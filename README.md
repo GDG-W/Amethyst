@@ -62,24 +62,23 @@ Here are some common setup issues and their fixes:
 - **Hook not running on commit?**
   - Verify `core.hooksPath`
 
-  ```bash
-  git config core.hooksPath  # Should return ".husky"
-  ```
+    ```bash
+    git config core.hooksPath  # Should return ".husky"
+    ```
 
   - Ensure the hook is executable
 
-  ```bash
-  chmod +x .husky/pre-commit
-  ```
+    ```bash
+    chmod +x .husky/pre-commit
+    ```
 
   - Test manually
 
-  ```bash
-  ./.husky/pre-commit
-  ```
+    ```bash
+    ./.husky/pre-commit
+    ```
 
-  - Got `"No staged files match"` error?
-
+- **Got `"No staged files match"` error?**
   - Make sure you've staged changes:
 
     ```bash
@@ -88,13 +87,12 @@ Here are some common setup issues and their fixes:
 
   - Ensure your `lint-staged` patterns match your files.
 
-  - Permission issues?
+- **Permission issues?**
+  - Run the following command:
 
-  Run the following command:
-
-  ```bash
-  chmod -R +x .husky/
-  ```
+    ```bash
+    chmod -R +x .husky/
+    ```
 
 - **App not starting?**
   - Confirm your Node.js version matches the one defined in `.nvmrc` or `package.json > engines`.
