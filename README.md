@@ -114,8 +114,8 @@ To ensure consistency across the team, please follow these conventions:
 Place test files (e.g., `index.test.tsx`) in the same directory as the component they test. This improves discoverability and encourages modular structure.
 
 ```
-components/
-  └── Button/
+  ui/
+  └── button/
       ├── index.tsx
       ├── index.test.tsx
 ```
@@ -153,14 +153,14 @@ export default SelectIcon; // remember to export as default
 
 ### ✅ Additional Notes
 
-- Use [Tailwind CSS](https://tailwindcss.com/docs) utility classes for styling. Inline color, font, etc. declarations are highly discouraged.
+- Use [Tailwind CSS](https://tailwindcss.com/docs) utility classes for styling. Inline color, font, etc. declarations are highly discouraged
   Make good use of Tailwind's native classes and extended classes as specified in `tailwind.config.ts`
-- Keep component files focused. If it’s doing too much, break it into smaller parts.
-- Name components and files descriptively.
+- Keep component files focused. If it’s doing too much, break it into smaller parts
+- Name components and files descriptively
 - Keep your code DRY
 - Do NOT attempt to bypass code quality checks. Doing so will result in immediate ejection from the project.
-- Prefer `async/await` over promise chains for readability.
-- Use TypeScript strictly: aim for full type coverage and no `any`.
+- Prefer `async/await` over promise chains for readability
+- Use TypeScript strictly: aim for full type coverage and no `any`
 - Test coverage must be no less than 85%
 
 ---
