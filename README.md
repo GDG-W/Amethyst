@@ -60,42 +60,41 @@ Here are some common setup issues and their fixes:
   - Ask a teammate or check the team docs for the necessary environment variables.
 
 - **Hook not running on commit?**
-
-- Verify `core.hooksPath`
-
-```bash
-git config core.hooksPath  # Should return ".husky"
-```
-
-- Ensure the hook is executable
-
-```bash
-chmod +x .husky/pre-commit
-```
-
-- Test manually
-
-```bash
-./.husky/pre-commit
-```
-
-- Got `"No staged files match"` error?
-
-- Make sure you've staged changes:
+  - Verify `core.hooksPath`
 
   ```bash
-  git add .
+  git config core.hooksPath  # Should return ".husky"
   ```
 
-- Ensure your `lint-staged` patterns match your files.
+  - Ensure the hook is executable
 
-- Permission issues?
+  ```bash
+  chmod +x .husky/pre-commit
+  ```
 
-Run the following command:
+  - Test manually
 
-```bash
-chmod -R +x .husky/
-```
+  ```bash
+  ./.husky/pre-commit
+  ```
+
+  - Got `"No staged files match"` error?
+
+  - Make sure you've staged changes:
+
+    ```bash
+    git add .
+    ```
+
+  - Ensure your `lint-staged` patterns match your files.
+
+  - Permission issues?
+
+  Run the following command:
+
+  ```bash
+  chmod -R +x .husky/
+  ```
 
 - **App not starting?**
   - Confirm your Node.js version matches the one defined in `.nvmrc` or `package.json > engines`.
@@ -164,6 +163,7 @@ export default SelectIcon; // remember to export as default
 - Do NOT attempt to bypass code quality checks. Doing so will result in immediate ejection from the project.
 - Prefer `async/await` over promise chains for readability.
 - Use TypeScript strictly: aim for full type coverage and no `any`.
+- Test coverage must be no less than 85%
 
 ---
 
