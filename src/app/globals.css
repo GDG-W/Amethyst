@@ -3,20 +3,280 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
-}
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --static-black: #171717;
+  --static-white: #ffffff;
+
+  --bg-strong-950: #171717;
+  --bg-surface-800: #262626;
+  --bg-sub-300: #d1d1d1;
+  --bg-soft-200: #ebebeb;
+  --bg-weak-50: #f7f7f7;
+  --bg-white-0: #ffffff;
+
+  --text-strong-950: #171717;
+  --text-sub-600: #5c5c5c;
+  --text-soft-400: #a3a3a3;
+  --text-disabled-300: #d1d1d1;
+  --text-white-0: #ffffff;
+
+  /* Stroke Color Tokens */
+  --stroke-strong-950: #171717;
+  --stroke-sub-300: #d1d1d1;
+  --stroke-soft-200: #ebebeb;
+  --stroke-white-0: #ffffff;
+
+  /* Icon Color Tokens */
+  --icon-strong-950: #171717;
+  --icon-sub-600: #5c5c5c;
+  --icon-soft-400: #a3a3a3;
+  --icon-disabled-300: #d1d1d1;
+  --icon-white-0: #ffffff;
+
+  /* Faded State Tokens */
+  --faded-dark: #262626;
+  --faded-base: #7b7b7b;
+  --faded-light: #ebebeb;
+  --faded-lighter: #f5f5f5;
+
+  /* Information State Tokens */
+  --information-dark: #122368;
+  --information-base: #335cff;
+  --information-light: #c0d5ff;
+  --information-lighter: #ebf1ff;
+
+  /* Warning State Tokens */
+  --warning-dark: #71330a;
+  --warning-base: #fa7319;
+  --warning-light: #ffd9c0;
+  --warning-lighter: #fff3eb;
+
+  /* Error State Tokens */
+  --error-dark: #681219;
+  --error-base: #fb3748;
+  --error-light: #ffc0c5;
+  --error-lighter: #ffebec;
+
+  /* Success State Tokens */
+  --success-dark: #0b4627;
+  --success-base: #1fc16b;
+  --success-light: #c2f5da;
+  --success-lighter: #e0faec;
+
+  /* Away State Tokens */
+  --away-dark: #624c18;
+  --away-base: #f6b51e;
+  --away-light: #ffecc0;
+  --away-lighter: #fffaeb;
+
+  /* Feature State Tokens */
+  --feature-dark: #351a75;
+  --feature-base: #7d52f4;
+  --feature-light: #cac0ff;
+  --feature-lighter: #efebff;
+
+  /* Verified State Tokens */
+  --verified-dark: #124b68;
+  --verified-base: #47c2ff;
+  --verified-light: #c0eaff;
+  --verified-lighter: #ebf8ff;
+
+  /* Highlighted State Tokens */
+  --highlighted-dark: #68123d;
+  --highlighted-base: #fb4ba3;
+  --highlighted-light: #ffc0df;
+  --highlighted-lighter: #ffebf4;
+
+  /* Stable State Tokens */
+  --stable-dark: #0b463e;
+  --stable-base: #22d3bb;
+  --stable-light: #c2f5ee;
+  --stable-lighter: #e4fbf8;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;
     --foreground: #ededed;
+
+    --static-black: #171717;
+    --static-white: #ffffff;
+
+    --bg-strong-950: #ffffff;
+    --bg-surface-800: #ebebeb;
+    --bg-sub-300: #5c5c5c;
+    --bg-soft-200: #333333;
+    --bg-weak-50: #262626;
+    --bg-white-0: #171717;
+
+    --text-strong-950: #ffffff;
+    --text-sub-600: #d1d1d1;
+    --text-soft-400: #7b7b7b;
+    --text-disabled-300: #5c5c5c;
+    --text-white-0: #171717;
+
+    /* Stroke Color Tokens */
+    --stroke-strong-950: #ffffff;
+    --stroke-sub-300: #5c5c5c;
+    --stroke-soft-200: #333333;
+    --stroke-white-0: #171717;
+
+    /* Icon Color Tokens */
+    --icon-strong-950: #ffffff;
+    --icon-sub-600: #a3a3a3;
+    --icon-soft-400: #7b7b7b;
+    --icon-disabled-300: #5c5c5c;
+    --icon-white-0: #171717;
+
+    /* Faded State Tokens */
+    --faded-dark: #d1d1d1;
+    --faded-base: #7b7b7b;
+    --faded-light: #99a0ae3d;
+    --faded-lighter: #99a0ae29;
+
+    /* Information State Tokens */
+    --information-dark: #6895ff;
+    --information-base: #335cff;
+    --information-light: #476cff3d;
+    --information-lighter: #476cff29;
+
+    /* Warning State Tokens */
+    --warning-dark: #ffa468;
+    --warning-base: #e16614;
+    --warning-light: #fa73193d;
+    --warning-lighter: #fa731929;
+
+    /* Error State Tokens */
+    --error-dark: #ff6875;
+    --error-base: #e93544;
+    --error-light: #fb37483d;
+    --error-lighter: #fb374829;
+
+    /* Success State Tokens */
+    --success-dark: #3ee089;
+    --success-base: #1daf61;
+    --success-light: #1fc16b3d;
+    --success-lighter: #1fc16b29;
+
+    /* Away State Tokens */
+    --away-dark: #ffd268;
+    --away-base: #e6a819;
+    --away-light: #fbc64b3d;
+    --away-lighter: #fbc64b29;
+
+    /* Feature State Tokens */
+    --feature-dark: #8c71f6;
+    --feature-base: #693ee0;
+    --feature-light: #784def3d;
+    --feature-lighter: #784def29;
+
+    /* Verified State Tokens */
+    --verified-dark: #68cdff;
+    --verified-base: #35ade9;
+    --verified-light: #47c2ff3d;
+    --verified-lighter: #47c2ff29;
+
+    /* Highlighted State Tokens */
+    --highlighted-dark: #ff68b3;
+    --highlighted-base: #e9358f;
+    --highlighted-light: #fb4ba33d;
+    --highlighted-lighter: #fb4ba329;
+
+    /* Stable State Tokens */
+    --stable-dark: #3fdec9;
+    --stable-base: #1daf9c;
+    --stable-light: #22d3bb3d;
+    --stable-lighter: #22d3bb29;
   }
+}
+
+@theme inline {
+  /* Base colors */
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+
+  /* Static colors */
+  --color-static-black: var(--static-black);
+  --color-static-white: var(--static-white);
+
+  /* Background colors */
+  --color-bg-strong-950: var(--bg-strong-950);
+  --color-bg-surface-800: var(--bg-surface-800);
+  --color-bg-sub-300: var(--bg-sub-300);
+  --color-bg-soft-200: var(--bg-soft-200);
+  --color-bg-weak-50: var(--bg-weak-50);
+  --color-bg-white-0: var(--bg-white-0);
+
+  /* Text colors */
+  --color-text-strong-950: var(--text-strong-950);
+  --color-text-sub-600: var(--text-sub-600);
+  --color-text-soft-400: var(--text-soft-400);
+  --color-text-disabled-300: var(--text-disabled-300);
+  --color-text-white-0: var(--text-white-0);
+
+  /* Stroke colors */
+  --color-stroke-strong-950: var(--stroke-strong-950);
+  --color-stroke-sub-300: var(--stroke-sub-300);
+  --color-stroke-soft-200: var(--stroke-soft-200);
+  --color-stroke-white-0: var(--stroke-white-0);
+
+  /* Icon colors */
+  --color-icon-strong-950: var(--icon-strong-950);
+  --color-icon-sub-600: var(--icon-sub-600);
+  --color-icon-soft-400: var(--icon-soft-400);
+  --color-icon-disabled-300: var(--icon-disabled-300);
+  --color-icon-white-0: var(--icon-white-0);
+
+  /* State colors */
+  --color-faded-dark: var(--faded-dark);
+  --color-faded-base: var(--faded-base);
+  --color-faded-light: var(--faded-light);
+  --color-faded-lighter: var(--faded-lighter);
+
+  --color-information-dark: var(--information-dark);
+  --color-information-base: var(--information-base);
+  --color-information-light: var(--information-light);
+  --color-information-lighter: var(--information-lighter);
+
+  --color-warning-dark: var(--warning-dark);
+  --color-warning-base: var(--warning-base);
+  --color-warning-light: var(--warning-light);
+  --color-warning-lighter: var(--warning-lighter);
+
+  --color-error-dark: var(--error-dark);
+  --color-error-base: var(--error-base);
+  --color-error-light: var(--error-light);
+  --color-error-lighter: var(--error-lighter);
+
+  --color-success-dark: var(--success-dark);
+  --color-success-base: var(--success-base);
+  --color-success-light: var(--success-light);
+  --color-success-lighter: var(--success-lighter);
+
+  --color-away-dark: var(--away-dark);
+  --color-away-base: var(--away-base);
+  --color-away-light: var(--away-light);
+  --color-away-lighter: var(--away-lighter);
+
+  --color-feature-dark: var(--feature-dark);
+  --color-feature-base: var(--feature-base);
+  --color-feature-light: var(--feature-light);
+  --color-feature-lighter: var(--feature-lighter);
+
+  --color-verified-dark: var(--verified-dark);
+  --color-verified-base: var(--verified-base);
+  --color-verified-light: var(--verified-light);
+  --color-verified-lighter: var(--verified-lighter);
+
+  --color-highlighted-dark: var(--highlighted-dark);
+  --color-highlighted-base: var(--highlighted-base);
+  --color-highlighted-light: var(--highlighted-light);
+  --color-highlighted-lighter: var(--highlighted-lighter);
+
+  --color-stable-dark: var(--stable-dark);
+  --color-stable-base: var(--stable-base);
+  --color-stable-light: var(--stable-light);
+  --color-stable-lighter: var(--stable-lighter);
 }
 
 body {
