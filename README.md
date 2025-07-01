@@ -176,8 +176,8 @@ If you're adding new features or fixing bugs, make sure to:
 - `improvement/` - for improvements
 - `chore/ `- for updates, cleanups, components, config, etc
   and suffix them with
-- `-ui` - for purely UI work
-- `-integration` - for purely integration work
+  - `-ui` - for purely UI work
+  - `-integration` - for purely integration work
 
 2. Write/update tests
 3. Follow existing code style and conventions; clean, accessible and quality code is non-negotiable
