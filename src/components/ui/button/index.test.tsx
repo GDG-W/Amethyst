@@ -42,14 +42,9 @@ describe("Button Component", () => {
     render(<Button loading>Submit</Button>);
     const button = screen.getByRole("button");
     expect(button).toBeDisabled();
-    expect(button).toContainElement(button.querySelector("span")); // spinner is present
-  });
-  it("ensures the spinner is spinning", () => {
-    render(<Button loading>Submit</Button>);
-    const button = screen.getByRole("button");
+    expect(button).toContainElement(button.querySelector("span"));
     expect(button.querySelector("span")).toHaveClass("animate-spin");
   });
-
   it("does not call onClick when loading", () => {
     const handleClick = jest.fn();
     render(
