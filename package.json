@@ -9,7 +9,7 @@
     "lint": "next lint --fix",
     "test": "jest",
     "format": "prettier --write .",
-    "prepare": "husky"
+    "prepare": "npx husky"
   },
   "dependencies": {
     "@radix-ui/react-slot": "^1.2.3",
@@ -22,6 +22,8 @@
     "tailwind-merge": "^3.3.1"
   },
   "devDependencies": {
+    "@commitlint/cli": "^19.8.1",
+    "@commitlint/config-conventional": "^19.8.1",
     "@eslint/eslintrc": "^3",
     "@tailwindcss/postcss": "^4",
     "@testing-library/jest-dom": "^6.6.3",
