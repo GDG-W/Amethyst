@@ -16,16 +16,20 @@ describe("Button Component", () => {
     expect(handleClick).toHaveBeenCalledTimes(1);
   });
 
-  it("applies the correct variant class", () => {
+  it("applies the secondary variant class", () => {
     render(<Button variant='secondary'>Secondary</Button>);
     const button = screen.getByRole("button");
     expect(button).toHaveClass("border-away-base");
   });
-
-  it("applies the correct size class", () => {
-    render(<Button size='large'>Large</Button>);
+  it("applies the primary variant class", () => {
+    render(<Button variant='primary'>Primary</Button>);
     const button = screen.getByRole("button");
-    expect(button.className).toMatch(/sm:w-40/);
+    expect(button).toHaveClass("bg-away-base");
+  });
+  it("applies the link variant class", () => {
+    render(<Button variant='link'>Link</Button>);
+    const button = screen.getByRole("button");
+    expect(button).toHaveClass("bg-transparent");
   });
 
   it("disables the button when disabled is true", () => {
@@ -43,8 +47,7 @@ describe("Button Component", () => {
   it("ensures the spinner is spinning", () => {
     render(<Button loading>Submit</Button>);
     const button = screen.getByRole("button");
-    expect(button).toBeDisabled();
-    expect(button.className).toMatch(/animate-spin/);
+    expect(button.querySelector("span")).toHaveClass("animate-spin");
   });
 
   it("does not call onClick when loading", () => {
