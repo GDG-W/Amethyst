@@ -2,7 +2,7 @@ import React from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
 import { useRouter } from "next/navigation";
 
-import Header from "./header";
+import Header from ".";
 
 jest.mock("next/navigation", () => ({
   useRouter: jest.fn(),
