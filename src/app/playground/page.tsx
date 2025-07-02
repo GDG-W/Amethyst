@@ -1,39 +1,10 @@
 // app/playground/page.tsx
 
+import { WandSparklesIcon } from "lucide-react";
+
 import ButtonPlayground from "@/components/playground/button.playground";
 import InputPlayground from "@/components/playground/input.playground";
-
-const ExampleInputs = () => (
-  <div className='space-y-6'>
-    <div className='space-y-2'>
-      <h4 className='text-sm text-gray-500'>Default (without label)</h4>
-      <input
-        type='text'
-        placeholder='Enter text here'
-        className='w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500'
-      />
-    </div>
-
-    <div className='space-y-2'>
-      <h4 className='text-sm text-gray-500'>With Label (required)</h4>
-      <label className='block text-sm font-medium text-gray-700'>First Name *</label>
-      <input
-        type='text'
-        placeholder='Enter your first name'
-        className='w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500'
-      />
-    </div>
-
-    <div className='space-y-2'>
-      <h4 className='text-sm text-gray-500'>With Helper Text</h4>
-      <label className='block text-sm font-medium text-gray-700'>Username</label>
-      <input
-        type='text'
-        className='w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500'
-      />
-    </div>
-  </div>
-);
+import Button from "@/components/ui/button";
 
 export default function PlaygroundPage() {
   return (
@@ -44,15 +15,18 @@ export default function PlaygroundPage() {
           <h1 className='text-2xl font-extrabold text-static-black'>Design System</h1>
 
           <div className='flex gap-2'>
-            <button className='px-4 py-2 bg-black text-white rounded-lg text-sm flex items-center gap-2'>
-              Small Flyout ✨
-            </button>
-            <button className='px-4 py-2 bg-black text-white rounded-lg text-sm flex items-center gap-2'>
-              Medium Flyout ✨
-            </button>
-            <button className='px-4 py-2 bg-black text-white rounded-lg text-sm flex items-center gap-2'>
-              Large Flyout ✨
-            </button>
+            <Button variant='primary' className='bg-static-black text-sm px-7 font-medium w-auto'>
+              Small Flyout
+              <WandSparklesIcon className='h-3 w-3' />
+            </Button>
+            <Button variant='primary' className='bg-static-black text-sm px-7 font-medium w-auto'>
+              Medium Flyout
+              <WandSparklesIcon className='h-3 w-3' />
+            </Button>
+            <Button variant='primary' className='bg-static-black text-sm px-7 font-medium w-auto'>
+              Large Flyout
+              <WandSparklesIcon className='h-3 w-3' />
+            </Button>
           </div>
         </div>
 

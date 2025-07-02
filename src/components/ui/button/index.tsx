@@ -1,25 +1,47 @@
 "use client";
 import React from "react";
+
+import { cn } from "@/lib/utils";
+
 type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
   children: React.ReactNode;
   loading?: boolean;
-  variant?: "primary" | "secondary" | "link";
+  variant?: "primary" | "secondary" | "danger" | "ghost" | "link";
 };
-const Button = ({ children, disabled, variant, loading = false, ...rest }: ButtonProps) => {
+
+const Button = ({
+  children,
+  disabled,
+  variant = "primary",
+  loading = false,
+  className = "",
+  ...rest
+}: ButtonProps) => {
   const buttonStyles = {
     variants: {
-      primary: "bg-away-base text-white ",
+      primary: "bg-away-base text-white",
       secondary: "bg-away-base/10 border border-away-base text-away-base",
-      link: "bg-transparent text-away-base underline underline-offset-2",
+      link: "bg-transparent text-away-base underline underline-offset-2 p-0",
+      danger: "bg-transparent border border-error-base text-error-base",
+      ghost: "bg-transparent text-away-base",
     },
   };
-  const buttonVariant = variant || "primary";
+
   const isDisabled = loading || disabled;
+  const isLink = variant === "link";
+
   return (
     <button
       disabled={isDisabled}
-      className={`flex items-center justify-center gap-2 px-3 py-3 w-full min-w-30 rounded-full capitalize hover:opacity-80 disabled:bg-bg-soft-200 disabled:text-white disabled:cursor-not-allowed ${buttonStyles.variants[buttonVariant]}
-      `}
+      className={cn(
+        "flex items-center justify-center gap-2 rounded-full capitalize font-medium cursor-pointer text-base w-full",
+        "transition-all duration-200 ease-in-out",
+        "disabled:bg-bg-soft-200 disabled:text-white disabled:cursor-not-allowed",
+        buttonStyles.variants[variant],
+        !isLink ? "px-4 py-2.5" : "",
+        !loading ? "hover:opacity-80" : "",
+        className,
+      )}
       {...rest}
     >
       {loading ? (
