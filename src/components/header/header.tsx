@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import LogoIcon from "../icons/LogoIcon";
 import CloseIcon from "../icons/CloseIcon";
 
-const Header = () => {
+const HeaderComponent = () => {
   const router = useRouter();
   const handleClose = () => {
     // Navigate to the home page when the close button is clicked
@@ -16,13 +16,12 @@ const Header = () => {
       <div className='flex justify-center bg-[#FFFFFF] border border-[#EBEBEB] px-5 py-4 md:px-10 md:py-5 max-w-3xl mx-auto rounded-full'>
         <div className='flex justify-between items-center w-full'>
           <LogoIcon />
-
           <button
             onClick={handleClose}
-            className='flex items-center gap-1 text-[#111111] text-base hover:text-gray-600 font-normal transition-colors cursor-pointer '
+            className='flex items-center gap-1 text-[#111111] text-base hover:text-gray-600 focus:text-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 font-normal transition-colors cursor-pointer'
           >
             Close
-            <CloseIcon />
+            <CloseIcon aria-hidden='true' />
           </button>
         </div>
       </div>
@@ -30,4 +29,4 @@ const Header = () => {
   );
 };
 
-export default Header;
+export default HeaderComponent;
