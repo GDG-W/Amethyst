@@ -386,3 +386,74 @@
     @apply bg-background text-foreground;
   }
 }
+
+/* Typography Styles */
+
+/* Headings */
+
+@utility heading-1 {
+  font-size: 56px;
+  line-height: 64px;
+  letter-spacing: -0.01em;
+}
+
+@utility heading-2 {
+  font-size: 48px;
+  line-height: 56px;
+  letter-spacing: -0.01em;
+}
+
+@utility heading-3 {
+  font-size: 40px;
+  line-height: 48px;
+  letter-spacing: -0.01em;
+}
+
+@utility heading-4 {
+  font-size: 32px;
+  line-height: 40px;
+  letter-spacing: -0.01em;
+}
+
+@utility heading-5 {
+  font-size: 24px;
+  line-height: 32px;
+  letter-spacing: -0.01em;
+}
+
+/* Labels and Paragraphs */
+
+@utility label-1 {
+  /* should also serve as paragraph-1 */
+  font-size: 24px;
+  line-height: 32px;
+  letter-spacing: -0.015em;
+}
+
+@utility label-2 {
+  /* should also serve as paragraph-2 */
+  font-size: 18px;
+  line-height: 24px;
+  letter-spacing: -0.015em;
+}
+
+@utility label-3 {
+  /* should also serve as paragraph-3 */
+  font-size: 16px;
+  line-height: 24px;
+  letter-spacing: -0.015em;
+}
+
+@utility label-4 {
+  /* should also serve as paragraph-4 */
+  font-size: 14px;
+  line-height: 20px;
+  letter-spacing: -0.015em;
+}
+
+@utility label-5 {
+  /* should also serve as paragraph-5 */
+  font-size: 12px;
+  line-height: 16px;
+  letter-spacing: -0.015em;
+}
