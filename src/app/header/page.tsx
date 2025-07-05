@@ -1,8 +1,8 @@
 import React from "react";
 
-import HeaderComponent from "@/components/header";
+import Header from "@/components/header";
 const page = () => {
-  return <HeaderComponent />;
+  return <Header />;
 };
 
 export default page;
