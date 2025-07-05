@@ -1,75 +1,61 @@
-import React from "react";
 import { render, screen } from "@testing-library/react";
+import React from "react";
 
-import ButtonPlayground from "./button.playground";
-import InputPlayground from "./input.playground";
-import { ComponentSection } from "./component.section";
-import { ComponentSubSection } from "./component.sub.section";
+import ButtonPlayground from "./buttonPlayground";
 
 describe("Playground Components", () => {
   describe("ButtonPlayground", () => {
-    it("renders the Buttons section", () => {
+    it("renders the Buttons section and all groups", () => {
       render(<ButtonPlayground />);
       expect(screen.getByText("Buttons")).toBeInTheDocument();
       expect(screen.getByText("Primary Buttons")).toBeInTheDocument();
       expect(screen.getByText("Outline & Danger Buttons")).toBeInTheDocument();
       expect(screen.getByText("Other Variants")).toBeInTheDocument();
     });
-    it("renders loading spinner in Primary Buttons", () => {
+    it("renders all button variants and labels", () => {
       render(<ButtonPlayground />);
-      expect(screen.getByText("Loading")).toBeInTheDocument();
-      const buttons = screen.getAllByRole("button");
-      expect(buttons[0].querySelector(".animate-spin")).toBeInTheDocument();
+      [
+        "Loading",
+        "With icon (right)",
+        "Text only",
+        "Outline with icon",
+        "Danger",
+        "Danger with icon",
+        "Ghost with left icon",
+        "Primary with custom background color",
+        "Disabled",
+      ].forEach((label) => {
+        expect(screen.getByText(label)).toBeInTheDocument();
+      });
     });
-    it("renders Outline and Danger button text", () => {
+    it("renders buttons with icons and disabled state", () => {
       render(<ButtonPlayground />);
-      expect(screen.getByText("Export Selected Orders")).toBeInTheDocument();
       expect(screen.getByText("Delete Selected Items")).toBeInTheDocument();
+      expect(screen.getByText("Login")).toBeInTheDocument();
+      const disabledButton = screen.getByText("Login").closest("button");
+      expect(disabledButton).toBeDisabled();
     });
   });
 
-  describe("InputPlayground", () => {
-    it("renders the Inputs section", () => {
-      render(<InputPlayground />);
-      expect(screen.getByText("Inputs")).toBeInTheDocument();
-      expect(screen.getByText("Basic Inputs")).toBeInTheDocument();
-      expect(screen.getByText("Input States")).toBeInTheDocument();
-      expect(screen.getByText("Textarea, Password & Select")).toBeInTheDocument();
-    });
-    it("renders disabled input and error state", () => {
-      render(<InputPlayground />);
-      expect(screen.getByPlaceholderText("0.00")).toBeDisabled();
-      expect(screen.getByText("Email is required")).toBeInTheDocument();
-    });
-    it("renders textarea and select", () => {
-      render(<InputPlayground />);
-      expect(screen.getByPlaceholderText("Enter description here")).toBeInTheDocument();
-      expect(screen.getByText("Max 500 characters")).toBeInTheDocument();
-      expect(screen.getByText("Select field")).toBeInTheDocument();
-    });
-  });
+  // Example extensible test for future playground sections
+  describe("Playground Section Structure", () => {
+    function testPlaygroundSection(Component: React.ComponentType, sectionTitle: string) {
+      it(`renders Section, SectionTitle, and ComponentGrid for ${sectionTitle}`, () => {
+        const { container } = render(<Component />);
+        // Section
+        const section = container.querySelector("section");
+        expect(section).toBeInTheDocument();
+        // SectionTitle as first child
+        const firstChild = section && section.firstElementChild;
+        expect(firstChild).toBeTruthy();
+        expect(firstChild?.textContent).toBe(sectionTitle);
+        // ComponentGrid exists after SectionTitle
+        const grid = section && section.querySelector(".grid");
+        expect(grid).toBeInTheDocument();
+      });
+    }
 
-  describe("ComponentSection", () => {
-    it("renders section title and children", () => {
-      render(
-        <ComponentSection title='Test Section'>
-          <div>Child Content</div>
-        </ComponentSection>,
-      );
-      expect(screen.getByText("Test Section")).toBeInTheDocument();
-      expect(screen.getByText("Child Content")).toBeInTheDocument();
-    });
-  });
-
-  describe("ComponentSubSection", () => {
-    it("renders subsection title and children", () => {
-      render(
-        <ComponentSubSection title='SubSection'>
-          <div>Sub Content</div>
-        </ComponentSubSection>,
-      );
-      expect(screen.getByText("SubSection")).toBeInTheDocument();
-      expect(screen.getByText("Sub Content")).toBeInTheDocument();
-    });
+    testPlaygroundSection(ButtonPlayground, "Buttons");
+    // Call testPlaygroundSection with the component and its section title for more playgrounds
   });
 });
