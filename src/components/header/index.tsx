@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import LogoIcon from "../icons/logo";
 import CloseIcon from "../icons/close-icon";
 
-const HeaderComponent = () => {
+const Header = () => {
   const router = useRouter();
   const handleClose = () => {
     // Navigate to the home page when the close button is clicked
@@ -29,4 +29,4 @@ const HeaderComponent = () => {
   );
 };
 
-export default HeaderComponent;
+export default Header;
