@@ -17,7 +17,7 @@ const SuccessCard = ({ title, summary }: { title: string; summary?: string }) =>
         className='w-full max-w-96 min-w-60 bg-white-0 border border-stroke-soft-200 rounded-md px-7 py-10 flex flex-col gap-3'
       >
         <ConfettiIcon />
-        <h4 className='heading-4 capitalize font-semibold  text-white-0'>{title}</h4>
+        <h4 className='heading-4 capitalize font-semibold text-white-0'>{title}</h4>
         {summary && <p className='text-text-sub-600 label-3'>{summary}</p>}
         <div className='flex flex-col gap-2 mt-3'>
           <Button
