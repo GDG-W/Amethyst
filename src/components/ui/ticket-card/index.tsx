@@ -19,7 +19,6 @@ const Card = ({ children, className = "", header }: CardProps) => {
 		max-w-sm
 		sm:max-w-md
 		md:max-w-lg
-		
 		${className}
 	  `}
     >

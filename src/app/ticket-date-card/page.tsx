@@ -35,7 +35,7 @@ const TicketsSelectionPage = () => {
   };
 
   return (
-    <div className='bg-gray-50 min-h-screen p-4 mx-w-md mx-auto'>
+    <div className='bg-gray-50 min-h-screen flex justify-center items-center p-4 mx-w-md mx-auto'>
       <Card header={header}>
         <Tabs tabs={tabsData} activeTab={activeTab} onTabChange={handleTabChange} />
 
