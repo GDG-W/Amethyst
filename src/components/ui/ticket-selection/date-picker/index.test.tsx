@@ -199,7 +199,7 @@ describe("DatePicker", () => {
       render(<DatePicker selectedDates={["tue-18"]} />);
       const selectedButton = screen.getByText("18").closest("button");
       // Look for the white background container that holds the check icon
-      const checkContainer = selectedButton?.querySelector(".bg-\\[\\#FFFFFF\\].rounded-full");
+      const checkContainer = selectedButton?.querySelector(".bg-white.rounded-full");
       expect(checkContainer).toBeInTheDocument();
     });
 
@@ -217,7 +217,7 @@ describe("DatePicker", () => {
       render(<DatePicker mode='pro' />);
       const disabledButton = screen.getByText("18").closest("button");
       // Should not have either the white or gray check containers
-      const whiteContainer = disabledButton?.querySelector(".bg-\\[\\#FFFFFF\\].rounded-full");
+      const whiteContainer = disabledButton?.querySelector(".bg-white.rounded-full");
       const grayContainer = disabledButton?.querySelector(".bg-\\[\\#E2E4E9\\].rounded-full");
       expect(whiteContainer).not.toBeInTheDocument();
       expect(grayContainer).not.toBeInTheDocument();
@@ -226,10 +226,10 @@ describe("DatePicker", () => {
     it("selected date has white background check container", () => {
       render(<DatePicker selectedDates={["wed-19"]} />);
       const selectedButton = screen.getByText("19").closest("button");
-      const checkContainer = selectedButton?.querySelector(".bg-\\[\\#FFFFFF\\].rounded-full");
+      const checkContainer = selectedButton?.querySelector(".bg-white.rounded-full");
       expect(checkContainer).toBeInTheDocument();
       expect(checkContainer).toHaveClass(
-        "bg-[#FFFFFF]",
+        "bg-white",
         "rounded-full",
         "transition-opacity",
         "duration-200",

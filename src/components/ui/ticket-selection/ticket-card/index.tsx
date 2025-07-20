@@ -10,9 +10,9 @@ const Card = ({ children, className = "", header }: CardProps) => {
   return (
     <div
       className={`
-		bg-white 
+		bg-bg-strong-950
 		border 
-		border-[#EBEBEB] 
+		border-bg-surface-800
 		rounded-lg 
 		p-4
 		w-full
