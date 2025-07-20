@@ -266,19 +266,19 @@
   --color-static-white: var(--static-white);
 
   /* Background colors */
-  --color-bg-strong-950: var(--bg-strong-950);
-  --color-bg-surface-800: var(--bg-surface-800);
-  --color-bg-sub-300: var(--bg-sub-300);
-  --color-bg-soft-200: var(--bg-soft-200);
-  --color-bg-weak-50: var(--bg-weak-50);
-  --color-bg-white-0: var(--bg-white-0);
+  --color-strong-950-bg: var(--bg-strong-950);
+  --color-surface-800: var(--bg-surface-800);
+  --color-sub-300: var(--bg-sub-300);
+  --color-soft-200: var(--bg-soft-200);
+  --color-weak-50: var(--bg-weak-50);
+  --color-white-0-bg: var(--bg-white-0);
 
   /* Text colors */
-  --color-text-strong-950: var(--text-strong-950);
-  --color-text-sub-600: var(--text-sub-600);
-  --color-text-soft-400: var(--text-soft-400);
-  --color-text-disabled-300: var(--text-disabled-300);
-  --color-text-white-0: var(--text-white-0);
+  --color-strong-950: var(--text-strong-950);
+  --color-sub-600: var(--text-sub-600);
+  --color-soft-400: var(--text-soft-400);
+  --color-disabled-300: var(--text-disabled-300);
+  --color-white-0: var(--text-white-0);
 
   /* Stroke colors */
   --color-stroke-strong-950: var(--stroke-strong-950);
