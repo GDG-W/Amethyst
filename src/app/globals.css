@@ -266,12 +266,16 @@
   --color-static-white: var(--static-white);
 
   /* Background colors */
-  --color-strong-950-bg: var(--bg-strong-950);
+  --color-strong-950-bg: var(
+    --bg-strong-950
+  ); /* They have the same var name as the text so I suffixed them with bg */
   --color-surface-800: var(--bg-surface-800);
   --color-sub-300: var(--bg-sub-300);
   --color-soft-200: var(--bg-soft-200);
   --color-weak-50: var(--bg-weak-50);
-  --color-white-0-bg: var(--bg-white-0);
+  --color-white-0-bg: var(
+    --bg-white-0
+  ); /* They have the same var name as the text so I suffixed them with bg */
 
   /* Text colors */
   --color-strong-950: var(--text-strong-950);
