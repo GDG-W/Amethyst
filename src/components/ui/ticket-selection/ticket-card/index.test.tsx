@@ -19,18 +19,23 @@ describe("Card", () => {
     const { container } = render(<Card>Content</Card>);
     const cardElement = container.firstChild;
 
-    expect(cardElement).toHaveClass("bg-white");
+    expect(cardElement).toHaveClass("bg-bg-strong-950");
     expect(cardElement).toHaveClass("border");
-    expect(cardElement).toHaveClass("border-[#EBEBEB]");
+    expect(cardElement).toHaveClass("border-bg-surface-800");
     expect(cardElement).toHaveClass("rounded-lg");
     expect(cardElement).toHaveClass("p-4");
     expect(cardElement).toHaveClass("w-full");
+    expect(cardElement).toHaveClass("max-w-sm");
+    expect(cardElement).toHaveClass("sm:max-w-md");
+    expect(cardElement).toHaveClass("md:max-w-lg");
   });
 
   it("applies custom className", () => {
     const { container } = render(<Card className='custom-class'>Content</Card>);
 
     expect(container.firstChild).toHaveClass("custom-class");
+    // Should also still have default classes
+    expect(container.firstChild).toHaveClass("bg-bg-strong-950");
   });
 
   it("renders header when provided", () => {
@@ -68,7 +73,12 @@ describe("Card", () => {
     const { container } = render(<Card className=''>Content</Card>);
 
     // Should still have default classes
-    expect(container.firstChild).toHaveClass("bg-white", "border", "rounded-lg");
+    expect(container.firstChild).toHaveClass(
+      "bg-bg-strong-950",
+      "border",
+      "border-bg-surface-800",
+      "rounded-lg",
+    );
   });
 
   it("handles complex children", () => {
@@ -85,5 +95,26 @@ describe("Card", () => {
     expect(screen.getByText("Title")).toBeInTheDocument();
     expect(screen.getByText("Description")).toBeInTheDocument();
     expect(screen.getByText("Action")).toBeInTheDocument();
+  });
+
+  it("renders with both header and custom className", () => {
+    const { container } = render(
+      <Card header={<span>Test Header</span>} className='extra-class'>
+        <p>Content</p>
+      </Card>,
+    );
+
+    const cardElement = container.firstChild;
+    expect(cardElement).toHaveClass("extra-class");
+    expect(cardElement).toHaveClass("bg-bg-strong-950");
+    expect(screen.getByText("Test Header")).toBeInTheDocument();
+    expect(screen.getByText("Content")).toBeInTheDocument();
+  });
+
+  it("handles undefined className prop", () => {
+    const { container } = render(<Card>Content</Card>);
+
+    // Should still render with default classes when className is undefined
+    expect(container.firstChild).toHaveClass("bg-bg-strong-950");
   });
 });
