@@ -10,27 +10,25 @@
   --static-black: #171717;
   --static-white: #ffffff;
 
-  --bg-strong-950: #171717;
+  --strong-950: #171717;
+
   --bg-surface-800: #262626;
   --bg-sub-300: #d1d1d1;
   --bg-soft-200: #ebebeb;
   --bg-weak-50: #f7f7f7;
   --bg-white-0: #ffffff;
 
-  --text-strong-950: #171717;
   --text-sub-600: #5c5c5c;
   --text-soft-400: #a3a3a3;
   --text-disabled-300: #d1d1d1;
   --text-white-0: #ffffff;
 
   /* Stroke Color Tokens */
-  --stroke-strong-950: #171717;
   --stroke-sub-300: #d1d1d1;
   --stroke-soft-200: #ebebeb;
   --stroke-white-0: #ffffff;
 
   /* Icon Color Tokens */
-  --icon-strong-950: #171717;
   --icon-sub-600: #5c5c5c;
   --icon-soft-400: #a3a3a3;
   --icon-disabled-300: #d1d1d1;
@@ -136,28 +134,25 @@
 
     --static-black: #171717;
     --static-white: #ffffff;
+    --strong-950: #ffffff;
 
-    --bg-strong-950: #ffffff;
     --bg-surface-800: #ebebeb;
     --bg-sub-300: #5c5c5c;
     --bg-soft-200: #333333;
     --bg-weak-50: #262626;
     --bg-white-0: #171717;
 
-    --text-strong-950: #ffffff;
     --text-sub-600: #d1d1d1;
     --text-soft-400: #7b7b7b;
     --text-disabled-300: #5c5c5c;
     --text-white-0: #171717;
 
     /* Stroke Color Tokens */
-    --stroke-strong-950: #ffffff;
     --stroke-sub-300: #5c5c5c;
     --stroke-soft-200: #333333;
     --stroke-white-0: #171717;
 
     /* Icon Color Tokens */
-    --icon-strong-950: #ffffff;
     --icon-sub-600: #a3a3a3;
     --icon-soft-400: #7b7b7b;
     --icon-disabled-300: #5c5c5c;
@@ -265,10 +260,8 @@
   --color-static-black: var(--static-black);
   --color-static-white: var(--static-white);
 
-  /* Background colors */
-  --color-strong-950-bg: var(
-    --bg-strong-950
-  ); /* They have the same var name as the text so I suffixed them with bg */
+  --color-strong-950: var(--strong-950);
+
   --color-surface-800: var(--bg-surface-800);
   --color-sub-300: var(--bg-sub-300);
   --color-soft-200: var(--bg-soft-200);
@@ -278,20 +271,17 @@
   ); /* They have the same var name as the text so I suffixed them with bg */
 
   /* Text colors */
-  --color-strong-950: var(--text-strong-950);
   --color-sub-600: var(--text-sub-600);
   --color-soft-400: var(--text-soft-400);
   --color-disabled-300: var(--text-disabled-300);
   --color-white-0: var(--text-white-0);
 
   /* Stroke colors */
-  --color-stroke-strong-950: var(--stroke-strong-950);
   --color-stroke-sub-300: var(--stroke-sub-300);
   --color-stroke-soft-200: var(--stroke-soft-200);
   --color-stroke-white-0: var(--stroke-white-0);
 
   /* Icon colors */
-  --color-icon-strong-950: var(--icon-strong-950);
   --color-icon-sub-600: var(--icon-sub-600);
   --color-icon-soft-400: var(--icon-soft-400);
   --color-icon-disabled-300: var(--icon-disabled-300);
