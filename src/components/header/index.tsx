@@ -18,7 +18,7 @@ const Header = () => {
           <LogoIcon className='w-36 md:w-40 xl:w-48' />
           <button
             onClick={handleClose}
-            className='flex items-center gap-1 text-[#111111] text-base hover:text-gray-600 focus:text-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 font-normal transition-colors cursor-pointer'
+            className='flex items-center gap-1 text-[#111111] text-base hover:text-gray-600 focus:text-gray-600 font-normal transition-colors cursor-pointer'
           >
             Close
             <CloseIcon aria-hidden='true' />

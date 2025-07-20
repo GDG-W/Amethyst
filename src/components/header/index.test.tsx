@@ -9,13 +9,13 @@ jest.mock("next/navigation", () => ({
 }));
 
 // Mock the icon components
-jest.mock("../icons/LogoIcon", () => {
+jest.mock("../icons/logo", () => {
   return function MockLogoIcon() {
     return <div data-testid='logo-icon'>Logo</div>;
   };
 });
 
-jest.mock("../icons/CloseIcon", () => {
+jest.mock("../icons/close-icon", () => {
   return function MockCloseIcon() {
     return <div data-testid='close-icon'>×</div>;
   };
