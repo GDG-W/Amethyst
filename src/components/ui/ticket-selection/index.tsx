@@ -38,7 +38,7 @@ const TicketsSelection = () => {
   };
 
   return (
-    <div className='bg-bg-strong-950 p-4 max-w-md mx-auto'>
+    <div className='bg-bg-strong-950 min-h-screen p-4'>
       <Card header={header} className='bg-bg-strong-950 border border-bg-surface-800 rounded-lg'>
         <Tabs
           tabs={tabsData}
