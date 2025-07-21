@@ -32,7 +32,7 @@ export default function Checkbox({ name, label, checked, onChange }: CheckboxPro
             </svg>
           )}
         </div>
-        {label && <span className='label-3 text-unnamed-black'>{label}</span>}
+        {label && <span className='label-3 text-strong-950'>{label}</span>}
       </label>
     </div>
   );
