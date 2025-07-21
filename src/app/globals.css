@@ -10,8 +10,6 @@
   --static-black: #171717;
   --static-white: #ffffff;
 
-  --unnamed-black: #111111;
-
   --bg-strong-950: #171717;
   --bg-surface-800: #262626;
   --bg-sub-300: #d1d1d1;
@@ -138,8 +136,6 @@
 
     --static-black: #171717;
     --static-white: #ffffff;
-
-    --unnamed-black: #ffffff;
 
     --bg-strong-950: #ffffff;
     --bg-surface-800: #ebebeb;
@@ -268,9 +264,6 @@
   /* Static colors */
   --color-static-black: var(--static-black);
   --color-static-white: var(--static-white);
-
-  /* unnamed black. to be renamed later */
-  --color-unnamed-black: var(--unnamed-black);
 
   /* Background colors */
   --color-bg-strong-950: var(--bg-strong-950);
