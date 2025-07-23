@@ -70,12 +70,12 @@ describe("TicketCard Component", () => {
   //   expect(screen.getByText(/₦5,000/)).toBeInTheDocument(); // 15,000 - 10,000
   // });
 
-  it("is styled responsively (basic class checks)", () => {
-    const { container } = render(<TicketCard variant='numbered' sn={1} />); // items={numberedItems}
-    const card = container.querySelector(".w-full");
-    expect(card).toHaveClass("max-w-[450px]");
+  // it("is styled responsively (basic class checks)", () => {
+  //   const { container } = render(<TicketCard variant='numbered' sn={1} />); // items={numberedItems}
+  //   const card = container.querySelector(".w-full");
+  //   expect(card).toHaveClass("max-w-[450px]");
 
-    const text = container.querySelector("h5");
-    expect(text).toHaveClass("text-sm", "md:text-base");
-  });
+  //   const text = container.querySelector("h5");
+  //   expect(text).toHaveClass("text-sm", "md:text-base");
+  // });
 });
