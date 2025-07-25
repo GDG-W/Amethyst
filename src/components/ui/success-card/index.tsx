@@ -10,8 +10,8 @@ import Button from "../button";
 const SuccessCard = ({ title, summary }: { title: string; summary?: string }) => {
   const navigator = useRouter();
   return (
-    <section className='w-full h-full flex items-center justify-center bg-transparent px-9 py-15'>
-      <div className='w-full  max-w-96 min-w-60 bg-bg-white-0 border border-stroke-soft-200 rounded-md px-7 py-10 flex flex-col gap-3'>
+    <div className='w-full h-full flex items-center justify-center bg-transparent px-9 py-15'>
+      <div className='w-full max-w-[410px] min-w-60 bg-white-0 border border-soft-200 rounded-md px-7 py-10 flex flex-col gap-3'>
         <ConfettiIcon />
         <h4 className='heading-4 capitalize font-semibold text-black'>{title}</h4>
         {summary && <p className='text-text-sub-600 label-3'>{summary}</p>}
@@ -27,7 +27,7 @@ const SuccessCard = ({ title, summary }: { title: string; summary?: string }) =>
           <Button variant='secondary'>buy more</Button>
         </div>
       </div>
-    </section>
+    </div>
   );
 };
 
