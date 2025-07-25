@@ -266,9 +266,8 @@
   --color-sub-300: var(--bg-sub-300);
   --color-soft-200: var(--bg-soft-200);
   --color-weak-50: var(--bg-weak-50);
-  --color-white-0-bg: var(
-    --bg-white-0
-  ); /* They have the same var name as the text so I suffixed them with bg */
+  --color-white-0-bg: var(--bg-white-0);
+  /* They have the same var name as the text so I suffixed them with bg */
 
   /* Text colors */
   --color-sub-600: var(--text-sub-600);
