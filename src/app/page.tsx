@@ -6,7 +6,7 @@ import SuccessCard from "@/components/ui/success-card";
 
 export default function Home() {
   return (
-    <div className="w-[700px] m-auto space-y-3">
+    <div className='w-[700px] m-auto space-y-3'>
       <SuccessCard
         title='Purchase Successful'
         summary='You have successfully purchased tickets for DevFest Lagos 2025. Check your email for your ticket ID.'
@@ -24,7 +24,12 @@ export default function Home() {
         />
       </div>
 
-      <Checkbox name="check-box" label="This ticket belongs to me" checked={false} onChange={() => {}} />
+      <Checkbox
+        name='check-box'
+        label='This ticket belongs to me'
+        checked={false}
+        onChange={() => {}}
+      />
     </div>
   );
 }
