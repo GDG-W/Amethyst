@@ -1,7 +1,10 @@
 "use client";
+
 import React from "react";
 import { useRouter } from "next/navigation";
+
 import ConfettiIcon from "@/components/icons/confetti";
+
 import Button from "../button";
 
 const SuccessCard = ({ title, summary }: { title: string; summary?: string }) => {
