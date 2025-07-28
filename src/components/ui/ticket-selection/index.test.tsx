@@ -273,7 +273,7 @@ describe("TicketsSelection", () => {
       const { container } = render(<TicketsSelection />);
 
       const mainDiv = container.firstChild;
-      expect(mainDiv).toHaveClass("bg-bg-strong-950", "p-4", "max-w-md", "mx-auto");
+      expect(mainDiv).toHaveClass("bg-bg-strong-950", "min-h-screen", "p-4");
     });
 
     it("applies correct spacing to DatePicker container", () => {
