@@ -1,8 +1,10 @@
+import Checkmark from "@/components/icons/checkmark";
+
 type CheckboxProps = {
   name: string;
   label?: string;
   checked: boolean;
-  onChange: () => void;
+  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
 export default function Checkbox({ name, label, checked, onChange }: CheckboxProps) {
@@ -18,19 +20,15 @@ export default function Checkbox({ name, label, checked, onChange }: CheckboxPro
           className='peer sr-only'
         />
         <div
-          className={`size-4 rounded-[3.5px] flex items-center justify-center 
-            ${checked ? "bg-away-base shadow-[0_2px_2px_0_rgba(28,38,100,0.32)]" : "bg-white border border-soft-200 shadow-[0_2px_2px_0_rgba(27,28,29,0.12)]"}
-          `}
+          className={`${checked ? "transparent" : "bg-soft-200 p-[1.5px] rounded-[4px] size-4"}`}
         >
-          {checked && (
-            <svg className='size-3 text-white' viewBox='0 0 20 20' fill='currentColor'>
-              <path
-                fillRule='evenodd'
-                d='M17.089 1.171L7.910 13.265L2.500 7.832L0 10.335L8.333 18.703L20 3.667Z'
-                clipRule='evenodd'
-              />
-            </svg>
-          )}
+          <div
+            className={`flex items-center justify-center
+              ${checked ? "bg-away-base shadow-checked size-4 rounded-[4px]" : "bg-white shadow-unchecked size-[13px] rounded-[2.6px]"}
+            `}
+          >
+            {checked && <Checkmark color='white' className='size-2' />}
+          </div>
         </div>
         {label && <span className='label-3 text-strong-950'>{label}</span>}
       </label>
