@@ -25,9 +25,15 @@ const TextField = ({
     return "border-stroke-soft-200";
   };
 
-  const getHelperColor = () => {
+  const getHelperTextColor = () => {
     if (hasError) return "text-red-500";
     if (hasHelper) return "text-sub-600";
+    return "";
+  };
+
+  const getHelperIconColor = () => {
+    if (hasError) return "text-red-500";
+    if (hasHelper) return "text-soft-400";
     return "";
   };
 
@@ -35,8 +41,8 @@ const TextField = ({
     if (!helperText && !error) return null;
 
     return (
-      <div className={cn("flex items-start gap-1 mt-1 font-medium tracking-tight", getHelperColor())}>
-        <AlertIcon className={cn("w-4 h-4", getHelperColor())} />
+      <div className={cn("flex items-start gap-1 mt-1 tracking-tight", getHelperTextColor())}>
+        <AlertIcon className={cn("w-4 h-4", getHelperIconColor())} />
         <p className='text-xs'>{hasError ? error : helperText}</p>
       </div>
     );
