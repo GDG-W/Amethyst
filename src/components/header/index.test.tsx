@@ -15,12 +15,6 @@ jest.mock("../icons/logo", () => {
   };
 });
 
-jest.mock("../icons/close-icon", () => {
-  return function MockCloseIcon() {
-    return <div data-testid='close-icon'>×</div>;
-  };
-});
-
 describe("Header Component", () => {
   const mockPush = jest.fn();
 
@@ -43,19 +37,14 @@ describe("Header Component", () => {
     expect(screen.getByTestId("logo-icon")).toBeInTheDocument();
   });
 
-  it("renders the close button with text", () => {
+  it("renders the claim ticket button with text", () => {
     render(<Header />);
-    expect(screen.getByRole("button", { name: /close/i })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: /claim ticket/i })).toBeInTheDocument();
   });
 
-  it("renders the close icon inside button", () => {
+  it("calls router.push with '/' when claim ticket button is clicked", () => {
     render(<Header />);
-    expect(screen.getByTestId("close-icon")).toBeInTheDocument();
-  });
-
-  it("calls router.push with '/' when close button is clicked", () => {
-    render(<Header />);
-    fireEvent.click(screen.getByRole("button", { name: /close/i }));
+    fireEvent.click(screen.getByRole("button", { name: /claim ticket/i }));
     expect(mockPush).toHaveBeenCalledWith("/");
     expect(mockPush).toHaveBeenCalledTimes(1);
   });
@@ -72,15 +61,16 @@ describe("Header Component", () => {
     expect(mainDiv).toHaveClass("h-screen");
   });
 
-  it("applies hover styles to close button", () => {
+  it("applies correct styles to claim ticket button", () => {
     render(<Header />);
-    const closeButton = screen.getByRole("button", { name: /close/i });
-    expect(closeButton).toHaveClass("hover:text-gray-600");
-  });
-
-  it("applies transition styles to close button", () => {
-    render(<Header />);
-    const closeButton = screen.getByRole("button", { name: /close/i });
-    expect(closeButton).toHaveClass("transition-colors");
+    const claimTicketButton = screen.getByRole("button", { name: /claim ticket/i });
+    expect(claimTicketButton).toHaveClass("flex");
+    expect(claimTicketButton).toHaveClass("items-center");
+    expect(claimTicketButton).toHaveClass("gap-1");
+    expect(claimTicketButton).toHaveClass("text-static-black");
+    expect(claimTicketButton).toHaveClass("underline");
+    expect(claimTicketButton).toHaveClass("text-base");
+    expect(claimTicketButton).toHaveClass("font-normal");
+    expect(claimTicketButton).toHaveClass("cursor-pointer");
   });
 });
