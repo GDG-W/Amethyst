@@ -1,6 +1,10 @@
-#!/usr/bin/env sh
+#!/bin/sh
 
-# npm test
-npx lint-staged
+export PATH="$PATH:/usr/local/bin"
 
-echo "🚨 Husky pre-commit is running"
+echo "🚨 Husky pre-commit is starting"
+
+npx lint-staged || exit 1
+npm test || exit 1
+
+echo "✅ Pre-commit passed"
