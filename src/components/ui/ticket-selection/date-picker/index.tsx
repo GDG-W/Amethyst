@@ -25,7 +25,7 @@ const DateButton = ({
       disabled={isDisabled}
       className={`
         group relative w-full py-1 sm:py-2 px-2 sm:px-3 transition-all duration-200 
-        flex flex-col items-center justify-center min-h-[60px] sm:min-h-[50px]
+        flex flex-col items-center justify-center min-h-[50px]
         ${
           isSelected
             ? "bg-[#F6B51E] text-white rounded-md"
@@ -37,14 +37,10 @@ const DateButton = ({
     >
       <div className='flex items-center gap-1 sm:gap-2 w-full justify-center'>
         <div className='flex flex-col items-center'>
-          <div
-            className={`text-xs sm:text-sm mb-0.5 ${isSelected ? "text-white" : "text-text-disabled-300"}`}
-          >
+          <div className={`text-sm mb-0.5 ${isSelected ? "text-white" : "text-text-disabled-300"}`}>
             {date.dayName}
           </div>
-          <div
-            className={`text-lg sm:text-base md:text-lg font-medium ${isSelected ? "text-white" : "text-[#171717]"}`}
-          >
+          <div className={`text-base font-medium ${isSelected ? "text-white" : "text-[#171717]"}`}>
             {date.day}
           </div>
         </div>
@@ -126,7 +122,7 @@ const DatePicker = ({
       <div className='flex items-center justify-center gap-2 mb-4 bg-[#F7F7F7] p-2 sm:p-3 rounded-sm border border-dashed border-[#EBEBEB]'>
         <h3 className='text-sm sm:text-base font-medium text-[#5C5C5C]'>November 2025</h3>
         {selectedDates.length > 0 && (
-          <div className='px-2 sm:px-3 py-1 bg-white border border-[#E2E4E9] rounded-sm text-xs sm:text-sm text-[#525866]'>
+          <div className='px-2 bg-white border border-[#E2E4E9] rounded-sm text-xs sm:text-sm text-[#525866]'>
             {getSelectionCount()} Selected
           </div>
         )}
