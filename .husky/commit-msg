@@ -1,6 +1,5 @@
 #!/bin/sh
 
-# Ensure npx is in the PATH
 export PATH="$PATH:/usr/local/bin"
 
 echo "🚨 Husky commit-msg hook is running"
