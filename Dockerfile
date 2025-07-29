@@ -1,5 +1,5 @@
-# Use Node.js as the base image
-FROM node:18.17.0-alpine
+# Use Node.js as the base image (updated to compatible version)
+FROM node:20-alpine
 
 # Set the working directory in the container
 WORKDIR /app
@@ -8,7 +8,7 @@ WORKDIR /app
 COPY package.json package-lock.json* ./
 
 # Install dependencies
-RUN npm ci --only=production
+RUN npm ci
 
 # Copy the app's source code to the container
 COPY . .
