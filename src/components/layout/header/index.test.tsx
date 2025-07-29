@@ -4,7 +4,13 @@ import React from "react";
 
 import Header from ".";
 
-jest.mock("@/components/icons/logo", () => () => <div data-testid='logo'>Logo</div>);
+jest.mock(
+  "@/components/icons/logo",
+  () =>
+    function MockLogo() {
+      return <div data-testid='logo'>Logo</div>;
+    },
+);
 
 describe("Header", () => {
   it("renders the header container", () => {
