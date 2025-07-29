@@ -1,6 +1,7 @@
 "use client";
 
 import Header from "@/components/layout/header";
+import Breadcrumb from "@/components/ui/breadcrumb";
 import Checkbox from "@/components/ui/inputs/checkbox";
 import TextField from "@/components/ui/inputs/text-field";
 import SuccessCard from "@/components/ui/success-card";
@@ -12,6 +13,8 @@ export default function Home() {
         title='Purchase Successful'
         summary='You have successfully purchased tickets for DevFest Lagos 2025. Check your email for your ticket ID.'
       />
+
+      <Breadcrumb breadcrumbList={breadcrumbList} />
 
       <div className='w-128'>
         <TextField
@@ -36,3 +39,18 @@ export default function Home() {
     </div>
   );
 }
+
+const breadcrumbList = [
+  {
+    name: "Home Page",
+    link: "/",
+  },
+  {
+    name: "Buy Ticket",
+    link: "/buy-ticket",
+  },
+  {
+    name: "Buyer Information",
+    link: "/buyer-information",
+  },
+];
