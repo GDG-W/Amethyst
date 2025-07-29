@@ -455,7 +455,7 @@
 }
 
 @utility shadow-unchecked {
-  box-shadow: 0px 2px 2px 0px #1B1C1D1F;
+  box-shadow: 0px 2px 2px 0px #1b1c1d1f;
 }
 
 @utility shadow-checked {

@@ -1,7 +1,9 @@
 import React from "react";
-import { TextFieldProps } from "../types";
+
 import { cn } from "@/lib/utils";
 import AlertIcon from "@/components/icons/alert";
+
+import { TextFieldProps } from "../types";
 
 const TextField = ({
   id,
@@ -13,7 +15,7 @@ const TextField = ({
   onChange,
   value,
   error,
-  required,
+  // required,
   ...inputProps
 }: TextFieldProps) => {
   const hasError = Boolean(error);
