@@ -5,7 +5,7 @@ import Link from "next/link";
 
 import Logo from "@/components/icons/logo";
 
-const Header = () => {
+function Header() {
   return (
     <header className='flex justify-center bg-white border border-bg-surface-800 px-5 py-4 md:px-10 md:py-5 max-w-[800px] mx-auto rounded-full'>
       <nav className='flex justify-between items-center w-full'>
@@ -19,6 +19,6 @@ const Header = () => {
       </nav>
     </header>
   );
-};
+}
 
 export default Header;
