@@ -4,18 +4,17 @@ FROM node:18.17.0-alpine
 # Set the working directory in the container
 WORKDIR /app
 
-# Copy package.json and npm.lock to the container
-COPY package.json npm.lock ./
+# Copy package.json and package-lock.json to the container
+COPY package.json package-lock.json* ./
 
 # Install dependencies
-RUN npm install --frozen-lockfile
+RUN npm ci --only=production
 
 # Copy the app's source code to the container
 COPY . .
 
 # Build the Next app
-RUN npm build
+RUN npm run build
 
 # Serve the production build
 CMD ["npm", "start"]
-
