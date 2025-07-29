@@ -1,5 +1,6 @@
 "use client";
 
+import Header from "@/components/layout/header";
 import Checkbox from "@/components/ui/inputs/checkbox";
 import TextField from "@/components/ui/inputs/text-field";
 import SuccessCard from "@/components/ui/success-card";
@@ -30,6 +31,8 @@ export default function Home() {
         checked={false}
         onChange={() => {}}
       />
+
+      <Header />
     </div>
   );
 }
