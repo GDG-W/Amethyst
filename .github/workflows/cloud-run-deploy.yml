@@ -1,8 +1,5 @@
 name: Deploy to Cloud Run
 
-env:
-  SERVICE_NAME: next-app-project
-
 on:
   push:
     branches:
@@ -17,7 +14,18 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4 # Updated to latest version
+        uses: actions/checkout@v4
+
+      - name: Set service name and image tag
+        id: service-name
+        run: |
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            echo "SERVICE_NAME=next-app-project-pr-${{ github.event.number }}" >> $GITHUB_ENV
+            echo "IMAGE_TAG=pr-${{ github.event.number }}" >> $GITHUB_ENV
+          else
+            echo "SERVICE_NAME=next-app-project" >> $GITHUB_ENV
+            echo "IMAGE_TAG=latest" >> $GITHUB_ENV
+          fi
 
       - name: Google Cloud Auth
         uses: "google-github-actions/auth@v2"
@@ -34,13 +42,32 @@ jobs:
 
       - name: Build and Push Docker Image
         run: |
-          docker build -t gcr.io/${{ secrets.GCP_PROJECT_ID }}/${{ secrets.DOCKER_IMAGE_NAME }}:latest .
-          docker push gcr.io/${{ secrets.GCP_PROJECT_ID }}/${{ secrets.DOCKER_IMAGE_NAME }}:latest
+          docker build -t gcr.io/${{ secrets.GCP_PROJECT_ID }}/${{ secrets.DOCKER_IMAGE_NAME }}:${{ env.IMAGE_TAG }} .
+          docker push gcr.io/${{ secrets.GCP_PROJECT_ID }}/${{ secrets.DOCKER_IMAGE_NAME }}:${{ env.IMAGE_TAG }}
 
       - name: Deploy to Cloud Run
         run: |
-          gcloud run deploy $SERVICE_NAME \
-            --image gcr.io/${{ secrets.GCP_PROJECT_ID }}/${{ secrets.DOCKER_IMAGE_NAME }}:latest \
+          gcloud run deploy ${{ env.SERVICE_NAME }} \
+            --image gcr.io/${{ secrets.GCP_PROJECT_ID }}/${{ secrets.DOCKER_IMAGE_NAME }}:${{ env.IMAGE_TAG }} \
             --platform managed \
             --region us-central1 \
             --allow-unauthenticated
+
+      - name: Get Cloud Run service URL
+        if: github.event_name == 'pull_request'
+        id: get-url
+        run: |
+          SERVICE_URL=$(gcloud run services describe ${{ env.SERVICE_NAME }} --region=us-central1 --format='value(status.url)')
+          echo "SERVICE_URL=$SERVICE_URL" >> $GITHUB_ENV
+
+      - name: Comment PR with preview URL
+        if: github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: `🚀 **Preview deployment ready!**\n\n[📱 View Preview](${{ env.SERVICE_URL }})\n\n**Service:** \`${{ env.SERVICE_NAME }}\`\n**Image:** \`gcr.io/${{ secrets.GCP_PROJECT_ID }}/${{ secrets.DOCKER_IMAGE_NAME }}:${{ env.IMAGE_TAG }}\`\n\n---\n*This preview will be automatically cleaned up when the PR is closed.*`
+            });
