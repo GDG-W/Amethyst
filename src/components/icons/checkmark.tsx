@@ -1,4 +1,3 @@
-
 const Checkmark: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
   <svg viewBox='0 0 20 20' fill='currentColor' {...props}>
     <path
