@@ -35,11 +35,19 @@ export default function Home() {
 
       <Header />
 
-      <div className="max-w-[350px]">
-        <Card numbered number={1} title="Select Date(s)">
+      <div className='max-w-[350px]'>
+        <Card
+          numbered
+          number={1}
+          title='Attendee'
+          subtitle='Kindly Press “Enter” key after entering each email to add it to the list.'
+        >
           <div></div>
         </Card>
-        <Card numbered number={2} title="Ticket Details">
+        <Card numbered number={2} title='Ticket Details'>
+          <div></div>
+        </Card>
+        <Card number={2} title='Ticket Details'>
           <div></div>
         </Card>
       </div>
