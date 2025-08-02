@@ -14,6 +14,15 @@ describe("Card", () => {
     expect(screen.getByText("Hello, world!")).toBeInTheDocument();
   });
 
+  it("renders the subtitle when subtitle is provided", () => {
+    render(
+      <Card title='Numbered Card' subtitle="Hello there" numbered number={1}>
+        Numbered content
+      </Card>,
+    );
+    expect(screen.getByText("Hello there")).toBeInTheDocument();
+  });
+
   it("renders the number when numbered is true", () => {
     render(
       <Card title='Numbered Card' numbered number={1}>

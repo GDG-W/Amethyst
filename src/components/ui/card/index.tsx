@@ -3,13 +3,21 @@ import clsx from "clsx";
 
 type CardProps = {
   title: string;
+  subtitle?: string;
   children: React.ReactNode;
   numbered?: boolean;
   number?: number;
   className?: string;
 };
 
-const Card: React.FC<CardProps> = ({ title, children, numbered = false, number, className }) => {
+const Card: React.FC<CardProps> = ({
+  title,
+  children,
+  numbered = false,
+  number,
+  className,
+  subtitle,
+}) => {
   return (
     <div
       className={clsx(
@@ -24,7 +32,10 @@ const Card: React.FC<CardProps> = ({ title, children, numbered = false, number, 
             {number}
           </div>
         )}
-        <h2 className='font-medium text-black tracking-tight'>{title}</h2>
+        <div>
+          <h2 className='font-medium text-black tracking-tight'>{title}</h2>
+          <p className='text-sub-600 tracking-tight italic text-[10px]'>{subtitle}</p>
+        </div>
       </div>
       <div>{children}</div>
     </div>
