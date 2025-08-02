@@ -2,6 +2,7 @@
 
 import Header from "@/components/layout/header";
 import Breadcrumb from "@/components/ui/breadcrumb";
+import Card from "@/components/ui/card";
 import Checkbox from "@/components/ui/inputs/checkbox";
 import TextField from "@/components/ui/inputs/text-field";
 import SuccessCard from "@/components/ui/success-card";
@@ -36,6 +37,23 @@ export default function Home() {
       />
 
       <Header />
+
+      <div className='max-w-[350px]'>
+        <Card
+          numbered
+          number={1}
+          title='Attendee'
+          subtitle='Kindly Press “Enter” key after entering each email to add it to the list.'
+        >
+          <div></div>
+        </Card>
+        <Card numbered number={2} title='Ticket Details'>
+          <div></div>
+        </Card>
+        <Card number={2} title='Ticket Details'>
+          <div></div>
+        </Card>
+      </div>
     </div>
   );
 }
