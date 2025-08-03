@@ -7,12 +7,12 @@ on:
   pull_request:
     branches:
       - main
-  
+
 permissions:
   contents: read
   pull-requests: write
   issues: write
-  
+
 jobs:
   dockerize-and-deploy:
     runs-on: ubuntu-latest

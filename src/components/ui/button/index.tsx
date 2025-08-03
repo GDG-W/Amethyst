@@ -18,12 +18,11 @@ const Button = ({ children, disabled, variant, loading = false, ...rest }: Butto
   return (
     <button
       disabled={isDisabled}
-      className={`flex items-center justify-center gap-2 px-3 py-3 w-full min-w-30 rounded-full capitalize hover:opacity-80 disabled:bg-bg-soft-200 disabled:text-white disabled:cursor-not-allowed ${buttonStyles.variants[buttonVariant]}
-      `}
+      className={`disabled:bg-bg-soft-200 flex w-full min-w-30 items-center justify-center gap-2 rounded-full px-3 py-3 capitalize hover:opacity-80 disabled:cursor-not-allowed disabled:text-white ${buttonStyles.variants[buttonVariant]} `}
       {...rest}
     >
       {loading ? (
-        <span className='h-5 w-5 border-2 border-white border-t-transparent rounded-full animate-spin'></span>
+        <span className='h-5 w-5 animate-spin rounded-full border-2 border-white border-t-transparent'></span>
       ) : (
         children
       )}

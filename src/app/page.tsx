@@ -8,7 +8,7 @@ import SuccessCard from "@/components/ui/success-card";
 
 export default function Home() {
   return (
-    <div className='w-[700px] m-auto space-y-3'>
+    <div className='m-auto w-[700px] space-y-3'>
       <SuccessCard
         title='Purchase Successful'
         summary='You have successfully purchased tickets for DevFest Lagos 2025. Check your email for your ticket ID.'
