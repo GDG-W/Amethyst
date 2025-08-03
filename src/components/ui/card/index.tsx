@@ -1,76 +1,45 @@
-import * as React from "react";
+import React from "react";
+import clsx from "clsx";
 
-import { cn } from "@/lib/utils";
-
-function Card({ className, ...props }: React.ComponentProps<"div">) {
-  return (
-    <div
-      data-slot='card'
-      className={cn(
-        "w-full font-[inter] leading-none bg-(--background) border border-solid border-(--stroke-soft-200) rounded-lg",
-        className,
-      )}
-      {...props}
-    />
-  );
-}
-
-function CardHeader({ className, ...props }: React.ComponentProps<"div">) {
-  return (
-    <div
-      data-slot='card-header'
-      className={cn(
-        "p-4 flex justify-start items-center gap-x-4 border-b border-solid border-(--stroke-soft-200)",
-        className,
-      )}
-      {...props}
-    />
-  );
-}
-
-function CardTitle({ className, ...props }: React.ComponentProps<"div">) {
-  return (
-    <div
-      data-slot='card-title'
-      className={cn("font-medium text-base leading-[100%] -tracking-[0.8px]", className)}
-      {...props}
-    />
-  );
-}
-
-function CardDescription({ className, ...props }: React.ComponentProps<"div">) {
-  return (
-    <div
-      data-slot='card-description'
-      className={cn("text-muted-foreground text-sm", className)}
-      {...props}
-    />
-  );
-}
-
-function CardAction({ className, ...props }: React.ComponentProps<"div">) {
-  return <div data-slot='card-action' className={cn("", className)} {...props} />;
-}
-
-function CardContent({ className, ...props }: React.ComponentProps<"div">) {
-  return <div data-slot='card-content' className={cn("w-full px-4 py-5", className)} {...props} />;
-}
-
-function CardItem({ className, ...props }: React.ComponentProps<"li">) {
-  return <li data-slot='card-item' className={cn("w-full", className)} {...props} />;
-}
-
-function CardFooter({ className, ...props }: React.ComponentProps<"div">) {
-  return <div data-slot='card-footer' className={cn("", className)} {...props} />;
-}
-
-export {
-  Card,
-  CardHeader,
-  CardFooter,
-  CardTitle,
-  CardAction,
-  CardDescription,
-  CardContent,
-  CardItem,
+type CardProps = {
+  title: string;
+  subtitle?: string;
+  children: React.ReactNode;
+  numbered?: boolean;
+  number?: number;
+  className?: string;
 };
+
+const Card: React.FC<CardProps> = ({
+  title,
+  children,
+  numbered = false,
+  number,
+  className,
+  subtitle,
+}) => {
+  return (
+    <div
+      className={clsx(
+        "border-soft-200 min-h-[160px] w-full min-w-[400px] rounded-[8px] border bg-white",
+        "flex flex-col",
+        className,
+      )}
+    >
+      <div className='border-soft-200 flex items-center gap-4 border-b p-4'>
+        {numbered && typeof number === "number" && (
+          <div className='bg-strong-950 flex h-6 w-6 items-center justify-center rounded p-4 text-sm font-semibold text-white'>
+            {number}
+          </div>
+        )}
+        <div>
+          <h2 className='font-medium tracking-tight text-black'>{title}</h2>
+          <p className='text-sub-600 text-[10px] tracking-tight italic'>{subtitle}</p>
+        </div>
+      </div>
+      <div>{children}</div>
+    </div>
+  );
+};
+
+export default Card;
