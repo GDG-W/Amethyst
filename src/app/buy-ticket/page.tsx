@@ -4,7 +4,7 @@ export default function page() {
   return (
     <div>
       <h1>Hello</h1>
-      <Breadcrumb breadcrumbList={breadcrumbList} />
+      <Breadcrumb breadcrumbList={breadcrumbList} activeIndex={2} handleClick={() => {}} />
     </div>
   );
 }
