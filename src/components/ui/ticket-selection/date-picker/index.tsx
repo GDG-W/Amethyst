@@ -1,6 +1,8 @@
 import React from "react";
 import { Check } from "lucide-react";
 
+import { TicketType } from "@/types/ticket";
+
 type DateType = {
   id: string;
   day: number;
@@ -23,21 +25,17 @@ const DateButton = ({
     <button
       onClick={() => !isDisabled && onClick(date)}
       disabled={isDisabled}
-      className={`
-        group relative w-full py-1 sm:py-2 px-2 sm:px-3 transition-all duration-200 
-        flex flex-col items-center justify-center min-h-[50px]
-        ${
-          isSelected
-            ? "bg-[#F6B51E] text-white rounded-md"
-            : isDisabled
-              ? "opacity-40 cursor-not-allowed"
-              : "bg-white border text-gray-900 hover:border-[#F6B51E] rounded-md"
-        }
-      `}
+      className={`group relative flex min-h-[50px] w-full flex-col items-center justify-center px-2 py-1 transition-all duration-200 sm:px-3 sm:py-2 ${
+        isSelected
+          ? "rounded-md bg-[#F6B51E] text-white"
+          : isDisabled
+            ? "cursor-not-allowed opacity-40"
+            : "rounded-md border bg-white text-gray-900 hover:border-[#F6B51E]"
+      } `}
     >
-      <div className='flex items-center gap-1 sm:gap-2 w-full justify-center'>
+      <div className='flex w-full items-center justify-center gap-1 sm:gap-2'>
         <div className='flex flex-col items-center'>
-          <div className={`text-sm mb-0.5 ${isSelected ? "text-white" : "text-text-disabled-300"}`}>
+          <div className={`mb-0.5 text-sm ${isSelected ? "text-white" : "text-text-disabled-300"}`}>
             {date.dayName}
           </div>
           <div className={`text-base font-medium ${isSelected ? "text-white" : "text-[#171717]"}`}>
@@ -45,15 +43,15 @@ const DateButton = ({
           </div>
         </div>
 
-        <div className='flex items-center ml-1 sm:ml-0'>
+        <div className='ml-1 flex items-center sm:ml-0'>
           {isSelected && (
-            <div className='bg-white rounded-full p-0.5 sm:p-1 transition-opacity duration-200'>
-              <Check className='w-2.5 h-2.5 sm:w-3 sm:h-3 text-[#F6B51E]' />
+            <div className='rounded-full bg-white p-0.5 transition-opacity duration-200 sm:p-1'>
+              <Check className='h-2.5 w-2.5 text-[#F6B51E] sm:h-3 sm:w-3' />
             </div>
           )}
           {!isSelected && !isDisabled && (
-            <div className='bg-[#E2E4E9] rounded-full p-0.5 sm:p-1 opacity-0 group-hover:opacity-100 transition-opacity duration-200'>
-              <Check className='w-2.5 h-2.5 sm:w-3 sm:h-3 text-white' />
+            <div className='rounded-full bg-[#E2E4E9] p-0.5 opacity-0 transition-opacity duration-200 group-hover:opacity-100 sm:p-1'>
+              <Check className='h-2.5 w-2.5 text-white sm:h-3 sm:w-3' />
             </div>
           )}
         </div>
@@ -63,12 +61,12 @@ const DateButton = ({
 };
 
 const DatePicker = ({
-  mode = "single",
+  mode = "standard",
   selectedDates = [],
   onSelectionChange,
   className = "",
 }: {
-  mode?: "single" | "multiple" | "pro";
+  mode?: TicketType;
   selectedDates?: string[];
   onSelectionChange?: (selectedDates: string[]) => void;
   className?: string;
@@ -85,11 +83,8 @@ const DatePicker = ({
   const handleDateClick = (date: { id: string; dayName: string }) => {
     let newSelection = [...selectedDates];
 
-    if (mode === "single") {
-      // Single mode: only one date can be selected
-      newSelection = selectedDates.includes(date.id) ? [] : [date.id];
-    } else if (mode === "multiple") {
-      // Multiple mode: toggle date selection
+    if (mode === "standard") {
+      // Standard mode: toggle date selection
       if (selectedDates.includes(date.id)) {
         newSelection = selectedDates.filter((id) => id !== date.id);
       } else {
@@ -119,10 +114,10 @@ const DatePicker = ({
   return (
     <div className={`${className}`}>
       {/* Month Header with Selection Count */}
-      <div className='flex items-center justify-center gap-2 mb-4 bg-[#F7F7F7] p-2 sm:p-3 rounded-sm border border-dashed border-[#EBEBEB]'>
-        <h3 className='text-sm sm:text-base font-medium text-[#5C5C5C]'>November 2025</h3>
+      <div className='mb-4 flex items-center justify-center gap-2 rounded-sm border border-dashed border-[#EBEBEB] bg-[#F7F7F7] p-2 sm:p-3'>
+        <h3 className='text-sm font-medium text-[#5C5C5C] sm:text-base'>November 2025</h3>
         {selectedDates.length > 0 && (
-          <div className='px-2 bg-white border border-[#E2E4E9] rounded-sm text-xs sm:text-sm text-[#525866]'>
+          <div className='rounded-sm border border-[#E2E4E9] bg-white px-2 text-xs text-[#525866] sm:text-sm'>
             {getSelectionCount()} Selected
           </div>
         )}
