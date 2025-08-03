@@ -1,12 +1,29 @@
 "use client";
 
+import { useState } from "react";
+
 import Header from "@/components/layout/header";
 import Card from "@/components/ui/card";
 import Checkbox from "@/components/ui/inputs/checkbox";
+import MultiInput from "@/components/ui/inputs/multi-input";
+import Select from "@/components/ui/inputs/select";
 import TextField from "@/components/ui/inputs/text-field";
 import SuccessCard from "@/components/ui/success-card";
 
+const options = [
+  { label: "Option 1", value: "one" },
+  { label: "Option 2", value: "two" },
+  { label: "Option 3", value: "three" },
+];
+
 export default function Home() {
+  const [selected, setSelected] = useState("");
+  const [emails, setEmails] = useState<string[]>([]);
+  const isValidEmail = (email: string) => {
+    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return regex.test(email) ? null : "Invalid email address";
+  };
+
   return (
     <div className='w-[700px] m-auto space-y-3'>
       <SuccessCard
@@ -14,7 +31,7 @@ export default function Home() {
         summary='You have successfully purchased tickets for DevFest Lagos 2025. Check your email for your ticket ID.'
       />
 
-      <div className='w-128'>
+      <div className='w-128 flex flex-col gap-2 mb-12'>
         <TextField
           label='Label'
           name='email'
@@ -23,6 +40,23 @@ export default function Home() {
           onChange={() => {}}
           // error='Name must be more than 2 characters'
           helperText="We'll never share your details."
+        />
+
+        <Select
+          label='Role'
+          options={options}
+          value={selected}
+          onChange={setSelected}
+          placeholder='Select your level of experience'
+        />
+
+        <MultiInput
+          label='Email Addresses'
+          value={emails}
+          onChange={setEmails}
+          placeholder='Enter email addresses'
+          validate={isValidEmail}
+          error='This field is required'
         />
       </div>
 
