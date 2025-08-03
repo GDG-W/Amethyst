@@ -1,60 +1,52 @@
 import React from "react";
-import { render } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 
-import {
-  Card,
-  CardHeader,
-  CardFooter,
-  CardTitle,
-  CardAction,
-  CardDescription,
-  CardContent,
-  CardItem,
-} from "@/components/ui/card";
+import Card from ".";
 
-const renderWithText = (Component: React.ElementType, text: string, testId: string = "") => {
-  const { getByText, container } = render(<Component>{text}</Component>);
-  expect(getByText(text)).toBeInTheDocument();
-  if (testId) {
-    expect(container.querySelector(`[data-slot="${testId}"]`)).toBeInTheDocument();
-  }
-};
-
-describe("Card component suite", () => {
-  it("renders Card", () => {
-    renderWithText(Card, "Card content", "card");
+describe("Card", () => {
+  it("renders the title", () => {
+    render(<Card title='My Card Title'>Content</Card>);
+    expect(screen.getByText("My Card Title")).toBeInTheDocument();
   });
 
-  it("renders CardHeader", () => {
-    renderWithText(CardHeader, "Header", "card-header");
+  it("renders the children content", () => {
+    render(<Card title='With Content'>Hello, world!</Card>);
+    expect(screen.getByText("Hello, world!")).toBeInTheDocument();
   });
 
-  it("renders CardFooter", () => {
-    renderWithText(CardFooter, "Footer", "card-footer");
+  it("renders the subtitle when subtitle is provided", () => {
+    render(
+      <Card title='Numbered Card' subtitle='Hello there' numbered number={1}>
+        Numbered content
+      </Card>,
+    );
+    expect(screen.getByText("Hello there")).toBeInTheDocument();
   });
 
-  it("renders CardTitle", () => {
-    renderWithText(CardTitle, "Title", "card-title");
+  it("renders the number when numbered is true", () => {
+    render(
+      <Card title='Numbered Card' numbered number={1}>
+        Numbered content
+      </Card>,
+    );
+    expect(screen.getByText("1")).toBeInTheDocument();
   });
 
-  it("renders CardAction", () => {
-    renderWithText(CardAction, "Action", "card-action");
+  it("does not render the number when numbered is false", () => {
+    render(
+      <Card title='Unnumbered Card' number={2}>
+        No number shown
+      </Card>,
+    );
+    expect(screen.queryByText("2")).not.toBeInTheDocument();
   });
 
-  it("renders CardDescription", () => {
-    renderWithText(CardDescription, "Description", "card-description");
-  });
-
-  it("renders CardContent", () => {
-    renderWithText(CardContent, "Content", "card-content");
-  });
-
-  it("renders CardItem", () => {
-    renderWithText(CardItem, "Item", "card-item");
-  });
-
-  it("applies className overrides", () => {
-    const { container } = render(<Card className='custom-class'>Test</Card>);
+  it("applies custom className", () => {
+    const { container } = render(
+      <Card title='Styled Card' className='custom-class'>
+        Styled content
+      </Card>,
+    );
     expect(container.firstChild).toHaveClass("custom-class");
   });
 });
