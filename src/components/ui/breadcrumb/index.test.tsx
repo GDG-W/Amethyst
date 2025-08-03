@@ -1,61 +1,74 @@
 import React from "react";
-import { usePathname } from "next/navigation";
-import { render, screen } from "@testing-library/react";
+import { render, screen, fireEvent } from "@testing-library/react";
 
-import Breadcrumb from "./";
-import "@testing-library/jest-dom";
-
-// Mock usePathname from next/navigation
-jest.mock("next/navigation", () => ({
-  usePathname: jest.fn(),
-}));
+import Breadcrumb from "./index";
 
 describe("Breadcrumb component", () => {
   const breadcrumbList = [
-    { name: "Home Page", link: "/" },
-    { name: "Buy Ticket", link: "/buy" },
-    { name: "Buyer Information", link: "/buyer" },
+    { name: "Home", link: "/" },
+    { name: "Shop", link: "/shop" },
+    { name: "Details", link: "/details" },
   ];
 
-  afterEach(() => {
-    jest.clearAllMocks();
+  const mockHandleClick = jest.fn();
+
+  beforeEach(() => {
+    mockHandleClick.mockClear();
   });
 
-  it("highlights only the first breadcrumb when path is '/'", () => {
-    (usePathname as jest.Mock).mockReturnValue("/");
+  it("renders all breadcrumb items", () => {
+    render(
+      <Breadcrumb breadcrumbList={breadcrumbList} activeIndex={1} handleClick={mockHandleClick} />,
+    );
 
-    render(<Breadcrumb breadcrumbList={breadcrumbList} />);
-
-    expect(screen.getByText("Home Page")).toHaveClass("!text-away-base");
-    expect(screen.getByText("Buy Ticket")).not.toHaveClass("!text-away-base");
-    expect(screen.getByText("Buyer Information")).not.toHaveClass("!text-away-base");
-
-    const separators = screen.queryAllByTestId("separator");
-    separators.forEach((sep) => {
-      expect(sep).not.toHaveClass("!text-away-base");
+    breadcrumbList.forEach((item) => {
+      expect(screen.getByText(item.name)).toBeInTheDocument();
     });
   });
 
-  it("highlights the second item and its separator when path is '/buy'", () => {
-    (usePathname as jest.Mock).mockReturnValue("/buy");
+  it("renders correct number of chevron icons", () => {
+    render(
+      <Breadcrumb breadcrumbList={breadcrumbList} activeIndex={2} handleClick={mockHandleClick} />,
+    );
 
-    render(<Breadcrumb breadcrumbList={breadcrumbList} />);
-
-    expect(screen.getByText("Buy Ticket")).toHaveClass("!text-away-base");
-
-    const separators = screen.getAllByTestId("separator");
-    expect(separators[0]).toHaveClass("!text-away-base"); // Before Buy Ticket
-    expect(separators[1]).not.toHaveClass("!text-away-base"); // Before Buyer Info
+    // There should be 2 chevrons between 3 items (after the first)
+    const chevrons = screen.getAllByTestId("chevron-icon");
+    expect(chevrons).toHaveLength(2);
   });
 
-  it("highlights the third item and its separator when path is '/buyer'", () => {
-    (usePathname as jest.Mock).mockReturnValue("/buyer");
+  it("applies active class only to the active breadcrumb", () => {
+    render(
+      <Breadcrumb breadcrumbList={breadcrumbList} activeIndex={2} handleClick={mockHandleClick} />,
+    );
 
-    render(<Breadcrumb breadcrumbList={breadcrumbList} />);
+    const activeItem = screen.getByText("Details");
+    const inactiveItem = screen.getByText("Shop");
 
-    expect(screen.getByText("Buyer Information")).toHaveClass("!text-away-base");
+    expect(activeItem).toHaveClass("text-away-base");
+    expect(inactiveItem).toHaveClass("text-soft-400");
+  });
 
-    const separators = screen.getAllByTestId("separator");
-    expect(separators[1]).toHaveClass("!text-away-base"); // Before Buyer Info
+  it("calls handleClick when any breadcrumb button is clicked", () => {
+    render(
+      <Breadcrumb breadcrumbList={breadcrumbList} activeIndex={0} handleClick={mockHandleClick} />,
+    );
+
+    const item = screen.getByText("Home");
+    fireEvent.click(item);
+
+    expect(mockHandleClick).toHaveBeenCalledTimes(1);
+  });
+
+  it("does not render chevron before the first item", () => {
+    render(
+      <Breadcrumb breadcrumbList={breadcrumbList} activeIndex={0} handleClick={mockHandleClick} />,
+    );
+
+    const firstItem = screen.getByText("Home");
+    const chevrons = screen.getAllByTestId("chevron-icon");
+
+    // Ensure chevrons are not rendered before first item
+    expect(firstItem.previousSibling).not.toBeInTheDocument();
+    expect(chevrons).toHaveLength(2); // only between items 1-2 and 2-3
   });
 });

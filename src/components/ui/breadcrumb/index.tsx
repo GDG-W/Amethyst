@@ -1,62 +1,47 @@
 "use client";
 import React from "react";
-import { usePathname } from "next/navigation";
-
-import {
-  BreadcrumbContainer,
-  BreadcrumbItem,
-  BreadcrumbLink,
-  BreadcrumbList,
-  BreadcrumbSeparator,
-} from "./parts";
+import { ChevronRight } from "lucide-react";
 
 type BreadcrumbProps = {
   breadcrumbList: { name: string; link: string }[];
-  separator?: React.ReactNode;
-  listClassName?: string;
-  itemClassName?: string;
-  linkClassName?: string;
-  separatorClassName?: string;
+  activeIndex: number;
+  handleClick: () => void;
 };
 
 export default function Breadcrumb({
   breadcrumbList,
-  separator,
-  listClassName,
-  itemClassName,
-  linkClassName,
-  separatorClassName,
+  activeIndex = 1,
+  handleClick,
 }: BreadcrumbProps) {
-  const pathname = usePathname();
   return (
-    <BreadcrumbContainer>
-      <BreadcrumbList className={listClassName}>
-        {breadcrumbList.map((item, index) => {
-          const isFirst = index === 0;
-          const isActive = (isFirst && pathname === "/") || (!isFirst && pathname === item.link);
-          const activateSeparator = isActive && !isFirst;
+    <nav
+      aria-label='breadcrumb'
+      data-slot='breadcrumb'
+      className='flex flex-wrap items-center gap-1'
+    >
+      {breadcrumbList.map((item, index) => {
+        const isFirst = index === 0;
+        const isActive = index === activeIndex;
+        const activateSeparator = isActive && !isFirst;
 
-          return (
-            <React.Fragment key={item.name}>
-              {!isFirst && (
-                <BreadcrumbSeparator
-                  className={`${separatorClassName} ${activateSeparator ? "!text-away-base" : ""}`}
-                >
-                  {separator}
-                </BreadcrumbSeparator>
-              )}
-              <BreadcrumbItem className={itemClassName}>
-                <BreadcrumbLink
-                  href={item.link}
-                  className={`${linkClassName} ${isActive ? "!text-away-base" : ""}`}
-                >
-                  {item.name}
-                </BreadcrumbLink>
-              </BreadcrumbItem>
-            </React.Fragment>
-          );
-        })}
-      </BreadcrumbList>
-    </BreadcrumbContainer>
+        return (
+          <React.Fragment key={item.name}>
+            {!isFirst && (
+              <ChevronRight
+                data-testid='chevron-icon'
+                strokeWidth={2}
+                className={`${activateSeparator ? "text-away-base" : "text-disabled-300"} size-5 [&>svg]:size-4`}
+              />
+            )}
+            <button
+              onClick={handleClick}
+              className={`${isActive ? "text-away-base" : "text-soft-400"} hover:text-away-base label-4 cursor-pointer`}
+            >
+              {item.name}
+            </button>
+          </React.Fragment>
+        );
+      })}
+    </nav>
   );
 }
