@@ -51,7 +51,7 @@ const TextField = ({
   };
 
   return (
-    <div className='mb-4 w-full'>
+    <div className='w-full'>
       <label htmlFor={id} className='block font-medium mb-2 label-3 tracking-tight'>
         <span className='mr-2'>{label}</span>
         {extraLabel && <span className='text-sm text-gray-500'>{extraLabel}</span>}
