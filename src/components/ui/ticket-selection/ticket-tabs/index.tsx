@@ -12,15 +12,11 @@ const Tab: React.FC<TabProps> = ({ children, isActive, onClick, disabled = false
     <button
       onClick={onClick}
       disabled={disabled}
-      className={`
-        px-2 md:px-4 py-2 text-sm font-medium rounded-md transition-colors flex-1 
-        ${
-          isActive
-            ? "bg-white text-black shadow-sm shadow-[#0E121B08] border border-[#EBEBEB]"
-            : "bg-transparent text-[#A3A3A3] hover:text-gray-700"
-        }
-        ${disabled ? "opacity-50 cursor-not-allowed" : "cursor-pointer"}
-      `}
+      className={`flex-1 rounded-md px-2 py-2 text-sm font-medium transition-colors md:px-4 ${
+        isActive
+          ? "border border-[#EBEBEB] bg-white text-black shadow-sm shadow-[#0E121B08]"
+          : "bg-transparent text-[#A3A3A3] hover:text-gray-700"
+      } ${disabled ? "cursor-not-allowed opacity-50" : "cursor-pointer"} `}
     >
       {children}
     </button>
@@ -43,7 +39,7 @@ interface TabsProps {
 const Tabs: React.FC<TabsProps> = ({ tabs = [], activeTab, onTabChange, className = "" }) => {
   return (
     <div
-      className={`bg-[#F7F7F7] px-2 md:px-3 py-2 flex gap-1 border border-y-[#EBEBEB] -mx-4 ${className}`}
+      className={`-mx-4 flex gap-1 border border-y-[#EBEBEB] bg-[#F7F7F7] px-2 py-2 md:px-3 ${className}`}
     >
       {tabs.map((tab, index) => (
         <Tab
