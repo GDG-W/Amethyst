@@ -58,54 +58,11 @@ describe("DatePicker", () => {
     });
   });
 
-  describe("Single Mode", () => {
-    it("selects a date when clicked", () => {
-      render(
-        <DatePicker mode='single' selectedDates={[]} onSelectionChange={mockOnSelectionChange} />,
-      );
-
-      fireEvent.click(screen.getByText("18"));
-      expect(mockOnSelectionChange).toHaveBeenCalledWith(["tue-18"]);
-    });
-
-    it("deselects a date when clicked again", () => {
-      render(
-        <DatePicker
-          mode='single'
-          selectedDates={["tue-18"]}
-          onSelectionChange={mockOnSelectionChange}
-        />,
-      );
-
-      fireEvent.click(screen.getByText("18"));
-      expect(mockOnSelectionChange).toHaveBeenCalledWith([]);
-    });
-
-    it("replaces selection when different date is clicked", () => {
-      render(
-        <DatePicker
-          mode='single'
-          selectedDates={["tue-18"]}
-          onSelectionChange={mockOnSelectionChange}
-        />,
-      );
-
-      fireEvent.click(screen.getByText("19"));
-      expect(mockOnSelectionChange).toHaveBeenCalledWith(["wed-19"]);
-    });
-
-    it("shows selected state styling", () => {
-      render(<DatePicker mode='single' selectedDates={["tue-18"]} />);
-      const selectedButton = screen.getByText("18").closest("button");
-      expect(selectedButton).toHaveClass("bg-[#F6B51E]", "text-white");
-    });
-  });
-
-  describe("Multiple Mode", () => {
+  describe("Standard Mode", () => {
     it("allows multiple date selection", () => {
       render(
         <DatePicker
-          mode='multiple'
+          mode='standard'
           selectedDates={["tue-18"]}
           onSelectionChange={mockOnSelectionChange}
         />,
@@ -118,7 +75,7 @@ describe("DatePicker", () => {
     it("removes date from selection when clicked again", () => {
       render(
         <DatePicker
-          mode='multiple'
+          mode='standard'
           selectedDates={["tue-18", "wed-19"]}
           onSelectionChange={mockOnSelectionChange}
         />,
@@ -129,7 +86,7 @@ describe("DatePicker", () => {
     });
 
     it("maintains multiple selected states", () => {
-      render(<DatePicker mode='multiple' selectedDates={["tue-18", "wed-19"]} />);
+      render(<DatePicker mode='standard' selectedDates={["tue-18", "wed-19"]} />);
 
       const button18 = screen.getByText("18").closest("button");
       const button19 = screen.getByText("19").closest("button");
@@ -254,7 +211,7 @@ describe("DatePicker", () => {
 
   describe("Callback Behavior", () => {
     it("does not crash when onSelectionChange is not provided", () => {
-      render(<DatePicker mode='single' />);
+      render(<DatePicker mode='standard' />);
 
       expect(() => {
         fireEvent.click(screen.getByText("18"));

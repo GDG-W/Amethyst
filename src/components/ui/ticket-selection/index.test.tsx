@@ -103,11 +103,11 @@ describe("TicketsSelection", () => {
       expect(header).toHaveTextContent("Select Date(s)");
     });
 
-    it("starts with single tab active", () => {
+    it("starts with standard tab active", () => {
       render(<TicketsSelection />);
 
-      const singleTab = screen.getByTestId("tab-single");
-      expect(singleTab).toHaveClass("active");
+      const standardTab = screen.getByTestId("tab-standard");
+      expect(standardTab).toHaveClass("active");
     });
 
     it("starts with no dates selected", () => {
@@ -121,31 +121,30 @@ describe("TicketsSelection", () => {
       render(<TicketsSelection />);
 
       const datePicker = screen.getByTestId("date-picker");
-      expect(datePicker).toHaveAttribute("data-mode", "single");
+      expect(datePicker).toHaveAttribute("data-mode", "standard");
       expect(datePicker).toHaveAttribute("data-selected", "");
       expect(datePicker).toHaveClass("w-full");
     });
   });
 
   describe("Tab Navigation", () => {
-    it("renders all three tabs", () => {
+    it("renders all two tabs", () => {
       render(<TicketsSelection />);
 
-      expect(screen.getByText("Single Ticket")).toBeInTheDocument();
-      expect(screen.getByText("Multiple Ticket")).toBeInTheDocument();
+      expect(screen.getByText("Standard Ticket")).toBeInTheDocument();
       expect(screen.getByText("Pro Ticket")).toBeInTheDocument();
     });
 
-    it("switches to multiple tab when clicked", () => {
+    it("switches to standard tab when clicked", () => {
       render(<TicketsSelection />);
 
-      fireEvent.click(screen.getByTestId("tab-multiple"));
+      fireEvent.click(screen.getByTestId("tab-standard"));
 
-      const multipleTab = screen.getByTestId("tab-multiple");
-      expect(multipleTab).toHaveClass("active");
+      const standardTab = screen.getByTestId("tab-standard");
+      expect(standardTab).toHaveClass("active");
 
       const datePicker = screen.getByTestId("date-picker");
-      expect(datePicker).toHaveAttribute("data-mode", "multiple");
+      expect(datePicker).toHaveAttribute("data-mode", "standard");
     });
 
     it("switches to pro tab when clicked", () => {
@@ -163,14 +162,9 @@ describe("TicketsSelection", () => {
     it("updates DatePicker mode when tab changes", () => {
       render(<TicketsSelection />);
 
-      // Start with single mode
+      // Start with standard mode
       let datePicker = screen.getByTestId("date-picker");
-      expect(datePicker).toHaveAttribute("data-mode", "single");
-
-      // Switch to multiple
-      fireEvent.click(screen.getByTestId("tab-multiple"));
-      datePicker = screen.getByTestId("date-picker");
-      expect(datePicker).toHaveAttribute("data-mode", "multiple");
+      expect(datePicker).toHaveAttribute("data-mode", "standard");
 
       // Switch to pro
       fireEvent.click(screen.getByTestId("tab-pro"));
@@ -207,37 +201,18 @@ describe("TicketsSelection", () => {
       expect(selectedCount).toHaveTextContent("1");
 
       // Click same tab again (should not clear)
-      fireEvent.click(screen.getByTestId("tab-single"));
+      fireEvent.click(screen.getByTestId("tab-standard"));
       selectedCount = screen.getByTestId("selected-count");
       expect(selectedCount).toHaveTextContent("1");
     });
   });
 
   describe("Tab Switching Clears Selection", () => {
-    it("clears selected dates when switching from single to multiple", () => {
+    it("clears selected dates when switching from standard to pro", () => {
       render(<TicketsSelection />);
 
-      // Select a date in single mode
-      fireEvent.click(screen.getByTestId("mock-date-select"));
-      let selectedCount = screen.getByTestId("selected-count");
-      expect(selectedCount).toHaveTextContent("1");
-
-      // Switch to multiple mode
-      fireEvent.click(screen.getByTestId("tab-multiple"));
-
-      // Selection should be cleared
-      selectedCount = screen.getByTestId("selected-count");
-      expect(selectedCount).toHaveTextContent("0");
-
-      const datePicker = screen.getByTestId("date-picker");
-      expect(datePicker).toHaveAttribute("data-selected", "");
-    });
-
-    it("clears selected dates when switching from multiple to pro", () => {
-      render(<TicketsSelection />);
-
-      // Switch to multiple and select dates
-      fireEvent.click(screen.getByTestId("tab-multiple"));
+      // Switch to standard and select dates
+      fireEvent.click(screen.getByTestId("tab-standard"));
       fireEvent.click(screen.getByTestId("mock-date-select"));
       let selectedCount = screen.getByTestId("selected-count");
       expect(selectedCount).toHaveTextContent("1");
@@ -250,7 +225,7 @@ describe("TicketsSelection", () => {
       expect(selectedCount).toHaveTextContent("0");
     });
 
-    it("clears selected dates when switching from pro to single", () => {
+    it("clears selected dates when switching from pro to standard", () => {
       render(<TicketsSelection />);
 
       // Switch to pro and select dates
@@ -259,8 +234,8 @@ describe("TicketsSelection", () => {
       let selectedCount = screen.getByTestId("selected-count");
       expect(selectedCount).toHaveTextContent("1");
 
-      // Switch to single mode
-      fireEvent.click(screen.getByTestId("tab-single"));
+      // Switch to standard mode
+      fireEvent.click(screen.getByTestId("tab-standard"));
 
       // Selection should be cleared
       selectedCount = screen.getByTestId("selected-count");
@@ -304,23 +279,22 @@ describe("TicketsSelection", () => {
       render(<TicketsSelection />);
 
       // Verify all expected tabs are rendered with correct labels
-      expect(screen.getByTestId("tab-single")).toHaveTextContent("Single Ticket");
-      expect(screen.getByTestId("tab-multiple")).toHaveTextContent("Multiple Ticket");
+      expect(screen.getByTestId("tab-standard")).toHaveTextContent("Standard Ticket");
       expect(screen.getByTestId("tab-pro")).toHaveTextContent("Pro Ticket");
     });
 
     it("maintains consistent state between tabs and DatePicker", () => {
       render(<TicketsSelection />);
 
-      // Switch to multiple mode
-      fireEvent.click(screen.getByTestId("tab-multiple"));
+      // Switch to standard mode
+      fireEvent.click(screen.getByTestId("tab-standard"));
 
       // Verify both components reflect the same state
-      const multipleTab = screen.getByTestId("tab-multiple");
+      const standardTab = screen.getByTestId("tab-standard");
       const datePicker = screen.getByTestId("date-picker");
 
-      expect(multipleTab).toHaveClass("active");
-      expect(datePicker).toHaveAttribute("data-mode", "multiple");
+      expect(standardTab).toHaveClass("active");
+      expect(datePicker).toHaveAttribute("data-mode", "standard");
     });
 
     it("passes header prop correctly to Card component", () => {
@@ -338,7 +312,7 @@ describe("TicketsSelection", () => {
       // This should not crash the component
       expect(() => {
         // Simulate clicking on existing tabs
-        fireEvent.click(screen.getByTestId("tab-single"));
+        fireEvent.click(screen.getByTestId("tab-standard"));
       }).not.toThrow();
     });
 
