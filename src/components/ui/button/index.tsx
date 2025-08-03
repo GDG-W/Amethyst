@@ -18,7 +18,7 @@ const Button = ({ children, disabled, variant, loading = false, ...rest }: Butto
   return (
     <button
       disabled={isDisabled}
-      className={`disabled:bg-bg-soft-200 flex w-full min-w-30 items-center justify-center gap-2 rounded-full px-3 py-3 capitalize hover:opacity-80 disabled:cursor-not-allowed disabled:text-white ${buttonStyles.variants[buttonVariant]} `}
+      className={`disabled:bg-soft-200 flex w-full min-w-30 items-center justify-center gap-2 rounded-full px-3 py-3 capitalize hover:opacity-80 disabled:cursor-not-allowed disabled:text-white ${buttonStyles.variants[buttonVariant]} `}
       {...rest}
     >
       {loading ? (
