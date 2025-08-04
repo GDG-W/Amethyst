@@ -20,9 +20,9 @@ export default function SelectField({
   id = "select-field",
 }: SelectFieldProps) {
   return (
-    <div className='flex flex-col gap-2 min-w-[400px]'>
+    <div className='flex min-w-[400px] flex-col gap-2'>
       {label && (
-        <label htmlFor={id} className='block font-medium label-3 tracking-tight'>
+        <label htmlFor={id} className='label-3 block font-medium tracking-tight'>
           <span className='mr-2'>{label}</span>
           {extraLabel && <span className='text-sm text-gray-500'>{extraLabel}</span>}
         </label>
@@ -31,28 +31,28 @@ export default function SelectField({
         <Select.Trigger
           id={id}
           aria-labelledby={id}
-          className='inline-flex items-center justify-between p-4 bg-white border border-soft-200 rounded-[8px] tracking-tight data-[placeholder]:text-soft-400'
+          className='border-soft-200 data-[placeholder]:text-soft-400 inline-flex items-center justify-between rounded-[8px] border bg-white p-4 tracking-tight'
         >
           <Select.Value placeholder={placeholder} />
           <Select.Icon>
-            <ChevronDown className='w-4 h-4 text-sub-600' />
+            <ChevronDown className='text-sub-600 h-4 w-4' />
           </Select.Icon>
         </Select.Trigger>
 
         <Select.Portal>
-          <Select.Content className='overflow-hidden bg-white border-[0.25px] border-sub-300 rounded-md shadow-lg mt-16'>
+          <Select.Content className='border-sub-300 mt-16 overflow-hidden rounded-md border-[0.25px] bg-white shadow-lg'>
             <Select.Viewport className=''>
               {options.map((option) => (
                 <Select.Item
                   key={option.value}
                   value={option.value}
                   className={cn(
-                    "flex items-center justify-between px-3.5 py-2.5 outline-none tracking-tight text-strong-950 hover:bg-away-lighter cursor-pointer",
+                    "text-strong-950 hover:bg-away-lighter flex cursor-pointer items-center justify-between px-3.5 py-2.5 tracking-tight outline-none",
                   )}
                 >
                   <Select.ItemText>{option.label}</Select.ItemText>
                   <Select.ItemIndicator>
-                    <Check className='w-4 h-4 text-sub-600' />
+                    <Check className='text-sub-600 h-4 w-4' />
                   </Select.ItemIndicator>
                 </Select.Item>
               ))}
@@ -62,8 +62,8 @@ export default function SelectField({
       </Select.Root>
 
       {error && (
-        <div className={"flex items-start gap-1 mt-1 tracking-tight text-red-500"}>
-          <AlertIcon className={"w-4 h-4 text-red-500"} />
+        <div className={"mt-1 flex items-start gap-1 tracking-tight text-red-500"}>
+          <AlertIcon className={"h-4 w-4 text-red-500"} />
           <p className='text-xs'>{error}</p>
         </div>
       )}

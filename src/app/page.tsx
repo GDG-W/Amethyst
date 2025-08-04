@@ -9,13 +9,15 @@ import MultiInput from "@/components/ui/inputs/multi-input";
 import Select from "@/components/ui/inputs/select";
 import TextField from "@/components/ui/inputs/text-field";
 import SuccessCard from "@/components/ui/success-card";
-
 const options = [
   { label: "Option 1", value: "one" },
   { label: "Option 2", value: "two" },
   { label: "Option 3", value: "three" },
 ];
 
+// after we're don using this page for testing
+//  redirect to buy page if user is not logged in
+//  and redirect to upgrade page if user is logged in
 export default function Home() {
   const [selected, setSelected] = useState("");
   const [emails, setEmails] = useState<string[]>([]);
