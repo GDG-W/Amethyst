@@ -25,13 +25,12 @@ export type TextFieldProps = {
 } & Omit<InputProps, "size">;
 
 export interface SelectFieldProps {
-  id: string;
+  id?: string;
   placeholder: string;
   options: OptionProp[];
   extraLabel?: string;
   isMulti?: boolean;
   isLoading?: boolean;
-  defaultValue?: OptionProp;
   label?: string;
   labelStyles?: React.CSSProperties;
   isSearchable?: boolean;
@@ -40,11 +39,24 @@ export interface SelectFieldProps {
   extra?: string;
   disabled?: boolean;
   isRequired?: boolean;
-  onChange: (value: OptionProp | OptionProp[]) => void;
+  value: string;
+  onChange: (value: string) => void;
   onOpen?: () => void;
   width?: string;
 }
 
-export interface MultiSelectFieldProps extends Omit<SelectFieldProps, "defaultValue"> {
-  defaultValue?: OptionProp[];
+export type MultiInputFieldProps = {
+  id?: string;
+  label: string;
+  error?: string;
+  extraLabel?: string | ReactNode;
+  value: string[];
+  onChange: (val: string[]) => void;
+  placeholder?: string;
+  validate?: (val: string) => string | null;
+};
+
+export interface MultiSelectFieldProps extends Omit<SelectFieldProps, "value" | "onChange"> {
+  value: OptionProp[];
+  onChange: (value: OptionProp[]) => void;
 }
