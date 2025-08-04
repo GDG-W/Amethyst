@@ -25,13 +25,13 @@ export default function Home() {
   };
 
   return (
-    <div className='w-[700px] m-auto space-y-3'>
+    <div className='m-auto w-[700px] space-y-3'>
       <SuccessCard
         title='Purchase Successful'
         summary='You have successfully purchased tickets for DevFest Lagos 2025. Check your email for your ticket ID.'
       />
 
-      <div className='w-128 flex flex-col gap-2 mb-12'>
+      <div className='mb-12 flex w-128 flex-col gap-2'>
         <TextField
           label='Label'
           name='email'

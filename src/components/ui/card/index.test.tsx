@@ -1,7 +1,7 @@
 import React from "react";
 import { render, screen } from "@testing-library/react";
-import Card from ".";
 
+import Card from ".";
 
 describe("Card", () => {
   it("renders the title", () => {
@@ -16,7 +16,7 @@ describe("Card", () => {
 
   it("renders the subtitle when subtitle is provided", () => {
     render(
-      <Card title='Numbered Card' subtitle="Hello there" numbered number={1}>
+      <Card title='Numbered Card' subtitle='Hello there' numbered number={1}>
         Numbered content
       </Card>,
     );
