@@ -2,7 +2,7 @@
 import { useState } from "react";
 
 import Header from "@/components/layout/header";
-import TextField from "@/components/ui/inputs/text-field";
+import ClaimTicketForm from "@/components/form/claim-ticket.form";
 
 const ClaimTicket = () => {
   const [formData, setFormData] = useState<object>({});
@@ -14,52 +14,7 @@ const ClaimTicket = () => {
           Finish your registration to claim your ticket
         </h1>
 
-        <form className='mt-6 space-y-6 rounded-[0.5rem] border border-solid border-(--stroke-soft-200) bg-(--static-white) p-5 md:mt-9'>
-          <TextField
-            id='fullname'
-            label='Full name'
-            placeholder='Enter full name'
-            onChange={(e) => {
-              console.log(e.target.value);
-            }}
-          />
-          <TextField
-            id='emailaddress'
-            label='Email address'
-            placeholder='Enter email address'
-            type='email'
-            onChange={(e) => {
-              console.log(e.target.value);
-            }}
-          />
-          <TextField
-            id='fullname'
-            label='Full name'
-            placeholder='Enter full name'
-            onChange={(e) => {
-              console.log(e.target.value);
-            }}
-          />
-          <TextField
-            id='fullname'
-            label='Full name'
-            placeholder='Enter full name'
-            onChange={(e) => {
-              console.log(e.target.value);
-            }}
-          />
-          <TextField
-            id='fullname'
-            label='Full name'
-            placeholder='Enter full name'
-            onChange={(e) => {
-              console.log(e.target.value);
-            }}
-          />
-          <button className='h-12 w-full rounded-[2.25rem] bg-(--away-base) text-center align-middle font-[inter] text-lg leading-6 font-bold tracking-tight text-(--bg-white-0) md:h-15'>
-            Claim ticket
-          </button>
-        </form>
+        <ClaimTicketForm />
       </div>
     </div>
   );
