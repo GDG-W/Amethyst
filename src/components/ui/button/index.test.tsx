@@ -55,4 +55,16 @@ describe("Button Component", () => {
     fireEvent.click(screen.getByRole("button"));
     expect(handleClick).not.toHaveBeenCalled();
   });
+
+  it("applies the full size class by default", () => {
+    render(<Button>Full</Button>);
+    const button = screen.getByRole("button");
+    expect(button).toHaveClass("w-full");
+  });
+
+  it("applies the fit size class when specified", () => {
+    render(<Button size='fit'>Fit</Button>);
+    const button = screen.getByRole("button");
+    expect(button).toHaveClass("w-fit");
+  });
 });
