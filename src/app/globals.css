@@ -20,6 +20,7 @@
 
   --text-sub-600: #5c5c5c;
   --text-soft-400: #a3a3a3;
+  --text-grey-80: #333333;
   --text-disabled-300: #d1d1d1;
   --text-white-0: #ffffff;
 
@@ -145,6 +146,7 @@
 
     --text-sub-600: #5c5c5c;
     --text-soft-400: #a3a3a3;
+    --text-grey-80: #333333;
     --text-disabled-300: #d1d1d1;
     --text-white-0: #ffffff;
 
@@ -274,6 +276,7 @@
   /* Text colors */
   --color-sub-600: var(--text-sub-600);
   --color-soft-400: var(--text-soft-400);
+  --color-grey-80: var(--text-grey-80);
   --color-disabled-300: var(--text-disabled-300);
   --color-white-0: var(--text-white-0);
 
