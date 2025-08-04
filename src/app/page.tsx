@@ -6,6 +6,10 @@ import Checkbox from "@/components/ui/inputs/checkbox";
 import TextField from "@/components/ui/inputs/text-field";
 import SuccessCard from "@/components/ui/success-card";
 
+// after we're don using this page for testing
+//  redirect to buy page if user is not logged in
+//  and redirect to upgrade page if user is logged in
+
 export default function Home() {
   return (
     <div className='m-auto w-[700px] space-y-3'>
