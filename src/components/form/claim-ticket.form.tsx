@@ -1,19 +1,21 @@
 import React from "react";
-import { useForm, SubmitHandler } from "react-hook-form";
+import { useForm, Controller, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import ClaimTicketSchema, { ClaimTicketFormData } from "@/schemas/claim-ticket.schema";
 
+import { GenderOptions, RoleOptions, ExperienceLevelOptions } from "@/constants/options";
+
 import TextField from "../ui/inputs/text-field";
+import SelectField from "../ui/inputs/select";
 
 const ClaimTicketForm = () => {
   const {
     register,
+    control,
     handleSubmit,
     formState: { errors, isValid, isSubmitting },
     reset,
-    watch,
-    trigger,
   } = useForm<ClaimTicketFormData>({
     resolver: zodResolver(ClaimTicketSchema),
     mode: "onTouched",
@@ -48,27 +50,52 @@ const ClaimTicketForm = () => {
         error={errors.email?.message}
         {...register("email")}
       />
-      <TextField
-        id='gender'
-        label='Gender'
-        placeholder='Select'
-        error={errors.gender?.message}
-        {...register("gender")}
+      <Controller
+        name='gender'
+        control={control}
+        render={({ field }) => (
+          <SelectField
+            id='gender'
+            label='Gender'
+            placeholder='Select'
+            options={GenderOptions}
+            error={errors.gender?.message}
+            value={field.value}
+            onChange={field.onChange}
+          />
+        )}
       />
-      <TextField
-        id='role'
-        label='role'
-        placeholder='Select your role'
-        error={errors.role?.message}
-        {...register("role")}
+      <Controller
+        name='role'
+        control={control}
+        render={({ field }) => (
+          <SelectField
+            id='role'
+            label='Role'
+            placeholder='Select your role'
+            options={RoleOptions}
+            error={errors.role?.message}
+            value={field.value}
+            onChange={field.onChange}
+          />
+        )}
       />
-      <TextField
-        id='experienceLevel'
-        label='Experience level'
-        placeholder='select your level of experience'
-        error={errors.experienceLevel?.message}
-        {...register("experienceLevel")}
+      <Controller
+        name='experienceLevel'
+        control={control}
+        render={({ field }) => (
+          <SelectField
+            id='experienceLevel'
+            label='Experience level'
+            placeholder='select your level of experience'
+            options={ExperienceLevelOptions}
+            error={errors.experienceLevel?.message}
+            value={field.value}
+            onChange={field.onChange}
+          />
+        )}
       />
+
       <button
         className='h-12 w-full rounded-[2.25rem] bg-(--away-base) text-center align-middle font-[inter] text-lg leading-6 font-bold tracking-tight text-(--bg-white-0) disabled:bg-(--bg-soft-200) md:h-15'
         type='submit'
