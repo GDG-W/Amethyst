@@ -18,6 +18,7 @@ type FormData = z.infer<typeof attendeeSchema>;
 const AttendeeInfo = () => {
   const { control, handleSubmit } = useForm<FormData>({
     resolver: zodResolver(attendeeSchema),
+    mode: "onBlur",
     defaultValues: {
       email: "",
       belongsToMe: false,
@@ -35,7 +36,7 @@ const AttendeeInfo = () => {
   return (
     <Card
       title='Attendee information'
-      subtitle='Kindly Press “Enter” key after entering each email to add it to the list.'
+      subtitle='Kindly Press "Enter" key after entering each email to add it to the list.'
       numbered={true}
       number={4}
     >

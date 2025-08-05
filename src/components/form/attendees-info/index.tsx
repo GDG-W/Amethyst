@@ -54,7 +54,7 @@ const AttendeesInfo = () => {
         <div className='space-y-4 px-5 py-7'>
           <div>
             <MultiInput
-              id='attendee-emails'
+              id='attendee-emails-1'
               label='Email address'
               //   extraLabel='Wednesday'
               placeholder='Enter email address'
@@ -66,7 +66,7 @@ const AttendeesInfo = () => {
           </div>
           <div>
             <MultiInput
-              id='attendee-emails'
+              id='attendee-emails-2'
               label='Email address'
               //   extraLabel='Thursday'
               placeholder='Enter email address'
@@ -78,7 +78,7 @@ const AttendeesInfo = () => {
           </div>
           <div>
             <MultiInput
-              id='attendee-emails'
+              id='attendee-emails-3'
               label='Email address'
               //   extraLabel='Friday'
               placeholder='Enter email address'
@@ -90,7 +90,7 @@ const AttendeesInfo = () => {
           </div>
           <div>
             <MultiInput
-              id='attendee-emails'
+              id='attendee-emails-4'
               label='Email address'
               //   extraLabel='Saturday'
               placeholder='Enter email address'
