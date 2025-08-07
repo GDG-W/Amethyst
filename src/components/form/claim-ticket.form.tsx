@@ -9,7 +9,15 @@ import { GenderOptions, RoleOptions, ExperienceLevelOptions } from "@/constants/
 import TextField from "../ui/inputs/text-field";
 import SelectField from "../ui/inputs/select";
 
-const ClaimTicketForm = () => {
+const defaultValues = Object.freeze({
+  fullName: "",
+  email: "",
+  gender: undefined,
+  role: undefined,
+  experienceLevel: undefined,
+} as const);
+
+const ClaimTicketForm = ({ formCallbackFn }: { formCallbackFn: () => Promise<void> }) => {
   const {
     register,
     control,
@@ -19,12 +27,15 @@ const ClaimTicketForm = () => {
   } = useForm<ClaimTicketFormData>({
     resolver: zodResolver(ClaimTicketSchema),
     mode: "onTouched",
+    defaultValues,
   });
   const onSubmit: SubmitHandler<ClaimTicketFormData> = async (data) => {
     try {
       console.log("Form Data:", data);
       await new Promise((res) => setTimeout(res, 1000));
-      reset();
+
+      await formCallbackFn();
+      reset(defaultValues);
     } catch (error) {
       console.log(error);
     }
