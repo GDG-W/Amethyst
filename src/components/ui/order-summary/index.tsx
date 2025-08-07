@@ -29,7 +29,7 @@ const OrderSummary = ({
     <Card title='Order Summary'>
       <div className='flex h-full min-h-70 flex-col justify-between gap-2 p-4'>
         {items.length < 1 ? (
-          <p className='text-sm'>Select your ticket dated(s) to see order summary</p>
+          <p className='text-sm'>Select your ticket date(s) to see order summary</p>
         ) : (
           <ul className='mb-4'>
             {items.map((item, index) => {
