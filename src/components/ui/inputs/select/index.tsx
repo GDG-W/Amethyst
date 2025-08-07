@@ -27,7 +27,12 @@ export default function SelectField({
           {extraLabel && <span className='text-sm text-gray-500'>{extraLabel}</span>}
         </label>
       )}
-      <Select.Root value={value} onValueChange={onChange} defaultValue={undefined}>
+      <Select.Root
+        key={`${id}-${Number(Boolean(value))}`}
+        value={value}
+        onValueChange={onChange}
+        defaultValue={undefined}
+      >
         <Select.Trigger
           id={id}
           aria-labelledby={id}

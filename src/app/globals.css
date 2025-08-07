@@ -6,6 +6,7 @@
 :root {
   --background: oklch(1 0 0);
   --foreground: oklch(0.145 0 0);
+  --bg-overlay: #11111133;
 
   --static-black: #171717;
   --static-white: #ffffff;

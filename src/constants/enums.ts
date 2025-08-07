@@ -5,6 +5,7 @@ export enum Gender {
 
 export enum Role {
   FrontendEngineer = "Frontend Engineer",
+  BackendEngineer = "Backend Engineer",
 }
 
 export enum ExperienceLevel {
