@@ -40,12 +40,35 @@ describe("SuccessCard", () => {
   it("renders buttons with correct text", () => {
     render(<SuccessCard title='Success!' />);
 
+    expect(screen.getByRole("button", { name: /Buy more tickets/i })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: /Go to dashboard/i })).toBeInTheDocument();
+  });
+
+  it("renders buttons with correct text - when links are defined", () => {
+    render(
+      <SuccessCard
+        title='Success!'
+        links={[
+          { id: "home", type: "primary", href: "/", text: "go home" },
+          { id: "buy", type: "secondary", href: "/buy", text: "buy more" },
+        ]}
+      />,
+    );
+
     expect(screen.getByRole("button", { name: /go home/i })).toBeInTheDocument();
     expect(screen.getByRole("button", { name: /buy more/i })).toBeInTheDocument();
   });
 
   it('calls router.push("/") when "go home" is clicked', () => {
-    render(<SuccessCard title='Success!' />);
+    render(
+      <SuccessCard
+        title='Success!'
+        links={[
+          { id: "home", type: "primary", href: "/", text: "go home" },
+          { id: "buy", type: "secondary", href: "/buy", text: "buy more" },
+        ]}
+      />,
+    );
 
     const goHomeButton = screen.getByRole("button", { name: /go home/i });
     goHomeButton.click();
