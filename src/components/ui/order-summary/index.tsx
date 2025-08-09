@@ -14,15 +14,15 @@ interface OrderSummaryInterface {
   currentStep: number;
   noOfSteps: number;
 }
+function calculateTotal(listItems: OrderItemsType[]) {
+  return listItems.reduce((total: number, item: OrderItemsType) => total + item.price, 0);
+}
 const OrderSummary = ({
   items,
   handleButtonClick,
   currentStep,
   noOfSteps,
 }: OrderSummaryInterface) => {
-  function calculateTotal(listItems: OrderItemsType[]) {
-    return listItems.reduce((total: number, item: OrderItemsType) => total + item.price, 0);
-  }
   const total = useMemo(() => calculateTotal(items), [items]);
 
   return (
