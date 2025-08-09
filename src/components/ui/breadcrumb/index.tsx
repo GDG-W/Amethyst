@@ -5,7 +5,7 @@ import { ChevronRight } from "lucide-react";
 type BreadcrumbProps = {
   breadcrumbList: { name: string; link: string }[];
   activeIndex: number;
-  handleClick: () => void;
+  handleClick: (index: number) => void;
 };
 
 export default function Breadcrumb({
@@ -28,13 +28,15 @@ export default function Breadcrumb({
           <React.Fragment key={item.name}>
             {!isFirst && (
               <ChevronRight
+                aria-hidden='true'
                 data-testid='chevron-icon'
                 strokeWidth={2}
                 className={`${activateSeparator ? "text-away-base" : "text-disabled-300"} size-5 [&>svg]:size-4`}
               />
             )}
             <button
-              onClick={handleClick}
+              onClick={() => handleClick(index)}
+              aria-current={isActive ? "page" : undefined}
               className={`${isActive ? "text-away-base" : "text-soft-400"} hover:text-away-base label-4 cursor-pointer`}
             >
               {item.name}

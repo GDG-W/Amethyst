@@ -34,6 +34,11 @@ describe("Breadcrumb component", () => {
     // There should be 2 chevrons between 3 items (after the first)
     const chevrons = screen.getAllByTestId("chevron-icon");
     expect(chevrons).toHaveLength(2);
+
+    // Chevrons should be decorative
+    chevrons.forEach((icon) => {
+      expect(icon).toHaveAttribute("aria-hidden", "true");
+    });
   });
 
   it("applies active class only to the active breadcrumb", () => {
@@ -48,7 +53,19 @@ describe("Breadcrumb component", () => {
     expect(inactiveItem).toHaveClass("text-soft-400");
   });
 
-  it("calls handleClick when any breadcrumb button is clicked", () => {
+  it("sets aria-current='page' only on the active breadcrumb", () => {
+    render(
+      <Breadcrumb breadcrumbList={breadcrumbList} activeIndex={2} handleClick={mockHandleClick} />,
+    );
+
+    const activeItem = screen.getByText("Details");
+    const inactiveItem = screen.getByText("Home");
+
+    expect(activeItem).toHaveAttribute("aria-current", "page");
+    expect(inactiveItem).not.toHaveAttribute("aria-current");
+  });
+
+  it("calls handleClick with the correct index when a breadcrumb button is clicked", () => {
     render(
       <Breadcrumb breadcrumbList={breadcrumbList} activeIndex={0} handleClick={mockHandleClick} />,
     );
@@ -57,6 +74,7 @@ describe("Breadcrumb component", () => {
     fireEvent.click(item);
 
     expect(mockHandleClick).toHaveBeenCalledTimes(1);
+    expect(mockHandleClick).toHaveBeenCalledWith(0);
   });
 
   it("does not render chevron before the first item", () => {
