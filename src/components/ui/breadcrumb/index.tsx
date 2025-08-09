@@ -3,21 +3,16 @@ import React from "react";
 import { ChevronRight } from "lucide-react";
 
 type BreadcrumbProps = {
-  breadcrumbList: { name: string; link: string }[];
   activeIndex: number;
-  handleClick: (index: number) => void;
+  breadcrumbList: string[];
 };
 
-export default function Breadcrumb({
-  breadcrumbList,
-  activeIndex = 0,
-  handleClick,
-}: BreadcrumbProps) {
+export default function Breadcrumb({ breadcrumbList, activeIndex = 0 }: BreadcrumbProps) {
   return (
     <nav
-      aria-label='breadcrumb'
-      data-slot='breadcrumb'
-      className='flex flex-wrap items-center gap-1'
+      aria-label="breadcrumb"
+      data-slot="breadcrumb"
+      className="flex flex-wrap items-center gap-1"
     >
       {breadcrumbList.map((item, index) => {
         const isFirst = index === 0;
@@ -25,22 +20,21 @@ export default function Breadcrumb({
         const activateSeparator = isActive && !isFirst;
 
         return (
-          <React.Fragment key={item.name}>
+          <React.Fragment key={item}>
             {!isFirst && (
               <ChevronRight
-                aria-hidden='true'
-                data-testid='chevron-icon'
+                aria-hidden="true"
+                data-testid="chevron-icon"
                 strokeWidth={2}
                 className={`${activateSeparator ? "text-away-base" : "text-disabled-300"} size-5 [&>svg]:size-4`}
               />
             )}
-            <button
-              onClick={() => handleClick(index)}
+            <p
               aria-current={isActive ? "page" : undefined}
-              className={`${isActive ? "text-away-base" : "text-soft-400"} hover:text-away-base label-4 cursor-pointer`}
+              className={`${isActive ? "text-away-base font-medium" : "text-soft-400"} label-4`}
             >
-              {item.name}
-            </button>
+              {item}
+            </p>
           </React.Fragment>
         );
       })}
