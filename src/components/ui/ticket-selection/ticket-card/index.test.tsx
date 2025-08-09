@@ -9,7 +9,7 @@ describe("Card", () => {
     render(
       <Card>
         <p>Test content</p>
-      </Card>,
+      </Card>
     );
 
     expect(screen.getByText("Test content")).toBeInTheDocument();
@@ -31,7 +31,7 @@ describe("Card", () => {
   });
 
   it("applies custom className", () => {
-    const { container } = render(<Card className='custom-class'>Content</Card>);
+    const { container } = render(<Card className="custom-class">Content</Card>);
 
     expect(container.firstChild).toHaveClass("custom-class");
     // Should also still have default classes
@@ -42,7 +42,7 @@ describe("Card", () => {
     render(
       <Card header={<h2>Card Header</h2>}>
         <p>Card content</p>
-      </Card>,
+      </Card>
     );
 
     expect(screen.getByText("Card Header")).toBeInTheDocument();
@@ -53,7 +53,7 @@ describe("Card", () => {
     const { container } = render(
       <Card>
         <p>Card content</p>
-      </Card>,
+      </Card>
     );
 
     // Check that there's no div with the header classes
@@ -70,14 +70,14 @@ describe("Card", () => {
   });
 
   it("handles empty string className", () => {
-    const { container } = render(<Card className=''>Content</Card>);
+    const { container } = render(<Card className="">Content</Card>);
 
     // Should still have default classes
     expect(container.firstChild).toHaveClass(
       "bg-bg-strong-950",
       "border",
       "border-bg-surface-800",
-      "rounded-lg",
+      "rounded-lg"
     );
   });
 
@@ -89,7 +89,7 @@ describe("Card", () => {
           <p>Description</p>
           <button>Action</button>
         </div>
-      </Card>,
+      </Card>
     );
 
     expect(screen.getByText("Title")).toBeInTheDocument();
@@ -99,9 +99,9 @@ describe("Card", () => {
 
   it("renders with both header and custom className", () => {
     const { container } = render(
-      <Card header={<span>Test Header</span>} className='extra-class'>
+      <Card header={<span>Test Header</span>} className="extra-class">
         <p>Content</p>
-      </Card>,
+      </Card>
     );
 
     const cardElement = container.firstChild;

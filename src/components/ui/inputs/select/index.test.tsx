@@ -17,27 +17,27 @@ const options = [
 
 describe("SelectField", () => {
   it("renders the placeholder", () => {
-    render(<SelectField options={options} value='' onChange={() => {}} placeholder='Choose one' />);
+    render(<SelectField options={options} value="" onChange={() => {}} placeholder="Choose one" />);
     expect(screen.getByText("Choose one")).toBeInTheDocument();
   });
 
   it("renders label and extra label", () => {
     render(
       <SelectField
-        label='Main Label'
-        extraLabel='Extra Info'
+        label="Main Label"
+        extraLabel="Extra Info"
         options={options}
-        value=''
+        value=""
         onChange={() => {}}
-        placeholder='Choose one'
-      />,
+        placeholder="Choose one"
+      />
     );
     expect(screen.getByText("Main Label")).toBeInTheDocument();
     expect(screen.getByText("Extra Info")).toBeInTheDocument();
   });
 
   it("displays dropdown options when trigger is clicked", async () => {
-    render(<SelectField options={options} value='' onChange={() => {}} placeholder='Choose one' />);
+    render(<SelectField options={options} value="" onChange={() => {}} placeholder="Choose one" />);
 
     const trigger = screen.getByRole("combobox");
     fireEvent.click(trigger);
@@ -52,7 +52,7 @@ describe("SelectField", () => {
     const handleChange = jest.fn();
 
     render(
-      <SelectField options={options} value='' onChange={handleChange} placeholder='Choose one' />,
+      <SelectField options={options} value="" onChange={handleChange} placeholder="Choose one" />
     );
 
     fireEvent.click(screen.getByRole("combobox"));
@@ -67,11 +67,11 @@ describe("SelectField", () => {
     render(
       <SelectField
         options={options}
-        value=''
+        value=""
         onChange={() => {}}
-        placeholder='Choose one'
-        error='This field is required'
-      />,
+        placeholder="Choose one"
+        error="This field is required"
+      />
     );
 
     expect(screen.getByText("This field is required")).toBeInTheDocument();
