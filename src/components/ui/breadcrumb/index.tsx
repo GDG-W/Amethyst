@@ -10,7 +10,7 @@ type BreadcrumbProps = {
 
 export default function Breadcrumb({
   breadcrumbList,
-  activeIndex = 1,
+  activeIndex = 0,
   handleClick,
 }: BreadcrumbProps) {
   return (
