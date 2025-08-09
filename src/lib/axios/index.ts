@@ -12,7 +12,7 @@ axiosInstance.interceptors.request.use(
   },
   function (error) {
     return Promise.reject(error);
-  },
+  }
 );
 
 axiosInstance.interceptors.response.use(
@@ -23,7 +23,7 @@ axiosInstance.interceptors.response.use(
   function (error) {
     // Any status codes that falls outside the range of 2xx cause this function to trigger
     return error.response;
-  },
+  }
 );
 
 export default axiosInstance;

@@ -18,7 +18,7 @@ describe("Breadcrumb component", () => {
 
   it("renders all breadcrumb items", () => {
     render(
-      <Breadcrumb breadcrumbList={breadcrumbList} activeIndex={1} handleClick={mockHandleClick} />,
+      <Breadcrumb breadcrumbList={breadcrumbList} activeIndex={1} handleClick={mockHandleClick} />
     );
 
     breadcrumbList.forEach((item) => {
@@ -28,7 +28,7 @@ describe("Breadcrumb component", () => {
 
   it("renders correct number of chevron icons", () => {
     render(
-      <Breadcrumb breadcrumbList={breadcrumbList} activeIndex={2} handleClick={mockHandleClick} />,
+      <Breadcrumb breadcrumbList={breadcrumbList} activeIndex={2} handleClick={mockHandleClick} />
     );
 
     // There should be 2 chevrons between 3 items (after the first)
@@ -43,7 +43,7 @@ describe("Breadcrumb component", () => {
 
   it("applies active class only to the active breadcrumb", () => {
     render(
-      <Breadcrumb breadcrumbList={breadcrumbList} activeIndex={2} handleClick={mockHandleClick} />,
+      <Breadcrumb breadcrumbList={breadcrumbList} activeIndex={2} handleClick={mockHandleClick} />
     );
 
     const activeItem = screen.getByText("Details");
@@ -55,7 +55,7 @@ describe("Breadcrumb component", () => {
 
   it("sets aria-current='page' only on the active breadcrumb", () => {
     render(
-      <Breadcrumb breadcrumbList={breadcrumbList} activeIndex={2} handleClick={mockHandleClick} />,
+      <Breadcrumb breadcrumbList={breadcrumbList} activeIndex={2} handleClick={mockHandleClick} />
     );
 
     const activeItem = screen.getByText("Details");
@@ -67,7 +67,7 @@ describe("Breadcrumb component", () => {
 
   it("calls handleClick with the correct index when a breadcrumb button is clicked", () => {
     render(
-      <Breadcrumb breadcrumbList={breadcrumbList} activeIndex={0} handleClick={mockHandleClick} />,
+      <Breadcrumb breadcrumbList={breadcrumbList} activeIndex={0} handleClick={mockHandleClick} />
     );
 
     const item = screen.getByText("Home");
@@ -79,7 +79,7 @@ describe("Breadcrumb component", () => {
 
   it("does not render chevron before the first item", () => {
     render(
-      <Breadcrumb breadcrumbList={breadcrumbList} activeIndex={0} handleClick={mockHandleClick} />,
+      <Breadcrumb breadcrumbList={breadcrumbList} activeIndex={0} handleClick={mockHandleClick} />
     );
 
     const firstItem = screen.getByText("Home");
