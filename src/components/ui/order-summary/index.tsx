@@ -34,7 +34,10 @@ const OrderSummary = ({
           <ul className='mb-4'>
             {items.map((item, index) => {
               return (
-                <li key={item.name + '-' + item.price} className='mb-3 flex items-center justify-between gap-3'>
+                <li
+                  key={`${item.name}-${item.price}-${index}`}
+                  className='mb-3 flex items-center justify-between gap-3'
+                >
                   <p className='text-sub-600 font-medium'>{item.name}</p>
                   <p className='label-3 font-medium text-black'>&#8358;{item.price}</p>
                 </li>
