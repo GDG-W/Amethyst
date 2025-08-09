@@ -9,20 +9,9 @@ interface CardProps {
 const Card = ({ children, className = "", header }: CardProps) => {
   return (
     <div
-      className={`
-		bg-bg-strong-950
-		border 
-		border-bg-surface-800
-		rounded-lg 
-		p-4
-		w-full
-		max-w-sm
-		sm:max-w-md
-		md:max-w-lg
-		${className}
-	  `}
+      className={`bg-bg-strong-950 border-bg-surface-800 w-full max-w-sm rounded-lg border p-4 sm:max-w-md md:max-w-lg ${className} `}
     >
-      {header && <div className='flex items-center gap-3 mb-4 '>{header}</div>}
+      {header && <div className='mb-4 flex items-center gap-3'>{header}</div>}
       {children}
     </div>
   );

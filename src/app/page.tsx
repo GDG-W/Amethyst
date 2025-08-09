@@ -3,6 +3,7 @@
 import { useState } from "react";
 
 import Header from "@/components/layout/header";
+import Breadcrumb from "@/components/ui/breadcrumb";
 import Card from "@/components/ui/card";
 import Checkbox from "@/components/ui/inputs/checkbox";
 import MultiInput from "@/components/ui/inputs/multi-input";
@@ -32,6 +33,10 @@ export default function Home() {
         title='Purchase Successful'
         summary='You have successfully purchased tickets for DevFest Lagos 2025. Check your email for your ticket ID.'
       />
+
+      <Breadcrumb breadcrumbList={breadcrumbList} activeIndex={1} handleClick={() => {}} />
+
+      <Breadcrumb breadcrumbList={breadcrumbList} activeIndex={1} handleClick={() => {}} />
 
       <div className='mb-12 flex w-128 flex-col gap-2'>
         <TextField
@@ -90,3 +95,18 @@ export default function Home() {
     </div>
   );
 }
+
+const breadcrumbList = [
+  {
+    name: "Home Page",
+    link: "/",
+  },
+  {
+    name: "Buy Ticket",
+    link: "/buy-ticket",
+  },
+  {
+    name: "Buyer Information",
+    link: "/buyer-information",
+  },
+];
