@@ -45,16 +45,16 @@ const TextField = ({
     return (
       <div className={cn("mt-1 flex items-start gap-1 tracking-tight", getHelperTextColor())}>
         <AlertIcon className={cn("h-4 w-4", getHelperIconColor())} />
-        <p className='text-xs'>{hasError ? error : helperText}</p>
+        <p className="text-xs">{hasError ? error : helperText}</p>
       </div>
     );
   };
 
   return (
-    <div className='w-full'>
-      <label htmlFor={id} className='label-3 mb-2 block font-medium tracking-tight'>
-        <span className='mr-2'>{label}</span>
-        {extraLabel && <span className='text-sm text-gray-500'>{extraLabel}</span>}
+    <div className="w-full">
+      <label htmlFor={id} className="label-3 mb-2 block font-medium tracking-tight">
+        <span className="mr-2">{label}</span>
+        {extraLabel && <span className="text-sm text-gray-500">{extraLabel}</span>}
       </label>
 
       <input
@@ -63,7 +63,7 @@ const TextField = ({
         className={cn(
           "placeholder:text-soft-400 w-full rounded-lg border px-4 py-4 tracking-tight",
           getBorderStyle(),
-          inputProps.disabled && "cursor-not-allowed bg-gray-100",
+          inputProps.disabled && "cursor-not-allowed bg-gray-100"
         )}
         value={value}
         onChange={onChange}

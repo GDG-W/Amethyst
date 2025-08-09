@@ -16,8 +16,8 @@ jest.mock("@/components/ui/ticket-selection/ticket-card", () => {
     className?: string;
   }) {
     return (
-      <div data-testid='ticket-card' className={className}>
-        {header && <div data-testid='card-header'>{header}</div>}
+      <div data-testid="ticket-card" className={className}>
+        {header && <div data-testid="card-header">{header}</div>}
         {children}
       </div>
     );
@@ -38,7 +38,7 @@ jest.mock("@/components/ui/ticket-selection/ticket-tabs", () => {
     className?: string;
   }) {
     return (
-      <div data-testid='ticket-tabs' className={className}>
+      <div data-testid="ticket-tabs" className={className}>
         {tabs.map((tab) => (
           <button
             key={tab.id}
@@ -70,15 +70,15 @@ jest.mock("@/components/ui/ticket-selection/date-picker", () => {
   }) {
     return (
       <div
-        data-testid='date-picker'
+        data-testid="date-picker"
         data-mode={mode}
         data-selected={(selectedDates || []).join(",")}
         className={className}
       >
-        <button onClick={() => onSelectionChange?.(["test-date"])} data-testid='mock-date-select'>
+        <button onClick={() => onSelectionChange?.(["test-date"])} data-testid="mock-date-select">
           Select Date
         </button>
-        <span data-testid='selected-count'>{(selectedDates || []).length}</span>
+        <span data-testid="selected-count">{(selectedDates || []).length}</span>
       </div>
     );
   };
