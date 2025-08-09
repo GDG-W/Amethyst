@@ -48,7 +48,7 @@ const Tabs: React.FC<TabsProps> = ({ tabs = [], activeTab, onTabChange, classNam
           onClick={() => onTabChange(tab.id)}
           disabled={tab.disabled}
         >
-          <p className='text-xs md:text-base'>{tab.label}</p>
+          <p className="text-xs md:text-base">{tab.label}</p>
         </Tab>
       ))}
     </div>

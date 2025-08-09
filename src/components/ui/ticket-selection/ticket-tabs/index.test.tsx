@@ -18,7 +18,7 @@ describe("Tabs", () => {
 
   describe("Rendering", () => {
     it("renders all tabs", () => {
-      render(<Tabs tabs={defaultTabs} activeTab='tab1' onTabChange={mockOnTabChange} />);
+      render(<Tabs tabs={defaultTabs} activeTab="tab1" onTabChange={mockOnTabChange} />);
 
       expect(screen.getByText("Tab 1")).toBeInTheDocument();
       expect(screen.getByText("Tab 2")).toBeInTheDocument();
@@ -26,7 +26,7 @@ describe("Tabs", () => {
     });
 
     it("renders without tabs prop (empty array)", () => {
-      const { container } = render(<Tabs activeTab='tab1' onTabChange={mockOnTabChange} />);
+      const { container } = render(<Tabs activeTab="tab1" onTabChange={mockOnTabChange} />);
 
       // Container should exist but no tab buttons
       expect(container.firstChild).toBeInTheDocument();
@@ -37,10 +37,10 @@ describe("Tabs", () => {
       const { container } = render(
         <Tabs
           tabs={defaultTabs}
-          activeTab='tab1'
+          activeTab="tab1"
           onTabChange={mockOnTabChange}
-          className='custom-class'
-        />,
+          className="custom-class"
+        />
       );
 
       expect(container.firstChild).toHaveClass("custom-class");
@@ -48,7 +48,7 @@ describe("Tabs", () => {
 
     it("applies default container classes", () => {
       const { container } = render(
-        <Tabs tabs={defaultTabs} activeTab='tab1' onTabChange={mockOnTabChange} />,
+        <Tabs tabs={defaultTabs} activeTab="tab1" onTabChange={mockOnTabChange} />
       );
 
       expect(container.firstChild).toHaveClass(
@@ -60,14 +60,14 @@ describe("Tabs", () => {
         "gap-1",
         "border",
         "border-y-[#EBEBEB]",
-        "-mx-4",
+        "-mx-4"
       );
     });
   });
 
   describe("Active Tab Styling", () => {
     it("applies active styles to the active tab", () => {
-      render(<Tabs tabs={defaultTabs} activeTab='tab2' onTabChange={mockOnTabChange} />);
+      render(<Tabs tabs={defaultTabs} activeTab="tab2" onTabChange={mockOnTabChange} />);
 
       const activeTab = screen.getByText("Tab 2").closest("button");
       expect(activeTab).toHaveClass(
@@ -76,12 +76,12 @@ describe("Tabs", () => {
         "shadow-sm",
         "shadow-[#0E121B08]",
         "border",
-        "border-[#EBEBEB]",
+        "border-[#EBEBEB]"
       );
     });
 
     it("applies inactive styles to non-active tabs", () => {
-      render(<Tabs tabs={defaultTabs} activeTab='tab2' onTabChange={mockOnTabChange} />);
+      render(<Tabs tabs={defaultTabs} activeTab="tab2" onTabChange={mockOnTabChange} />);
 
       const inactiveTab = screen.getByText("Tab 1").closest("button");
       expect(inactiveTab).toHaveClass("bg-transparent", "text-[#A3A3A3]", "hover:text-gray-700");
@@ -90,14 +90,14 @@ describe("Tabs", () => {
 
   describe("Tab Interactions", () => {
     it("calls onTabChange when tab is clicked", () => {
-      render(<Tabs tabs={defaultTabs} activeTab='tab1' onTabChange={mockOnTabChange} />);
+      render(<Tabs tabs={defaultTabs} activeTab="tab1" onTabChange={mockOnTabChange} />);
 
       fireEvent.click(screen.getByText("Tab 2"));
       expect(mockOnTabChange).toHaveBeenCalledWith("tab2");
     });
 
     it("calls onTabChange with correct id for each tab", () => {
-      render(<Tabs tabs={defaultTabs} activeTab='tab1' onTabChange={mockOnTabChange} />);
+      render(<Tabs tabs={defaultTabs} activeTab="tab1" onTabChange={mockOnTabChange} />);
 
       fireEvent.click(screen.getByText("Tab 3"));
       expect(mockOnTabChange).toHaveBeenCalledWith("tab3");
@@ -107,7 +107,7 @@ describe("Tabs", () => {
     });
 
     it("allows clicking on already active tab", () => {
-      render(<Tabs tabs={defaultTabs} activeTab='tab1' onTabChange={mockOnTabChange} />);
+      render(<Tabs tabs={defaultTabs} activeTab="tab1" onTabChange={mockOnTabChange} />);
 
       fireEvent.click(screen.getByText("Tab 1"));
       expect(mockOnTabChange).toHaveBeenCalledWith("tab1");
@@ -122,28 +122,28 @@ describe("Tabs", () => {
     ];
 
     it("disables tabs when disabled prop is true", () => {
-      render(<Tabs tabs={tabsWithDisabled} activeTab='tab1' onTabChange={mockOnTabChange} />);
+      render(<Tabs tabs={tabsWithDisabled} activeTab="tab1" onTabChange={mockOnTabChange} />);
 
       const disabledTab = screen.getByText("Tab 2").closest("button");
       expect(disabledTab).toBeDisabled();
     });
 
     it("applies disabled styling to disabled tabs", () => {
-      render(<Tabs tabs={tabsWithDisabled} activeTab='tab1' onTabChange={mockOnTabChange} />);
+      render(<Tabs tabs={tabsWithDisabled} activeTab="tab1" onTabChange={mockOnTabChange} />);
 
       const disabledTab = screen.getByText("Tab 2").closest("button");
       expect(disabledTab).toHaveClass("opacity-50", "cursor-not-allowed");
     });
 
     it("does not call onTabChange when disabled tab is clicked", () => {
-      render(<Tabs tabs={tabsWithDisabled} activeTab='tab1' onTabChange={mockOnTabChange} />);
+      render(<Tabs tabs={tabsWithDisabled} activeTab="tab1" onTabChange={mockOnTabChange} />);
 
       fireEvent.click(screen.getByText("Tab 2"));
       expect(mockOnTabChange).not.toHaveBeenCalled();
     });
 
     it("enables tabs when disabled prop is false or undefined", () => {
-      render(<Tabs tabs={defaultTabs} activeTab='tab1' onTabChange={mockOnTabChange} />);
+      render(<Tabs tabs={defaultTabs} activeTab="tab1" onTabChange={mockOnTabChange} />);
 
       const enabledTab = screen.getByText("Tab 1").closest("button");
       expect(enabledTab).not.toBeDisabled();
@@ -154,7 +154,7 @@ describe("Tabs", () => {
   describe("Tab Keys and Fallbacks", () => {
     it("uses tab id as key when available", () => {
       const { container } = render(
-        <Tabs tabs={defaultTabs} activeTab='tab1' onTabChange={mockOnTabChange} />,
+        <Tabs tabs={defaultTabs} activeTab="tab1" onTabChange={mockOnTabChange} />
       );
 
       // Check that buttons are rendered (indirect test of key usage)
@@ -169,7 +169,7 @@ describe("Tabs", () => {
       ];
 
       const { container } = render(
-        <Tabs tabs={tabsWithoutId} activeTab='0' onTabChange={mockOnTabChange} />,
+        <Tabs tabs={tabsWithoutId} activeTab="0" onTabChange={mockOnTabChange} />
       );
 
       const buttons = container.querySelectorAll("button");
@@ -179,7 +179,7 @@ describe("Tabs", () => {
 
   describe("Responsive Text Sizing", () => {
     it("applies responsive text classes", () => {
-      render(<Tabs tabs={defaultTabs} activeTab='tab1' onTabChange={mockOnTabChange} />);
+      render(<Tabs tabs={defaultTabs} activeTab="tab1" onTabChange={mockOnTabChange} />);
 
       const tabText = screen.getByText("Tab 1");
       expect(tabText).toHaveClass("text-xs", "md:text-base");
@@ -188,14 +188,14 @@ describe("Tabs", () => {
 
   describe("Layout Classes", () => {
     it("applies flex-1 to tab buttons for equal width distribution", () => {
-      render(<Tabs tabs={defaultTabs} activeTab='tab1' onTabChange={mockOnTabChange} />);
+      render(<Tabs tabs={defaultTabs} activeTab="tab1" onTabChange={mockOnTabChange} />);
 
       const tabButton = screen.getByText("Tab 1").closest("button");
       expect(tabButton).toHaveClass("flex-1");
     });
 
     it("applies responsive padding classes", () => {
-      render(<Tabs tabs={defaultTabs} activeTab='tab1' onTabChange={mockOnTabChange} />);
+      render(<Tabs tabs={defaultTabs} activeTab="tab1" onTabChange={mockOnTabChange} />);
 
       const tabButton = screen.getByText("Tab 1").closest("button");
       expect(tabButton).toHaveClass("px-2", "md:px-4", "py-2");

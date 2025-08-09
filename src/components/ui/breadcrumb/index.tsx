@@ -15,9 +15,9 @@ export default function Breadcrumb({
 }: BreadcrumbProps) {
   return (
     <nav
-      aria-label='breadcrumb'
-      data-slot='breadcrumb'
-      className='flex flex-wrap items-center gap-1'
+      aria-label="breadcrumb"
+      data-slot="breadcrumb"
+      className="flex flex-wrap items-center gap-1"
     >
       {breadcrumbList.map((item, index) => {
         const isFirst = index === 0;
@@ -28,8 +28,8 @@ export default function Breadcrumb({
           <React.Fragment key={item.name}>
             {!isFirst && (
               <ChevronRight
-                aria-hidden='true'
-                data-testid='chevron-icon'
+                aria-hidden="true"
+                data-testid="chevron-icon"
                 strokeWidth={2}
                 className={`${activateSeparator ? "text-away-base" : "text-disabled-300"} size-5 [&>svg]:size-4`}
               />

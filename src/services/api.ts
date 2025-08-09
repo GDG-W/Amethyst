@@ -20,7 +20,7 @@ type BaseResponse<T> =
 
 class API {
   private static _handleResponse<T>(
-    response: AxiosResponse<T | ErrorResponse> | undefined,
+    response: AxiosResponse<T | ErrorResponse> | undefined
   ): BaseResponse<T> {
     if (!response) return { success: false, message: "Unknown error" };
 
@@ -55,7 +55,7 @@ class API {
 
   static get = async <T>(endpoint: string): Promise<BaseResponse<T>> => {
     const response = await axiosInstance.get<T | ErrorResponse, AxiosResponse<T | ErrorResponse>>(
-      endpoint,
+      endpoint
     );
     return this._handleResponse(response);
   };

@@ -17,10 +17,10 @@ const TicketsSelection = () => {
 
   const header = (
     <>
-      <div className='flex h-8 w-8 items-center justify-center rounded-sm bg-[#171717] text-sm font-semibold text-white'>
+      <div className="flex h-8 w-8 items-center justify-center rounded-sm bg-[#171717] text-sm font-semibold text-white">
         1
       </div>
-      <h2 className='text-base font-medium text-black'>Select Date(s)</h2>
+      <h2 className="text-base font-medium text-black">Select Date(s)</h2>
     </>
   );
 
@@ -38,21 +38,21 @@ const TicketsSelection = () => {
   };
 
   return (
-    <div className='bg-bg-strong-950 min-h-screen p-4'>
-      <Card header={header} className='bg-bg-strong-950 border-bg-surface-800 rounded-lg border'>
+    <div className="bg-bg-strong-950 min-h-screen p-4">
+      <Card header={header} className="bg-bg-strong-950 border-bg-surface-800 rounded-lg border">
         <Tabs
           tabs={tabsData}
           activeTab={activeTab}
           onTabChange={handleTabChange}
-          className='flex gap-1 bg-[#F7F7F7] px-2 py-2 md:px-3'
+          className="flex gap-1 bg-[#F7F7F7] px-2 py-2 md:px-3"
         />
 
-        <div className='mt-6'>
+        <div className="mt-6">
           <DatePicker
             mode={activeTab}
             selectedDates={selectedDates}
             onSelectionChange={handleDateSelectionChange}
-            className='w-full'
+            className="w-full"
           />
         </div>
       </Card>

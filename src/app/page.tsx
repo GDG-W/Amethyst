@@ -28,67 +28,67 @@ export default function Home() {
   };
 
   return (
-    <div className='m-auto w-[700px] space-y-3'>
+    <div className="m-auto w-[700px] space-y-3">
       <SuccessCard
-        title='Purchase Successful'
-        summary='You have successfully purchased tickets for DevFest Lagos 2025. Check your email for your ticket ID.'
+        title="Purchase Successful"
+        summary="You have successfully purchased tickets for DevFest Lagos 2025. Check your email for your ticket ID."
       />
 
       <Breadcrumb breadcrumbList={breadcrumbList} activeIndex={1} handleClick={() => {}} />
 
       <Breadcrumb breadcrumbList={breadcrumbList} activeIndex={1} handleClick={() => {}} />
 
-      <div className='mb-12 flex w-128 flex-col gap-2'>
+      <div className="mb-12 flex w-128 flex-col gap-2">
         <TextField
-          label='Label'
-          name='email'
-          placeholder='Enter your name'
-          value=''
+          label="Label"
+          name="email"
+          placeholder="Enter your name"
+          value=""
           onChange={() => {}}
           // error='Name must be more than 2 characters'
           helperText="We'll never share your details."
         />
 
         <Select
-          label='Role'
+          label="Role"
           options={options}
           value={selected}
           onChange={setSelected}
-          placeholder='Select your level of experience'
+          placeholder="Select your level of experience"
         />
 
         <MultiInput
-          label='Email Addresses'
+          label="Email Addresses"
           value={emails}
           onChange={setEmails}
-          placeholder='Enter email addresses'
+          placeholder="Enter email addresses"
           validate={isValidEmail}
-          error='This field is required'
+          error="This field is required"
         />
       </div>
 
       <Checkbox
-        name='check-box'
-        label='This ticket belongs to me'
+        name="check-box"
+        label="This ticket belongs to me"
         checked={false}
         onChange={() => {}}
       />
 
       <Header />
 
-      <div className='max-w-[350px]'>
+      <div className="max-w-[350px]">
         <Card
           numbered
           number={1}
-          title='Attendee'
-          subtitle='Kindly Press “Enter” key after entering each email to add it to the list.'
+          title="Attendee"
+          subtitle="Kindly Press “Enter” key after entering each email to add it to the list."
         >
           <div></div>
         </Card>
-        <Card numbered number={2} title='Ticket Details'>
+        <Card numbered number={2} title="Ticket Details">
           <div></div>
         </Card>
-        <Card number={2} title='Ticket Details'>
+        <Card number={2} title="Ticket Details">
           <div></div>
         </Card>
       </div>

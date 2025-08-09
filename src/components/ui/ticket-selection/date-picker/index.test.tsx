@@ -36,7 +36,7 @@ describe("DatePicker", () => {
     });
 
     it("applies custom className", () => {
-      const { container } = render(<DatePicker className='custom-class' />);
+      const { container } = render(<DatePicker className="custom-class" />);
       expect(container.firstChild).toHaveClass("custom-class");
     });
   });
@@ -62,10 +62,10 @@ describe("DatePicker", () => {
     it("allows multiple date selection", () => {
       render(
         <DatePicker
-          mode='standard'
+          mode="standard"
           selectedDates={["tue-18"]}
           onSelectionChange={mockOnSelectionChange}
-        />,
+        />
       );
 
       fireEvent.click(screen.getByText("19"));
@@ -75,10 +75,10 @@ describe("DatePicker", () => {
     it("removes date from selection when clicked again", () => {
       render(
         <DatePicker
-          mode='standard'
+          mode="standard"
           selectedDates={["tue-18", "wed-19"]}
           onSelectionChange={mockOnSelectionChange}
-        />,
+        />
       );
 
       fireEvent.click(screen.getByText("18"));
@@ -86,7 +86,7 @@ describe("DatePicker", () => {
     });
 
     it("maintains multiple selected states", () => {
-      render(<DatePicker mode='standard' selectedDates={["tue-18", "wed-19"]} />);
+      render(<DatePicker mode="standard" selectedDates={["tue-18", "wed-19"]} />);
 
       const button18 = screen.getByText("18").closest("button");
       const button19 = screen.getByText("19").closest("button");
@@ -99,7 +99,7 @@ describe("DatePicker", () => {
   describe("Pro Mode", () => {
     it("only allows Thursday to be selected", () => {
       render(
-        <DatePicker mode='pro' selectedDates={[]} onSelectionChange={mockOnSelectionChange} />,
+        <DatePicker mode="pro" selectedDates={[]} onSelectionChange={mockOnSelectionChange} />
       );
 
       // Try clicking non-Thursday dates
@@ -115,7 +115,7 @@ describe("DatePicker", () => {
     });
 
     it("disables non-Thursday buttons", () => {
-      render(<DatePicker mode='pro' />);
+      render(<DatePicker mode="pro" />);
 
       const tuesdayButton = screen.getByText("18").closest("button");
       const wednesdayButton = screen.getByText("19").closest("button");
@@ -131,7 +131,7 @@ describe("DatePicker", () => {
     });
 
     it("shows disabled styling for non-Thursday dates", () => {
-      render(<DatePicker mode='pro' />);
+      render(<DatePicker mode="pro" />);
 
       const tuesdayButton = screen.getByText("18").closest("button");
       expect(tuesdayButton).toHaveClass("opacity-40", "cursor-not-allowed");
@@ -140,10 +140,10 @@ describe("DatePicker", () => {
     it("can deselect Thursday when clicked again", () => {
       render(
         <DatePicker
-          mode='pro'
+          mode="pro"
           selectedDates={["thu-20"]}
           onSelectionChange={mockOnSelectionChange}
-        />,
+        />
       );
 
       fireEvent.click(screen.getByText("20"));
@@ -165,13 +165,13 @@ describe("DatePicker", () => {
       const enabledButton = screen.getByText("18").closest("button");
       // Look for the gray background container with opacity-0 class
       const hoverCheckContainer = enabledButton?.querySelector(
-        ".bg-\\[\\#E2E4E9\\].rounded-full.opacity-0",
+        ".bg-\\[\\#E2E4E9\\].rounded-full.opacity-0"
       );
       expect(hoverCheckContainer).toBeInTheDocument();
     });
 
     it("does not show any check icon containers for disabled dates", () => {
-      render(<DatePicker mode='pro' />);
+      render(<DatePicker mode="pro" />);
       const disabledButton = screen.getByText("18").closest("button");
       // Should not have either the white or gray check containers
       const whiteContainer = disabledButton?.querySelector(".bg-white.rounded-full");
@@ -189,7 +189,7 @@ describe("DatePicker", () => {
         "bg-white",
         "rounded-full",
         "transition-opacity",
-        "duration-200",
+        "duration-200"
       );
     });
 
@@ -204,14 +204,14 @@ describe("DatePicker", () => {
         "opacity-0",
         "group-hover:opacity-100",
         "transition-opacity",
-        "duration-200",
+        "duration-200"
       );
     });
   });
 
   describe("Callback Behavior", () => {
     it("does not crash when onSelectionChange is not provided", () => {
-      render(<DatePicker mode='standard' />);
+      render(<DatePicker mode="standard" />);
 
       expect(() => {
         fireEvent.click(screen.getByText("18"));
