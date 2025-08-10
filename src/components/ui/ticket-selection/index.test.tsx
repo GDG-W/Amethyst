@@ -61,12 +61,10 @@ jest.mock("@/components/ui/ticket-selection/ticket-tabs", () => {
 // Mock the DatePicker component
 jest.mock("@/components/ui/ticket-selection/date-picker", () => {
   return function MockDatePicker({
-    mode,
     selectedDates,
     onSelectionChange,
     className,
   }: {
-    mode?: string;
     selectedDates?: string[];
     onSelectionChange?: (dates: string[]) => void;
     className?: string;
@@ -74,11 +72,10 @@ jest.mock("@/components/ui/ticket-selection/date-picker", () => {
     return (
       <div
         data-testid="date-picker"
-        data-mode={mode}
         data-selected={(selectedDates || []).join(",")}
         className={className}
       >
-        <button onClick={() => onSelectionChange?.(["test-date"])} data-testid="mock-date-select">
+        <button onClick={() => onSelectionChange?.(["2025-11-18"])} data-testid="mock-date-select">
           Select Date
         </button>
         <span data-testid="selected-count">{(selectedDates || []).length}</span>
@@ -151,7 +148,6 @@ describe("TicketsSelection", () => {
       renderControlled();
 
       const datePicker = screen.getByTestId("date-picker");
-      expect(datePicker).toHaveAttribute("data-mode", "standard");
       expect(datePicker).toHaveAttribute("data-selected", "");
       expect(datePicker).toHaveClass("w-full");
     });
@@ -172,9 +168,6 @@ describe("TicketsSelection", () => {
 
       const standardTab = screen.getByTestId("tab-standard");
       expect(standardTab).toHaveClass("active");
-
-      const datePicker = screen.getByTestId("date-picker");
-      expect(datePicker).toHaveAttribute("data-mode", "standard");
     });
 
     it("switches to pro tab when clicked", () => {
@@ -184,22 +177,6 @@ describe("TicketsSelection", () => {
 
       const proTab = screen.getByTestId("tab-pro");
       expect(proTab).toHaveClass("active");
-
-      const datePicker = screen.getByTestId("date-picker");
-      expect(datePicker).toHaveAttribute("data-mode", "pro");
-    });
-
-    it("updates DatePicker mode when tab changes", () => {
-      renderControlled();
-
-      // Start with standard mode
-      let datePicker = screen.getByTestId("date-picker");
-      expect(datePicker).toHaveAttribute("data-mode", "standard");
-
-      // Switch to pro
-      fireEvent.click(screen.getByTestId("tab-pro"));
-      datePicker = screen.getByTestId("date-picker");
-      expect(datePicker).toHaveAttribute("data-mode", "pro");
     });
   });
 
@@ -219,7 +196,7 @@ describe("TicketsSelection", () => {
       expect(selectedCount).toHaveTextContent("1");
 
       const datePicker = screen.getByTestId("date-picker");
-      expect(datePicker).toHaveAttribute("data-selected", "test-date");
+      expect(datePicker).toHaveAttribute("data-selected", "2025-11-18");
     });
 
     it("maintains selected dates when staying on same tab", () => {
@@ -324,7 +301,6 @@ describe("TicketsSelection", () => {
       const datePicker = screen.getByTestId("date-picker");
 
       expect(standardTab).toHaveClass("active");
-      expect(datePicker).toHaveAttribute("data-mode", "standard");
     });
 
     it("passes header prop correctly to Card component", () => {

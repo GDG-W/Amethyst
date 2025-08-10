@@ -27,6 +27,16 @@ const TicketsSelection = ({
     return set;
   }, [tickets]);
 
+  const dates = React.useMemo(() => {
+    return tickets.map((t) => {
+      const iso = t.date.split("T")[0];
+      const day = Number(iso.split("-")[2]);
+      const day3 = t.day.slice(0, 3);
+      const dayName = day3.charAt(0).toUpperCase() + day3.slice(1).toLowerCase();
+      return { day, dayName, date: iso };
+    });
+  }, [tickets]);
+
   const tabsData: { id: TicketType; label: string }[] = [
     { id: "standard", label: "Standard Ticket" },
     { id: "pro", label: "Pro Ticket" },
@@ -63,7 +73,7 @@ const TicketsSelection = ({
 
         <div className="mt-6">
           <DatePicker
-            mode={activeTab}
+            dates={dates}
             selectedDates={selectedDates}
             availableDateKeys={availableDateKeys}
             onSelectionChange={handleDateSelectionChange}
