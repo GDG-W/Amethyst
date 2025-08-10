@@ -2,10 +2,7 @@
 import React from "react";
 import { Check } from "lucide-react";
 
-import { TicketType } from "@/types/ticket";
-
 type DateType = {
-  id: string;
   day: number;
   dayName: string;
   date: string;
@@ -62,36 +59,27 @@ const DateButton = ({
 };
 
 const DatePicker = ({
-  mode = "standard",
+  dates = [],
   selectedDates = [],
   onSelectionChange,
   className = "",
   availableDateKeys,
 }: {
-  mode?: TicketType;
+  dates?: DateType[];
   selectedDates?: string[];
   onSelectionChange?: (selectedDates: string[]) => void;
   className?: string;
   availableDateKeys?: Set<string>;
 }) => {
-  // Dates for Devfest 2025
-  const dates = [
-    { id: "tue-18", day: 18, dayName: "Tue", date: "2025-11-18" },
-    { id: "wed-19", day: 19, dayName: "Wed", date: "2025-11-19" },
-    { id: "thu-20", day: 20, dayName: "Thu", date: "2025-11-20" },
-    { id: "fri-21", day: 21, dayName: "Fri", date: "2025-11-21" },
-    { id: "sat-22", day: 22, dayName: "Sat", date: "2025-11-22" },
-  ];
-
-  const handleDateClick = (date: { id: string; dayName: string }) => {
+  const handleDateClick = (date: DateType) => {
+    const iso = date.date;
     let newSelection = [...selectedDates];
-    if (selectedDates.includes(date.id))
-      newSelection = selectedDates.filter((id) => id !== date.id);
-    else newSelection.push(date.id);
+    if (selectedDates.includes(iso)) newSelection = selectedDates.filter((d) => d !== iso);
+    else newSelection.push(iso);
     onSelectionChange?.(newSelection);
   };
 
-  const isDateDisabled = (date: { id?: string; day?: number; dayName: string; date?: string }) => {
+  const isDateDisabled = (date: DateType) => {
     const isAvailable = availableDateKeys
       ? date.date
         ? availableDateKeys.has(date.date)
@@ -120,9 +108,9 @@ const DatePicker = ({
       <div className="grid grid-cols-5 gap-2 sm:gap-3">
         {dates.map((date) => (
           <DateButton
-            key={date.id}
+            key={date.day}
             date={date}
-            isSelected={selectedDates.includes(date.id)}
+            isSelected={selectedDates.includes(date.date)}
             isDisabled={isDateDisabled(date)}
             onClick={handleDateClick}
           />
