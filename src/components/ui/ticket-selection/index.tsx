@@ -27,15 +27,16 @@ const TicketsSelection = ({
     return set;
   }, [tickets]);
 
-  const dates = React.useMemo(() => {
-    return tickets.map((t) => {
-      const iso = t.date.split("T")[0];
-      const day = Number(iso.split("-")[2]);
-      const day3 = t.day.slice(0, 3);
-      const dayName = day3.charAt(0).toUpperCase() + day3.slice(1).toLowerCase();
-      return { day, dayName, date: iso };
-    });
-  }, [tickets]);
+  const dates = React.useMemo(
+    () => [
+      { day: 18, dayName: "Tue", date: "2025-11-18" },
+      { day: 19, dayName: "Wed", date: "2025-11-19" },
+      { day: 20, dayName: "Thu", date: "2025-11-20" },
+      { day: 21, dayName: "Fri", date: "2025-11-21" },
+      { day: 22, dayName: "Sat", date: "2025-11-22" },
+    ],
+    []
+  );
 
   const tabsData: { id: TicketType; label: string }[] = [
     { id: "standard", label: "Standard Ticket" },
