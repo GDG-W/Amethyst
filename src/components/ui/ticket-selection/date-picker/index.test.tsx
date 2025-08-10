@@ -96,58 +96,41 @@ describe("DatePicker", () => {
     });
   });
 
-  describe("Pro Mode", () => {
-    it("only allows Thursday to be selected", () => {
-      render(
-        <DatePicker mode="pro" selectedDates={[]} onSelectionChange={mockOnSelectionChange} />
-      );
-
-      // Try clicking non-Thursday dates
-      fireEvent.click(screen.getByText("18")); // Tuesday
-      expect(mockOnSelectionChange).not.toHaveBeenCalled();
-
-      fireEvent.click(screen.getByText("19")); // Wednesday
-      expect(mockOnSelectionChange).not.toHaveBeenCalled();
-
-      // Click Thursday
-      fireEvent.click(screen.getByText("20")); // Thursday
-      expect(mockOnSelectionChange).toHaveBeenCalledWith(["thu-20"]);
-    });
-
-    it("disables non-Thursday buttons", () => {
-      render(<DatePicker mode="pro" />);
-
-      const tuesdayButton = screen.getByText("18").closest("button");
-      const wednesdayButton = screen.getByText("19").closest("button");
-      const thursdayButton = screen.getByText("20").closest("button");
-      const fridayButton = screen.getByText("21").closest("button");
-      const saturdayButton = screen.getByText("22").closest("button");
-
-      expect(tuesdayButton).toBeDisabled();
-      expect(wednesdayButton).toBeDisabled();
-      expect(thursdayButton).not.toBeDisabled();
-      expect(fridayButton).toBeDisabled();
-      expect(saturdayButton).toBeDisabled();
-    });
-
-    it("shows disabled styling for non-Thursday dates", () => {
-      render(<DatePicker mode="pro" />);
-
-      const tuesdayButton = screen.getByText("18").closest("button");
-      expect(tuesdayButton).toHaveClass("opacity-40", "cursor-not-allowed");
-    });
-
-    it("can deselect Thursday when clicked again", () => {
+  describe("Availability-driven behavior", () => {
+    it("enables only available dates in pro mode", () => {
       render(
         <DatePicker
           mode="pro"
-          selectedDates={["thu-20"]}
+          availableDateKeys={new Set(["2025-11-20"])}
+          selectedDates={[]}
           onSelectionChange={mockOnSelectionChange}
         />
       );
 
+      // Tue and Wed disabled; Thu enabled
+      expect(screen.getByText("18").closest("button")).toBeDisabled();
+      expect(screen.getByText("19").closest("button")).toBeDisabled();
+      expect(screen.getByText("20").closest("button")).not.toBeDisabled();
+
       fireEvent.click(screen.getByText("20"));
-      expect(mockOnSelectionChange).toHaveBeenCalledWith([]);
+      expect(mockOnSelectionChange).toHaveBeenCalledWith(["thu-20"]);
+    });
+
+    it("enables only provided dates in standard mode", () => {
+      render(
+        <DatePicker
+          mode="standard"
+          availableDateKeys={new Set(["2025-11-18", "2025-11-21"])}
+          selectedDates={[]}
+          onSelectionChange={mockOnSelectionChange}
+        />
+      );
+
+      expect(screen.getByText("18").closest("button")).not.toBeDisabled();
+      expect(screen.getByText("19").closest("button")).toBeDisabled();
+      expect(screen.getByText("20").closest("button")).toBeDisabled();
+      expect(screen.getByText("21").closest("button")).not.toBeDisabled();
+      expect(screen.getByText("22").closest("button")).toBeDisabled();
     });
   });
 
@@ -171,7 +154,7 @@ describe("DatePicker", () => {
     });
 
     it("does not show any check icon containers for disabled dates", () => {
-      render(<DatePicker mode="pro" />);
+      render(<DatePicker mode="pro" availableDateKeys={new Set(["2025-11-20"])} />);
       const disabledButton = screen.getByText("18").closest("button");
       // Should not have either the white or gray check containers
       const whiteContainer = disabledButton?.querySelector(".bg-white.rounded-full");

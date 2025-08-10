@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import { Check } from "lucide-react";
 
@@ -43,7 +44,7 @@ const DateButton = ({
           </div>
         </div>
 
-        <div className="ml-1 flex items-center sm:ml-0">
+        <div className="ml-1 flex min-w-5 items-center justify-center sm:ml-0">
           {isSelected && (
             <div className="rounded-full bg-white p-0.5 transition-opacity duration-200 sm:p-1">
               <Check className="h-2.5 w-2.5 text-[#F6B51E] sm:h-3 sm:w-3" />
@@ -65,11 +66,13 @@ const DatePicker = ({
   selectedDates = [],
   onSelectionChange,
   className = "",
+  availableDateKeys,
 }: {
   mode?: TicketType;
   selectedDates?: string[];
   onSelectionChange?: (selectedDates: string[]) => void;
   className?: string;
+  availableDateKeys?: Set<string>;
 }) => {
   // Dates for Devfest 2025
   const dates = [
@@ -82,29 +85,19 @@ const DatePicker = ({
 
   const handleDateClick = (date: { id: string; dayName: string }) => {
     let newSelection = [...selectedDates];
-
-    if (mode === "standard") {
-      // Standard mode: toggle date selection
-      if (selectedDates.includes(date.id)) {
-        newSelection = selectedDates.filter((id) => id !== date.id);
-      } else {
-        newSelection.push(date.id);
-      }
-    } else if (mode === "pro") {
-      // Pro mode: only Thursday can be selected
-      if (date.dayName === "Thu") {
-        newSelection = selectedDates.includes(date.id) ? [] : [date.id];
-      }
-    }
-
+    if (selectedDates.includes(date.id))
+      newSelection = selectedDates.filter((id) => id !== date.id);
+    else newSelection.push(date.id);
     onSelectionChange?.(newSelection);
   };
 
   const isDateDisabled = (date: { id?: string; day?: number; dayName: string; date?: string }) => {
-    if (mode === "pro") {
-      return date.dayName !== "Thu";
-    }
-    return false;
+    const isAvailable = availableDateKeys
+      ? date.date
+        ? availableDateKeys.has(date.date)
+        : false
+      : true;
+    return !isAvailable;
   };
 
   const getSelectionCount = () => {
