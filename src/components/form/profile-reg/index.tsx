@@ -8,17 +8,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import TextField from "@/components/ui/inputs/text-field";
 import Card from "@/components/ui/card";
 import SelectField from "@/components/ui/inputs/select";
-
-const profileSchema = z.object({
-  fullName: z
-    .string()
-    .min(1, "Full name is required")
-    .min(2, "Full name must be at least 2 characters"),
-  email: z.string().min(1, "Email address is required").email("Please enter a valid email address"),
-  gender: z.string().min(1, "Gender is required"),
-  role: z.string().min(1, "Role is required"),
-  experienceLevel: z.string().min(1, "Experience level is required"),
-});
+import { profileSchema } from "@/schemas/profileSchema";
 
 type FormData = z.infer<typeof profileSchema>;
 
@@ -167,6 +157,7 @@ const ProfileRegistration: React.FC<ProfileRegistrationProps> = ({
                   }
             }
             error={genderError?.message}
+            disabled={isFieldReadonly("gender")}
           />
 
           <SelectField
@@ -183,6 +174,7 @@ const ProfileRegistration: React.FC<ProfileRegistrationProps> = ({
                   }
             }
             error={roleError?.message}
+            disabled={isFieldReadonly("role")}
           />
 
           <SelectField
@@ -199,6 +191,7 @@ const ProfileRegistration: React.FC<ProfileRegistrationProps> = ({
                   }
             }
             error={experienceLevelError?.message}
+            disabled={isFieldReadonly("experienceLevel")}
           />
         </div>
       </form>

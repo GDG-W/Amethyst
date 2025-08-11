@@ -10,17 +10,10 @@ import Checkbox from "@/components/ui/inputs/checkbox";
 
 import Card from "@/components/ui/card";
 
-import AttendeesInfo from "../attendees-info";
-import ProfileRegistration from "../profile-reg";
+import { buyerSchema } from "@/schemas/buyerSchema";
 
-const buyerSchema = z.object({
-  fullName: z
-    .string()
-    .min(1, "Full name is required")
-    .min(2, "Full name must be at least 2 characters"),
-  email: z.string().min(1, "Email address is required").email("Please enter a valid email address"),
-  belongsToMe: z.boolean(),
-});
+import ProfileRegistration from "../profile-reg";
+import AttendeeInfo from "../attendee-info";
 
 type FormData = z.infer<typeof buyerSchema>;
 
@@ -110,7 +103,7 @@ const BuyerInformation = () => {
             readonlyFields={["fullName", "email"]}
           />
         ) : (
-          <AttendeesInfo />
+          <AttendeeInfo selectedDates={[]} />
         )}
       </div>
     </div>
