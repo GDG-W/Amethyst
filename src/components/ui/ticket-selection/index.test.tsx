@@ -214,8 +214,8 @@ describe("TicketsSelection", () => {
     });
   });
 
-  describe("Tab Switching Clears Selection", () => {
-    it("clears selected dates when switching from standard to pro", () => {
+  describe("Tab Switching Keeps Selection", () => {
+    it("keeps selected dates when switching from standard to pro", () => {
       renderControlled();
 
       // Switch to standard and select dates
@@ -227,12 +227,12 @@ describe("TicketsSelection", () => {
       // Switch to pro mode
       fireEvent.click(screen.getByTestId("tab-pro"));
 
-      // Selection should be cleared
+      // Selection should be kept
       selectedCount = screen.getByTestId("selected-count");
-      expect(selectedCount).toHaveTextContent("0");
+      expect(selectedCount).toHaveTextContent("1");
     });
 
-    it("clears selected dates when switching from pro to standard", () => {
+    it("keeps selected dates when switching from pro to standard", () => {
       renderControlled();
 
       // Switch to pro and select dates
@@ -244,9 +244,9 @@ describe("TicketsSelection", () => {
       // Switch to standard mode
       fireEvent.click(screen.getByTestId("tab-standard"));
 
-      // Selection should be cleared
+      // Selection should be kept
       selectedCount = screen.getByTestId("selected-count");
-      expect(selectedCount).toHaveTextContent("0");
+      expect(selectedCount).toHaveTextContent("1");
     });
   });
 
