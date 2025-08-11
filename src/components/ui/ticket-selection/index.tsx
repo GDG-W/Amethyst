@@ -54,7 +54,6 @@ const TicketsSelection = ({
 
   const handleTabChange = (tabId: string) => {
     const newTab = tabId as TicketType;
-    if (newTab !== activeTab) onSelectionChange([]);
     onTabChange(newTab);
   };
 
