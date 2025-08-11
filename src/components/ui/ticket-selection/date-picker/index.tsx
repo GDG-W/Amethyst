@@ -41,15 +41,15 @@ const DateButton = ({
           </div>
         </div>
 
-        <div className="ml-1 flex min-w-5 items-center justify-center sm:ml-0">
+        <div className="flex min-w-4 items-center justify-center sm:min-w-5">
           {isSelected && (
             <div className="rounded-full bg-white p-0.5 transition-opacity duration-200 sm:p-1">
-              <Check className="h-2.5 w-2.5 text-[#F6B51E] sm:h-3 sm:w-3" />
+              <Check className="h-2 w-2 text-[#F6B51E] sm:h-3 sm:w-3" />
             </div>
           )}
           {!isSelected && !isDisabled && (
             <div className="rounded-full bg-[#E2E4E9] p-0.5 opacity-0 transition-opacity duration-200 group-hover:opacity-100 sm:p-1">
-              <Check className="h-2.5 w-2.5 text-white sm:h-3 sm:w-3" />
+              <Check className="h-2 w-2 text-white sm:h-3 sm:w-3" />
             </div>
           )}
         </div>
