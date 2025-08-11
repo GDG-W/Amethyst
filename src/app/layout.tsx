@@ -27,7 +27,7 @@ export default function RootLayout({
         className={`${inter.variable} md:rounded-2.5xl min-h-dvh bg-cover bg-no-repeat px-5 antialiased md:min-h-[95dvh]`}
       >
         <RQProvider>
-          <div className="mx-auto max-w-4xl pt-8 md:pt-14">{children}</div>
+          <div className="mx-auto max-w-4xl pt-8 pb-6 md:pt-14">{children}</div>
         </RQProvider>
       </body>
     </html>
