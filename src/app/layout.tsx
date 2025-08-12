@@ -19,12 +19,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang='en' className='md:mx-5 md:my-3'>
+    <html lang="en" className="md:mx-5 md:my-3">
       <body
         style={{ backgroundImage: "url('/bg.png')" }}
         className={`${inter.variable} md:rounded-2.5xl min-h-dvh bg-cover bg-no-repeat px-5 antialiased md:min-h-[95dvh]`}
       >
-        <div className='mx-auto max-w-4xl pt-8 md:pt-14'>{children}</div>
+        <div className="mx-auto max-w-4xl pt-8 md:pt-14">{children}</div>
       </body>
     </html>
   );
