@@ -14,7 +14,7 @@ describe("Checkbox", () => {
   });
 
   it("renders with label", () => {
-    render(<Checkbox {...defaultProps} label='Accept terms' />);
+    render(<Checkbox {...defaultProps} label="Accept terms" />);
 
     const label = screen.getByText("Accept terms");
     const input = screen.getByRole("checkbox");

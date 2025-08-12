@@ -20,7 +20,7 @@ describe("MultiInput", () => {
   });
 
   it("renders with label and placeholder", () => {
-    render(<MultiInput {...defaultProps} extraLabel='(optional)' />);
+    render(<MultiInput {...defaultProps} extraLabel="(optional)" />);
     expect(screen.getByText("Tags")).toBeInTheDocument();
     expect(screen.getByText("(optional)")).toBeInTheDocument();
     expect(screen.getByPlaceholderText("Select options")).toBeInTheDocument();
