@@ -19,7 +19,7 @@ describe("TextField", () => {
   });
 
   it("renders the extra label when provided", () => {
-    render(<TextField {...defaultProps} extraLabel='(optional)' />);
+    render(<TextField {...defaultProps} extraLabel="(optional)" />);
     expect(screen.getByText("(optional)")).toBeInTheDocument();
   });
 
@@ -31,12 +31,12 @@ describe("TextField", () => {
   });
 
   it("shows error message when error is passed", () => {
-    render(<TextField {...defaultProps} error='This field is required' />);
+    render(<TextField {...defaultProps} error="This field is required" />);
     expect(screen.getByText("This field is required")).toBeInTheDocument();
   });
 
   it("shows helperText when no error is passed", () => {
-    render(<TextField {...defaultProps} helperText='Helpful tip' />);
+    render(<TextField {...defaultProps} helperText="Helpful tip" />);
     expect(screen.getByText("Helpful tip")).toBeInTheDocument();
   });
 
@@ -46,7 +46,7 @@ describe("TextField", () => {
   });
 
   it("applies error styles when error is present", () => {
-    render(<TextField {...defaultProps} error='Invalid input' />);
+    render(<TextField {...defaultProps} error="Invalid input" />);
     const input = screen.getByLabelText("Test Label");
     expect(input.className).toMatch(/border-red-500/);
   });

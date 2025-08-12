@@ -17,17 +17,17 @@ describe("Button Component", () => {
   });
 
   it("applies the secondary variant class", () => {
-    render(<Button variant='secondary'>Secondary</Button>);
+    render(<Button variant="secondary">Secondary</Button>);
     const button = screen.getByRole("button");
     expect(button).toHaveClass("border-away-base");
   });
   it("applies the primary variant class", () => {
-    render(<Button variant='primary'>Primary</Button>);
+    render(<Button variant="primary">Primary</Button>);
     const button = screen.getByRole("button");
     expect(button).toHaveClass("bg-away-base");
   });
   it("applies the link variant class", () => {
-    render(<Button variant='link'>Link</Button>);
+    render(<Button variant="link">Link</Button>);
     const button = screen.getByRole("button");
     expect(button).toHaveClass("bg-transparent");
   });
@@ -50,7 +50,7 @@ describe("Button Component", () => {
     render(
       <Button loading onClick={handleClick}>
         Loading...
-      </Button>,
+      </Button>
     );
     fireEvent.click(screen.getByRole("button"));
     expect(handleClick).not.toHaveBeenCalled();
@@ -63,7 +63,7 @@ describe("Button Component", () => {
   });
 
   it("applies the fit size class when specified", () => {
-    render(<Button size='fit'>Fit</Button>);
+    render(<Button size="fit">Fit</Button>);
     const button = screen.getByRole("button");
     expect(button).toHaveClass("w-fit");
   });

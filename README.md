@@ -129,19 +129,19 @@ Use icons as React components rather than importing SVGs as raw images. This ena
 ```tsx
 const SelectIcon: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
   <svg
-    width='16'
-    height='17'
-    viewBox='0 0 16 17'
-    fill='none'
-    xmlns='http://www.w3.org/2000/svg'
+    width="16"
+    height="17"
+    viewBox="0 0 16 17"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
     {...props}
   >
     <path
-      d='M13.3334 5.83301L8.25128 11.0592C8.2183 11.0932 8.17913 11.1201 8.13602 11.1385C8.09291 11.1569 8.04669 11.1663 8.00002 11.1663C7.95335 11.1663 7.90713 11.1569 7.86402 11.1385C7.82091 11.1201 7.78174 11.0932 7.74876 11.0592L2.66669 5.83301'
-      stroke='currentColor'
-      strokeWidth='1.33'
-      strokeLinecap='round'
-      strokeLinejoin='round'
+      d="M13.3334 5.83301L8.25128 11.0592C8.2183 11.0932 8.17913 11.1201 8.13602 11.1385C8.09291 11.1569 8.04669 11.1663 8.00002 11.1663C7.95335 11.1663 7.90713 11.1569 7.86402 11.1385C7.82091 11.1201 7.78174 11.0932 7.74876 11.0592L2.66669 5.83301"
+      stroke="currentColor"
+      strokeWidth="1.33"
+      strokeLinecap="round"
+      strokeLinejoin="round"
     />
   </svg>
 );
