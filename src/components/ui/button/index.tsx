@@ -5,11 +5,13 @@ type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
   loading?: boolean;
   size?: "full" | "fit";
   variant?: "primary" | "secondary" | "link";
+  height?: "sixty" | "auto";
 };
 const Button = ({
   children,
   disabled,
   size = "full",
+  height = "auto",
   loading = false,
   variant = "primary",
   ...rest
@@ -18,6 +20,10 @@ const Button = ({
     sizes: {
       full: "w-full",
       fit: "w-fit",
+    },
+    height: {
+      sixty: "h-[45px] sm:h-[60px]",
+      auto: "auto",
     },
     variants: {
       primary: "bg-away-base text-white",
@@ -31,11 +37,11 @@ const Button = ({
   return (
     <button
       disabled={isDisabled}
-      className={`disabled:bg-bg-soft-200 flex min-w-30 items-center justify-center gap-2 rounded-full px-6 py-2.5 capitalize hover:opacity-80 disabled:cursor-not-allowed disabled:text-white ${buttonStyles.variants[variant]} ${buttonStyles.sizes[size]}`}
+      className={`disabled:bg-soft-200 flex min-w-30 cursor-pointer items-center justify-center gap-2 rounded-full px-6 py-2.5 capitalize hover:opacity-80 disabled:cursor-not-allowed disabled:text-white ${buttonStyles.variants[variant]} ${buttonStyles.sizes[size]} ${buttonStyles.height[height]}`}
       {...rest}
     >
       {loading ? (
-        <span className="h-5 w-5 animate-spin rounded-full border-2 border-white border-t-transparent"></span>
+        <span className="size-5 animate-spin rounded-full border-2 border-white border-t-transparent"></span>
       ) : (
         children
       )}

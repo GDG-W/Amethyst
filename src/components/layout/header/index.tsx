@@ -25,7 +25,7 @@ const Header = () => {
             </Link>
           </>
         ) : null}
-        {pathname === "/claim" || pathname === "/upgrade" ? (
+        {["/claim", "/upgrade", "/login"].includes(pathname) ? (
           <Button size="fit">
             <Link href="/buy">Buy Tickets!</Link>
           </Button>
