@@ -1,0 +1,25 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`Button Component Snapshots matches snapshot for ghost variant 1`] = `
+<button
+  class="p-4 h-[52px] md:h-[3.75rem] items-cente flex  rounded-full heading-6 border-4 transition-all duration-200 hover:scale-105 font-akira bg-[#1E1E1E] border-none text-white  "
+>
+  Ghost Button
+</button>
+`;
+
+exports[`Button Component Snapshots matches snapshot for primary variant 1`] = `
+<button
+  class="p-4 h-[52px] md:h-[3.75rem] items-cente flex  rounded-full heading-6 border-4 transition-all duration-200 hover:scale-105 font-akira bg-[#F6B51E] border-[#1E1E1E] text-sm md:text-base w-[10.9375rem] md:w-[16.125rem]  "
+>
+  Primary Button
+</button>
+`;
+
+exports[`Button Component Snapshots matches snapshot for secondary variant 1`] = `
+<button
+  class="p-4 h-[52px] md:h-[3.75rem] items-cente flex  rounded-full heading-6 border-4 transition-all duration-200 hover:scale-105 font-akira bg-[#1E1E1E] border-2 border-white text-white w-[13.81rem] "
+>
+  Secondary Button
+</button>
+`;
