@@ -1,6 +1,8 @@
 import { Inter } from "next/font/google";
 
 import "./globals.css";
+import Toaster from "@/components/ui/toast";
+
 import type { Metadata } from "next";
 
 const inter = Inter({
@@ -27,6 +29,7 @@ export default function RootLayout({
         >
           <div className="mx-auto max-w-4xl pt-8 md:pt-14">{children}</div>
         </div>
+        <Toaster />
         <div id="modal-root" />
       </body>
     </html>
