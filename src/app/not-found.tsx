@@ -1,9 +1,6 @@
-"use client";
-import React from "react";
-
-import { useRouter } from "next/navigation";
-
 import localFont from "next/font/local";
+
+import Link from "next/link";
 
 import { EyesIcon } from "@/components/icons/eyes";
 import Button from "@/components/ui/button";
@@ -15,7 +12,6 @@ const akira = localFont({
 });
 
 const NotFound = () => {
-  const navigator = useRouter();
   return (
     <section>
       <Header />
@@ -27,9 +23,9 @@ const NotFound = () => {
           404, Page not found.
         </h3>
         <div className="mx-auto mt-10 w-full max-w-[330px]">
-          <Button onClick={() => navigator.push("/buy")} size="full">
-            Buy ticket
-          </Button>
+          <Link href={"/buy"}>
+            <Button size="full">Buy ticket</Button>
+          </Link>
         </div>
       </div>
     </section>
