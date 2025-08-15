@@ -1,15 +1,8 @@
-import localFont from "next/font/local";
-
 import Link from "next/link";
 
 import { EyesIcon } from "@/components/icons/eyes";
 import Button from "@/components/ui/button";
 import Header from "@/components/layout/header";
-
-const akira = localFont({
-  src: "../components/fonts/Akira-Expanded-Demo.otf",
-  display: "swap",
-});
 
 const NotFound = () => {
   return (
@@ -18,7 +11,7 @@ const NotFound = () => {
       <div className="max-width-5xl mx-auto my-15">
         <EyesIcon className="mx-auto w-full max-w-xl" />
         <h3
-          className={`text-strong-950 my-7 text-center sm:text-4xl ${akira.className} text-2xl uppercase`}
+          className={`text-strong-950 font-akira my-7 text-center text-2xl uppercase sm:text-4xl`}
         >
           404, Page not found.
         </h3>
