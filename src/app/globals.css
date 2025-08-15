@@ -468,3 +468,7 @@
 @utility shadow-checked {
   box-shadow: 0px 2px 2px 0px #16266452 inset;
 }
+
+@utility font-akira {
+  font-family: var(--font-akira), sans-serif;
+}
