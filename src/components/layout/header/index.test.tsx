@@ -13,8 +13,8 @@ jest.mock(
   "@/components/icons/logo",
   () =>
     function MockLogo() {
-      return <div data-testid='logo'>Logo</div>;
-    },
+      return <div data-testid="logo">Logo</div>;
+    }
 );
 
 const mockedUsePathname = usePathname as jest.Mock;
