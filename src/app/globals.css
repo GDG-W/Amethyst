@@ -257,6 +257,8 @@
 }
 
 @theme inline {
+  /* Fonts */
+  --font-akira: var(--font-akira);
   /* Base colors */
   --color-background: var(--background);
   --color-foreground: var(--foreground);
