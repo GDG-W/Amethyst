@@ -15,7 +15,7 @@ export const metadata: Metadata = {
   description: "Purchase your tickets to attend one of the biggest tech conferences in Africa",
 };
 const akira = localFont({
-  src: "./components/fonts/Akira-Expanded-Demo.otf",
+  src: "../components/fonts/Akira-Expanded-Demo.otf",
   variable: "--font-akira",
   display: "swap",
 });
