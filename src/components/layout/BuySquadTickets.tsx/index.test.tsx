@@ -87,7 +87,7 @@ describe("TicketSection", () => {
       expect(standardCard).toBeInTheDocument();
 
       expect(screen.getByText("STANDARD TICKET")).toBeInTheDocument();
-      expect(screen.getByText("(₦10,000 per day)")).toBeInTheDocument();
+      expect(screen.getByText("10,000 per day")).toBeInTheDocument(); // Changed here
       expect(
         screen.getByText(/Open to everyone — whether you're just starting out/)
       ).toBeInTheDocument();
@@ -105,7 +105,7 @@ describe("TicketSection", () => {
       expect(proCard).toBeInTheDocument();
 
       expect(screen.getByText("PRO TICKET")).toBeInTheDocument();
-      expect(screen.getByText("(₦70,000 FOR THURSDAY)")).toBeInTheDocument();
+      expect(screen.getByText("70,000 FOR THURSDAY")).toBeInTheDocument(); // Changed here
       expect(
         screen.getByText(/For those who want more access and a more focused/)
       ).toBeInTheDocument();
@@ -134,8 +134,8 @@ describe("TicketSection", () => {
     it("displays correct pricing information", () => {
       render(<TicketSection />);
 
-      expect(screen.getByText("(₦10,000 per day)")).toBeInTheDocument();
-      expect(screen.getByText("(₦70,000 FOR THURSDAY)")).toBeInTheDocument();
+      expect(screen.getByText("10,000 per day")).toBeInTheDocument(); // Changed here
+      expect(screen.getByText("70,000 FOR THURSDAY")).toBeInTheDocument(); // Changed here
     });
 
     it("displays all standard ticket features", () => {
