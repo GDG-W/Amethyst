@@ -77,30 +77,30 @@ export default function MultiInput({
   };
 
   return (
-    <div className='flex min-w-[400px] flex-col gap-2' data-testid='multi-input-container'>
+    <div className="flex min-w-[400px] flex-col gap-2" data-testid="multi-input-container">
       {label && (
-        <label htmlFor={id} className='label-3 block font-medium tracking-tight'>
-          <span className='mr-2'>{label}</span>
-          {extraLabel && <span className='text-sm text-gray-500'>{extraLabel}</span>}
+        <label htmlFor={id} className="label-3 block font-medium tracking-tight">
+          <span className="mr-2">{label}</span>
+          {extraLabel && <span className="text-sm text-gray-500">{extraLabel}</span>}
         </label>
       )}
-      <div className='w-full'>
+      <div className="w-full">
         <div
           className={cn(
             "flex max-h-[100px] w-full flex-wrap items-center gap-2 overflow-scroll rounded-[8px] border px-4 py-3.5 text-base tracking-tight",
-            err ? "border-red-500" : "border-soft-200",
+            err ? "border-red-500" : "border-soft-200"
           )}
           onClick={() => inputRef.current?.focus()}
         >
           {value.map((item) => (
             <span
               key={item}
-              className='text-strong-950 bg-away-lighter flex items-center gap-1 rounded-full px-2 py-1.5 text-xs'
+              className="text-strong-950 bg-away-lighter flex items-center gap-1 rounded-full px-2 py-1.5 text-xs"
             >
               {item}
-              <button type='button' onClick={() => handleRemove(item)}>
-                <span className='sr-only'>close</span>
-                <Close className='h-4 w-4' />
+              <button type="button" onClick={() => handleRemove(item)}>
+                <span className="sr-only">close</span>
+                <Close className="h-4 w-4" />
               </button>
             </span>
           ))}
@@ -110,7 +110,7 @@ export default function MultiInput({
             onChange={(e) => setInput(e.target.value)}
             onKeyDown={handleKeyDown}
             onPaste={handlePaste}
-            className='placeholder:text-soft-400 flex-1 bg-transparent outline-none'
+            className="placeholder:text-soft-400 flex-1 bg-transparent outline-none"
             placeholder={placeholder}
           />
         </div>
@@ -118,10 +118,10 @@ export default function MultiInput({
         {err && (
           <div
             className={"mt-1 flex items-start gap-1 tracking-tight text-red-500"}
-            data-testid='error-message'
+            data-testid="error-message"
           >
             <AlertIcon className={"h-4 w-4 text-red-500"} />
-            <p className='text-xs'>{err}</p>
+            <p className="text-xs">{err}</p>
           </div>
         )}
       </div>

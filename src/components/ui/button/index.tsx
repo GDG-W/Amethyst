@@ -35,7 +35,7 @@ const Button = ({
       {...rest}
     >
       {loading ? (
-        <span className='h-5 w-5 animate-spin rounded-full border-2 border-white border-t-transparent'></span>
+        <span className="h-5 w-5 animate-spin rounded-full border-2 border-white border-t-transparent"></span>
       ) : (
         children
       )}
