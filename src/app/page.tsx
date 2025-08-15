@@ -10,6 +10,7 @@ import MultiInput from "@/components/ui/inputs/multi-input";
 import Select from "@/components/ui/inputs/select";
 import TextField from "@/components/ui/inputs/text-field";
 import SuccessCard from "@/components/ui/success-card";
+import { toast } from "@/components/ui/toast";
 const options = [
   { label: "Option 1", value: "one" },
   { label: "Option 2", value: "two" },
@@ -56,6 +57,17 @@ export default function Home() {
           onChange={setSelected}
           placeholder="Select your level of experience"
         />
+
+        <button
+          onClick={() => {
+            toast.error(
+              "Something went wrong!",
+              "We couldn't complete your request right now. Please try again"
+            );
+          }}
+        >
+          show toast
+        </button>
 
         <MultiInput
           label="Email Addresses"
