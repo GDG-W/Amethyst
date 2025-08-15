@@ -29,7 +29,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="">
       <body className={`${inter.variable} ${akira.variable} `}>
-        <div className="mx-auto max-w-7xl">{children}</div>
+        <div className="">{children}</div>
       </body>
     </html>
   );

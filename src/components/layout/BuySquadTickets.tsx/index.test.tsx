@@ -45,13 +45,12 @@ describe("TicketSection", () => {
       const section = screen.getByRole("region");
       expect(section).toHaveClass(
         "flex",
+        "min-h-screen",
         "w-full",
         "flex-col",
         "items-center",
         "justify-center",
-        "gap-[3.0625rem]",
-        "bg-[#1E1E1E]",
-        "py-20"
+        "bg-[#1E1E1E]"
       );
     });
 
