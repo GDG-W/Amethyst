@@ -25,7 +25,10 @@ function CustomErrorToast({ title, message }: CustomToastProps) {
 
 export const toast = {
   error: (title: string, message: string) => {
-    return sonnerToast.custom((id) => <CustomErrorToast id={id} title={title} message={message} />);
+    return sonnerToast.custom(
+      (id) => <CustomErrorToast id={id} title={title} message={message} />,
+      { position: "top-right" }
+    );
   },
 };
 

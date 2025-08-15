@@ -2,22 +2,29 @@ import React from "react";
 import { useForm, Controller, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
-import ClaimTicketSchema, { ClaimTicketFormData } from "@/schemas/claim-ticket.schema";
-
 import { GenderOptions, RoleOptions, ExperienceLevelOptions } from "@/constants/options";
+import ClaimTicketSchema, { ClaimTicketFormData } from "@/schemas/claim-ticket.schema";
+import claimTicket from "@/services/claim-ticket.service";
 
-import TextField from "../ui/inputs/text-field";
 import SelectField from "../ui/inputs/select";
+import TextField from "../ui/inputs/text-field";
+import { toast } from "../ui/toast";
 
 const defaultValues = Object.freeze({
-  fullName: "",
-  email: "",
+  fullname: "",
+  // email: "",
   gender: undefined,
   role: undefined,
-  experienceLevel: undefined,
+  experience: undefined,
 } as const);
 
-const ClaimTicketForm = ({ formCallbackFn }: { formCallbackFn: () => Promise<void> }) => {
+const ClaimTicketForm = ({
+  token,
+  formCallbackFn,
+}: {
+  token: string;
+  formCallbackFn: () => Promise<void>;
+}) => {
   const {
     register,
     control,
@@ -31,44 +38,63 @@ const ClaimTicketForm = ({ formCallbackFn }: { formCallbackFn: () => Promise<voi
   });
   const onSubmit: SubmitHandler<ClaimTicketFormData> = async (data) => {
     try {
-      console.log("Form Data:", data);
-      await new Promise((res) => setTimeout(res, 1000));
+      const submitForm = await claimTicket({
+        token,
+        ...data,
+      });
 
-      await formCallbackFn();
-      reset(defaultValues);
+      if (submitForm === true) {
+        await formCallbackFn();
+        reset(defaultValues);
+      } else {
+        toast.error(
+          "Something went wrong!",
+          submitForm ?? "We couldn't complete your request right now. Please try again"
+        );
+      }
     } catch (error) {
-      console.log(error);
+      if (error instanceof Error) {
+        toast.error(
+          "Something went wrong!",
+          error.message ?? "We couldn't complete your request right now. Please try again"
+        );
+        return;
+      }
+      toast.error(
+        "Something went wrong!",
+        "We couldn't complete your request right now. Please try again"
+      );
     }
   };
 
   return (
     <form
-      className='mt-6 space-y-6 rounded-[0.5rem] border border-solid border-(--stroke-soft-200) bg-(--static-white) p-5 md:mt-9'
+      className="mt-6 space-y-6 rounded-[0.5rem] border border-solid border-(--stroke-soft-200) bg-(--static-white) p-5 md:mt-9"
       onSubmit={handleSubmit(onSubmit)}
     >
       <TextField
-        id='fullname'
-        label='Full name'
-        placeholder='Enter full name'
-        error={errors.fullName?.message}
-        {...register("fullName")}
+        id="fullname"
+        label="Full name"
+        placeholder="Enter full name"
+        error={errors.fullname?.message}
+        {...register("fullname")}
       />
-      <TextField
-        id='emailaddress'
-        label='Email address'
-        placeholder='Enter email address'
-        type='email'
+      {/* <TextField
+        id="emailaddress"
+        label="Email address"
+        placeholder="Enter email address"
+        type="email"
         error={errors.email?.message}
         {...register("email")}
-      />
+      /> */}
       <Controller
-        name='gender'
+        name="gender"
         control={control}
         render={({ field }) => (
           <SelectField
-            id='gender'
-            label='Gender'
-            placeholder='Select'
+            id="gender"
+            label="Gender"
+            placeholder="Select"
             options={GenderOptions}
             error={errors.gender?.message}
             value={field.value}
@@ -77,13 +103,13 @@ const ClaimTicketForm = ({ formCallbackFn }: { formCallbackFn: () => Promise<voi
         )}
       />
       <Controller
-        name='role'
+        name="role"
         control={control}
         render={({ field }) => (
           <SelectField
-            id='role'
-            label='Role'
-            placeholder='Select your role'
+            id="role"
+            label="Role"
+            placeholder="Select your role"
             options={RoleOptions}
             error={errors.role?.message}
             value={field.value}
@@ -92,15 +118,15 @@ const ClaimTicketForm = ({ formCallbackFn }: { formCallbackFn: () => Promise<voi
         )}
       />
       <Controller
-        name='experienceLevel'
+        name="experience"
         control={control}
         render={({ field }) => (
           <SelectField
-            id='experienceLevel'
-            label='Experience level'
-            placeholder='select your level of experience'
+            id="experience"
+            label="Experience level"
+            placeholder="select your level of experience"
             options={ExperienceLevelOptions}
-            error={errors.experienceLevel?.message}
+            error={errors.experience?.message}
             value={field.value}
             onChange={field.onChange}
           />
@@ -108,8 +134,8 @@ const ClaimTicketForm = ({ formCallbackFn }: { formCallbackFn: () => Promise<voi
       />
 
       <button
-        className='h-12 w-full rounded-[2.25rem] bg-(--away-base) text-center align-middle font-[inter] text-lg leading-6 font-bold tracking-tight text-(--bg-white-0) disabled:bg-(--bg-soft-200) md:h-15'
-        type='submit'
+        className="h-12 w-full rounded-[2.25rem] bg-(--away-base) text-center align-middle font-[inter] text-lg leading-6 font-bold tracking-tight text-(--bg-white-0) disabled:bg-(--bg-soft-200) md:h-15"
+        type="submit"
         disabled={!isValid || isSubmitting}
       >
         {isSubmitting ? "Claiming..." : "Claim ticket"}

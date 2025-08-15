@@ -1,11 +1,11 @@
 export enum Gender {
-  Female = "Female",
-  Male = "Male",
+  Female = "female",
+  Male = "male",
 }
 
 export enum Role {
-  FrontendEngineer = "Frontend Engineer",
-  BackendEngineer = "Backend Engineer",
+  FrontendEngineer = "frontend engineer",
+  BackendEngineer = "backend engineer",
 }
 
 export enum ExperienceLevel {

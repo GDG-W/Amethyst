@@ -1,11 +1,11 @@
 export const GenderOptions = [
-  { label: "Female", value: "Female" },
-  { label: "Male", value: "Male" },
+  { label: "Female", value: "female" },
+  { label: "Male", value: "male" },
 ];
 
 export const RoleOptions = [
-  { label: "Frontend Engineer", value: "Frontend Engineer" },
-  { label: "Backend Engineer", value: "Backend Engineer" },
+  { label: "Frontend Engineer", value: "frontend engineer" },
+  { label: "Backend Engineer", value: "backend engineer" },
 ];
 
 export const ExperienceLevelOptions = [
