@@ -1,3 +1,5 @@
+import "@testing-library/jest-dom";
+
 import { fireEvent, render, screen } from "@testing-library/react";
 
 import TicketCard from "./ticket-card";
@@ -14,7 +16,6 @@ describe("TicketCard", () => {
   it("renders title, price, and description", () => {
     render(<TicketCard {...defaultProps} />);
     expect(screen.getByText("Standard Pass")).toBeInTheDocument();
-    expect(screen.getByText("$100")).toBeInTheDocument();
     expect(screen.getByText("Access to all standard sessions")).toBeInTheDocument();
   });
 

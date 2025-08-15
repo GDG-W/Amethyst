@@ -3,7 +3,7 @@ import TicketCard from "./ticket-card";
 const ticketTypes = [
   {
     title: "STANDARD TICKET",
-    price: "(\u20A610,000 per day)",
+    price: "10,000 per day",
     description: "Open to everyone — whether you're just starting out or deep in the industry",
     features: [
       "Access to all talks and sessions",
@@ -15,7 +15,7 @@ const ticketTypes = [
   },
   {
     title: "PRO TICKET",
-    price: `(\u20A670,000 FOR THURSDAY)`,
+    price: "70,000 FOR THURSDAY",
     description:
       "For those who want more access and a more focused, premium experience — all in one day",
     features: [
@@ -28,7 +28,7 @@ const ticketTypes = [
   },
 ];
 
-export default function index() {
+export default function Index() {
   return (
     <section
       aria-label="Ticket Section"
