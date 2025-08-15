@@ -27,8 +27,8 @@ const NotFound = () => {
           404, Page not found.
         </h3>
         <div className="mx-auto mt-10 w-full max-w-[330px]">
-          <Button onClick={() => navigator.back()} size="full">
-            Go back
+          <Button onClick={() => navigator.push("/buy")} size="full">
+            Buy ticket
           </Button>
         </div>
       </div>
