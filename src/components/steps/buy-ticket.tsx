@@ -1,5 +1,7 @@
 import React, { useEffect, useMemo, useState } from "react";
 
+import { useQueryClient } from "@tanstack/react-query";
+
 import TicketDetails from "@/components/buy-ticket/ticket-details";
 import { useTickets } from "@/hooks/useTickets";
 import { API_DAY_TO_LABEL } from "@/lib/constants";
@@ -15,33 +17,48 @@ type BuyTicketProps = {
 };
 
 const BuyTicket = ({ onItemsChange }: BuyTicketProps) => {
+  const queryClient = useQueryClient();
+  const ticketDetails = queryClient.getQueryData<OrderItem[]>(["orderItems"]);
+
   const [activeType, setActiveType] = useState<TicketType>("standard");
-  const [quantities, setQuantities] = useState<Record<string, number>>({});
-  const [selectedByType, setSelectedByType] = useState<Record<TicketType, string[]>>({
-    standard: [],
-    pro: [],
-  });
 
   const { tickets: standardTickets } = useTickets("standard");
   const { tickets: proTickets } = useTickets("pro");
+
+  const ticketMap = useMemo(() => {
+    const all = [...standardTickets, ...proTickets];
+    return new Map(all.map((t) => [t.id, t]));
+  }, [standardTickets, proTickets]);
+
+  // derives initial states from cache
+  const initialQuantities: Record<string, number> = {};
+  const initialSelectedByType: Record<TicketType, string[]> = { standard: [], pro: [] };
+
+  if (ticketDetails) {
+    for (const item of ticketDetails) {
+      const t = ticketMap.get(item.id);
+      if (t) {
+        initialQuantities[item.id] = item.ticketCount;
+
+        const isoDate = t.date.split("T")[0];
+        initialSelectedByType[t.ticket_type].push(isoDate);
+      }
+    }
+  }
 
   const ticketsActive = useMemo(
     () => (activeType === "pro" ? proTickets : standardTickets),
     [activeType, standardTickets, proTickets]
   );
 
+  const [quantities, setQuantities] = useState<Record<string, number>>(initialQuantities);
+  const [selectedByType, setSelectedByType] =
+    useState<Record<TicketType, string[]>>(initialSelectedByType);
+
   const stdByIso = useMemo(() => indexTicketsByIsoDate(standardTickets), [standardTickets]);
   const proByIso = useMemo(() => indexTicketsByIsoDate(proTickets), [proTickets]);
 
   const selectedDates = useMemo(() => selectedByType[activeType], [selectedByType, activeType]);
-
-  // const mk = (t: Ticket): OrderItem | null => {
-  //   const qty = quantities[t.id] ?? 0;
-  //   if (qty <= 0) return null;
-  //   const dayLabel = API_DAY_TO_LABEL[t.day] ?? t.day;
-  //   const typeLabel = t.ticket_type === "pro" ? "Pro Ticket" : "Standard Ticket";
-  //   return { name: `${qty} x ${dayLabel} (${typeLabel})`, price: qty * t.price };
-  // };
 
   const mk = (t: Ticket): OrderItem | null => {
     const qty = quantities[t.id] ?? 0;
