@@ -27,7 +27,7 @@ const getDefaultEmailsByDate = (selectedDates: AttendeesInfoProps["selectedDates
       acc[date.id] = [];
       return acc;
     },
-    {} as Record<string, string[]>,
+    {} as Record<string, string[]>
   );
 };
 
@@ -68,20 +68,20 @@ const AttendeeInfo = ({ selectedDates }: AttendeesInfoProps) => {
 
   return (
     <Card
-      title='Attendee information'
+      title="Attendee information"
       subtitle='Kindly Press "Enter" key or comma after entering each email to add it to the list.'
       numbered={true}
       number={4}
     >
       <form onSubmit={handleSubmit(() => {})}>
-        <div className='space-y-4 px-5 py-7'>
+        <div className="space-y-4 px-5 py-7">
           {selectedDates.map((date) => (
             <div key={date.id}>
               <MultiInput
                 id={`attendee-emails-${date.id}`}
-                label='Email address'
+                label="Email address"
                 extraLabel={`${date.dayName}`}
-                placeholder='Enter email address'
+                placeholder="Enter email address"
                 value={emailsField.value[date.id]}
                 onChange={(emails) => handleEmailChange(date.id, emails)}
                 error={errors.emailsByDate?.[date.id]?.message}

@@ -55,14 +55,14 @@ const BuyerInformation = () => {
 
   return (
     <div>
-      <Card title='Buyer Information' numbered={true} number={3}>
+      <Card title="Buyer Information" numbered={true} number={3}>
         <form onSubmit={handleSubmit(() => {})}>
-          <div className='space-y-4 px-5 py-7'>
+          <div className="space-y-4 px-5 py-7">
             <div>
               <TextField
-                label='Full Name'
-                name='fullName'
-                placeholder='Enter full name'
+                label="Full Name"
+                name="fullName"
+                placeholder="Enter full name"
                 value={fullNameField.value}
                 onChange={fullNameField.onChange}
                 onBlur={fullNameField.onBlur}
@@ -72,10 +72,10 @@ const BuyerInformation = () => {
 
             <div>
               <TextField
-                label='Email address'
-                name='email'
-                type='email'
-                placeholder='Enter email address'
+                label="Email address"
+                name="email"
+                type="email"
+                placeholder="Enter email address"
                 value={emailField.value}
                 onChange={emailField.onChange}
                 onBlur={emailField.onBlur}
@@ -86,17 +86,17 @@ const BuyerInformation = () => {
         </form>
       </Card>
 
-      <div className='mt-4'>
+      <div className="mt-4">
         <Checkbox
-          name='belongsToMe'
-          label='This ticket belongs to me'
+          name="belongsToMe"
+          label="This ticket belongs to me"
           checked={belongsToMeField.value}
           onChange={belongsToMeField.onChange}
         />
       </div>
 
       {/* Conditional rendering based on belongsToMe checkbox */}
-      <div className='mt-6'>
+      <div className="mt-6">
         {belongsToMe ? (
           <ProfileRegistration
             initialData={{ fullName, email }}
