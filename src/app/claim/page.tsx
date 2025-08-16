@@ -1,5 +1,11 @@
 import React from "react";
 
+import TicketList from "@/components/ui/tickets";
+
 export default function ClaimPage() {
-  return <div></div>;
+  return (
+    <div>
+      <TicketList />
+    </div>
+  );
 }
