@@ -33,6 +33,18 @@ const BuyerInformation = ({ selectedDates }: { selectedDates: OrderItem[] }) => 
     updateBuyerField(field, value);
   };
 
+  let ChildComponent;
+  if (belongsToMe) {
+    ChildComponent = (
+      <ProfileRegistration
+        initialData={{ fullName, email }}
+        readonlyFields={["fullName", "email"]}
+      />
+    );
+  } else {
+    ChildComponent = <AttendeeInfo selectedDates={selectedDates} />;
+  }
+
   return (
     <div>
       <Card title="Buyer Information" numbered={true} number={3}>
@@ -73,16 +85,7 @@ const BuyerInformation = ({ selectedDates }: { selectedDates: OrderItem[] }) => 
         />
       </div>
 
-      <div className="mt-6">
-        {belongsToMe ? (
-          <ProfileRegistration
-            initialData={{ fullName, email }}
-            readonlyFields={["fullName", "email"]}
-          />
-        ) : (
-          <AttendeeInfo selectedDates={selectedDates} />
-        )}
-      </div>
+      <div className="mt-6">{ChildComponent}</div>
     </div>
   );
 };
