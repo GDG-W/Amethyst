@@ -21,7 +21,7 @@ const Header = () => {
               href="/claim"
               className="text-strong-950 cursor-pointer text-xs font-normal underline underline-offset-2 md:text-base"
             >
-              Claim Ticket
+              Login
             </Link>
           </>
         ) : null}
