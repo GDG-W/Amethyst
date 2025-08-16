@@ -115,14 +115,14 @@ const ProfileRegistration: React.FC<ProfileRegistrationProps> = ({
   const isFieldReadonly = (fieldName: string) => readonlyFields.includes(fieldName);
 
   return (
-    <Card title='Register Your Profile' numbered={true} number={4}>
+    <Card title="Register Your Profile" numbered={true} number={4}>
       <form onSubmit={handleSubmit(() => {})}>
-        <div className='space-y-4 px-5 py-7'>
+        <div className="space-y-4 px-5 py-7">
           <TextField
-            id='fullName'
-            label='Full Name'
-            name='fullName'
-            placeholder='Enter full name'
+            id="fullName"
+            label="Full Name"
+            name="fullName"
+            placeholder="Enter full name"
             value={fullNameField.value}
             onChange={isFieldReadonly("fullName") ? () => {} : fullNameField.onChange}
             onBlur={fullNameField.onBlur}
@@ -131,11 +131,11 @@ const ProfileRegistration: React.FC<ProfileRegistrationProps> = ({
           />
 
           <TextField
-            id='email'
-            label='Email address'
-            name='email'
-            type='email'
-            placeholder='Enter email address'
+            id="email"
+            label="Email address"
+            name="email"
+            type="email"
+            placeholder="Enter email address"
             value={emailField.value}
             onChange={isFieldReadonly("email") ? () => {} : emailField.onChange}
             onBlur={emailField.onBlur}
@@ -144,10 +144,10 @@ const ProfileRegistration: React.FC<ProfileRegistrationProps> = ({
           />
 
           <SelectField
-            id='gender'
-            label='Gender'
+            id="gender"
+            label="Gender"
             options={genderOptions}
-            placeholder='Select gender'
+            placeholder="Select gender"
             value={genderField.value}
             onChange={
               isFieldReadonly("gender")
@@ -161,10 +161,10 @@ const ProfileRegistration: React.FC<ProfileRegistrationProps> = ({
           />
 
           <SelectField
-            id='role'
-            label='Role'
+            id="role"
+            label="Role"
             options={roleOptions}
-            placeholder='Select role'
+            placeholder="Select role"
             value={roleField.value}
             onChange={
               isFieldReadonly("role")
@@ -178,10 +178,10 @@ const ProfileRegistration: React.FC<ProfileRegistrationProps> = ({
           />
 
           <SelectField
-            id='experienceLevel'
-            label='Experience Level'
+            id="experienceLevel"
+            label="Experience Level"
             options={experienceLevelOptions}
-            placeholder='Select experience level'
+            placeholder="Select experience level"
             value={experienceLevelField.value}
             onChange={
               isFieldReadonly("experienceLevel")

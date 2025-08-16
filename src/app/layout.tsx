@@ -1,8 +1,9 @@
 import { Inter } from "next/font/google";
 
 import "./globals.css";
-import { RQProvider } from "@/lib/react-query";
 import localFont from "next/font/local";
+
+import { RQProvider } from "@/lib/react-query";
 
 import type { Metadata } from "next";
 
