@@ -6,9 +6,9 @@ import { GenderOptions, RoleOptions, ExperienceLevelOptions } from "@/constants/
 import ClaimTicketSchema, { ClaimTicketFormData } from "@/schemas/claim-ticket.schema";
 import claimTicket from "@/services/claim-ticket.service";
 
-import SelectField from "../ui/inputs/select";
-import TextField from "../ui/inputs/text-field";
-import { toast } from "../ui/toast";
+import SelectField from "../../ui/inputs/select";
+import TextField from "../../ui/inputs/text-field";
+import { toast } from "../../ui/toast";
 
 const defaultValues = Object.freeze({
   fullname: "",
