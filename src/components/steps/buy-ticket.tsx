@@ -1,64 +1,43 @@
-import React, { useEffect, useMemo, useState } from "react";
-
-import { useQueryClient } from "@tanstack/react-query";
+import React, { useEffect, useMemo } from "react";
 
 import TicketDetails from "@/components/buy-ticket/ticket-details";
 import { useTickets } from "@/hooks/useTickets";
 import { API_DAY_TO_LABEL } from "@/lib/constants";
 import { indexTicketsByIsoDate } from "@/lib/utils";
-import { Ticket, TicketType } from "@/types/ticket";
+import { Ticket } from "@/types/ticket";
+import { useBuyFormStore } from "@/store/buy-form-store";
 
 import { OrderItem } from "@/app/buy/client";
 
 import TicketsSelection from "../ui/ticket-selection";
 
-type BuyTicketProps = {
-  onItemsChange?: (items: OrderItem[]) => void;
-};
-
-const BuyTicket = ({ onItemsChange }: BuyTicketProps) => {
-  const queryClient = useQueryClient();
-  const ticketDetails = queryClient.getQueryData<OrderItem[]>(["orderItems"]);
-
-  const [activeType, setActiveType] = useState<TicketType>("standard");
+const BuyTicket = () => {
+  const {
+    activeTicketType,
+    selectedByType,
+    quantities,
+    setActiveTicketType,
+    setSelectedByType,
+    setQuantities,
+    updateTicketQuantity,
+    setOrderItems,
+  } = useBuyFormStore();
 
   const { tickets: standardTickets } = useTickets("standard");
   const { tickets: proTickets } = useTickets("pro");
 
-  const ticketMap = useMemo(() => {
-    const all = [...standardTickets, ...proTickets];
-    return new Map(all.map((t) => [t.id, t]));
-  }, [standardTickets, proTickets]);
-
-  // derives initial states from cache
-  const initialQuantities: Record<string, number> = {};
-  const initialSelectedByType: Record<TicketType, string[]> = { standard: [], pro: [] };
-
-  if (ticketDetails) {
-    for (const item of ticketDetails) {
-      const t = ticketMap.get(item.id);
-      if (t) {
-        initialQuantities[item.id] = item.ticketCount;
-
-        const isoDate = t.date.split("T")[0];
-        initialSelectedByType[t.ticket_type].push(isoDate);
-      }
-    }
-  }
-
   const ticketsActive = useMemo(
-    () => (activeType === "pro" ? proTickets : standardTickets),
-    [activeType, standardTickets, proTickets]
+    () => (activeTicketType === "pro" ? proTickets : standardTickets),
+    [activeTicketType, standardTickets, proTickets]
   );
-
-  const [quantities, setQuantities] = useState<Record<string, number>>(initialQuantities);
-  const [selectedByType, setSelectedByType] =
-    useState<Record<TicketType, string[]>>(initialSelectedByType);
 
   const stdByIso = useMemo(() => indexTicketsByIsoDate(standardTickets), [standardTickets]);
   const proByIso = useMemo(() => indexTicketsByIsoDate(proTickets), [proTickets]);
 
-  const selectedDates = useMemo(() => selectedByType[activeType], [selectedByType, activeType]);
+  const selectedDates = useMemo(
+    () => selectedByType[activeTicketType],
+    [selectedByType, activeTicketType]
+  );
 
   const mk = (t: Ticket): OrderItem | null => {
     const qty = quantities[t.id] ?? 0;
@@ -96,45 +75,44 @@ const BuyTicket = ({ onItemsChange }: BuyTicketProps) => {
   }, [selectedByType, standardTickets, proTickets, quantities]);
 
   const handleSelectionChange = (newDates: string[]) => {
-    setSelectedByType((prev) => ({ ...prev, [activeType]: newDates }));
+    setSelectedByType(activeTicketType, newDates);
 
     const prevDates = selectedDates;
     const added = newDates.filter((d) => !prevDates.includes(d));
     const removed = prevDates.filter((d) => !newDates.includes(d));
 
-    const activeDateToTicketMap = activeType === "pro" ? proByIso : stdByIso;
+    const activeDateToTicketMap = activeTicketType === "pro" ? proByIso : stdByIso;
 
-    setQuantities((prev) => {
-      const addUpdates = added
-        .map((isoDate) => activeDateToTicketMap.get(isoDate))
-        .filter((t): t is Ticket => !!t)
-        .map((t) => [t.id, Math.max(1, prev[t.id] ?? 0)] as const);
+    const addUpdates = added
+      .map((isoDate) => activeDateToTicketMap.get(isoDate))
+      .filter((t): t is Ticket => !!t)
+      .map((t) => [t.id, Math.max(1, quantities[t.id] ?? 0)] as const);
 
-      const removeUpdates = removed
-        .map((isoDate) => activeDateToTicketMap.get(isoDate))
-        .filter((t): t is Ticket => !!t)
-        .map((t) => [t.id, 0] as const);
+    const removeUpdates = removed
+      .map((isoDate) => activeDateToTicketMap.get(isoDate))
+      .filter((t): t is Ticket => !!t)
+      .map((t) => [t.id, 0] as const);
 
-      return [...addUpdates, ...removeUpdates].reduce(
-        (acc, [id, qty]) => {
-          acc[id] = qty;
-          return acc;
-        },
-        { ...prev }
-      );
-    });
+    const newQuantities = [...addUpdates, ...removeUpdates].reduce(
+      (acc, [id, qty]) => {
+        acc[id] = qty;
+        return acc;
+      },
+      { ...quantities }
+    );
+
+    setQuantities(newQuantities);
   };
 
   useEffect(() => {
-    if (!onItemsChange) return;
-    onItemsChange(items);
-  }, [items, onItemsChange]);
+    setOrderItems(items);
+  }, [items, setOrderItems]);
 
   return (
     <div className="h-fit">
       <TicketsSelection
-        activeTab={activeType}
-        onTabChange={setActiveType}
+        activeTab={activeTicketType}
+        onTabChange={setActiveTicketType}
         selectedDates={selectedDates}
         onSelectionChange={handleSelectionChange}
       />
@@ -143,9 +121,7 @@ const BuyTicket = ({ onItemsChange }: BuyTicketProps) => {
           tickets={ticketsActive}
           quantities={quantities}
           selectedDates={selectedDates}
-          onChangeQuantity={(ticketId, quantity) =>
-            setQuantities((prev) => ({ ...prev, [ticketId]: quantity }))
-          }
+          onChangeQuantity={updateTicketQuantity}
         />
       </div>
     </div>
