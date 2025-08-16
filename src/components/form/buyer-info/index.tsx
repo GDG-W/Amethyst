@@ -134,12 +134,6 @@ const BuyerInformation = ({ selectedDates, onSubmit }: BuyerInformationProps) =>
           <AttendeeInfo selectedDates={selectedDates} onChange={handleAttendeeChange} />
         )}
       </div>
-
-      <div className="mt-6 flex justify-end">
-        <button type="button" onClick={handleFormSubmit} className="btn-primary">
-          Save & Continue
-        </button>
-      </div>
     </div>
   );
 };

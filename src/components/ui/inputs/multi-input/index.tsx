@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import { cn } from "@/lib/utils";
 import Close from "@/components/icons/close";
@@ -23,6 +23,21 @@ export default function MultiInput({
   const [err, setErr] = useState<string | undefined>(error);
   const inputRef = useRef<HTMLInputElement>(null);
 
+  useEffect(() => {
+    if (maxItems !== undefined && value.length <= maxItems && err) {
+      setErr(undefined);
+    }
+  }, [value, maxItems]);
+
+  const handleBlur = (e: React.FocusEvent<HTMLInputElement>) => {
+    if (maxItems !== undefined && value.length > maxItems) {
+      const validEmails = value.slice(0, maxItems);
+      onChange?.(validEmails);
+    }
+
+    setErr(undefined);
+  };
+
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter" || e.key === ",") {
       e.preventDefault();
@@ -32,6 +47,7 @@ export default function MultiInput({
 
       if (maxItems !== undefined && value.length >= maxItems) {
         setErr(`Maximum ${maxItems} email(s) allowed`);
+        setInput("");
         return;
       }
 
@@ -84,17 +100,26 @@ export default function MultiInput({
   };
 
   const handleRemove = (item: string) => {
-    onChange(value.filter((v) => v !== item));
+    const newValues = value.filter((v) => v !== item);
+    onChange(newValues);
+
+    if (maxItems !== undefined && newValues.length < maxItems) {
+      setErr(undefined);
+    }
   };
 
   const displayError = err || error;
 
   return (
-    <div className="flex min-w-[400px] flex-col gap-2" data-testid="multi-input-container">
+    <div className="flex w-full min-w-[200px] flex-col gap-2" data-testid="multi-input-container">
       {label && (
         <label htmlFor={id} className="label-3 block font-medium tracking-tight">
           <span className="mr-2">{label}</span>
-          {extraLabel && <span className="text-sm text-gray-500">{extraLabel}</span>}
+          {extraLabel && (
+            <span className="border-soft-200 text-soft-400 rounded-md border px-1 py-0.5 text-xs">
+              {extraLabel}
+            </span>
+          )}
         </label>
       )}
       <div className="w-full">
@@ -121,6 +146,7 @@ export default function MultiInput({
             ref={inputRef}
             value={input}
             onChange={(e) => setInput(e.target.value)}
+            onBlur={handleBlur}
             onKeyDown={handleKeyDown}
             onPaste={handlePaste}
             className="placeholder:text-soft-400 flex-1 bg-transparent outline-none"

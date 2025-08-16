@@ -38,8 +38,6 @@ export default function BuyPageClient() {
   const [buyerInfo, setBuyerInfo] = useState<BuyerInfo | null>(null);
   const [attendeeInfo, setAttendeeInfo] = useState<AttendeeInfo | null>(null);
 
-  console.log(orderItems);
-
   const handleContinue = () => {
     if (orderItems.length < 1) return;
     queryClient.setQueryData(["orderItems"], orderItems);
