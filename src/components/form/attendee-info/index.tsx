@@ -2,22 +2,20 @@
 
 import React from "react";
 import { useForm, useController } from "react-hook-form";
-import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import MultiInput from "@/components/ui/inputs/multi-input";
 import Card from "@/components/ui/card";
-import { attendeeSchema } from "@/schemas/attendeeSchema";
-
-type FormData = z.infer<typeof attendeeSchema>;
+import { createAttendeeSchema, AttendeeFormData } from "@/schemas/attendeeSchema";
 
 type AttendeesInfoProps = {
   selectedDates: Array<{
     id: string;
-    day: number;
     dayName: string;
-    date: string;
+    ticketCount: number;
   }>;
+  buyerEmail?: string;
+  onChange?: (data: AttendeeFormData) => void;
 };
 
 // Helper function to initialize default values
@@ -31,13 +29,24 @@ const getDefaultEmailsByDate = (selectedDates: AttendeesInfoProps["selectedDates
   );
 };
 
-const AttendeeInfo = ({ selectedDates }: AttendeesInfoProps) => {
+const AttendeeInfo = ({ selectedDates, onChange }: AttendeesInfoProps) => {
+  const ticketQuantities = selectedDates.reduce(
+    (acc, date) => {
+      acc[date.id] = date.ticketCount;
+      return acc;
+    },
+    {} as Record<string, number>
+  );
+
+  const schema = createAttendeeSchema(ticketQuantities);
+
   const {
     control,
     handleSubmit,
     formState: { errors },
-  } = useForm<FormData>({
-    resolver: zodResolver(attendeeSchema),
+    watch,
+  } = useForm<AttendeeFormData>({
+    resolver: zodResolver(schema),
     defaultValues: {
       emailsByDate: getDefaultEmailsByDate(selectedDates),
       belongsToMe: false,
@@ -49,7 +58,8 @@ const AttendeeInfo = ({ selectedDates }: AttendeesInfoProps) => {
     control,
   });
 
-  // Email validation function for MultiInput
+  const formValues = watch();
+
   const validateEmail = (email: string): string | null => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
@@ -58,13 +68,23 @@ const AttendeeInfo = ({ selectedDates }: AttendeesInfoProps) => {
     return null;
   };
 
-  // Handle email changes for specific dates
   const handleEmailChange = (dateId: string, emails: string[]) => {
-    emailsField.onChange({
+    const maxEmails = ticketQuantities[dateId];
+    if (emails.length > maxEmails) {
+      return;
+    }
+    const newValue = {
       ...emailsField.value,
       [dateId]: emails,
+    };
+    emailsField.onChange(newValue);
+
+    onChange?.({
+      emailsByDate: newValue,
+      belongsToMe: formValues.belongsToMe,
     });
   };
+  console.log(errors);
 
   return (
     <Card
@@ -75,10 +95,10 @@ const AttendeeInfo = ({ selectedDates }: AttendeesInfoProps) => {
     >
       <form onSubmit={handleSubmit(() => {})}>
         <div className="space-y-4 px-5 py-7">
-          {selectedDates.map((date) => (
-            <div key={date.id}>
+          {selectedDates.map((date, index) => (
+            <div key={`${date.id || date.dayName}-${index}`}>
               <MultiInput
-                id={`attendee-emails-${date.id}`}
+                id={`attendee-emails-${date.id || index}`}
                 label="Email address"
                 extraLabel={`${date.dayName}`}
                 placeholder="Enter email address"
@@ -86,6 +106,7 @@ const AttendeeInfo = ({ selectedDates }: AttendeesInfoProps) => {
                 onChange={(emails) => handleEmailChange(date.id, emails)}
                 error={errors.emailsByDate?.[date.id]?.message}
                 validate={validateEmail}
+                maxItems={date.ticketCount}
               />
             </div>
           ))}

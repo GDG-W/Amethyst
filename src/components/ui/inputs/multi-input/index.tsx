@@ -17,6 +17,7 @@ export default function MultiInput({
   onChange,
   placeholder = "Select options",
   validate,
+  maxItems,
 }: MultiInputFieldProps) {
   const [input, setInput] = useState("");
   const [err, setErr] = useState<string | undefined>(error);
@@ -28,6 +29,11 @@ export default function MultiInput({
       const trimmed = input.trim();
 
       if (!trimmed) return;
+
+      if (maxItems !== undefined && value.length >= maxItems) {
+        setErr(`Maximum ${maxItems} email(s) allowed`);
+        return;
+      }
 
       const validationError = validate?.(trimmed);
       if (validationError) {
@@ -49,6 +55,11 @@ export default function MultiInput({
     const pasted = e.clipboardData.getData("text");
     const items = pasted.split(/[\s,]+/);
     let hasError = false;
+
+    if (maxItems !== undefined && value.length + items.length > maxItems) {
+      setErr(`Cannot add ${items.length} emails (max ${maxItems})`);
+      return;
+    }
 
     const newValues = items.reduce<string[]>((acc, item) => {
       const trimmed = item.trim();
@@ -75,6 +86,8 @@ export default function MultiInput({
   const handleRemove = (item: string) => {
     onChange(value.filter((v) => v !== item));
   };
+
+  const displayError = err || error;
 
   return (
     <div className="flex min-w-[400px] flex-col gap-2" data-testid="multi-input-container">
@@ -115,13 +128,13 @@ export default function MultiInput({
           />
         </div>
 
-        {err && (
+        {displayError && (
           <div
             className={"mt-1 flex items-start gap-1 tracking-tight text-red-500"}
             data-testid="error-message"
           >
             <AlertIcon className={"h-4 w-4 text-red-500"} />
-            <p className="text-xs">{err}</p>
+            <p className="text-xs">{displayError}</p>
           </div>
         )}
       </div>
