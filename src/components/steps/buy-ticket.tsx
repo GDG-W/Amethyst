@@ -105,8 +105,18 @@ const BuyTicket = () => {
   };
 
   useEffect(() => {
-    setOrderItems(items);
-  }, [items, setOrderItems]);
+    const currentItems = useBuyFormStore.getState().orderItems;
+
+    const areItemsEqual =
+      currentItems.length === items.length &&
+      currentItems.every(
+        (item, i) => item.id === items[i]?.id && item.ticketCount === items[i]?.ticketCount
+      );
+
+    if (!areItemsEqual) {
+      setOrderItems(items);
+    }
+  }, [items]);
 
   return (
     <div className="h-fit">
