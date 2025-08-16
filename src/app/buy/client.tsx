@@ -42,18 +42,41 @@ export default function BuyPageClient() {
     if (orderItems.length < 1) return;
     queryClient.setQueryData(["orderItems"], orderItems);
     setStep((s) => Math.min(s + 1, steps.length - 1));
+    return true;
   };
 
   const handleGoBack = () => {
     if (step > 0) setStep(step - 1);
   };
 
-  const handleBuyerSubmit = (buyer: BuyerInfo, attendees: AttendeeInfo) => {
+  const handleBuyerSubmit = (buyer: BuyerInfo, attendees: AttendeeInfo): boolean => {
+    console.log({ buyer, attendees });
+    if (!buyer || !attendees) return false;
+
     setBuyerInfo(buyer);
     setAttendeeInfo(attendees);
 
+    queryClient.setQueryData(["buyerInfo"], buyer);
+    queryClient.setQueryData(["attendeeInfo"], attendees);
+
     console.log("Buyer Info:", buyer);
     console.log("Attendee Info:", attendees);
+
+    setStep((s) => Math.min(s + 1, steps.length - 1));
+    return true;
+  };
+
+  const handleNext = () => {
+    if (step === 0) {
+      return handleContinue();
+    } else if (step === 1) {
+      console.log({ buyerInfo, attendeeInfo });
+      if (buyerInfo && attendeeInfo) {
+        return handleBuyerSubmit(buyerInfo, attendeeInfo);
+      }
+      return false;
+    }
+    return false;
   };
 
   return (
@@ -76,11 +99,7 @@ export default function BuyPageClient() {
           {step === 1 && (
             <BuyerInformation selectedDates={orderItems} onSubmit={handleBuyerSubmit} />
           )}
-          <Button
-            onClick={handleContinue}
-            className="mt-10 sm:hidden"
-            disabled={orderItems.length < 1}
-          >
+          <Button onClick={handleNext} className="mt-10 sm:hidden" disabled={orderItems.length < 1}>
             {step === steps.length - 1 ? "Proceed to Pay" : "Continue"}
           </Button>
         </div>
@@ -89,7 +108,7 @@ export default function BuyPageClient() {
             items={orderItems}
             currentStep={step + 1}
             noOfSteps={steps.length}
-            handleButtonClick={handleContinue}
+            handleButtonClick={handleNext}
           />
         </div>
       </div>
