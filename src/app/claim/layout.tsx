@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Suspense } from "react";
 
 import Header from "@/components/layout/header";
 
@@ -10,7 +10,7 @@ export default function ClaimLayout({
   return (
     <>
       <Header />
-      {children}
+      <Suspense>{children}</Suspense>
     </>
   );
 }
