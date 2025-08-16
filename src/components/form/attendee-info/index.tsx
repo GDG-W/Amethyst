@@ -1,12 +1,10 @@
 "use client";
 
 import React from "react";
-import { useForm, useController } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
 
 import MultiInput from "@/components/ui/inputs/multi-input";
 import Card from "@/components/ui/card";
-import { createAttendeeSchema, AttendeeFormData } from "@/schemas/attendeeSchema";
+import { useBuyFormStore } from "@/store/buy-form-store";
 
 type AttendeesInfoProps = {
   selectedDates: Array<{
@@ -15,7 +13,6 @@ type AttendeesInfoProps = {
     ticketCount: number;
   }>;
   buyerEmail?: string;
-  onChange?: (data: AttendeeFormData) => void;
 };
 
 // Helper function to initialize default values
@@ -29,7 +26,10 @@ const getDefaultEmailsByDate = (selectedDates: AttendeesInfoProps["selectedDates
   );
 };
 
-const AttendeeInfo = ({ selectedDates, onChange }: AttendeesInfoProps) => {
+const AttendeeInfo = ({ selectedDates }: AttendeesInfoProps) => {
+  const { attendeeInfo, attendeeErrors, updateAttendeeEmails, setAttendeeError } =
+    useBuyFormStore();
+
   const ticketQuantities = selectedDates.reduce(
     (acc, date) => {
       acc[date.id] = date.ticketCount;
@@ -37,28 +37,6 @@ const AttendeeInfo = ({ selectedDates, onChange }: AttendeesInfoProps) => {
     },
     {} as Record<string, number>
   );
-
-  const schema = createAttendeeSchema(ticketQuantities);
-
-  const {
-    control,
-    handleSubmit,
-    formState: { errors },
-    watch,
-  } = useForm<AttendeeFormData>({
-    resolver: zodResolver(schema),
-    defaultValues: {
-      emailsByDate: getDefaultEmailsByDate(selectedDates),
-      belongsToMe: false,
-    },
-  });
-
-  const { field: emailsField } = useController({
-    name: "emailsByDate",
-    control,
-  });
-
-  const formValues = watch();
 
   const validateEmail = (email: string): string | null => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -73,16 +51,11 @@ const AttendeeInfo = ({ selectedDates, onChange }: AttendeesInfoProps) => {
     if (emails.length > maxEmails) {
       return;
     }
-    const newValue = {
-      ...emailsField.value,
-      [dateId]: emails,
-    };
-    emailsField.onChange(newValue);
 
-    onChange?.({
-      emailsByDate: newValue,
-      belongsToMe: formValues.belongsToMe,
-    });
+    updateAttendeeEmails(dateId, emails);
+
+    // Clear any existing error for this field
+    setAttendeeError(dateId, null);
   };
 
   return (
@@ -92,27 +65,23 @@ const AttendeeInfo = ({ selectedDates, onChange }: AttendeesInfoProps) => {
       numbered={true}
       number={4}
     >
-      <form onSubmit={handleSubmit(() => {})}>
-        <div className="space-y-4 px-5 py-7">
-          {selectedDates.map((date, index) => (
-            <div key={`${date.id || date.dayName}-${index}`}>
-              <MultiInput
-                id={`attendee-emails-${date.id || index}`}
-                label={date.ticketCount > 1 ? "Email address(es)" : "Email address"}
-                extraLabel={`${date.dayName}`}
-                placeholder={
-                  date.ticketCount > 1 ? "Enter email address(es)" : "Enter email address"
-                }
-                value={emailsField.value[date.id]}
-                onChange={(emails) => handleEmailChange(date.id, emails)}
-                error={errors.emailsByDate?.[date.id]?.message}
-                validate={validateEmail}
-                maxItems={date.ticketCount}
-              />
-            </div>
-          ))}
-        </div>
-      </form>
+      <div className="space-y-4 px-5 py-7">
+        {selectedDates.map((date, index) => (
+          <div key={`${date.id || date.dayName}-${index}`}>
+            <MultiInput
+              id={`attendee-emails-${date.id || index}`}
+              label={date.ticketCount > 1 ? "Email address(es)" : "Email address"}
+              extraLabel={`${date.dayName}`}
+              placeholder={date.ticketCount > 1 ? "Enter email address(es)" : "Enter email address"}
+              value={attendeeInfo?.emailsByDate[date.id] || []}
+              onChange={(emails) => handleEmailChange(date.id, emails)}
+              error={attendeeErrors[date.id]}
+              validate={validateEmail}
+              maxItems={date.ticketCount}
+            />
+          </div>
+        ))}
+      </div>
     </Card>
   );
 };
