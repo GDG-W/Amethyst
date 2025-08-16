@@ -10,16 +10,14 @@ describe("AttendeeInfo", () => {
     expect(screen.getByText("Attendee information")).toBeInTheDocument();
     expect(
       screen.getByText(
-        'Kindly Press "Enter" key or comma after entering each email to add it to the list.',
-      ),
+        'Kindly Press "Enter" key or comma after entering each email to add it to the list.'
+      )
     ).toBeInTheDocument();
   });
 
   it("adds email on Enter key", async () => {
     render(
-      <AttendeeInfo
-        selectedDates={[{ id: "1", day: 15, dayName: "Monday", date: "2024-01-15" }]}
-      />,
+      <AttendeeInfo selectedDates={[{ id: "1", day: 15, dayName: "Monday", date: "2024-01-15" }]} />
     );
     const input = screen.getByRole("textbox");
 
@@ -32,7 +30,7 @@ describe("AttendeeInfo", () => {
     render(
       <AttendeeInfo
         selectedDates={[{ id: "1", day: 16, dayName: "Tuesday", date: "2024-01-16" }]}
-      />,
+      />
     );
     const input = screen.getByRole("textbox");
 
@@ -43,9 +41,7 @@ describe("AttendeeInfo", () => {
 
   it("validates email format and shows error message", async () => {
     render(
-      <AttendeeInfo
-        selectedDates={[{ id: "1", day: 15, dayName: "Monday", date: "2024-01-15" }]}
-      />,
+      <AttendeeInfo selectedDates={[{ id: "1", day: 15, dayName: "Monday", date: "2024-01-15" }]} />
     );
     const input = screen.getByRole("textbox");
 
@@ -56,9 +52,7 @@ describe("AttendeeInfo", () => {
 
   it("does not add invalid email to the list", async () => {
     render(
-      <AttendeeInfo
-        selectedDates={[{ id: "1", day: 15, dayName: "Monday", date: "2024-01-15" }]}
-      />,
+      <AttendeeInfo selectedDates={[{ id: "1", day: 15, dayName: "Monday", date: "2024-01-15" }]} />
     );
     const input = screen.getByRole("textbox");
 
@@ -69,9 +63,7 @@ describe("AttendeeInfo", () => {
 
   it("clears error when valid email is entered", async () => {
     render(
-      <AttendeeInfo
-        selectedDates={[{ id: "1", day: 15, dayName: "Monday", date: "2024-01-15" }]}
-      />,
+      <AttendeeInfo selectedDates={[{ id: "1", day: 15, dayName: "Monday", date: "2024-01-15" }]} />
     );
     const input = screen.getByRole("textbox");
 
@@ -84,9 +76,7 @@ describe("AttendeeInfo", () => {
 
   it("removes email when close button is clicked", async () => {
     render(
-      <AttendeeInfo
-        selectedDates={[{ id: "1", day: 15, dayName: "Monday", date: "2024-01-15" }]}
-      />,
+      <AttendeeInfo selectedDates={[{ id: "1", day: 15, dayName: "Monday", date: "2024-01-15" }]} />
     );
     const input = screen.getByRole("textbox");
 
@@ -101,9 +91,7 @@ describe("AttendeeInfo", () => {
 
   it("does not add empty emails", async () => {
     render(
-      <AttendeeInfo
-        selectedDates={[{ id: "1", day: 15, dayName: "Monday", date: "2024-01-15" }]}
-      />,
+      <AttendeeInfo selectedDates={[{ id: "1", day: 15, dayName: "Monday", date: "2024-01-15" }]} />
     );
     const input = screen.getByRole("textbox");
 
@@ -115,9 +103,7 @@ describe("AttendeeInfo", () => {
 
   it("does not add duplicate emails", async () => {
     render(
-      <AttendeeInfo
-        selectedDates={[{ id: "1", day: 15, dayName: "Monday", date: "2024-01-15" }]}
-      />,
+      <AttendeeInfo selectedDates={[{ id: "1", day: 15, dayName: "Monday", date: "2024-01-15" }]} />
     );
     const input = screen.getByRole("textbox");
 

@@ -84,7 +84,7 @@ describe("ProfileRegistration", () => {
           fullName: "Updated User",
           email: "updated@example.com",
         }}
-      />,
+      />
     );
 
     // Form now shows the loaded data
