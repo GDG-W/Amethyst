@@ -6,9 +6,9 @@ import { API_DAY_TO_LABEL } from "@/lib/constants";
 import { indexTicketsByIsoDate } from "@/lib/utils";
 import { Ticket, TicketType } from "@/types/ticket";
 
-import TicketsSelection from "../ui/ticket-selection";
+import { OrderItem } from "@/app/buy/client";
 
-type OrderItem = { name: string; price: number };
+import TicketsSelection from "../ui/ticket-selection";
 
 type BuyTicketProps = {
   onItemsChange?: (items: OrderItem[]) => void;
@@ -35,12 +35,28 @@ const BuyTicket = ({ onItemsChange }: BuyTicketProps) => {
 
   const selectedDates = useMemo(() => selectedByType[activeType], [selectedByType, activeType]);
 
+  // const mk = (t: Ticket): OrderItem | null => {
+  //   const qty = quantities[t.id] ?? 0;
+  //   if (qty <= 0) return null;
+  //   const dayLabel = API_DAY_TO_LABEL[t.day] ?? t.day;
+  //   const typeLabel = t.ticket_type === "pro" ? "Pro Ticket" : "Standard Ticket";
+  //   return { name: `${qty} x ${dayLabel} (${typeLabel})`, price: qty * t.price };
+  // };
+
   const mk = (t: Ticket): OrderItem | null => {
     const qty = quantities[t.id] ?? 0;
     if (qty <= 0) return null;
+
     const dayLabel = API_DAY_TO_LABEL[t.day] ?? t.day;
     const typeLabel = t.ticket_type === "pro" ? "Pro Ticket" : "Standard Ticket";
-    return { name: `${qty} x ${dayLabel} (${typeLabel})`, price: qty * t.price };
+
+    return {
+      id: t.id,
+      name: `${qty} x ${dayLabel} (${typeLabel})`,
+      dayName: dayLabel,
+      ticketCount: qty,
+      price: qty * t.price,
+    };
   };
 
   const items = useMemo(() => {

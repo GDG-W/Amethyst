@@ -1,13 +1,12 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import { useForm, useController } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import TextField from "@/components/ui/inputs/text-field";
 import Checkbox from "@/components/ui/inputs/checkbox";
-
 import Card from "@/components/ui/card";
 
 import { buyerSchema } from "@/schemas/buyerSchema";
@@ -15,9 +14,16 @@ import { buyerSchema } from "@/schemas/buyerSchema";
 import ProfileRegistration from "../profile-reg";
 import AttendeeInfo from "../attendee-info";
 
+import type { OrderItem, BuyerInfo, AttendeeInfo as AttendeeInfoType } from "@/app/buy/client";
+
 type FormData = z.infer<typeof buyerSchema>;
 
-const BuyerInformation = () => {
+type BuyerInformationProps = {
+  selectedDates: OrderItem[];
+  onSubmit: (buyer: BuyerInfo, attendees: AttendeeInfoType) => void;
+};
+
+const BuyerInformation = ({ selectedDates, onSubmit }: BuyerInformationProps) => {
   const { control, handleSubmit, watch } = useForm<FormData>({
     resolver: zodResolver(buyerSchema),
     defaultValues: {
@@ -48,15 +54,38 @@ const BuyerInformation = () => {
     control,
   });
 
-  // Watch the belongsToMe checkbox and form values
+  // Watch buyer values
   const belongsToMe = watch("belongsToMe");
   const fullName = watch("fullName");
   const email = watch("email");
 
+  // Local state to collect attendee info
+  const [attendeeData, setAttendeeData] = useState<AttendeeInfoType>({
+    emailsByDate: {},
+  });
+
+  const handleAttendeeChange = (data: AttendeeInfoType) => {
+    setAttendeeData(data);
+  };
+
+  const handleFormSubmit = handleSubmit((buyerData) => {
+    const buyer: BuyerInfo = {
+      fullName: buyerData.fullName,
+      email: buyerData.email,
+      belongsToMe: buyerData.belongsToMe,
+    };
+
+    if (buyer.belongsToMe) {
+      onSubmit(buyer, { emailsByDate: {} });
+    } else {
+      onSubmit(buyer, attendeeData);
+    }
+  });
+
   return (
     <div>
       <Card title="Buyer Information" numbered={true} number={3}>
-        <form onSubmit={handleSubmit(() => {})}>
+        <form onSubmit={handleFormSubmit}>
           <div className="space-y-4 px-5 py-7">
             <div>
               <TextField
@@ -95,7 +124,6 @@ const BuyerInformation = () => {
         />
       </div>
 
-      {/* Conditional rendering based on belongsToMe checkbox */}
       <div className="mt-6">
         {belongsToMe ? (
           <ProfileRegistration
@@ -103,8 +131,14 @@ const BuyerInformation = () => {
             readonlyFields={["fullName", "email"]}
           />
         ) : (
-          <AttendeeInfo selectedDates={[]} />
+          <AttendeeInfo selectedDates={selectedDates} onChange={handleAttendeeChange} />
         )}
+      </div>
+
+      <div className="mt-6 flex justify-end">
+        <button type="button" onClick={handleFormSubmit} className="btn-primary">
+          Save & Continue
+        </button>
       </div>
     </div>
   );

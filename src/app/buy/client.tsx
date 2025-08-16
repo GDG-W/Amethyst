@@ -2,24 +2,60 @@
 import { ChevronLeft } from "lucide-react";
 import React, { useState } from "react";
 
+import { useQueryClient } from "@tanstack/react-query";
+
 import BuyTicket from "@/components/steps/buy-ticket";
 import Breadcrumb from "@/components/ui/breadcrumb";
 import OrderSummary from "@/components/ui/order-summary";
 import Button from "@/components/ui/button";
+import AttendeeInfo from "@/components/form/attendee-info";
+import BuyerInformation from "@/components/form/buyer-info";
 
 const steps = ["Buy Ticket", "Buyer Information"];
 
+export type OrderItem = {
+  id: string;
+  name: string;
+  dayName: string;
+  ticketCount: number;
+  price: number;
+};
+
+export type BuyerInfo = {
+  fullName: string;
+  email: string;
+  belongsToMe: boolean;
+};
+
+export type AttendeeInfo = {
+  emailsByDate: Record<string, string[]>;
+};
+
 export default function BuyPageClient() {
+  const queryClient = useQueryClient();
   const [step, setStep] = useState(0);
-  const [orderItems, setOrderItems] = useState<{ name: string; price: number }[]>([]);
+  const [orderItems, setOrderItems] = useState<OrderItem[]>([]);
+  const [buyerInfo, setBuyerInfo] = useState<BuyerInfo | null>(null);
+  const [attendeeInfo, setAttendeeInfo] = useState<AttendeeInfo | null>(null);
+
+  console.log(orderItems);
 
   const handleContinue = () => {
     if (orderItems.length < 1) return;
+    queryClient.setQueryData(["orderItems"], orderItems);
     setStep((s) => Math.min(s + 1, steps.length - 1));
   };
 
   const handleGoBack = () => {
     if (step > 0) setStep(step - 1);
+  };
+
+  const handleBuyerSubmit = (buyer: BuyerInfo, attendees: AttendeeInfo) => {
+    setBuyerInfo(buyer);
+    setAttendeeInfo(attendees);
+
+    console.log("Buyer Info:", buyer);
+    console.log("Attendee Info:", attendees);
   };
 
   return (
@@ -39,6 +75,9 @@ export default function BuyPageClient() {
       <div className="flex flex-col gap-[20px] pt-5 sm:flex-row">
         <div className="w-full sm:flex-[9]">
           {step === 0 && <BuyTicket onItemsChange={setOrderItems} />}
+          {step === 1 && (
+            <BuyerInformation selectedDates={orderItems} onSubmit={handleBuyerSubmit} />
+          )}
           <Button
             onClick={handleContinue}
             className="mt-10 sm:hidden"
