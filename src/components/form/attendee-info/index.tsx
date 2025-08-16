@@ -84,7 +84,6 @@ const AttendeeInfo = ({ selectedDates, onChange }: AttendeesInfoProps) => {
       belongsToMe: formValues.belongsToMe,
     });
   };
-  console.log(errors);
 
   return (
     <Card
@@ -99,9 +98,11 @@ const AttendeeInfo = ({ selectedDates, onChange }: AttendeesInfoProps) => {
             <div key={`${date.id || date.dayName}-${index}`}>
               <MultiInput
                 id={`attendee-emails-${date.id || index}`}
-                label="Email address"
+                label={date.ticketCount > 1 ? "Email address(es)" : "Email address"}
                 extraLabel={`${date.dayName}`}
-                placeholder="Enter email address"
+                placeholder={
+                  date.ticketCount > 1 ? "Enter email address(es)" : "Enter email address"
+                }
                 value={emailsField.value[date.id]}
                 onChange={(emails) => handleEmailChange(date.id, emails)}
                 error={errors.emailsByDate?.[date.id]?.message}
