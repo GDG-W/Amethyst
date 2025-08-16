@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 
-import ClaimTicketForm from "@/components/form/claim-ticket.form";
+import ClaimTicketForm from "@/components/form/claim-ticket";
 import SuccessCard from "@/components/ui/success-card";
 import Modal from "@/components/modal/modal-overlay";
 
