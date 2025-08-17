@@ -177,8 +177,8 @@ export default function BuyPageClient() {
 
       try {
         const res = await checkout(payload);
-        console.log(res);
-        // if (res.payment_url) {
+        // console.log(res);
+        // if (res.success) {
         //   window.location.href = res.payment_url;
         // } else {
         //   console.error("Checkout failed: missing payment_url");

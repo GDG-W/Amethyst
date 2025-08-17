@@ -35,8 +35,16 @@ export interface CheckoutPayload {
 }
 
 export interface CheckoutSuccess {
-  reference: string;
-  paymentUrl: string;
+  id: string;
+  amount_payable: number;
+  total_amount: number;
+  checkout_url: string;
+  created_at: string;
+  updated_at: string;
+  intent: "purchase";
+  payer_email: string;
+  payer_fullname: string;
+  status: "pending" | "completed" | "failed";
 }
 
 export interface ApiError {
