@@ -66,7 +66,7 @@ const TicketsSelection = ({
   });
 
   return (
-    <div className="bg-bg-strong-950 h-fit">
+    <div className="bg-strong-950 h-fit">
       <Card header={header} className="border-bg-surface-800 rounded-lg border bg-white">
         <Tabs
           tabs={tabsData}
