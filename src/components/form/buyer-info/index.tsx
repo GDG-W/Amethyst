@@ -7,6 +7,8 @@ import Checkbox from "@/components/ui/inputs/checkbox";
 import Card from "@/components/ui/card";
 import { useBuyFormStore } from "@/store/buy-form-store";
 
+import { buyerSchema } from "@/schemas/buyerSchema";
+
 import ProfileRegistration from "../profile-reg";
 import AttendeeInfo from "../attendee-info";
 
@@ -20,8 +22,22 @@ const BuyerInformation = ({ selectedDates }: { selectedDates: OrderItem[] }) => 
   const email = buyerInfo?.email || "";
   const belongsToMe = buyerInfo?.belongsToMe || false;
 
+  const validateField = <K extends keyof BuyerInfo>(field: K, value: BuyerInfo[K]) => {
+    const partial = { ...buyerInfo, [field]: value };
+
+    const result = buyerSchema.safeParse(partial);
+
+    if (!result.success) {
+      const issue = result.error.issues.find((i) => i.path[0] === field);
+      setBuyerError(field, issue ? issue.message : null);
+    } else {
+      setBuyerError(field, null);
+    }
+  };
+
   const handleFieldChange = <K extends keyof BuyerInfo>(field: K, value: BuyerInfo[K]) => {
     updateBuyerField(field, value);
+    validateField(field, value);
   };
 
   let ChildComponent;
@@ -48,6 +64,7 @@ const BuyerInformation = ({ selectedDates }: { selectedDates: OrderItem[] }) => 
                 placeholder="Enter full name"
                 value={fullName}
                 onChange={(e) => handleFieldChange("fullName", e.target.value)}
+                onBlur={(e) => validateField("fullName", e.target.value)}
                 error={buyerErrors.fullName}
               />
             </div>
@@ -60,6 +77,7 @@ const BuyerInformation = ({ selectedDates }: { selectedDates: OrderItem[] }) => 
                 placeholder="Enter email address"
                 value={email}
                 onChange={(e) => handleFieldChange("email", e.target.value)}
+                onBlur={(e) => validateField("fullName", e.target.value)}
                 error={buyerErrors.email}
               />
             </div>

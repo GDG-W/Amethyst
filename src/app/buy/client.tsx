@@ -35,6 +35,38 @@ export default function BuyPageClient() {
   const [step, setStep] = useState(0);
   const { mutateAsync: checkout } = useCheckout();
   const { orderItems, buyerInfo, attendeeInfo, profileInfo } = useBuyFormStore();
+  const isNextDisabled = () => {
+    if (step === 0) {
+      // Step 0: no tickets selected
+      return orderItems.length < 1;
+    }
+
+    if (step === 1) {
+      if (!buyerInfo || !buyerInfo.fullName || !buyerInfo.email) {
+        return true; // buyer info is required
+      }
+
+      if (buyerInfo.belongsToMe) {
+        // ticket belongs to me → require profile registration info
+        return !(
+          profileInfo &&
+          profileInfo.gender &&
+          profileInfo.role &&
+          profileInfo.experienceLevel
+        );
+      } else {
+        // ticket for others → require at least one attendee email
+        return !(
+          attendeeInfo &&
+          Object.keys(attendeeInfo.emailsByDate || {}).some(
+            (dateId) => attendeeInfo.emailsByDate[dateId].length > 0
+          )
+        );
+      }
+    }
+
+    return false;
+  };
 
   const handleContinue = () => {
     if (orderItems.length < 1) return;
@@ -154,7 +186,7 @@ export default function BuyPageClient() {
         <div className="w-full sm:flex-[9]">
           {step === 0 && <BuyTicket />}
           {step === 1 && <BuyerInformation selectedDates={orderItems} />}
-          <Button onClick={handleNext} className="mt-10 sm:hidden" disabled={orderItems.length < 1}>
+          <Button onClick={handleNext} className="mt-10 sm:hidden" disabled={isNextDisabled()}>
             {step === steps.length - 1 ? "Proceed to Pay" : "Continue"}
           </Button>
         </div>
@@ -164,6 +196,7 @@ export default function BuyPageClient() {
             currentStep={step + 1}
             noOfSteps={steps.length}
             handleButtonClick={handleNext}
+            disabled={isNextDisabled()}
           />
         </div>
       </div>
