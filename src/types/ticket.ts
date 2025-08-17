@@ -16,3 +16,30 @@ export type Ticket = {
   date: ISODate;
   theme: string;
 };
+
+export interface Buyer {
+  fullname: string;
+  email: string;
+}
+export interface Attendee {
+  email: string;
+  ticket_ids: string[];
+  gender?: string;
+  role?: string;
+  experience?: string;
+}
+export interface CheckoutPayload {
+  buyer: Buyer;
+  attendees: Attendee[];
+  callback_url: string;
+}
+
+export interface CheckoutSuccess {
+  reference: string;
+  paymentUrl: string;
+}
+
+export interface ApiError {
+  message: string;
+  errors?: Record<string, string[]>;
+}
