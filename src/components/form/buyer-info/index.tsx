@@ -1,25 +1,16 @@
 "use client";
 
 import React from "react";
-import { z } from "zod";
 
 import TextField from "@/components/ui/inputs/text-field";
 import Checkbox from "@/components/ui/inputs/checkbox";
 import Card from "@/components/ui/card";
 import { useBuyFormStore } from "@/store/buy-form-store";
 
-import { buyerSchema } from "@/schemas/buyerSchema";
-
 import ProfileRegistration from "../profile-reg";
 import AttendeeInfo from "../attendee-info";
 
 import type { OrderItem, BuyerInfo } from "@/app/buy/client";
-
-type FormData = z.infer<typeof buyerSchema>;
-
-type BuyerInformationProps = {
-  selectedDates: OrderItem[];
-};
 
 const BuyerInformation = ({ selectedDates }: { selectedDates: OrderItem[] }) => {
   const { buyerInfo, buyerErrors, attendeeInfo, updateBuyerField, setBuyerError } =

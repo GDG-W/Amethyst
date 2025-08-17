@@ -35,7 +35,6 @@ export default function BuyPageClient() {
   const [step, setStep] = useState(0);
   const { mutateAsync: checkout } = useCheckout();
   const { orderItems, buyerInfo, attendeeInfo, profileInfo } = useBuyFormStore();
-  console.log("API URL:", process.env.NEXT_PUBLIC_API_URL);
 
   const handleContinue = () => {
     if (orderItems.length < 1) return;
@@ -146,7 +145,7 @@ export default function BuyPageClient() {
           className="disabled:text-soft-400 flex items-center gap-1 disabled:cursor-not-allowed"
         >
           <ChevronLeft className="inline" size={20} />
-          <span className="label-4">Go Back</span>
+          <span className="label-4 cursor-pointer">Go Back</span>
         </button>
         |
         <Breadcrumb activeIndex={step} breadcrumbList={steps} />

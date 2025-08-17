@@ -20,7 +20,7 @@ export default function SelectField({
   id = "select-field",
 }: SelectFieldProps) {
   return (
-    <div className="flex min-w-[400px] flex-col gap-2">
+    <div className="flex w-full min-w-[200px] flex-col gap-2">
       {label && (
         <label htmlFor={id} className="label-3 block font-medium tracking-tight">
           <span className="mr-2">{label}</span>
