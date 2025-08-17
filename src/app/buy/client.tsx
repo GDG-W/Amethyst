@@ -8,6 +8,7 @@ import OrderSummary from "@/components/ui/order-summary";
 import Button from "@/components/ui/button";
 import BuyerInformation from "@/components/form/buyer-info";
 import { useBuyFormStore } from "@/store/buy-form-store";
+import { useCheckout } from "@/hooks/useCheckout";
 
 const steps = ["Buy Ticket", "Buyer Information"];
 
@@ -31,7 +32,8 @@ export type AttendeeInfo = {
 
 export default function BuyPageClient() {
   const [step, setStep] = useState(0);
-  const { orderItems, buyerInfo, attendeeInfo } = useBuyFormStore();
+  const { mutateAsync: checkout } = useCheckout();
+  const { orderItems, buyerInfo, attendeeInfo, profileInfo } = useBuyFormStore();
 
   const handleContinue = () => {
     if (orderItems.length < 1) return;
@@ -43,17 +45,148 @@ export default function BuyPageClient() {
     if (step > 0) setStep(step - 1);
   };
 
-  const handleNext = () => {
-    if (step === 0) {
-      return handleContinue();
-    } else if (step === 1) {
-      console.log({ buyerInfo, attendeeInfo });
-      if (buyerInfo && attendeeInfo) {
-        console.log("PROCESS PAYMENT");
-      }
-      return false;
+  // const prepareCheckoutPayload = () => {
+  //   if (!buyerInfo) return null;
+
+  //   const buyer = { fullname: buyerInfo.fullName.toLowerCase(), email: buyerInfo.email };
+
+  //   const attendees: any[] = [];
+
+  //   if (attendeeInfo?.emailsByDate) {
+  //     Object.entries(attendeeInfo.emailsByDate).forEach(([dateId, emails]) => {
+  //       emails.forEach((email) => {
+  //         if (!email || email === buyerInfo.email) return;
+
+  //         const ticket_ids = orderItems
+  //           .filter((i) => i.id === dateId)
+  //           .map((i) => i.id)
+  //           .filter(Boolean);
+
+  //         if (!ticket_ids.length) return;
+
+  //         const attendee: any = { email, ticket_ids };
+  //         if (profileInfo?.gender) attendee.gender = profileInfo.gender;
+  //         if (profileInfo?.role) attendee.role = profileInfo.role;
+  //         if (profileInfo?.experienceLevel) attendee.experience = profileInfo.experienceLevel;
+
+  //         attendees.push(attendee);
+  //       });
+  //     });
+  //   }
+
+  //   if (buyerInfo.belongsToMe && orderItems.length) {
+  //     const buyerTicketIds = orderItems
+  //       .map((i) => i.id)
+  //       .filter((id) => !attendees.some((att) => att.ticket_ids.includes(id)));
+
+  //     if (buyerTicketIds.length) {
+  //       const buyerAttendee: any = { email: buyerInfo.email, ticket_ids: buyerTicketIds };
+  //       if (profileInfo?.gender) buyerAttendee.gender = profileInfo.gender;
+  //       if (profileInfo?.role) buyerAttendee.role = profileInfo.role;
+  //       if (profileInfo?.experienceLevel) buyerAttendee.experience = profileInfo.experienceLevel;
+  //       attendees.push(buyerAttendee);
+  //     }
+  //   }
+
+  //   return {
+  //     buyer,
+  //     attendees,
+  //     callback_url: `${window.location.origin}/payment-success`,
+  //   };
+  // };
+
+  type CheckoutAttendee = {
+    email: string;
+    ticket_ids: string[];
+    gender?: string;
+    role?: string;
+    experience?: string;
+  };
+
+  type CheckoutPayload = {
+    buyer: { fullname: string; email: string };
+    attendees: CheckoutAttendee[];
+    callback_url: string;
+  };
+
+  const prepareCheckoutPayload = (): CheckoutPayload | null => {
+    if (!buyerInfo) return null;
+
+    const buyer = { fullname: buyerInfo.fullName.toLowerCase(), email: buyerInfo.email };
+
+    const attendees: CheckoutAttendee[] = [];
+
+    // Add attendees from emailsByDate
+    if (attendeeInfo?.emailsByDate) {
+      Object.entries(attendeeInfo.emailsByDate).forEach(([dateId, emails]) => {
+        emails.forEach((email) => {
+          if (!email || email === buyerInfo.email) return;
+
+          const ticket_ids = orderItems
+            .filter((i) => i.id === dateId)
+            .map((i) => i.id)
+            .filter(Boolean);
+
+          if (!ticket_ids.length) return;
+
+          const attendee: CheckoutAttendee = {
+            email,
+            ticket_ids,
+            ...(profileInfo?.gender && { gender: profileInfo.gender }),
+            ...(profileInfo?.role && { role: profileInfo.role }),
+            ...(profileInfo?.experienceLevel && { experience: profileInfo.experienceLevel }),
+          };
+
+          attendees.push(attendee);
+        });
+      });
     }
-    return false;
+
+    // Add buyer as attendee if "belongsToMe" is checked
+    if (buyerInfo.belongsToMe && orderItems.length) {
+      const buyerTicketIds = orderItems
+        .map((i) => i.id)
+        .filter((id) => !attendees.some((att) => att.ticket_ids.includes(id)));
+
+      if (buyerTicketIds.length) {
+        const buyerAttendee: CheckoutAttendee = {
+          email: buyerInfo.email,
+          ticket_ids: buyerTicketIds,
+          ...(profileInfo?.gender && { gender: profileInfo.gender }),
+          ...(profileInfo?.role && { role: profileInfo.role }),
+          ...(profileInfo?.experienceLevel && { experience: profileInfo.experienceLevel }),
+        };
+        attendees.push(buyerAttendee);
+      }
+    }
+
+    return {
+      buyer,
+      attendees,
+      callback_url: `${window.location.origin}/payment-success`,
+    };
+  };
+
+  const handleNext = async () => {
+    if (step === 0) return handleContinue();
+
+    if (step === 1) {
+      const payload = prepareCheckoutPayload();
+      console.log(payload);
+      if (!payload) return;
+
+      try {
+        const res = await checkout(payload);
+        console.log(res);
+        // if (res.payment_url) {
+        //   window.location.href = res.payment_url;
+        // } else {
+        //   console.error("Checkout failed: missing payment_url");
+        // }
+      } catch (err) {
+        // toast.error("Checkout failed", err);
+      }
+    }
   };
 
   return (
