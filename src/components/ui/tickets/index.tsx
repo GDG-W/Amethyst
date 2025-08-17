@@ -41,7 +41,7 @@ const Ticket: React.FC<TicketProps> = ({
 
   return (
     <div
-      className={`relative mx-auto w-full max-w-lg overflow-visible bg-red-500`}
+      className={`relative mx-auto w-full max-w-lg overflow-visible bg-white`}
       style={{
         clipPath: clipPath,
       }}
