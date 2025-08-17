@@ -17,7 +17,7 @@ const Ticket: React.FC<TicketProps> = ({
   ticketType = "Standard",
 }) => {
   const dayNumber = parseInt(date.match(/\d+/)?.[0] || "0");
-  const isProTicket = dayNumber === 20;
+  const isProTicket = dayNumber === 20 && ticketType === "Pro";
 
   const getBorderColor = (date: string): string => {
     const dayNumber = parseInt(date.match(/\d+/)?.[0] || "0");
@@ -41,7 +41,7 @@ const Ticket: React.FC<TicketProps> = ({
 
   return (
     <div
-      className={`relative mx-auto w-full max-w-lg overflow-visible bg-white`}
+      className={`relative mx-auto w-full max-w-lg overflow-visible bg-red-500`}
       style={{
         clipPath: clipPath,
       }}
@@ -92,20 +92,20 @@ const TicketList = () => {
       title: "Kickoff & Big Ideas",
       date: "18th November",
       time: "10:00 AM",
-      ticketType: "Standard",
+      ticketType: "Pro",
       day: "Monday",
     },
     {
       title: "Backend & Cloud Mastery",
       date: "19th November",
       time: "10:00 AM",
-      ticketType: "Pro",
+      ticketType: "Standard",
     },
     {
       title: "Frontend Fundamentals",
       date: "20th November",
       time: "2:00 PM",
-      ticketType: "Standard",
+      ticketType: "Pro",
       day: "Friday",
     },
     {
