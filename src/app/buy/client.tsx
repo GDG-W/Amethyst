@@ -9,6 +9,7 @@ import Button from "@/components/ui/button";
 import BuyerInformation from "@/components/form/buyer-info";
 import { useBuyFormStore } from "@/store/buy-form-store";
 import { useCheckout } from "@/hooks/useCheckout";
+import { toast } from "@/components/ui/toast";
 
 const steps = ["Buy Ticket", "Buyer Information"];
 
@@ -44,56 +45,6 @@ export default function BuyPageClient() {
   const handleGoBack = () => {
     if (step > 0) setStep(step - 1);
   };
-
-  // const prepareCheckoutPayload = () => {
-  //   if (!buyerInfo) return null;
-
-  //   const buyer = { fullname: buyerInfo.fullName.toLowerCase(), email: buyerInfo.email };
-
-  //   const attendees: any[] = [];
-
-  //   if (attendeeInfo?.emailsByDate) {
-  //     Object.entries(attendeeInfo.emailsByDate).forEach(([dateId, emails]) => {
-  //       emails.forEach((email) => {
-  //         if (!email || email === buyerInfo.email) return;
-
-  //         const ticket_ids = orderItems
-  //           .filter((i) => i.id === dateId)
-  //           .map((i) => i.id)
-  //           .filter(Boolean);
-
-  //         if (!ticket_ids.length) return;
-
-  //         const attendee: any = { email, ticket_ids };
-  //         if (profileInfo?.gender) attendee.gender = profileInfo.gender;
-  //         if (profileInfo?.role) attendee.role = profileInfo.role;
-  //         if (profileInfo?.experienceLevel) attendee.experience = profileInfo.experienceLevel;
-
-  //         attendees.push(attendee);
-  //       });
-  //     });
-  //   }
-
-  //   if (buyerInfo.belongsToMe && orderItems.length) {
-  //     const buyerTicketIds = orderItems
-  //       .map((i) => i.id)
-  //       .filter((id) => !attendees.some((att) => att.ticket_ids.includes(id)));
-
-  //     if (buyerTicketIds.length) {
-  //       const buyerAttendee: any = { email: buyerInfo.email, ticket_ids: buyerTicketIds };
-  //       if (profileInfo?.gender) buyerAttendee.gender = profileInfo.gender;
-  //       if (profileInfo?.role) buyerAttendee.role = profileInfo.role;
-  //       if (profileInfo?.experienceLevel) buyerAttendee.experience = profileInfo.experienceLevel;
-  //       attendees.push(buyerAttendee);
-  //     }
-  //   }
-
-  //   return {
-  //     buyer,
-  //     attendees,
-  //     callback_url: `${window.location.origin}/payment-success`,
-  //   };
-  // };
 
   type CheckoutAttendee = {
     email: string;
@@ -177,14 +128,10 @@ export default function BuyPageClient() {
 
       try {
         const res = await checkout(payload);
-        // console.log(res);
-        // if (res.success) {
-        //   window.location.href = res.payment_url;
-        // } else {
-        //   console.error("Checkout failed: missing payment_url");
-        // }
+        console.log(res);
       } catch (err) {
-        // toast.error("Checkout failed", err);
+        console.log(err);
+        toast.error("Checkout failed", "Please try again in a few minutes");
       }
     }
   };
