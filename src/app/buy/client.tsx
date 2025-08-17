@@ -35,6 +35,7 @@ export default function BuyPageClient() {
   const [step, setStep] = useState(0);
   const { mutateAsync: checkout } = useCheckout();
   const { orderItems, buyerInfo, attendeeInfo, profileInfo } = useBuyFormStore();
+  console.log("API URL:", process.env.NEXT_PUBLIC_API_URL);
 
   const handleContinue = () => {
     if (orderItems.length < 1) return;
