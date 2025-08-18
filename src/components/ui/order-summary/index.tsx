@@ -13,8 +13,8 @@ interface OrderSummaryInterface {
   handleButtonClick: () => void;
   currentStep: number;
   noOfSteps: number;
-  loading: boolean;
-  disabled: boolean;
+  loading?: boolean;
+  disabled?: boolean;
 }
 function calculateTotal(listItems: OrderItemsType[]) {
   return listItems.reduce((total: number, item: OrderItemsType) => total + item.price, 0);
