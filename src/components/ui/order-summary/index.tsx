@@ -38,14 +38,16 @@ const OrderSummary = ({
                   key={`${item.name}-${item.price}-${index}`}
                   className="mb-3 flex items-center justify-between gap-3"
                 >
-                  <p className="text-sub-600 font-medium">{item.name}</p>
-                  <p className="label-3 font-medium text-black">&#8358;{item.price}</p>
+                  <p className="text-sub-600 font-medium tracking-tight">{item.name}</p>
+                  <p className="label-3 font-medium tracking-tight text-black">
+                    &#8358;{item.price}
+                  </p>
                 </li>
               );
             })}
 
             <hr className="border-soft-200 mt-4 h-0 border-t border-dashed" />
-            <li className="text-away-base my-5 flex cursor-pointer items-center justify-between gap-3 underline underline-offset-4">
+            <li className="text-away-base my-5 flex cursor-pointer items-center justify-between gap-3 font-medium tracking-tight underline underline-offset-4">
               <span>Add discount code</span>
             </li>
 

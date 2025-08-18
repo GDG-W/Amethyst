@@ -1,13 +1,12 @@
 "use client";
 
-import React, { useEffect } from "react";
-import { useForm, useController } from "react-hook-form";
+import React from "react";
 import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
 
 import TextField from "@/components/ui/inputs/text-field";
 import Card from "@/components/ui/card";
 import SelectField from "@/components/ui/inputs/select";
+import { useBuyFormStore } from "@/store/buy-form-store";
 import { profileSchema } from "@/schemas/profileSchema";
 
 type FormData = z.infer<typeof profileSchema>;
@@ -53,148 +52,78 @@ const ProfileRegistration: React.FC<ProfileRegistrationProps> = ({
   initialData,
   readonlyFields = [],
 }) => {
-  const { control, handleSubmit, setValue } = useForm<FormData>({
-    resolver: zodResolver(profileSchema),
-    defaultValues: {
-      fullName: "",
-      email: "",
-      gender: "",
-      role: "",
-      experienceLevel: "",
-    },
-  });
+  const { buyerInfo, profileInfo, profileErrors, updateProfileField, setProfileError } =
+    useBuyFormStore();
 
-  const {
-    field: fullNameField,
-    fieldState: { error: fullNameError },
-  } = useController({
-    name: "fullName",
-    control,
-  });
+  const fullName = initialData?.fullName || buyerInfo?.fullName || "";
+  const email = initialData?.email || buyerInfo?.email || "";
+  const gender = profileInfo?.gender || "";
+  const role = profileInfo?.role || "";
+  const experienceLevel = profileInfo?.experienceLevel || "";
 
-  const {
-    field: emailField,
-    fieldState: { error: emailError },
-  } = useController({
-    name: "email",
-    control,
-  });
-
-  const {
-    field: genderField,
-    fieldState: { error: genderError },
-  } = useController({
-    name: "gender",
-    control,
-  });
-
-  const {
-    field: roleField,
-    fieldState: { error: roleError },
-  } = useController({
-    name: "role",
-    control,
-  });
-
-  const {
-    field: experienceLevelField,
-    fieldState: { error: experienceLevelError },
-  } = useController({
-    name: "experienceLevel",
-    control,
-  });
-
-  // Update form values when initialData changes
-  useEffect(() => {
-    if (initialData) {
-      setValue("fullName", initialData.fullName);
-      setValue("email", initialData.email);
-    }
-  }, [initialData, setValue]);
+  const handleFieldChange = (field: "gender" | "role" | "experienceLevel", value: string) => {
+    updateProfileField(field, value);
+  };
 
   const isFieldReadonly = (fieldName: string) => readonlyFields.includes(fieldName);
 
   return (
     <Card title="Register Your Profile" numbered={true} number={4}>
-      <form onSubmit={handleSubmit(() => {})}>
-        <div className="space-y-4 px-5 py-7">
-          <TextField
-            id="fullName"
-            label="Full Name"
-            name="fullName"
-            placeholder="Enter full name"
-            value={fullNameField.value}
-            onChange={isFieldReadonly("fullName") ? () => {} : fullNameField.onChange}
-            onBlur={fullNameField.onBlur}
-            error={fullNameError?.message}
-            disabled={isFieldReadonly("fullName")}
-          />
+      <div className="space-y-4 px-5 py-7">
+        <TextField
+          id="fullName"
+          label="Full Name"
+          name="fullName"
+          placeholder="Enter full name"
+          value={fullName}
+          onChange={() => {}} // Read-only since it comes from buyer info
+          disabled={true}
+        />
 
-          <TextField
-            id="email"
-            label="Email address"
-            name="email"
-            type="email"
-            placeholder="Enter email address"
-            value={emailField.value}
-            onChange={isFieldReadonly("email") ? () => {} : emailField.onChange}
-            onBlur={emailField.onBlur}
-            error={emailError?.message}
-            disabled={isFieldReadonly("email")}
-          />
+        <TextField
+          id="email"
+          label="Email address"
+          name="email"
+          type="email"
+          placeholder="Enter email address"
+          value={email}
+          onChange={() => {}} // Read-only since it comes from buyer info
+          disabled={true}
+        />
 
-          <SelectField
-            id="gender"
-            label="Gender"
-            options={genderOptions}
-            placeholder="Select gender"
-            value={genderField.value}
-            onChange={
-              isFieldReadonly("gender")
-                ? () => {}
-                : (value) => {
-                    genderField.onChange(value);
-                  }
-            }
-            error={genderError?.message}
-            disabled={isFieldReadonly("gender")}
-          />
+        <SelectField
+          id="gender"
+          label="Gender"
+          options={genderOptions}
+          placeholder="Select gender"
+          value={gender}
+          onChange={(value) => handleFieldChange("gender", value)}
+          error={profileErrors.gender}
+          disabled={isFieldReadonly("gender")}
+        />
 
-          <SelectField
-            id="role"
-            label="Role"
-            options={roleOptions}
-            placeholder="Select role"
-            value={roleField.value}
-            onChange={
-              isFieldReadonly("role")
-                ? () => {}
-                : (value) => {
-                    roleField.onChange(value);
-                  }
-            }
-            error={roleError?.message}
-            disabled={isFieldReadonly("role")}
-          />
+        <SelectField
+          id="role"
+          label="Role"
+          options={roleOptions}
+          placeholder="Select role"
+          value={role}
+          onChange={(value) => handleFieldChange("role", value)}
+          error={profileErrors.role}
+          disabled={isFieldReadonly("role")}
+        />
 
-          <SelectField
-            id="experienceLevel"
-            label="Experience Level"
-            options={experienceLevelOptions}
-            placeholder="Select experience level"
-            value={experienceLevelField.value}
-            onChange={
-              isFieldReadonly("experienceLevel")
-                ? () => {}
-                : (value) => {
-                    experienceLevelField.onChange(value);
-                  }
-            }
-            error={experienceLevelError?.message}
-            disabled={isFieldReadonly("experienceLevel")}
-          />
-        </div>
-      </form>
+        <SelectField
+          id="experienceLevel"
+          label="Experience Level"
+          options={experienceLevelOptions}
+          placeholder="Select experience level"
+          value={experienceLevel}
+          onChange={(value) => handleFieldChange("experienceLevel", value)}
+          error={profileErrors.experienceLevel}
+          disabled={isFieldReadonly("experienceLevel")}
+        />
+      </div>
     </Card>
   );
 };
