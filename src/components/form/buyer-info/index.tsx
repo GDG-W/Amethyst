@@ -1,72 +1,63 @@
 "use client";
 
 import React from "react";
-import { useForm, useController } from "react-hook-form";
 import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
 
 import TextField from "@/components/ui/inputs/text-field";
 import Checkbox from "@/components/ui/inputs/checkbox";
-
 import Card from "@/components/ui/card";
+import { useBuyFormStore } from "@/store/buy-form-store";
 
 import { buyerSchema } from "@/schemas/buyerSchema";
 
 import ProfileRegistration from "../profile-reg";
 import AttendeeInfo from "../attendee-info";
 
+import type { OrderItem, BuyerInfo } from "@/app/buy/client";
+
 type FormData = z.infer<typeof buyerSchema>;
 
-const BuyerInformation = () => {
-  const { control, handleSubmit, watch } = useForm<FormData>({
-    resolver: zodResolver(buyerSchema),
-    defaultValues: {
-      fullName: "",
-      email: "",
-      belongsToMe: false,
-    },
-  });
+type BuyerInformationProps = {
+  selectedDates: OrderItem[];
+};
 
-  const {
-    field: fullNameField,
-    fieldState: { error: fullNameError },
-  } = useController({
-    name: "fullName",
-    control,
-  });
+const BuyerInformation = ({ selectedDates }: { selectedDates: OrderItem[] }) => {
+  const { buyerInfo, buyerErrors, attendeeInfo, updateBuyerField, setBuyerError } =
+    useBuyFormStore();
 
-  const {
-    field: emailField,
-    fieldState: { error: emailError },
-  } = useController({
-    name: "email",
-    control,
-  });
+  const fullName = buyerInfo?.fullName || "";
+  const email = buyerInfo?.email || "";
+  const belongsToMe = buyerInfo?.belongsToMe || false;
 
-  const { field: belongsToMeField } = useController({
-    name: "belongsToMe",
-    control,
-  });
+  const handleFieldChange = <K extends keyof BuyerInfo>(field: K, value: BuyerInfo[K]) => {
+    updateBuyerField(field, value);
+  };
 
-  // Watch the belongsToMe checkbox and form values
-  const belongsToMe = watch("belongsToMe");
-  const fullName = watch("fullName");
-  const email = watch("email");
+  let ChildComponent;
+  if (belongsToMe) {
+    ChildComponent = (
+      <ProfileRegistration
+        initialData={{ fullName, email }}
+        readonlyFields={["fullName", "email"]}
+      />
+    );
+  } else {
+    ChildComponent = <AttendeeInfo selectedDates={selectedDates} />;
+  }
 
   return (
     <div>
       <Card title="Buyer Information" numbered={true} number={3}>
-        <form onSubmit={handleSubmit(() => {})}>
+        <form>
           <div className="space-y-4 px-5 py-7">
             <div>
               <TextField
                 label="Full Name"
                 name="fullName"
                 placeholder="Enter full name"
-                value={fullNameField.value}
-                onChange={fullNameField.onChange}
-                onBlur={fullNameField.onBlur}
-                error={fullNameError?.message}
+                value={fullName}
+                onChange={(e) => handleFieldChange("fullName", e.target.value)}
+                error={buyerErrors.fullName}
               />
             </div>
 
@@ -76,10 +67,9 @@ const BuyerInformation = () => {
                 name="email"
                 type="email"
                 placeholder="Enter email address"
-                value={emailField.value}
-                onChange={emailField.onChange}
-                onBlur={emailField.onBlur}
-                error={emailError?.message}
+                value={email}
+                onChange={(e) => handleFieldChange("email", e.target.value)}
+                error={buyerErrors.email}
               />
             </div>
           </div>
@@ -90,22 +80,12 @@ const BuyerInformation = () => {
         <Checkbox
           name="belongsToMe"
           label="This ticket belongs to me"
-          checked={belongsToMeField.value}
-          onChange={belongsToMeField.onChange}
+          checked={belongsToMe}
+          onChange={(checked) => handleFieldChange("belongsToMe", checked.target.checked)}
         />
       </div>
 
-      {/* Conditional rendering based on belongsToMe checkbox */}
-      <div className="mt-6">
-        {belongsToMe ? (
-          <ProfileRegistration
-            initialData={{ fullName, email }}
-            readonlyFields={["fullName", "email"]}
-          />
-        ) : (
-          <AttendeeInfo selectedDates={[]} />
-        )}
-      </div>
+      <div className="mt-6">{ChildComponent}</div>
     </div>
   );
 };

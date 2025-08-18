@@ -61,6 +61,10 @@ const TicketsSelection = ({
     onSelectionChange(dates);
   };
 
+  console.log({
+    availableDateKeys,
+  });
+
   return (
     <div className="bg-bg-strong-950 h-fit">
       <Card header={header} className="border-bg-surface-800 rounded-lg border bg-white">

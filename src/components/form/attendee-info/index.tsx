@@ -1,23 +1,18 @@
 "use client";
 
 import React from "react";
-import { useForm, useController } from "react-hook-form";
-import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
 
 import MultiInput from "@/components/ui/inputs/multi-input";
 import Card from "@/components/ui/card";
-import { attendeeSchema } from "@/schemas/attendeeSchema";
-
-type FormData = z.infer<typeof attendeeSchema>;
+import { useBuyFormStore } from "@/store/buy-form-store";
 
 type AttendeesInfoProps = {
   selectedDates: Array<{
     id: string;
-    day: number;
     dayName: string;
-    date: string;
+    ticketCount: number;
   }>;
+  buyerEmail?: string;
 };
 
 // Helper function to initialize default values
@@ -32,24 +27,17 @@ const getDefaultEmailsByDate = (selectedDates: AttendeesInfoProps["selectedDates
 };
 
 const AttendeeInfo = ({ selectedDates }: AttendeesInfoProps) => {
-  const {
-    control,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<FormData>({
-    resolver: zodResolver(attendeeSchema),
-    defaultValues: {
-      emailsByDate: getDefaultEmailsByDate(selectedDates),
-      belongsToMe: false,
+  const { attendeeInfo, attendeeErrors, updateAttendeeEmails, setAttendeeError } =
+    useBuyFormStore();
+
+  const ticketQuantities = selectedDates.reduce(
+    (acc, date) => {
+      acc[date.id] = date.ticketCount;
+      return acc;
     },
-  });
+    {} as Record<string, number>
+  );
 
-  const { field: emailsField } = useController({
-    name: "emailsByDate",
-    control,
-  });
-
-  // Email validation function for MultiInput
   const validateEmail = (email: string): string | null => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
@@ -58,12 +46,16 @@ const AttendeeInfo = ({ selectedDates }: AttendeesInfoProps) => {
     return null;
   };
 
-  // Handle email changes for specific dates
   const handleEmailChange = (dateId: string, emails: string[]) => {
-    emailsField.onChange({
-      ...emailsField.value,
-      [dateId]: emails,
-    });
+    const maxEmails = ticketQuantities[dateId];
+    if (emails.length > maxEmails) {
+      return;
+    }
+
+    updateAttendeeEmails(dateId, emails);
+
+    // Clear any existing error for this field
+    setAttendeeError(dateId, null);
   };
 
   return (
@@ -73,24 +65,23 @@ const AttendeeInfo = ({ selectedDates }: AttendeesInfoProps) => {
       numbered={true}
       number={4}
     >
-      <form onSubmit={handleSubmit(() => {})}>
-        <div className="space-y-4 px-5 py-7">
-          {selectedDates.map((date) => (
-            <div key={date.id}>
-              <MultiInput
-                id={`attendee-emails-${date.id}`}
-                label="Email address"
-                extraLabel={`${date.dayName}`}
-                placeholder="Enter email address"
-                value={emailsField.value[date.id]}
-                onChange={(emails) => handleEmailChange(date.id, emails)}
-                error={errors.emailsByDate?.[date.id]?.message}
-                validate={validateEmail}
-              />
-            </div>
-          ))}
-        </div>
-      </form>
+      <div className="space-y-4 px-5 py-7">
+        {selectedDates.map((date, index) => (
+          <div key={`${date.id || date.dayName}-${index}`}>
+            <MultiInput
+              id={`attendee-emails-${date.id || index}`}
+              label={date.ticketCount > 1 ? "Email address(es)" : "Email address"}
+              extraLabel={`${date.dayName}`}
+              placeholder={date.ticketCount > 1 ? "Enter email address(es)" : "Enter email address"}
+              value={attendeeInfo?.emailsByDate[date.id] || []}
+              onChange={(emails) => handleEmailChange(date.id, emails)}
+              error={attendeeErrors[date.id]}
+              validate={validateEmail}
+              maxItems={date.ticketCount}
+            />
+          </div>
+        ))}
+      </div>
     </Card>
   );
 };

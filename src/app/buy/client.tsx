@@ -6,20 +6,54 @@ import BuyTicket from "@/components/steps/buy-ticket";
 import Breadcrumb from "@/components/ui/breadcrumb";
 import OrderSummary from "@/components/ui/order-summary";
 import Button from "@/components/ui/button";
+import BuyerInformation from "@/components/form/buyer-info";
+import { useBuyFormStore } from "@/store/buy-form-store";
 
 const steps = ["Buy Ticket", "Buyer Information"];
 
+export type OrderItem = {
+  id: string;
+  name: string;
+  dayName: string;
+  ticketCount: number;
+  price: number;
+};
+
+export type BuyerInfo = {
+  fullName: string;
+  email: string;
+  belongsToMe: boolean;
+};
+
+export type AttendeeInfo = {
+  emailsByDate: Record<string, string[]>;
+};
+
 export default function BuyPageClient() {
   const [step, setStep] = useState(0);
-  const [orderItems, setOrderItems] = useState<{ name: string; price: number }[]>([]);
+  const { orderItems, buyerInfo, attendeeInfo } = useBuyFormStore();
 
   const handleContinue = () => {
     if (orderItems.length < 1) return;
     setStep((s) => Math.min(s + 1, steps.length - 1));
+    return true;
   };
 
   const handleGoBack = () => {
     if (step > 0) setStep(step - 1);
+  };
+
+  const handleNext = () => {
+    if (step === 0) {
+      return handleContinue();
+    } else if (step === 1) {
+      console.log({ buyerInfo, attendeeInfo });
+      if (buyerInfo && attendeeInfo) {
+        console.log("PROCESS PAYMENT");
+      }
+      return false;
+    }
+    return false;
   };
 
   return (
@@ -38,12 +72,9 @@ export default function BuyPageClient() {
       </div>
       <div className="flex flex-col gap-[20px] pt-5 sm:flex-row">
         <div className="w-full sm:flex-[9]">
-          {step === 0 && <BuyTicket onItemsChange={setOrderItems} />}
-          <Button
-            onClick={handleContinue}
-            className="mt-10 sm:hidden"
-            disabled={orderItems.length < 1}
-          >
+          {step === 0 && <BuyTicket />}
+          {step === 1 && <BuyerInformation selectedDates={orderItems} />}
+          <Button onClick={handleNext} className="mt-10 sm:hidden" disabled={orderItems.length < 1}>
             {step === steps.length - 1 ? "Proceed to Pay" : "Continue"}
           </Button>
         </div>
@@ -52,7 +83,7 @@ export default function BuyPageClient() {
             items={orderItems}
             currentStep={step + 1}
             noOfSteps={steps.length}
-            handleButtonClick={handleContinue}
+            handleButtonClick={handleNext}
           />
         </div>
       </div>

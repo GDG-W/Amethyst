@@ -54,6 +54,7 @@ export type MultiInputFieldProps = {
   onChange: (val: string[]) => void;
   placeholder?: string;
   validate?: (val: string) => string | null;
+  maxItems?: number;
 };
 
 export interface MultiSelectFieldProps extends Omit<SelectFieldProps, "value" | "onChange"> {
