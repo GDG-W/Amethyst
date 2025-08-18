@@ -126,7 +126,7 @@ export default function BuyPageClient() {
     if (attendeeInfo?.emailsByDate) {
       Object.entries(attendeeInfo.emailsByDate).forEach(([dateId, emails]) => {
         emails.forEach((email) => {
-          if (!email || email === buyerInfo.email) return;
+          if (!email) return;
 
           const ticket_ids = orderItems
             .filter((i) => i.id === dateId)
@@ -166,10 +166,23 @@ export default function BuyPageClient() {
       }
     }
 
+    // Group by unique email and merge ticket_ids
+    const grouped: Record<string, CheckoutAttendee> = {};
+    attendees.forEach((att) => {
+      if (!grouped[att.email]) {
+        grouped[att.email] = { ...att, ticket_ids: [...att.ticket_ids] };
+      } else {
+        grouped[att.email].ticket_ids.push(...att.ticket_ids);
+        grouped[att.email].ticket_ids = Array.from(new Set(grouped[att.email].ticket_ids)); // remove duplicates
+      }
+    });
+
+    const mergedAttendees = Object.values(grouped);
+
     return {
       buyer,
-      attendees,
-      callback_url: `${window.location.origin}/payment-success`,
+      attendees: mergedAttendees,
+      callback_url: `${window.location.origin}/login`,
     };
   };
 
