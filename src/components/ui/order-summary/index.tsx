@@ -13,6 +13,7 @@ interface OrderSummaryInterface {
   handleButtonClick: () => void;
   currentStep: number;
   noOfSteps: number;
+  loading: boolean;
   disabled: boolean;
 }
 function calculateTotal(listItems: OrderItemsType[]) {
@@ -24,6 +25,7 @@ const OrderSummary = ({
   currentStep,
   noOfSteps,
   disabled,
+  loading,
 }: OrderSummaryInterface) => {
   const total = useMemo(() => calculateTotal(items), [items]);
 
@@ -60,7 +62,7 @@ const OrderSummary = ({
             </li>
           </ul>
         )}
-        <Button disabled={disabled} onClick={handleButtonClick}>
+        <Button disabled={disabled} onClick={handleButtonClick} loading={loading}>
           {currentStep === noOfSteps ? "Proceed to Pay" : "Continue"}
         </Button>
       </div>

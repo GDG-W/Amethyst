@@ -10,6 +10,7 @@ import BuyerInformation from "@/components/form/buyer-info";
 import { useBuyFormStore } from "@/store/buy-form-store";
 import { useCheckout } from "@/hooks/useCheckout";
 import { toast } from "@/components/ui/toast";
+import { useTickets } from "@/hooks/useTickets";
 
 const steps = ["Buy Ticket", "Buyer Information"];
 
@@ -31,10 +32,27 @@ export type AttendeeInfo = {
   emailsByDate: Record<string, string[]>;
 };
 
+type CheckoutAttendee = {
+  email: string;
+  ticket_ids: string[];
+  gender?: string;
+  role?: string;
+  experience?: string;
+};
+
+type CheckoutPayload = {
+  buyer: { fullname: string; email: string };
+  attendees: CheckoutAttendee[];
+  callback_url: string;
+};
+
 export default function BuyPageClient() {
   const [step, setStep] = useState(0);
-  const { mutateAsync: checkout } = useCheckout();
+  const { tickets: standardTickets } = useTickets("standard");
+  const { tickets: proTickets } = useTickets("pro");
+  const { mutateAsync: checkout, isPending } = useCheckout();
   const { orderItems, buyerInfo, attendeeInfo, profileInfo } = useBuyFormStore();
+
   const isNextDisabled = () => {
     if (step === 0) {
       // Step 0: no tickets selected
@@ -69,27 +87,32 @@ export default function BuyPageClient() {
   };
 
   const handleContinue = () => {
-    if (orderItems.length < 1) return;
-    setStep((s) => Math.min(s + 1, steps.length - 1));
-    return true;
+    if (step === 0) {
+      // Remove tickets with 0 quantity
+      const { quantities, selectedByType, setSelectedByType } = useBuyFormStore.getState();
+
+      ["standard", "pro"].forEach((type) => {
+        const filtered = selectedByType[type as "standard" | "pro"].filter((iso) => {
+          const ticket = (type === "pro" ? proTickets : standardTickets).find(
+            (t) => t.date.split("T")[0] === iso
+          );
+          if (!ticket) return false;
+          return (quantities[ticket.id] ?? 0) > 0;
+        });
+        setSelectedByType(type as "standard" | "pro", filtered);
+      });
+
+      setStep((s) => Math.min(s + 1, steps.length - 1));
+      return true;
+    }
+
+    if (step === 1) {
+      handleNext();
+    }
   };
 
   const handleGoBack = () => {
     if (step > 0) setStep(step - 1);
-  };
-
-  type CheckoutAttendee = {
-    email: string;
-    ticket_ids: string[];
-    gender?: string;
-    role?: string;
-    experience?: string;
-  };
-
-  type CheckoutPayload = {
-    buyer: { fullname: string; email: string };
-    attendees: CheckoutAttendee[];
-    callback_url: string;
   };
 
   const prepareCheckoutPayload = (): CheckoutPayload | null => {
@@ -186,7 +209,12 @@ export default function BuyPageClient() {
         <div className="w-full sm:flex-[9]">
           {step === 0 && <BuyTicket />}
           {step === 1 && <BuyerInformation selectedDates={orderItems} />}
-          <Button onClick={handleNext} className="mt-10 sm:hidden" disabled={isNextDisabled()}>
+          <Button
+            onClick={handleNext}
+            className="mt-10 sm:hidden"
+            disabled={isNextDisabled()}
+            loading={isPending}
+          >
             {step === steps.length - 1 ? "Proceed to Pay" : "Continue"}
           </Button>
         </div>
@@ -197,6 +225,7 @@ export default function BuyPageClient() {
             noOfSteps={steps.length}
             handleButtonClick={handleNext}
             disabled={isNextDisabled()}
+            loading={isPending}
           />
         </div>
       </div>
