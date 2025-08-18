@@ -15,7 +15,7 @@ import AttendeeInfo from "../attendee-info";
 import type { OrderItem, BuyerInfo } from "@/app/buy/client";
 
 const BuyerInformation = ({ selectedDates }: { selectedDates: OrderItem[] }) => {
-  const { buyerInfo, buyerErrors, attendeeInfo, updateBuyerField, setBuyerError } =
+  const { buyerInfo, orderItems, buyerErrors, attendeeInfo, updateBuyerField, setBuyerError } =
     useBuyFormStore();
 
   const fullName = buyerInfo?.fullName || "";
@@ -39,6 +39,8 @@ const BuyerInformation = ({ selectedDates }: { selectedDates: OrderItem[] }) => 
     updateBuyerField(field, value);
     validateField(field, value);
   };
+
+  const canShowBelongsToMe = orderItems.every((item) => (item.ticketCount || 0) === 1);
 
   let ChildComponent;
   if (belongsToMe) {
@@ -85,14 +87,16 @@ const BuyerInformation = ({ selectedDates }: { selectedDates: OrderItem[] }) => 
         </form>
       </Card>
 
-      <div className="mt-4">
-        <Checkbox
-          name="belongsToMe"
-          label="This ticket belongs to me"
-          checked={belongsToMe}
-          onChange={(checked) => handleFieldChange("belongsToMe", checked.target.checked)}
-        />
-      </div>
+      {canShowBelongsToMe && (
+        <div className="mt-4">
+          <Checkbox
+            name="belongsToMe"
+            label="This ticket belongs to me"
+            checked={belongsToMe}
+            onChange={(checked) => handleFieldChange("belongsToMe", checked.target.checked)}
+          />
+        </div>
+      )}
 
       <div className="mt-6">{ChildComponent}</div>
     </div>

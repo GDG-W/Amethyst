@@ -136,7 +136,7 @@ export default function MultiInput({
               className="text-strong-950 bg-away-lighter flex items-center gap-1 rounded-full px-2 py-1.5 text-sm"
             >
               {item}
-              <button type="button" onClick={() => handleRemove(item)}>
+              <button type="button" className="cursor-pointer" onClick={() => handleRemove(item)}>
                 <span className="sr-only">close</span>
                 <Close className="h-4 w-4" />
               </button>
