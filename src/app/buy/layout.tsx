@@ -17,8 +17,8 @@ export default function BuyLayout({
       </h1>
       <p className="text-soft-400 text-xs">
         <span>Already have a ticket? </span>
-        <Link href="/claim" className="text-sub-600 underline underline-offset-2">
-          Claim Ticket
+        <Link href="/login" className="text-sub-600 underline underline-offset-2">
+          Login
         </Link>
       </p>
       {children}

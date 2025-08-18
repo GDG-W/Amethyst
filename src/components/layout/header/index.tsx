@@ -18,14 +18,14 @@ const Header = () => {
         {pathname === "/buy" ? (
           <>
             <Link
-              href="/claim"
+              href="/login"
               className="text-strong-950 cursor-pointer text-xs font-normal underline underline-offset-2 md:text-base"
             >
               Login
             </Link>
           </>
         ) : null}
-        {pathname === "/claim" || pathname === "/upgrade" ? (
+        {pathname === "/login" || pathname === "/upgrade" ? (
           <Button size="fit">
             <Link href="/buy">Buy Tickets!</Link>
           </Button>
