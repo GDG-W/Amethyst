@@ -73,13 +73,18 @@ export default function BuyPageClient() {
           profileInfo.experienceLevel
         );
       } else {
-        // ticket for others → require at least one attendee email
-        return !(
-          attendeeInfo &&
-          Object.keys(attendeeInfo.emailsByDate || {}).some(
-            (dateId) => attendeeInfo.emailsByDate[dateId].length > 0
-          )
-        );
+        // ticket for others → require attendee emails equal ticket count
+        const totalTickets = orderItems.reduce((sum, item) => sum + (item.ticketCount || 0), 0);
+
+        const totalAttendees =
+          attendeeInfo && attendeeInfo.emailsByDate
+            ? Object.values(attendeeInfo.emailsByDate).reduce(
+                (sum, emails) => sum + emails.filter(Boolean).length,
+                0
+              )
+            : 0;
+
+        return totalAttendees !== totalTickets;
       }
     }
 
