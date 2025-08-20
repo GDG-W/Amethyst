@@ -1,6 +1,7 @@
 import React from "react";
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 
+import { ExperienceLevelOptions, GenderOptions, RoleOptions } from "@/constants/options";
 import claimTicket from "@/services/claim-ticket.service";
 
 import { toast } from "../../ui/toast";
@@ -56,9 +57,9 @@ describe("ClaimTicketForm", () => {
     fireEvent.change(screen.getByLabelText(/full name/i), {
       target: { value: "John Doe" },
     });
-    await fillSelect(/gender/i, "Female");
-    await fillSelect(/role/i, "Frontend Engineer");
-    await fillSelect(/experience/i, "Beginner - 0-1 year experience, just starting out");
+    await fillSelect(/gender/i, GenderOptions[0].label);
+    await fillSelect(/role/i, RoleOptions[3].label);
+    await fillSelect(/experience/i, ExperienceLevelOptions[0].label);
 
     const submitBtn = screen.getByRole("button", { name: /claim ticket/i });
     await waitFor(() => {
@@ -71,9 +72,9 @@ describe("ClaimTicketForm", () => {
       expect(claimTicket).toHaveBeenCalledWith({
         token,
         fullname: "John Doe",
-        gender: "female",
-        role: "frontend engineer",
-        experience: "Beginner - 0-1 year experience, just starting out",
+        gender: GenderOptions[0].value,
+        role: RoleOptions[3].value,
+        experience: ExperienceLevelOptions[0].value,
       });
       expect(formCallbackFn).toHaveBeenCalled();
     });
@@ -87,9 +88,9 @@ describe("ClaimTicketForm", () => {
     fireEvent.change(screen.getByLabelText(/full name/i), {
       target: { value: "Jane Doe" },
     });
-    await fillSelect(/gender/i, "Female");
-    await fillSelect(/role/i, "Backend Engineer");
-    await fillSelect(/experience/i, "Beginner - 0-1 year experience, just starting out");
+    await fillSelect(/gender/i, GenderOptions[1].label);
+    await fillSelect(/role/i, RoleOptions[5].label);
+    await fillSelect(/experience/i, ExperienceLevelOptions[1].label);
 
     const submitBtn = screen.getByRole("button", { name: /claim ticket/i });
     await waitFor(() => expect(submitBtn).toBeEnabled());
@@ -110,9 +111,9 @@ describe("ClaimTicketForm", () => {
     fireEvent.change(screen.getByLabelText(/full name/i), {
       target: { value: "Test User" },
     });
-    await fillSelect(/gender/i, "Male");
-    await fillSelect(/role/i, "Frontend Engineer");
-    await fillSelect(/experience/i, "Beginner - 0-1 year experience, just starting out");
+    await fillSelect(/gender/i, GenderOptions[0].label);
+    await fillSelect(/role/i, RoleOptions[8].label);
+    await fillSelect(/experience/i, ExperienceLevelOptions[2].label);
 
     const submitBtn = screen.getByRole("button", { name: /claim ticket/i });
     await waitFor(() => expect(submitBtn).toBeEnabled());
