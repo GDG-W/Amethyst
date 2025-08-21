@@ -5,13 +5,11 @@ type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
   loading?: boolean;
   size?: "full" | "fit";
   variant?: "primary" | "secondary" | "link";
-  height?: "sixty" | "auto";
 };
 const Button = ({
   children,
   disabled,
   size = "full",
-  height = "auto",
   loading = false,
   variant = "primary",
   ...rest
@@ -22,7 +20,6 @@ const Button = ({
       fit: "w-fit",
     },
     height: {
-      sixty: "h-[45px] sm:h-[60px]",
       auto: "auto",
     },
     variants: {
@@ -37,7 +34,7 @@ const Button = ({
   return (
     <button
       disabled={isDisabled}
-      className={`disabled:bg-soft-200 flex min-w-30 cursor-pointer items-center justify-center gap-2 rounded-full px-6 py-2.5 capitalize hover:opacity-80 disabled:cursor-not-allowed disabled:text-white ${buttonStyles.variants[variant]} ${buttonStyles.sizes[size]} ${buttonStyles.height[height]}`}
+      className={`disabled:bg-soft-200 flex min-w-30 cursor-pointer items-center justify-center gap-2 rounded-full px-6 py-2.5 capitalize hover:opacity-80 disabled:cursor-not-allowed disabled:text-white ${buttonStyles.variants[variant]} ${buttonStyles.sizes[size]}`}
       {...rest}
     >
       {loading ? (
