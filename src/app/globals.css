@@ -472,3 +472,7 @@
 @utility font-akira {
   font-family: var(--font-akira), sans-serif;
 }
+
+/* *{
+  outline: 1px solid red;
+} */
