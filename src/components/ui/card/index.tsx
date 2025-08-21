@@ -21,7 +21,7 @@ const Card: React.FC<CardProps> = ({
   return (
     <div
       className={clsx(
-        "border-soft-200 min-h-[160px] w-full min-w-[400px] rounded-[8px] border bg-white",
+        "border-soft-200 min-h-[160px] w-full rounded-[8px] border bg-white sm:min-w-[400px]",
         "flex flex-col",
         className
       )}

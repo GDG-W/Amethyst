@@ -1,14 +1,42 @@
 "use client";
-import React, { useState } from "react";
+import React from "react";
 
 import Card from "@/components/ui/ticket-selection/ticket-card";
 import Tabs from "@/components/ui/ticket-selection/ticket-tabs";
 import DatePicker from "@/components/ui/ticket-selection/date-picker";
 import { TicketType } from "@/types/ticket";
+import { useTickets } from "@/hooks/useTickets";
 
-const TicketsSelection = () => {
-  const [activeTab, setActiveTab] = useState<TicketType>("standard");
-  const [selectedDates, setSelectedDates] = useState<string[]>([]);
+type TicketsSelectionProps = {
+  activeTab: TicketType;
+  onTabChange: (id: TicketType) => void;
+  selectedDates: string[];
+  onSelectionChange: (dates: string[]) => void;
+};
+
+const TicketsSelection = ({
+  activeTab,
+  onTabChange,
+  selectedDates,
+  onSelectionChange,
+}: TicketsSelectionProps) => {
+  const { tickets } = useTickets(activeTab);
+  const availableDateKeys = React.useMemo(() => {
+    const set = new Set<string>();
+    for (const t of tickets) if ((t.available_quantity ?? 0) > 0) set.add(t.date.split("T")[0]);
+    return set;
+  }, [tickets]);
+
+  const dates = React.useMemo(
+    () => [
+      { day: 18, dayName: "Tue", date: "2025-11-18" },
+      { day: 19, dayName: "Wed", date: "2025-11-19" },
+      { day: 20, dayName: "Thu", date: "2025-11-20" },
+      { day: 21, dayName: "Fri", date: "2025-11-21" },
+      { day: 22, dayName: "Sat", date: "2025-11-22" },
+    ],
+    []
+  );
 
   const tabsData: { id: TicketType; label: string }[] = [
     { id: "standard", label: "Standard Ticket" },
@@ -26,20 +54,20 @@ const TicketsSelection = () => {
 
   const handleTabChange = (tabId: string) => {
     const newTab = tabId as TicketType;
-    // Only clear selected dates when switching to a different tab
-    if (newTab !== activeTab) {
-      setSelectedDates([]);
-    }
-    setActiveTab(newTab);
+    onTabChange(newTab);
   };
 
   const handleDateSelectionChange = (dates: string[]) => {
-    setSelectedDates(dates);
+    onSelectionChange(dates);
   };
 
+  console.log({
+    availableDateKeys,
+  });
+
   return (
-    <div className="bg-bg-strong-950 min-h-screen p-4">
-      <Card header={header} className="bg-bg-strong-950 border-bg-surface-800 rounded-lg border">
+    <div className="bg-bg-strong-950 h-fit">
+      <Card header={header} className="border-bg-surface-800 rounded-lg border bg-white">
         <Tabs
           tabs={tabsData}
           activeTab={activeTab}
@@ -49,8 +77,9 @@ const TicketsSelection = () => {
 
         <div className="mt-6">
           <DatePicker
-            mode={activeTab}
+            dates={dates}
             selectedDates={selectedDates}
+            availableDateKeys={availableDateKeys}
             onSelectionChange={handleDateSelectionChange}
             className="w-full"
           />
