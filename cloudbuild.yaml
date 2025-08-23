@@ -33,5 +33,5 @@ options:
 substitutions:
   _TAG: latest 
   _PROJECT_ID: devfest-lagos-2025
-  _APP_NAME: amethyst
+  _APP_NAME: amethyst-staging
   _REGION: europe-west1
