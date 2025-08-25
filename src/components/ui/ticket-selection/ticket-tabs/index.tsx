@@ -39,7 +39,7 @@ interface TabsProps {
 const Tabs: React.FC<TabsProps> = ({ tabs = [], activeTab, onTabChange, className = "" }) => {
   return (
     <div
-      className={`-mx-4 flex gap-1 border border-y-[#EBEBEB] bg-[#F7F7F7] px-2 py-2 md:px-3 ${className}`}
+      className={`-mx-4 flex gap-1 border-y border-y-[#EBEBEB] bg-[#F7F7F7] px-2 py-2 md:px-3 ${className}`}
     >
       {tabs.map((tab, index) => (
         <Tab
