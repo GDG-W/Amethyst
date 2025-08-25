@@ -33,7 +33,7 @@ export default function SelectField({
           aria-labelledby={id}
           className="border-soft-200 data-[placeholder]:text-soft-400 inline-flex items-center justify-between rounded-[8px] border bg-white p-4 tracking-tight"
         >
-          <Select.Value placeholder={placeholder} />
+          <Select.Value placeholder={placeholder} className="!text-left" />
           <Select.Icon>
             <ChevronDown className="text-sub-600 h-4 w-4" />
           </Select.Icon>
