@@ -26,33 +26,35 @@ const OrderSummary = ({
   const total = useMemo(() => calculateTotal(items), [items]);
 
   return (
-    <Card title='Order Summary'>
-      <div className='flex h-full min-h-70 flex-col justify-between gap-2 p-4'>
+    <Card title="Order Summary">
+      <div className="flex h-full min-h-70 flex-col justify-between gap-2 p-4">
         {items.length < 1 ? (
-          <p className='text-sm'>Select your ticket date(s) to see order summary</p>
+          <p className="text-sm">Select your ticket date(s) to see order summary</p>
         ) : (
-          <ul className='mb-4'>
+          <ul className="mb-4">
             {items.map((item, index) => {
               return (
                 <li
                   key={`${item.name}-${item.price}-${index}`}
-                  className='mb-3 flex items-center justify-between gap-3'
+                  className="mb-3 flex items-center justify-between gap-3"
                 >
-                  <p className='text-sub-600 font-medium'>{item.name}</p>
-                  <p className='label-3 font-medium text-black'>&#8358;{item.price}</p>
+                  <p className="text-sub-600 font-medium tracking-tight">{item.name}</p>
+                  <p className="label-3 font-medium tracking-tight text-black">
+                    &#8358;{item.price}
+                  </p>
                 </li>
               );
             })}
 
-            <hr className='border-soft-200 mt-4 h-0 border-t border-dashed' />
-            <li className='text-away-base my-5 flex cursor-pointer items-center justify-between gap-3 underline underline-offset-4'>
+            <hr className="border-soft-200 mt-4 h-0 border-t border-dashed" />
+            <li className="text-away-base my-5 flex cursor-pointer items-center justify-between gap-3 font-medium tracking-tight underline underline-offset-4">
               <span>Add discount code</span>
             </li>
 
-            <hr className='border-soft-200 mb-4 h-0 border-t border-dashed' />
-            <li className='flex items-center justify-between gap-3'>
-              <p className='text-sub-600 text-sm font-medium'>Total</p>
-              <p className='label-3 text-sm font-medium text-black'>&#8358;{total}</p>
+            <hr className="border-soft-200 mb-4 h-0 border-t border-dashed" />
+            <li className="flex items-center justify-between gap-3">
+              <p className="text-sub-600 text-sm font-medium">Total</p>
+              <p className="label-3 text-sm font-medium text-black">&#8358;{total}</p>
             </li>
           </ul>
         )}
