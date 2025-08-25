@@ -13,6 +13,8 @@ interface OrderSummaryInterface {
   handleButtonClick: () => void;
   currentStep: number;
   noOfSteps: number;
+  loading?: boolean;
+  disabled?: boolean;
 }
 function calculateTotal(listItems: OrderItemsType[]) {
   return listItems.reduce((total: number, item: OrderItemsType) => total + item.price, 0);
@@ -22,6 +24,8 @@ const OrderSummary = ({
   handleButtonClick,
   currentStep,
   noOfSteps,
+  disabled,
+  loading,
 }: OrderSummaryInterface) => {
   const total = useMemo(() => calculateTotal(items), [items]);
 
@@ -38,14 +42,16 @@ const OrderSummary = ({
                   key={`${item.name}-${item.price}-${index}`}
                   className="mb-3 flex items-center justify-between gap-3"
                 >
-                  <p className="text-sub-600 font-medium">{item.name}</p>
-                  <p className="label-3 font-medium text-black">&#8358;{item.price}</p>
+                  <p className="text-sub-600 font-medium tracking-tight">{item.name}</p>
+                  <p className="label-3 font-medium tracking-tight text-black">
+                    &#8358;{item.price}
+                  </p>
                 </li>
               );
             })}
 
             <hr className="border-soft-200 mt-4 h-0 border-t border-dashed" />
-            <li className="text-away-base my-5 flex cursor-pointer items-center justify-between gap-3 underline underline-offset-4">
+            <li className="text-away-base my-5 flex cursor-pointer items-center justify-between gap-3 font-medium tracking-tight underline underline-offset-4">
               <span>Add discount code</span>
             </li>
 
@@ -56,7 +62,7 @@ const OrderSummary = ({
             </li>
           </ul>
         )}
-        <Button disabled={items.length < 1} onClick={handleButtonClick}>
+        <Button disabled={disabled} onClick={handleButtonClick} loading={loading}>
           {currentStep === noOfSteps ? "Proceed to Pay" : "Continue"}
         </Button>
       </div>
