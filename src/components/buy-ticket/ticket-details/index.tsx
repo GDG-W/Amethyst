@@ -1,6 +1,8 @@
 "use client";
 import React, { useMemo } from "react";
 
+import { ChevronDown } from "lucide-react";
+
 import Card from "@/components/ui/card";
 import { API_DAY_TO_LABEL } from "@/lib/constants";
 import { indexTicketsByIsoDate } from "@/lib/utils";
@@ -32,6 +34,7 @@ export default function TicketDetails({
   onChangeQuantity,
 }: TicketDetailsProps) {
   const MAX_TICKETS_PER_DAY = 9;
+  const ticketOptions = Array.from({ length: MAX_TICKETS_PER_DAY + 1 }, (_, i) => i);
 
   const ticketsByDateKey = useMemo(() => indexTicketsByIsoDate(tickets), [tickets]);
 
@@ -43,10 +46,8 @@ export default function TicketDetails({
     [selectedDates, ticketsByDateKey]
   );
 
-  console.log(selectedTickets);
-
   const handleQty =
-    (ticketId: string, available: number) => (e: React.ChangeEvent<HTMLInputElement>) => {
+    (ticketId: string, available: number) => (e: React.ChangeEvent<HTMLSelectElement>) => {
       const val = e.currentTarget.value;
 
       // Treat empty input as 0
@@ -81,16 +82,33 @@ export default function TicketDetails({
                     <p>{formatCurrencyNaira(t.price)}</p>
                   </div>
                   <div className="flex items-center justify-between">
-                    <p className="text-sub-600 label-5 capitalize">{t.theme}</p>
-                    <input
-                      aria-label={`Quantity for ${dayLabel}`}
-                      type="number"
-                      min={0}
-                      max={Math.min(max, MAX_TICKETS_PER_DAY)}
-                      value={qty === 0 ? "" : qty}
-                      onChange={handleQty(t.id, max)}
-                      className="border-soft-200 no-spinner h-8 w-16 rounded-md border px-2 text-sm"
-                    />
+                    <p
+                      className={`text-sub-600 label-5 ${t.theme === "ui/ux" ? "uppercase" : "capitalize"}`}
+                    >
+                      {t.theme}
+                    </p>
+                    <div className="relative inline-block">
+                      <select
+                        aria-label={`Quantity for ${dayLabel}`}
+                        value={qty === 0 ? "" : qty}
+                        onChange={handleQty(t.id, max)}
+                        className="border-soft-200 no-spinner h-8 w-16 appearance-none rounded-md border px-1.5 text-sm outline-none"
+                      >
+                        <option defaultValue={0} value={0}>
+                          --
+                        </option>
+                        {ticketOptions.map((t) => {
+                          if (t == 0) return null;
+
+                          return (
+                            <option key={t} value={t}>
+                              {t}
+                            </option>
+                          );
+                        })}
+                      </select>
+                      <ChevronDown className="pointer-events-none absolute top-1/2 right-2 h-4 w-4 -translate-y-1/2 text-gray-500" />
+                    </div>
                   </div>
                 </li>
               );
