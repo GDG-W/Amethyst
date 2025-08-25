@@ -1,72 +1,73 @@
 "use client";
 
 import React from "react";
-import { useForm, useController } from "react-hook-form";
-import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
 
 import TextField from "@/components/ui/inputs/text-field";
 import Checkbox from "@/components/ui/inputs/checkbox";
-
 import Card from "@/components/ui/card";
+import { useBuyFormStore } from "@/store/buy-form-store";
 
 import { buyerSchema } from "@/schemas/buyerSchema";
 
 import ProfileRegistration from "../profile-reg";
 import AttendeeInfo from "../attendee-info";
 
-type FormData = z.infer<typeof buyerSchema>;
+import type { OrderItem, BuyerInfo } from "@/app/buy/client";
 
-const BuyerInformation = () => {
-  const { control, handleSubmit, watch } = useForm<FormData>({
-    resolver: zodResolver(buyerSchema),
-    defaultValues: {
-      fullName: "",
-      email: "",
-      belongsToMe: false,
-    },
-  });
+const BuyerInformation = ({ selectedDates }: { selectedDates: OrderItem[] }) => {
+  const { buyerInfo, orderItems, buyerErrors, attendeeInfo, updateBuyerField, setBuyerError } =
+    useBuyFormStore();
 
-  const {
-    field: fullNameField,
-    fieldState: { error: fullNameError },
-  } = useController({
-    name: "fullName",
-    control,
-  });
+  const fullName = buyerInfo?.fullName || "";
+  const email = buyerInfo?.email || "";
+  const belongsToMe = buyerInfo?.belongsToMe || false;
 
-  const {
-    field: emailField,
-    fieldState: { error: emailError },
-  } = useController({
-    name: "email",
-    control,
-  });
+  const validateField = <K extends keyof BuyerInfo>(field: K, value: BuyerInfo[K]) => {
+    const partial = { ...buyerInfo, [field]: value };
 
-  const { field: belongsToMeField } = useController({
-    name: "belongsToMe",
-    control,
-  });
+    const result = buyerSchema.safeParse(partial);
 
-  // Watch the belongsToMe checkbox and form values
-  const belongsToMe = watch("belongsToMe");
-  const fullName = watch("fullName");
-  const email = watch("email");
+    if (!result.success) {
+      const issue = result.error.issues.find((i) => i.path[0] === field);
+      setBuyerError(field, issue ? issue.message : null);
+    } else {
+      setBuyerError(field, null);
+    }
+  };
+
+  const handleFieldChange = <K extends keyof BuyerInfo>(field: K, value: BuyerInfo[K]) => {
+    updateBuyerField(field, value);
+    validateField(field, value);
+  };
+
+  const canShowBelongsToMe = orderItems.every((item) => (item.ticketCount || 0) === 1);
+
+  let ChildComponent;
+  if (belongsToMe) {
+    ChildComponent = (
+      <ProfileRegistration
+        initialData={{ fullName, email }}
+        readonlyFields={["fullName", "email"]}
+      />
+    );
+  } else {
+    ChildComponent = <AttendeeInfo selectedDates={selectedDates} />;
+  }
 
   return (
     <div>
       <Card title="Buyer Information" numbered={true} number={3}>
-        <form onSubmit={handleSubmit(() => {})}>
+        <form>
           <div className="space-y-4 px-5 py-7">
             <div>
               <TextField
                 label="Full Name"
                 name="fullName"
                 placeholder="Enter full name"
-                value={fullNameField.value}
-                onChange={fullNameField.onChange}
-                onBlur={fullNameField.onBlur}
-                error={fullNameError?.message}
+                value={fullName}
+                onChange={(e) => handleFieldChange("fullName", e.target.value)}
+                onBlur={(e) => validateField("fullName", e.target.value)}
+                error={buyerErrors.fullName}
               />
             </div>
 
@@ -76,36 +77,28 @@ const BuyerInformation = () => {
                 name="email"
                 type="email"
                 placeholder="Enter email address"
-                value={emailField.value}
-                onChange={emailField.onChange}
-                onBlur={emailField.onBlur}
-                error={emailError?.message}
+                value={email}
+                onChange={(e) => handleFieldChange("email", e.target.value)}
+                onBlur={(e) => validateField("fullName", e.target.value)}
+                error={buyerErrors.email}
               />
             </div>
           </div>
         </form>
       </Card>
 
-      <div className="mt-4">
-        <Checkbox
-          name="belongsToMe"
-          label="This ticket belongs to me"
-          checked={belongsToMeField.value}
-          onChange={belongsToMeField.onChange}
-        />
-      </div>
-
-      {/* Conditional rendering based on belongsToMe checkbox */}
-      <div className="mt-6">
-        {belongsToMe ? (
-          <ProfileRegistration
-            initialData={{ fullName, email }}
-            readonlyFields={["fullName", "email"]}
+      {canShowBelongsToMe && (
+        <div className="mt-4">
+          <Checkbox
+            name="belongsToMe"
+            label="This ticket belongs to me"
+            checked={belongsToMe}
+            onChange={(checked) => handleFieldChange("belongsToMe", checked.target.checked)}
           />
-        ) : (
-          <AttendeeInfo selectedDates={[]} />
-        )}
-      </div>
+        </div>
+      )}
+
+      <div className="mt-6">{ChildComponent}</div>
     </div>
   );
 };

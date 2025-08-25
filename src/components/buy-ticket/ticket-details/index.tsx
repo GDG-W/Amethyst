@@ -31,6 +31,8 @@ export default function TicketDetails({
   quantities = {},
   onChangeQuantity,
 }: TicketDetailsProps) {
+  const MAX_TICKETS_PER_DAY = 9;
+
   const ticketsByDateKey = useMemo(() => indexTicketsByIsoDate(tickets), [tickets]);
 
   const selectedTickets = useMemo(
@@ -43,8 +45,14 @@ export default function TicketDetails({
 
   const handleQty =
     (ticketId: string, available: number) => (e: React.ChangeEvent<HTMLInputElement>) => {
-      const val = Number.isNaN(e.currentTarget.valueAsNumber) ? 0 : e.currentTarget.valueAsNumber;
-      const clamped = Math.max(0, Math.min(available, val));
+      const val = e.currentTarget.value;
+
+      // Treat empty input as 0
+      const num = val === "" ? 0 : Number(val);
+
+      // Clamp to max allowed
+      const clamped = Math.max(0, Math.min(num, available, MAX_TICKETS_PER_DAY));
+
       onChangeQuantity?.(ticketId, clamped);
     };
 
@@ -73,10 +81,10 @@ export default function TicketDetails({
                       aria-label={`Quantity for ${dayLabel}`}
                       type="number"
                       min={0}
-                      max={max}
-                      value={qty}
+                      max={Math.min(max, MAX_TICKETS_PER_DAY)}
+                      value={qty === 0 ? "" : qty}
                       onChange={handleQty(t.id, max)}
-                      className="border-soft-200 h-8 w-16 rounded-md border px-2 text-sm"
+                      className="border-soft-200 no-spinner h-8 w-16 rounded-md border px-2 text-sm"
                     />
                   </div>
                 </li>
