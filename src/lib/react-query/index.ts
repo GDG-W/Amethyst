@@ -1,1 +1,1 @@
-// React Query client setup
+export { RQProvider } from "./provider";
