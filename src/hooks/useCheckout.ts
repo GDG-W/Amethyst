@@ -1,13 +1,14 @@
 import { useMutation } from "@tanstack/react-query";
 
-import ticketService from "@/services/ticket.service";
-import { CheckoutPayload } from "@/types/ticket";
+import checkoutService from "@/services/checkout.service";
+
 import { toast } from "@/components/ui/toast";
+import { CheckoutPayload } from "@/types/checkout";
 
 export function useCheckout() {
   return useMutation({
     mutationFn: async (payload: CheckoutPayload) => {
-      return ticketService.checkout(payload);
+      return checkoutService.checkout(payload);
     },
     onError: (error) => {
       toast.error("Oops!", "Unexpected network error");
