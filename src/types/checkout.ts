@@ -15,7 +15,7 @@ export interface CheckoutPayload {
   callback_url: string;
 }
 
-export interface CheckoutSuccess {
+export interface CheckoutResponse {
   id: string;
   amount_payable: number;
   total_amount: number;
