@@ -31,7 +31,7 @@ export default function SelectField({
         <Select.Trigger
           id={id}
           aria-labelledby={id}
-          className="border-soft-200 data-[placeholder]:text-soft-400 inline-flex items-center justify-between rounded-[8px] border bg-white p-4 tracking-tight"
+          className="border-soft-200 data-[placeholder]:text-soft-400 inline-flex items-center justify-between rounded-[8px] border bg-white p-4 text-left tracking-tight"
         >
           <Select.Value placeholder={placeholder} />
           <Select.Icon>
