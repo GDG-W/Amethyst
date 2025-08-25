@@ -56,7 +56,8 @@ jobs:
             --image gcr.io/${{ secrets.GCP_PROJECT_ID }}/${{ secrets.DOCKER_IMAGE_NAME }}:${{ env.IMAGE_TAG }} \
             --platform managed \
             --region us-central1 \
-            --allow-unauthenticated
+            --allow-unauthenticated \
+            --set-env-vars NEXT_PUBLIC_API_URL=${{ secrets.STAGING_API_BASE_URL }}
 
       - name: Get Cloud Run service URL
         if: github.event_name == 'pull_request'

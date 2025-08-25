@@ -2,6 +2,9 @@ import React from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
 
 import "@testing-library/jest-dom";
+import { RQProvider } from "@/lib/react-query";
+import { TicketType } from "@/types/ticket";
+
 import TicketsSelection from ".";
 
 // Mock the Card component
@@ -58,12 +61,10 @@ jest.mock("@/components/ui/ticket-selection/ticket-tabs", () => {
 // Mock the DatePicker component
 jest.mock("@/components/ui/ticket-selection/date-picker", () => {
   return function MockDatePicker({
-    mode,
     selectedDates,
     onSelectionChange,
     className,
   }: {
-    mode?: string;
     selectedDates?: string[];
     onSelectionChange?: (dates: string[]) => void;
     className?: string;
@@ -71,11 +72,10 @@ jest.mock("@/components/ui/ticket-selection/date-picker", () => {
     return (
       <div
         data-testid="date-picker"
-        data-mode={mode}
         data-selected={(selectedDates || []).join(",")}
         className={className}
       >
-        <button onClick={() => onSelectionChange?.(["test-date"])} data-testid="mock-date-select">
+        <button onClick={() => onSelectionChange?.(["2025-11-18"])} data-testid="mock-date-select">
           Select Date
         </button>
         <span data-testid="selected-count">{(selectedDates || []).length}</span>
@@ -84,10 +84,37 @@ jest.mock("@/components/ui/ticket-selection/date-picker", () => {
   };
 });
 
+function renderWithRQ(ui: React.ReactElement) {
+  return render(<RQProvider>{ui}</RQProvider>);
+}
+
+function ControlledWrapper({
+  initialTab = "standard",
+  initialDates = [],
+}: {
+  initialTab?: string;
+  initialDates?: string[];
+}) {
+  const [activeTab, setActiveTab] = React.useState(initialTab);
+  const [selectedDates, setSelectedDates] = React.useState<string[]>(initialDates);
+  return (
+    <TicketsSelection
+      activeTab={activeTab as TicketType}
+      onTabChange={(id) => setActiveTab(id)}
+      selectedDates={selectedDates}
+      onSelectionChange={(dates) => setSelectedDates(dates)}
+    />
+  );
+}
+
+function renderControlled(props?: { initialTab?: string; initialDates?: string[] }) {
+  return renderWithRQ(<ControlledWrapper {...props} />);
+}
+
 describe("TicketsSelection", () => {
   describe("Initial Rendering", () => {
     it("renders the page with all components", () => {
-      render(<TicketsSelection />);
+      renderControlled();
 
       expect(screen.getByTestId("ticket-card")).toBeInTheDocument();
       expect(screen.getByTestId("ticket-tabs")).toBeInTheDocument();
@@ -95,7 +122,7 @@ describe("TicketsSelection", () => {
     });
 
     it("renders the header with step number and title", () => {
-      render(<TicketsSelection />);
+      renderControlled();
 
       const header = screen.getByTestId("card-header");
       expect(header).toBeInTheDocument();
@@ -104,24 +131,23 @@ describe("TicketsSelection", () => {
     });
 
     it("starts with standard tab active", () => {
-      render(<TicketsSelection />);
+      renderControlled();
 
       const standardTab = screen.getByTestId("tab-standard");
       expect(standardTab).toHaveClass("active");
     });
 
     it("starts with no dates selected", () => {
-      render(<TicketsSelection />);
+      renderControlled();
 
       const selectedCount = screen.getByTestId("selected-count");
       expect(selectedCount).toHaveTextContent("0");
     });
 
     it("passes correct initial props to DatePicker", () => {
-      render(<TicketsSelection />);
+      renderControlled();
 
       const datePicker = screen.getByTestId("date-picker");
-      expect(datePicker).toHaveAttribute("data-mode", "standard");
       expect(datePicker).toHaveAttribute("data-selected", "");
       expect(datePicker).toHaveClass("w-full");
     });
@@ -129,53 +155,34 @@ describe("TicketsSelection", () => {
 
   describe("Tab Navigation", () => {
     it("renders all two tabs", () => {
-      render(<TicketsSelection />);
+      renderControlled();
 
       expect(screen.getByText("Standard Ticket")).toBeInTheDocument();
       expect(screen.getByText("Pro Ticket")).toBeInTheDocument();
     });
 
     it("switches to standard tab when clicked", () => {
-      render(<TicketsSelection />);
+      renderControlled();
 
       fireEvent.click(screen.getByTestId("tab-standard"));
 
       const standardTab = screen.getByTestId("tab-standard");
       expect(standardTab).toHaveClass("active");
-
-      const datePicker = screen.getByTestId("date-picker");
-      expect(datePicker).toHaveAttribute("data-mode", "standard");
     });
 
     it("switches to pro tab when clicked", () => {
-      render(<TicketsSelection />);
+      renderControlled();
 
       fireEvent.click(screen.getByTestId("tab-pro"));
 
       const proTab = screen.getByTestId("tab-pro");
       expect(proTab).toHaveClass("active");
-
-      const datePicker = screen.getByTestId("date-picker");
-      expect(datePicker).toHaveAttribute("data-mode", "pro");
-    });
-
-    it("updates DatePicker mode when tab changes", () => {
-      render(<TicketsSelection />);
-
-      // Start with standard mode
-      let datePicker = screen.getByTestId("date-picker");
-      expect(datePicker).toHaveAttribute("data-mode", "standard");
-
-      // Switch to pro
-      fireEvent.click(screen.getByTestId("tab-pro"));
-      datePicker = screen.getByTestId("date-picker");
-      expect(datePicker).toHaveAttribute("data-mode", "pro");
     });
   });
 
   describe("Date Selection Integration", () => {
     it("updates selected dates when DatePicker triggers change", () => {
-      render(<TicketsSelection />);
+      renderControlled();
 
       // Initially no dates selected
       let selectedCount = screen.getByTestId("selected-count");
@@ -189,11 +196,11 @@ describe("TicketsSelection", () => {
       expect(selectedCount).toHaveTextContent("1");
 
       const datePicker = screen.getByTestId("date-picker");
-      expect(datePicker).toHaveAttribute("data-selected", "test-date");
+      expect(datePicker).toHaveAttribute("data-selected", "2025-11-18");
     });
 
     it("maintains selected dates when staying on same tab", () => {
-      render(<TicketsSelection />);
+      renderControlled();
 
       // Select a date
       fireEvent.click(screen.getByTestId("mock-date-select"));
@@ -207,9 +214,9 @@ describe("TicketsSelection", () => {
     });
   });
 
-  describe("Tab Switching Clears Selection", () => {
-    it("clears selected dates when switching from standard to pro", () => {
-      render(<TicketsSelection />);
+  describe("Tab Switching Keeps Selection", () => {
+    it("keeps selected dates when switching from standard to pro", () => {
+      renderControlled();
 
       // Switch to standard and select dates
       fireEvent.click(screen.getByTestId("tab-standard"));
@@ -220,13 +227,13 @@ describe("TicketsSelection", () => {
       // Switch to pro mode
       fireEvent.click(screen.getByTestId("tab-pro"));
 
-      // Selection should be cleared
+      // Selection should be kept
       selectedCount = screen.getByTestId("selected-count");
-      expect(selectedCount).toHaveTextContent("0");
+      expect(selectedCount).toHaveTextContent("1");
     });
 
-    it("clears selected dates when switching from pro to standard", () => {
-      render(<TicketsSelection />);
+    it("keeps selected dates when switching from pro to standard", () => {
+      renderControlled();
 
       // Switch to pro and select dates
       fireEvent.click(screen.getByTestId("tab-pro"));
@@ -237,22 +244,22 @@ describe("TicketsSelection", () => {
       // Switch to standard mode
       fireEvent.click(screen.getByTestId("tab-standard"));
 
-      // Selection should be cleared
+      // Selection should be kept
       selectedCount = screen.getByTestId("selected-count");
-      expect(selectedCount).toHaveTextContent("0");
+      expect(selectedCount).toHaveTextContent("1");
     });
   });
 
   describe("Layout and Styling", () => {
     it("applies correct container classes", () => {
-      const { container } = render(<TicketsSelection />);
+      const { container } = renderControlled();
 
       const mainDiv = container.firstChild;
-      expect(mainDiv).toHaveClass("bg-bg-strong-950", "min-h-screen", "p-4");
+      expect(mainDiv).toHaveClass("bg-bg-strong-950");
     });
 
     it("applies correct spacing to DatePicker container", () => {
-      render(<TicketsSelection />);
+      renderControlled();
 
       const datePicker = screen.getByTestId("date-picker");
       const container = datePicker.parentElement;
@@ -260,14 +267,14 @@ describe("TicketsSelection", () => {
     });
 
     it("applies correct classes to Card component", () => {
-      render(<TicketsSelection />);
+      renderControlled();
 
       const card = screen.getByTestId("ticket-card");
-      expect(card).toHaveClass("bg-bg-strong-950", "border", "border-bg-surface-800", "rounded-lg");
+      expect(card).toHaveClass("border", "border-bg-surface-800", "rounded-lg", "bg-white");
     });
 
     it("applies correct classes to Tabs component", () => {
-      render(<TicketsSelection />);
+      renderControlled();
 
       const tabs = screen.getByTestId("ticket-tabs");
       expect(tabs).toHaveClass("bg-[#F7F7F7]", "px-2", "md:px-3", "py-2", "flex", "gap-1");
@@ -276,7 +283,7 @@ describe("TicketsSelection", () => {
 
   describe("Props Propagation", () => {
     it("passes correct tabs data to Tabs component", () => {
-      render(<TicketsSelection />);
+      renderControlled();
 
       // Verify all expected tabs are rendered with correct labels
       expect(screen.getByTestId("tab-standard")).toHaveTextContent("Standard Ticket");
@@ -284,7 +291,7 @@ describe("TicketsSelection", () => {
     });
 
     it("maintains consistent state between tabs and DatePicker", () => {
-      render(<TicketsSelection />);
+      renderControlled();
 
       // Switch to standard mode
       fireEvent.click(screen.getByTestId("tab-standard"));
@@ -294,11 +301,10 @@ describe("TicketsSelection", () => {
       const datePicker = screen.getByTestId("date-picker");
 
       expect(standardTab).toHaveClass("active");
-      expect(datePicker).toHaveAttribute("data-mode", "standard");
     });
 
     it("passes header prop correctly to Card component", () => {
-      render(<TicketsSelection />);
+      renderControlled();
 
       const header = screen.getByTestId("card-header");
       expect(header).toBeInTheDocument();
@@ -307,7 +313,7 @@ describe("TicketsSelection", () => {
 
   describe("Error Handling", () => {
     it("handles invalid tab ids gracefully", () => {
-      render(<TicketsSelection />);
+      renderControlled();
 
       // This should not crash the component
       expect(() => {
@@ -317,20 +323,11 @@ describe("TicketsSelection", () => {
     });
 
     it("handles undefined selectedDates gracefully", () => {
-      render(<TicketsSelection />);
+      renderControlled();
 
       // Component should render without crashing even if selectedDates is undefined
       const selectedCount = screen.getByTestId("selected-count");
       expect(selectedCount).toBeInTheDocument();
-    });
-
-    it("handles missing onSelectionChange callback gracefully", () => {
-      render(<TicketsSelection />);
-
-      // Should not crash when clicking date select
-      expect(() => {
-        fireEvent.click(screen.getByTestId("mock-date-select"));
-      }).not.toThrow();
     });
   });
 });

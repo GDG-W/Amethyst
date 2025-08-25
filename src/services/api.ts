@@ -5,9 +5,7 @@ import { isPlainObject } from "@/lib/utils";
 
 type ErrorResponse = {
   message: string;
-  errors?: {
-    [key: string]: string;
-  };
+  errors?: Record<string, string>;
 };
 
 const isErrorResponse = (data: unknown): data is ErrorResponse => {
@@ -50,15 +48,27 @@ class API {
       AxiosResponse<T | ErrorResponse>,
       D
     >(endpoint, data);
-    return this._handleResponse(response);
+    return this._handleResponse<T>(response);
   };
 
   static get = async <T>(endpoint: string): Promise<BaseResponse<T>> => {
     const response = await axiosInstance.get<T | ErrorResponse, AxiosResponse<T | ErrorResponse>>(
       endpoint
     );
-    return this._handleResponse(response);
+    return this._handleResponse<T>(response);
   };
 }
+
+export const toAPIError = (res: {
+  message?: string;
+  code?: number;
+  errors?: Record<string, string>;
+}): Error & { code?: number; errors?: Record<string, string>; response?: unknown } => {
+  return Object.assign(new Error(res.message ?? "Request failed"), {
+    code: res.code,
+    errors: res.errors,
+    response: res,
+  });
+};
 
 export default API;
