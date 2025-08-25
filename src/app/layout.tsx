@@ -5,6 +5,8 @@ import localFont from "next/font/local";
 
 import { RQProvider } from "@/lib/react-query";
 
+import Toaster from "@/components/ui/toast";
+
 import type { Metadata } from "next";
 
 const inter = Inter({
@@ -36,6 +38,7 @@ export default function RootLayout({
         <RQProvider>
           <div className="mx-auto max-w-4xl pt-8 pb-6 md:pt-14">{children}</div>
         </RQProvider>
+        <Toaster />
       </body>
     </html>
   );
