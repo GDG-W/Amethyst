@@ -11,6 +11,7 @@ import { SelectFieldProps } from "../types";
 
 export default function SelectField({
   label,
+  width = "full",
   extraLabel,
   options,
   value,
@@ -20,7 +21,13 @@ export default function SelectField({
   id = "select-field",
 }: SelectFieldProps) {
   return (
-    <div className="flex w-full min-w-[200px] flex-col gap-2">
+    <div
+      className="flex flex-col gap-2"
+      style={{
+        width: width === "full" ? "100%" : width,
+        minWidth: width === "full" ? "200px" : "",
+      }}
+    >
       {label && (
         <label htmlFor={id} className="label-3 block font-medium tracking-tight">
           <span className="mr-2">{label}</span>
@@ -31,7 +38,7 @@ export default function SelectField({
         <Select.Trigger
           id={id}
           aria-labelledby={id}
-          className="border-soft-200 data-[placeholder]:text-soft-400 inline-flex items-center justify-between rounded-[8px] border bg-white p-4 tracking-tight"
+          className={`border-soft-200 data-[placeholder]:text-soft-400 inline-flex items-center justify-between rounded-[8px] border bg-white ${width !== "full" ? "px-2 py-1.5" : "p-4"} tracking-tight`}
         >
           <Select.Value placeholder={placeholder} className="!text-left" />
           <Select.Icon>
