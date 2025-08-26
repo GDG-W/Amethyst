@@ -19,7 +19,7 @@ describe("Card", () => {
     const { container } = render(<Card>Content</Card>);
     const cardElement = container.firstChild;
 
-    expect(cardElement).toHaveClass("bg-bg-strong-950");
+    expect(cardElement).toHaveClass("bg-strong-950");
     expect(cardElement).toHaveClass("border");
     expect(cardElement).toHaveClass("border-bg-surface-800");
     expect(cardElement).toHaveClass("rounded-lg");
@@ -35,7 +35,7 @@ describe("Card", () => {
 
     expect(container.firstChild).toHaveClass("custom-class");
     // Should also still have default classes
-    expect(container.firstChild).toHaveClass("bg-bg-strong-950");
+    expect(container.firstChild).toHaveClass("bg-strong-950");
   });
 
   it("renders header when provided", () => {
@@ -74,7 +74,7 @@ describe("Card", () => {
 
     // Should still have default classes
     expect(container.firstChild).toHaveClass(
-      "bg-bg-strong-950",
+      "bg-strong-950",
       "border",
       "border-bg-surface-800",
       "rounded-lg"
@@ -106,7 +106,7 @@ describe("Card", () => {
 
     const cardElement = container.firstChild;
     expect(cardElement).toHaveClass("extra-class");
-    expect(cardElement).toHaveClass("bg-bg-strong-950");
+    expect(cardElement).toHaveClass("bg-strong-950");
     expect(screen.getByText("Test Header")).toBeInTheDocument();
     expect(screen.getByText("Content")).toBeInTheDocument();
   });
@@ -115,6 +115,6 @@ describe("Card", () => {
     const { container } = render(<Card>Content</Card>);
 
     // Should still render with default classes when className is undefined
-    expect(container.firstChild).toHaveClass("bg-bg-strong-950");
+    expect(container.firstChild).toHaveClass("bg-strong-950");
   });
 });
