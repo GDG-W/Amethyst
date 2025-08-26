@@ -71,12 +71,19 @@ export default function TicketDetails({
                 <li key={t.id}>
                   <div className="label-3 mb-2 flex items-center justify-between font-medium sm:mb-3">
                     <p>
-                      {dayLabel} - <span className="capitalize">{t.theme}</span>
+                      {dayLabel} -{" "}
+                      <span className={`${t.theme === "ui/ux" ? "uppercase" : "capitalize"}`}>
+                        {t.theme}
+                      </span>
                     </p>
                     <p>{formatCurrencyNaira(t.price)}</p>
                   </div>
                   <div className="flex items-center justify-between">
-                    <p className="text-sub-600 label-5 capitalize">{t.theme}</p>
+                    <p
+                      className={`text-sub-600 label-5 ${t.theme === "ui/ux" ? "uppercase" : "capitalize"}`}
+                    >
+                      {t.theme}
+                    </p>
                     <input
                       aria-label={`Quantity for ${dayLabel}`}
                       type="number"
