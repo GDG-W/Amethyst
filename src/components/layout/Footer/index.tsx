@@ -107,7 +107,7 @@ export default function index() {
               <Button className="flex text-lg md:text-xl lg:hidden">Buy Tickets</Button>
 
               <Image
-                src="/footer-image.svg"
+                src="/footer-image.webp"
                 alt="DevFest Lagos Community"
                 width={550}
                 height={200}
