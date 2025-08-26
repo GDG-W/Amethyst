@@ -4,6 +4,8 @@ import { Inter } from "next/font/google";
 
 import localFont from "next/font/local";
 
+import { RQProvider } from "@/lib/react-query";
+
 import type { Metadata } from "next";
 
 const inter = Inter({
@@ -29,7 +31,9 @@ export default function RootLayout({
   return (
     <html lang="en" className="">
       <body className={`${inter.variable} ${akira.variable} `}>
-        <div className="">{children}</div>
+        <RQProvider>
+          <div className="">{children}</div>
+        </RQProvider>
       </body>
     </html>
   );

@@ -1,10 +1,8 @@
+"use client";
 import React from "react";
 import { Check } from "lucide-react";
 
-import { TicketType } from "@/types/ticket";
-
 type DateType = {
-  id: string;
   day: number;
   dayName: string;
   date: string;
@@ -43,15 +41,15 @@ const DateButton = ({
           </div>
         </div>
 
-        <div className="ml-1 flex items-center sm:ml-0">
+        <div className="flex min-w-4 items-center justify-center sm:min-w-5">
           {isSelected && (
             <div className="rounded-full bg-white p-0.5 transition-opacity duration-200 sm:p-1">
-              <Check className="h-2.5 w-2.5 text-[#F6B51E] sm:h-3 sm:w-3" />
+              <Check className="h-2 w-2 text-[#F6B51E] sm:h-3 sm:w-3" />
             </div>
           )}
           {!isSelected && !isDisabled && (
             <div className="rounded-full bg-[#E2E4E9] p-0.5 opacity-0 transition-opacity duration-200 group-hover:opacity-100 sm:p-1">
-              <Check className="h-2.5 w-2.5 text-white sm:h-3 sm:w-3" />
+              <Check className="h-2 w-2 text-white sm:h-3 sm:w-3" />
             </div>
           )}
         </div>
@@ -61,50 +59,33 @@ const DateButton = ({
 };
 
 const DatePicker = ({
-  mode = "standard",
+  dates = [],
   selectedDates = [],
   onSelectionChange,
   className = "",
+  availableDateKeys,
 }: {
-  mode?: TicketType;
+  dates?: DateType[];
   selectedDates?: string[];
   onSelectionChange?: (selectedDates: string[]) => void;
   className?: string;
+  availableDateKeys?: Set<string>;
 }) => {
-  // Dates for Devfest 2025
-  const dates = [
-    { id: "tue-18", day: 18, dayName: "Tue", date: "2025-11-18" },
-    { id: "wed-19", day: 19, dayName: "Wed", date: "2025-11-19" },
-    { id: "thu-20", day: 20, dayName: "Thu", date: "2025-11-20" },
-    { id: "fri-21", day: 21, dayName: "Fri", date: "2025-11-21" },
-    { id: "sat-22", day: 22, dayName: "Sat", date: "2025-11-22" },
-  ];
-
-  const handleDateClick = (date: { id: string; dayName: string }) => {
+  const handleDateClick = (date: DateType) => {
+    const iso = date.date;
     let newSelection = [...selectedDates];
-
-    if (mode === "standard") {
-      // Standard mode: toggle date selection
-      if (selectedDates.includes(date.id)) {
-        newSelection = selectedDates.filter((id) => id !== date.id);
-      } else {
-        newSelection.push(date.id);
-      }
-    } else if (mode === "pro") {
-      // Pro mode: only Thursday can be selected
-      if (date.dayName === "Thu") {
-        newSelection = selectedDates.includes(date.id) ? [] : [date.id];
-      }
-    }
-
+    if (selectedDates.includes(iso)) newSelection = selectedDates.filter((d) => d !== iso);
+    else newSelection.push(iso);
     onSelectionChange?.(newSelection);
   };
 
-  const isDateDisabled = (date: { id?: string; day?: number; dayName: string; date?: string }) => {
-    if (mode === "pro") {
-      return date.dayName !== "Thu";
-    }
-    return false;
+  const isDateDisabled = (date: DateType) => {
+    const isAvailable = availableDateKeys
+      ? date.date
+        ? availableDateKeys.has(date.date)
+        : false
+      : true;
+    return !isAvailable;
   };
 
   const getSelectionCount = () => {
@@ -127,9 +108,9 @@ const DatePicker = ({
       <div className="grid grid-cols-5 gap-2 sm:gap-3">
         {dates.map((date) => (
           <DateButton
-            key={date.id}
+            key={date.day}
             date={date}
-            isSelected={selectedDates.includes(date.id)}
+            isSelected={selectedDates.includes(date.date)}
             isDisabled={isDateDisabled(date)}
             onClick={handleDateClick}
           />

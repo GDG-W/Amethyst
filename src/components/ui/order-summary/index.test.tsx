@@ -19,7 +19,7 @@ describe("OrderSummary Component", () => {
         handleButtonClick={mockHandleButtonClick}
         currentStep={1}
         noOfSteps={3}
-      />,
+      />
     );
     expect(screen.getByText(/Select your ticket/i)).toBeInTheDocument();
   });
@@ -31,7 +31,7 @@ describe("OrderSummary Component", () => {
         handleButtonClick={mockHandleButtonClick}
         currentStep={1}
         noOfSteps={3}
-      />,
+      />
     );
 
     expect(screen.getByText("2 x Thursday (Standard ticket)")).toBeInTheDocument();
@@ -50,7 +50,7 @@ describe("OrderSummary Component", () => {
         handleButtonClick={mockHandleButtonClick}
         currentStep={1}
         noOfSteps={3}
-      />,
+      />
     );
 
     const button = screen.getByRole("button", { name: /Continue/i });
@@ -66,7 +66,7 @@ describe("OrderSummary Component", () => {
         handleButtonClick={mockHandleButtonClick}
         currentStep={1}
         noOfSteps={3}
-      />,
+      />
     );
 
     const button = screen.getByRole("button");
@@ -80,7 +80,7 @@ describe("OrderSummary Component", () => {
         handleButtonClick={mockHandleButtonClick}
         currentStep={3}
         noOfSteps={3}
-      />,
+      />
     );
 
     expect(screen.getByText(/Proceed to Pay/i)).toBeInTheDocument();
