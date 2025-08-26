@@ -20,10 +20,10 @@ const defaultValues = Object.freeze({
 
 const ClaimTicketForm = ({
   token,
-  formCallbackFn,
+  toggleModal,
 }: {
   token: string;
-  formCallbackFn: () => Promise<void>;
+  toggleModal: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
   const {
     register,
@@ -44,7 +44,7 @@ const ClaimTicketForm = ({
       });
 
       if (submitForm === true) {
-        await formCallbackFn();
+        toggleModal(true);
         reset(defaultValues);
       } else {
         toast.error(

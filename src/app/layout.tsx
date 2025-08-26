@@ -6,8 +6,6 @@ import localFont from "next/font/local";
 import Toaster from "@/components/ui/toast";
 import { RQProvider } from "@/lib/react-query";
 
-import Toaster from "@/components/ui/toast";
-
 import type { Metadata } from "next";
 
 const inter = Inter({
