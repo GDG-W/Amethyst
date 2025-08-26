@@ -31,8 +31,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="">
-      <body className={`${inter.variable} ${akira.variable} `}>
+    <html lang="en">
+      <body className={`${inter.variable} ${akira.variable}`}>
         <RQProvider>
           <div className="">{children}</div>
         </RQProvider>

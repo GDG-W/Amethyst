@@ -32,7 +32,7 @@ export default function Index() {
   return (
     <section
       aria-label="Ticket Section"
-      className="flex min-h-screen w-full flex-col items-center justify-center bg-[#1E1E1E]"
+      className="flex w-full flex-col items-center justify-center bg-[#1E1E1E]"
     >
       <div className="mx-auto flex w-full max-w-7xl flex-col items-center justify-center gap-[3.0625rem] py-20">
         <div className="flex flex-col items-center justify-center gap-[.65rem]">
