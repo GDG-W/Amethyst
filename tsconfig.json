@@ -28,7 +28,7 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "src/components/layout/BuySquadTickets"
+    "src/components/layout/squad-tickets"
   ],
   "exclude": ["node_modules"]
 }
