@@ -15,6 +15,8 @@ describe("OrderSummary Component", () => {
   it("shows message when no items are passed", () => {
     render(
       <OrderSummary
+        loading={false}
+        disabled={false}
         items={[]}
         handleButtonClick={mockHandleButtonClick}
         currentStep={1}
@@ -27,6 +29,8 @@ describe("OrderSummary Component", () => {
   it("displays each item and correct total", () => {
     render(
       <OrderSummary
+        loading={false}
+        disabled={false}
         items={sampleItems}
         handleButtonClick={mockHandleButtonClick}
         currentStep={1}
@@ -46,6 +50,8 @@ describe("OrderSummary Component", () => {
   it("calls handleButtonClick when button is clicked", () => {
     render(
       <OrderSummary
+        loading={false}
+        disabled={false}
         items={sampleItems}
         handleButtonClick={mockHandleButtonClick}
         currentStep={1}
@@ -62,6 +68,7 @@ describe("OrderSummary Component", () => {
   it("disables button when no items", () => {
     render(
       <OrderSummary
+        loading={false}
         items={[]}
         handleButtonClick={mockHandleButtonClick}
         currentStep={1}
@@ -76,6 +83,7 @@ describe("OrderSummary Component", () => {
   it("shows Proceed to Pay on final step", () => {
     render(
       <OrderSummary
+        disabled={false}
         items={sampleItems}
         handleButtonClick={mockHandleButtonClick}
         currentStep={3}

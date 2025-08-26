@@ -133,25 +133,29 @@ export default function MultiInput({
           {value.map((item) => (
             <span
               key={item}
-              className="text-strong-950 bg-away-lighter flex items-center gap-1 rounded-full px-2 py-1.5 text-xs"
+              className="text-strong-950 bg-away-lighter flex items-center gap-1 rounded-full px-2 py-1.5 text-sm"
             >
               {item}
-              <button type="button" onClick={() => handleRemove(item)}>
+              <button type="button" className="cursor-pointer" onClick={() => handleRemove(item)}>
                 <span className="sr-only">close</span>
                 <Close className="h-4 w-4" />
               </button>
             </span>
           ))}
-          <input
-            ref={inputRef}
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-            onBlur={handleBlur}
-            onKeyDown={handleKeyDown}
-            onPaste={handlePaste}
-            className="placeholder:text-soft-400 flex-1 bg-transparent outline-none"
-            placeholder={placeholder}
-          />
+
+          {/* Show input only if maxItems is not reached */}
+          {maxItems === undefined || value.length < maxItems ? (
+            <input
+              ref={inputRef}
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+              onBlur={handleBlur}
+              onKeyDown={handleKeyDown}
+              onPaste={handlePaste}
+              className="placeholder:text-soft-400 flex-1 bg-transparent outline-none"
+              placeholder={placeholder}
+            />
+          ) : null}
         </div>
 
         {displayError && (

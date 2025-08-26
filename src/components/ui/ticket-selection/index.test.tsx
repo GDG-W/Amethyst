@@ -255,7 +255,7 @@ describe("TicketsSelection", () => {
       const { container } = renderControlled();
 
       const mainDiv = container.firstChild;
-      expect(mainDiv).toHaveClass("bg-bg-strong-950");
+      expect(mainDiv).toHaveClass("bg-strong-950");
     });
 
     it("applies correct spacing to DatePicker container", () => {
