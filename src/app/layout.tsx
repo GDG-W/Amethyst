@@ -1,8 +1,12 @@
 import "./globals.css";
 
 import { Inter } from "next/font/google";
-import { RQProvider } from "@/lib/react-query";
+
 import localFont from "next/font/local";
+
+import { RQProvider } from "@/lib/react-query";
+
+import Toaster from "@/components/ui/toast";
 
 import type { Metadata } from "next";
 
@@ -28,8 +32,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="">
-      <body className={`${inter.variable} ${akira.variable} `}>
-        <div className="">{children}</div>
+      <body style={{ backgroundImage: "" }} className={`${inter.variable} ${akira.variable}`}>
+        <RQProvider>
+          <div className="">{children}</div>
+        </RQProvider>
+        <Toaster />
       </body>
     </html>
   );
