@@ -20,7 +20,7 @@ export default function SelectField({
   id = "select-field",
 }: SelectFieldProps) {
   return (
-    <div className="flex min-w-[400px] flex-col gap-2">
+    <div className="flex w-full min-w-[200px] flex-col gap-2">
       {label && (
         <label htmlFor={id} className="label-3 block font-medium tracking-tight">
           <span className="mr-2">{label}</span>
@@ -33,7 +33,7 @@ export default function SelectField({
           aria-labelledby={id}
           className="border-soft-200 data-[placeholder]:text-soft-400 inline-flex items-center justify-between rounded-[8px] border bg-white p-4 tracking-tight"
         >
-          <Select.Value placeholder={placeholder} />
+          <Select.Value placeholder={placeholder} className="!text-left" />
           <Select.Icon>
             <ChevronDown className="text-sub-600 h-4 w-4" />
           </Select.Icon>
