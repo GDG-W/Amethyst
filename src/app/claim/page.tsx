@@ -3,47 +3,21 @@ import { useEffect, useState } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 
 import ClaimTicketForm from "@/components/form/claim-ticket";
-import SuccessCard from "@/components/ui/success-card";
-import Modal from "@/components/modal/modal-overlay";
+import SuccessModal from "@/components/modal/success-modal";
 
 export default function ClaimPage() {
   const searchParams = useSearchParams();
   const token = searchParams.get("token");
   const router = useRouter();
 
-  const [ticketToken, setTicketToken] = useState<string>("");
-  const [showModal, setShowModal] = useState<boolean>(false);
-  const [closeModalCb, setCloseModalCb] = useState<() => void>(() => () => {});
-
-  useEffect(() => {
-    const closeModal = () => {
-      setShowModal(false);
-    };
-
-    setCloseModalCb(() => closeModal);
-  }, []);
+  const [toggleSuccessModal, setToggleSuccessModal] = useState<boolean>(false);
 
   useEffect(() => {
     if (!token) {
       router.push("/");
       return;
     }
-
-    setTicketToken(token);
   }, [token, router]);
-
-  const openModalAndWait = () => {
-    return new Promise<void>((resolve) => {
-      setShowModal(true);
-
-      const closeModal = () => {
-        setShowModal(false);
-        resolve();
-      };
-
-      setCloseModalCb(() => closeModal);
-    });
-  };
 
   return (
     <div className="relative mx-auto mt-7 w-full max-w-[450px] pb-[15.813rem] md:mt-18 md:pb-18">
@@ -51,15 +25,14 @@ export default function ClaimPage() {
         Finish your registration to claim your ticket
       </h1>
 
-      <ClaimTicketForm token={ticketToken} formCallbackFn={openModalAndWait} />
+      <ClaimTicketForm token={token!} toggleModal={setToggleSuccessModal} />
 
-      <Modal isOpen={showModal}>
-        <SuccessCard
-          title="Registration Successful"
-          summary="You have successfully registered for Devfest Lagos 2025. Check your email for your Ticket ID"
-          onClose={closeModalCb}
-        />
-      </Modal>
+      <SuccessModal
+        currModalState={toggleSuccessModal}
+        toggleModal={setToggleSuccessModal}
+        title="Registration Successful"
+        summary="You have successfully registered for Devfest Lagos 2025. Check your email for your Ticket ID"
+      />
     </div>
   );
 }

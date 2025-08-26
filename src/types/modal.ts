@@ -1,9 +1,10 @@
-type ModalProps = {
+type SuccessModalProps = {
+  currModalState?: boolean;
   title: string;
   summary?: string;
   links?: { id: string; type: "primary" | "secondary"; href: string; text: string }[];
   className?: string;
-  onClose?: () => void;
+  toggleModal?: React.Dispatch<React.SetStateAction<boolean>>;
 } & React.HTMLAttributes<HTMLDivElement>;
 
-export default ModalProps;
+export default SuccessModalProps;

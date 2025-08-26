@@ -24,6 +24,7 @@ const Button = ({
       primary: "bg-away-base text-white",
       secondary: "bg-away-base/10 border border-away-base text-away-base",
       link: "bg-transparent text-away-base underline underline-offset-2",
+      ghost: "bg-transparent",
     },
   };
 
@@ -32,7 +33,7 @@ const Button = ({
   return (
     <button
       disabled={isDisabled}
-      className={`disabled:bg-soft-200 flex min-w-30 cursor-pointer items-center justify-center gap-2 rounded-full px-6 py-2.5 font-medium tracking-tight capitalize hover:opacity-80 disabled:cursor-not-allowed disabled:text-white ${buttonStyles.variants[variant]} ${buttonStyles.sizes[size]} ${className}`}
+      className={`disabled:bg-soft-200 cursor-pointer ${variant === buttonStyles.variants.ghost ? "" : "flex min-w-30 items-center justify-center gap-2 rounded-full px-6 py-2.5 font-medium tracking-tight capitalize hover:opacity-80 disabled:cursor-not-allowed disabled:text-white"} ${buttonStyles.variants[variant]} ${buttonStyles.sizes[size]} ${className}`}
       {...rest}
     >
       {loading ? (
