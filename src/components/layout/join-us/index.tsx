@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import React from "react";
 
 import Button from "@/components/ui/home-button";
@@ -13,7 +14,9 @@ const JoinUs = () => {
           <br /> future in Nigeria
         </h1>
 
-        <Button className="w-full text-sm text-[#141414] md:text-base">Buy Tickets</Button>
+        <Link href="/buy" className="flex w-full justify-center">
+          <Button className="w-full text-sm text-[#141414] md:text-base">Buy Tickets</Button>
+        </Link>
         <div className="relative hidden w-full lg:block">
           <Image
             src="/see-you-there.svg"
