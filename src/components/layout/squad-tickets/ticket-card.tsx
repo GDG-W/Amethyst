@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 
 import Button from "@/components/ui/home-button";
 
@@ -64,8 +65,9 @@ export default function TicketCard({
           ))}
         </ul>
       </div>
-
-      <Button onClick={onBuyTickets}>BUY TICKETS</Button>
+      <Link href="/buy">
+        <Button onClick={onBuyTickets}>BUY TICKETS</Button>
+      </Link>
     </div>
   );
 }

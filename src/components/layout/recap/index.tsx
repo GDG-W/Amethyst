@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 
 import Image from "next/image";
+import Link from "next/link";
 
 import Button from "@/components/ui/home-button";
 
@@ -47,10 +48,14 @@ export default function Recap() {
                 </p>
               </div>
               <div className="flex w-full flex-col gap-3 md:flex-row">
-                <Button className="w-full md:flex-1">Buy TicketS</Button>
-                <Button className="w-full whitespace-nowrap md:flex-1" variant="secondary">
-                  VIEW EVENT HIGHLIGHTS
-                </Button>
+                <Link href="/buy">
+                  <Button className="w-full md:flex-1">Buy TicketS</Button>
+                </Link>
+                <Link href="https://youtu.be/4HeUaiZLZ34?si=_-n9psHWDKjv36w" target="_blank">
+                  <Button className="w-full whitespace-nowrap md:flex-1" variant="secondary">
+                    VIEW EVENT HIGHLIGHTS
+                  </Button>
+                </Link>
               </div>
             </div>
           </div>

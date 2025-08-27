@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 
 import Button from "@/components/ui/home-button";
 
@@ -54,7 +55,9 @@ export default function index() {
           <div className="relative">
             <div className="font-akira flex flex-wrap items-center gap-6 text-[2.25rem] leading-[.8] font-bold text-black lg:text-[7rem]">
               <span>DevFest</span>
-              <Button className="hidden text-lg md:text-xl lg:flex">Buy Tickets</Button>
+              <Link href="/buy">
+                <Button className="hidden text-lg md:text-xl lg:flex">Buy Tickets</Button>
+              </Link>
               <span className="whitespace-nowrap">Lagos 2025</span>
             </div>
           </div>
@@ -104,8 +107,9 @@ export default function index() {
               </div>
             </div>
             <div className="mt-4 flex w-full flex-col lg:mt-0">
-              <Button className="flex text-lg md:text-xl lg:hidden">Buy Tickets</Button>
-
+              <Link href="/buy">
+                <Button className="flex text-lg md:text-xl lg:hidden">Buy Tickets</Button>
+              </Link>
               <Image
                 src="/footer-image.webp"
                 alt="DevFest Lagos Community"

@@ -1,12 +1,8 @@
-import "./globals.css";
+import "../globals.css";
 
 import { Inter } from "next/font/google";
 
 import localFont from "next/font/local";
-
-import { RQProvider } from "@/lib/react-query";
-
-import Toaster from "@/components/ui/toast";
 
 import type { Metadata } from "next";
 
@@ -20,27 +16,20 @@ export const metadata: Metadata = {
   description: "Purchase your tickets to attend one of the biggest tech conferences in Africa",
 };
 const akira = localFont({
-  src: "../components/fonts/Akira-Expanded-Demo.otf",
+  src: "../../components/fonts/Akira-Expanded-Demo.otf",
   variable: "--font-akira",
   display: "swap",
 });
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+export default function DashboardLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className="md:mx-5 md:my-3">
-      <body
+    <div className="md:mx-5 md:my-3">
+      <div
         style={{ backgroundImage: "url('/bg.png')" }}
-        className={`${inter.variable} ${akira.variable} md:rounded-2.5xl min-h-dvh bg-cover bg-no-repeat px-5 antialiased md:min-h-[95dvh]`}
+        className="md:rounded-2.5xl min-h-dvh bg-cover bg-no-repeat px-5 md:min-h-[95dvh]"
       >
-        <RQProvider>
-          <div className="mx-auto max-w-4xl pt-8 pb-6 md:pt-14">{children}</div>
-        </RQProvider>
-        <Toaster />
-      </body>
-    </html>
+        <div className="mx-auto max-w-4xl pt-8 pb-6 md:pt-14">{children}</div>
+      </div>
+    </div>
   );
 }
