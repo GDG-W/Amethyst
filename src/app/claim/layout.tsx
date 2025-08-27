@@ -10,7 +10,7 @@ export default function ClaimLayout({
   return (
     <>
       <Header />
-      <Suspense>{children}</Suspense>
+      <Suspense fallback={<>loading...</>}>{children}</Suspense>
     </>
   );
 }

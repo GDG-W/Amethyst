@@ -12,7 +12,6 @@ import { toast } from "@/components/ui/toast";
 import SuccessModal from "@/components/modal/success-modal";
 import Button from "@/components/ui/button";
 
-import SuccessCard from "@/components/ui/success-card/index";
 const options = [
   { label: "Option 1", value: "one" },
   { label: "Option 2", value: "two" },
@@ -47,11 +46,6 @@ export default function Home() {
       >
         Open Modal
       </Button>
-
-      <SuccessCard
-        title="Purchase Successful"
-        summary="You have successfully purchased tickets for DevFest Lagos 2025. Check your email for your ticket ID."
-      />
 
       {/* <Breadcrumb breadcrumbList={breadcrumbList} activeIndex={1} handleClick={() => {}} />
 
