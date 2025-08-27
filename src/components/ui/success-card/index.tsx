@@ -11,7 +11,7 @@ import ModalProps from "@/types/modal";
 
 import Button from "../button";
 
-const SuccessCard = ({ title, summary, links, className, onClose }: ModalProps) => {
+const SuccessCard = ({ title, summary, links, className, toggleModal }: ModalProps) => {
   const navigator = useRouter();
   return (
     <div
@@ -26,12 +26,12 @@ const SuccessCard = ({ title, summary, links, className, onClose }: ModalProps) 
     >
       <div className="flex items-start justify-between">
         <ConfettiIcon />
-        {onClose ? (
+        {toggleModal ? (
           <Button
             aria-label="Close modal"
             className={`h-8 w-8 cursor-pointer`}
             onClick={() => {
-              onClose();
+              toggleModal(false);
             }}
           >
             <Close className="h-full w-full" />

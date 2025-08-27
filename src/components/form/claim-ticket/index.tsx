@@ -2,13 +2,13 @@ import React from "react";
 import { useForm, Controller, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
+import SelectField from "@/components/ui/inputs/select";
+import TextField from "@/components/ui/inputs/text-field";
+import { toast } from "@/components/ui/toast";
+import Button from "@/components/ui/button";
 import { GenderOptions, RoleOptions, ExperienceLevelOptions } from "@/constants/options";
+import { useClaimTicket } from "@/hooks/useClaimTicket";
 import ClaimTicketSchema, { ClaimTicketFormData } from "@/schemas/claim-ticket.schema";
-import claimTicket from "@/services/claim-ticket.service";
-
-import SelectField from "../../ui/inputs/select";
-import TextField from "../../ui/inputs/text-field";
-import { toast } from "../../ui/toast";
 
 const defaultValues = Object.freeze({
   fullname: "",
@@ -25,6 +25,8 @@ const ClaimTicketForm = ({
   token: string;
   toggleModal: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
+  const { mutateAsync: claimTicket, isPending } = useClaimTicket(toggleModal);
+
   const {
     register,
     control,
@@ -38,28 +40,14 @@ const ClaimTicketForm = ({
   });
   const onSubmit: SubmitHandler<ClaimTicketFormData> = async (data) => {
     try {
-      const submitForm = await claimTicket({
+      await claimTicket({
         token,
         ...data,
       });
 
-      if (submitForm === true) {
-        toggleModal(true);
-        reset(defaultValues);
-      } else {
-        toast.error(
-          "Something went wrong!",
-          submitForm ?? "We couldn't complete your request right now. Please try again"
-        );
-      }
+      toggleModal(true);
+      reset(defaultValues);
     } catch (error) {
-      if (error instanceof Error) {
-        toast.error(
-          "Something went wrong!",
-          error.message ?? "We couldn't complete your request right now. Please try again"
-        );
-        return;
-      }
       toast.error(
         "Something went wrong!",
         "We couldn't complete your request right now. Please try again"
@@ -133,13 +121,14 @@ const ClaimTicketForm = ({
         )}
       />
 
-      <button
+      <Button
         className="h-12 w-full rounded-[2.25rem] bg-(--away-base) text-center align-middle font-[inter] text-lg leading-6 font-bold tracking-tight text-(--bg-white-0) disabled:bg-(--bg-soft-200) md:h-15"
         type="submit"
         disabled={!isValid || isSubmitting}
+        loading={isPending}
       >
         {isSubmitting ? "Claiming..." : "Claim ticket"}
-      </button>
+      </Button>
     </form>
   );
 };

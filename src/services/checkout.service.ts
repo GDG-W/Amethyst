@@ -6,6 +6,8 @@ export const checkout = async (payload: CheckoutPayload) => {
   return API.post<CheckoutPayload, CheckoutResponse>("/payments/checkout", payload);
 };
 
-export default {
+const checkoutService = {
   checkout,
 };
+
+export default checkoutService;
