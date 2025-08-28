@@ -196,14 +196,11 @@ export default function BuyPageClient() {
 
     if (step === 1) {
       const payload = prepareCheckoutPayload();
-      console.log(payload);
       if (!payload) return;
 
       try {
         const res = await checkout(payload);
-        console.log(res);
       } catch (err) {
-        console.log(err);
         toast.error("Checkout failed", "Please try again in a few minutes");
       }
     }
