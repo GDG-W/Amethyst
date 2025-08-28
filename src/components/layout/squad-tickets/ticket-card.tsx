@@ -49,7 +49,7 @@ export default function TicketCard({
           <div className="flex flex-col">
             <h3 className={`font-akira text-sm md:text-xl`}>{title}</h3>
             <p className="font-akira text-sm md:text-xl">
-              (<span className="align-baseline text-[.725rem]">&#8358;</span>
+              (<span className="align-baseline text-[.45rem] md:text-[.725rem]">&#8358;</span>
               {price})
             </p>
           </div>
