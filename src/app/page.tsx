@@ -8,7 +8,10 @@ import Checkbox from "@/components/ui/inputs/checkbox";
 import MultiInput from "@/components/ui/inputs/multi-input";
 import Select from "@/components/ui/inputs/select";
 import TextField from "@/components/ui/inputs/text-field";
-import SuccessCard from "@/components/ui/success-card";
+import { toast } from "@/components/ui/toast";
+import SuccessModal from "@/components/modal/success-modal";
+import Button from "@/components/ui/button";
+
 const options = [
   { label: "Option 1", value: "one" },
   { label: "Option 2", value: "two" },
@@ -19,6 +22,7 @@ const options = [
 //  redirect to buy page if user is not logged in
 //  and redirect to upgrade page if user is logged in
 export default function Home() {
+  const [toggleSuccessModal, setToggleSuccessModal] = useState(false);
   const [selected, setSelected] = useState("");
   const [emails, setEmails] = useState<string[]>([]);
   const isValidEmail = (email: string) => {
@@ -28,10 +32,20 @@ export default function Home() {
 
   return (
     <div className="m-auto w-[700px] space-y-3">
-      <SuccessCard
+      <SuccessModal
+        currModalState={toggleSuccessModal}
+        toggleModal={setToggleSuccessModal}
         title="Purchase Successful"
         summary="You have successfully purchased tickets for DevFest Lagos 2025. Check your email for your ticket ID."
       />
+
+      <Button
+        onClick={() => {
+          setToggleSuccessModal(true);
+        }}
+      >
+        Open Modal
+      </Button>
 
       {/* <Breadcrumb breadcrumbList={breadcrumbList} activeIndex={1} handleClick={() => {}} />
 
@@ -55,6 +69,17 @@ export default function Home() {
           onChange={setSelected}
           placeholder="Select your level of experience"
         />
+
+        <button
+          onClick={() => {
+            toast.error(
+              "Something went wrong!",
+              "We couldn't complete your request right now. Please try again"
+            );
+          }}
+        >
+          show toast
+        </button>
 
         <MultiInput
           label="Email Addresses"
@@ -95,17 +120,17 @@ export default function Home() {
   );
 }
 
-const breadcrumbList = [
-  {
-    name: "Home Page",
-    link: "/",
-  },
-  {
-    name: "Buy Ticket",
-    link: "/buy-ticket",
-  },
-  {
-    name: "Buyer Information",
-    link: "/buyer-information",
-  },
-];
+// const breadcrumbList = [
+//   {
+//     name: "Home Page",
+//     link: "/",
+//   },
+//   {
+//     name: "Buy Ticket",
+//     link: "/buy-ticket",
+//   },
+//   {
+//     name: "Buyer Information",
+//     link: "/buyer-information",
+//   },
+// ];

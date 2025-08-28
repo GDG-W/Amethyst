@@ -27,13 +27,20 @@ export default function SelectField({
           {extraLabel && <span className="text-sm text-gray-500">{extraLabel}</span>}
         </label>
       )}
-      <Select.Root value={value} onValueChange={onChange}>
+      <Select.Root
+        key={`${id}-${Number(Boolean(value))}`}
+        value={value}
+        onValueChange={onChange}
+        defaultValue={undefined}
+      >
         <Select.Trigger
           id={id}
           aria-labelledby={id}
           className="border-soft-200 data-[placeholder]:text-soft-400 inline-flex items-center justify-between rounded-[8px] border bg-white p-4 tracking-tight"
         >
-          <Select.Value placeholder={placeholder} className="!text-left" />
+          <span className="truncate pr-2">
+            <Select.Value placeholder={placeholder} />
+          </span>
           <Select.Icon>
             <ChevronDown className="text-sub-600 h-4 w-4" />
           </Select.Icon>
