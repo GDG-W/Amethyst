@@ -44,6 +44,7 @@ type CheckoutPayload = {
   buyer: { fullname: string; email: string };
   attendees: CheckoutAttendee[];
   callback_url: string;
+  claim_url: string;
 };
 
 export default function BuyPageClient() {
@@ -188,6 +189,7 @@ export default function BuyPageClient() {
       buyer,
       attendees: mergedAttendees,
       callback_url: `${window.location.origin}/login`,
+      claim_url: `${window.location.origin}/claim`,
     };
   };
 
