@@ -35,7 +35,6 @@ export default function RootLayout({
       <body className={`${inter.variable} ${akira.variable}`}>
         <RQProvider>
           <div className="">{children}</div>
-          ass{" "}
         </RQProvider>
         <Toaster />
         <div id="modal-root" />
