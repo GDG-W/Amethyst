@@ -14,6 +14,7 @@ export function useClaimTicket(toggleModal: React.Dispatch<React.SetStateAction<
       toast.error("Something went wrong!", "Unexpected network error");
     },
     onSuccess: (res) => {
+      console.log(res);
       if (res.success) {
         toggleModal(true);
       } else {
