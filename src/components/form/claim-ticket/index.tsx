@@ -44,8 +44,6 @@ const ClaimTicketForm = ({
         token,
         ...data,
       });
-
-      toggleModal(true);
       reset(defaultValues);
     } catch (error) {
       toast.error(
@@ -63,7 +61,7 @@ const ClaimTicketForm = ({
       <TextField
         id="fullname"
         label="Full name"
-        placeholder="Enter full name"
+        placeholder="Enter your full name"
         error={errors.fullname?.message}
         {...register("fullname")}
       />
@@ -112,7 +110,7 @@ const ClaimTicketForm = ({
           <SelectField
             id="experience"
             label="Experience level"
-            placeholder="select your level of experience"
+            placeholder="Select your level of experience"
             options={ExperienceLevelOptions}
             error={errors.experience?.message}
             value={field.value}
