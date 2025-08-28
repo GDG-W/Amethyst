@@ -4,6 +4,7 @@ const ticketTypes = [
   {
     title: "STANDARD TICKET",
     price: "10,000 per day",
+    href: "/buy#standard",
     description: "Open to everyone — whether you're just starting out or deep in the industry",
     features: [
       "Access to all talks and sessions",
@@ -16,6 +17,7 @@ const ticketTypes = [
   {
     title: "PRO TICKET",
     price: "70,000 FOR THURSDAY",
+    href: "/buy#pro",
     description:
       "For those who want more access and a more focused, premium experience — all in one day",
     features: [
@@ -54,6 +56,7 @@ export default function Index() {
               description={ticket.description}
               features={ticket.features}
               variant={ticket.variant}
+              href={ticket.href}
             />
           ))}
         </div>

@@ -60,11 +60,11 @@ export default function Recap() {
             </div>
           </div>
 
-          <div className="hidden lg:flex">
+          <div className="hidden lg:block">
             <Image
               src="/recap-image.png"
               width={150}
-              height={150}
+              height={10}
               alt="laptop image with devfest logo"
             />
           </div>
