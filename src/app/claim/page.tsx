@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 
 import ClaimTicketForm from "@/components/form/claim-ticket";
@@ -12,12 +12,12 @@ export default function ClaimPage() {
 
   const [toggleSuccessModal, setToggleSuccessModal] = useState<boolean>(false);
 
-  // useEffect(() => {
-  //   if (!token) {
-  //     router.push("/");
-  //     return;
-  //   }
-  // }, [token, router]);
+  useEffect(() => {
+    if (!token) {
+      router.push("/");
+      return;
+    }
+  }, [token, router]);
 
   return (
     <div className="relative mx-auto mt-7 w-full max-w-[450px] pb-[15.813rem] md:mt-18 md:pb-18">
