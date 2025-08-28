@@ -9,6 +9,7 @@ interface TicketCardProps {
   description: string;
   features: string[];
   variant?: "standard" | "pro";
+  href?: string;
   onBuyTickets?: () => void;
 }
 
@@ -18,6 +19,7 @@ export default function TicketCard({
   description,
   features,
   variant = "standard",
+  href = "/buy",
   onBuyTickets,
 }: TicketCardProps) {
   const variants = {
@@ -65,7 +67,7 @@ export default function TicketCard({
           ))}
         </ul>
       </div>
-      <Link href="/buy">
+      <Link href={href}>
         <Button onClick={onBuyTickets}>BUY TICKETS</Button>
       </Link>
     </div>
