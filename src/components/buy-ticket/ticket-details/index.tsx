@@ -5,6 +5,7 @@ import Card from "@/components/ui/card";
 import { API_DAY_TO_LABEL } from "@/lib/constants";
 import { indexTicketsByIsoDate } from "@/lib/utils";
 import { Ticket } from "@/types/ticket";
+import SelectField from "@/components/ui/inputs/select";
 
 type TicketDetailsProps = {
   selectedDates?: string[];
@@ -32,6 +33,10 @@ export default function TicketDetails({
   onChangeQuantity,
 }: TicketDetailsProps) {
   const MAX_TICKETS_PER_DAY = 9;
+  const ticketSelectOptions = Array.from({ length: MAX_TICKETS_PER_DAY }, (_, i) => ({
+    label: String(i + 1),
+    value: String(i + 1),
+  }));
 
   const ticketsByDateKey = useMemo(() => indexTicketsByIsoDate(tickets), [tickets]);
 
@@ -43,18 +48,15 @@ export default function TicketDetails({
     [selectedDates, ticketsByDateKey]
   );
 
-  const handleQty =
-    (ticketId: string, available: number) => (e: React.ChangeEvent<HTMLInputElement>) => {
-      const val = e.currentTarget.value;
+  const handleQty = (ticketId: string, available: number) => (val: string) => {
+    // Treat empty input as 0
+    const num = val === "" ? 0 : Number(val);
 
-      // Treat empty input as 0
-      const num = val === "" ? 0 : Number(val);
+    // Clamp to max allowed
+    const clamped = Math.max(0, Math.min(num, available, MAX_TICKETS_PER_DAY));
 
-      // Clamp to max allowed
-      const clamped = Math.max(0, Math.min(num, available, MAX_TICKETS_PER_DAY));
-
-      onChangeQuantity?.(ticketId, clamped);
-    };
+    onChangeQuantity?.(ticketId, clamped);
+  };
 
   return (
     <Card title="Ticket Details" numbered number={2}>
@@ -71,20 +73,25 @@ export default function TicketDetails({
                 <li key={t.id}>
                   <div className="label-3 mb-2 flex items-center justify-between font-medium sm:mb-3">
                     <p>
-                      {dayLabel} - <span className="capitalize">{t.theme}</span>
+                      {dayLabel} -{" "}
+                      <span className={`${t.theme === "ui/ux" ? "uppercase" : "capitalize"}`}>
+                        {t.theme}
+                      </span>
                     </p>
                     <p>{formatCurrencyNaira(t.price)}</p>
                   </div>
                   <div className="flex items-center justify-between">
-                    <p className="text-sub-600 label-5 capitalize">{t.theme}</p>
-                    <input
-                      aria-label={`Quantity for ${dayLabel}`}
-                      type="number"
-                      min={0}
-                      max={Math.min(max, MAX_TICKETS_PER_DAY)}
-                      value={qty === 0 ? "" : qty}
+                    <p
+                      className={`text-sub-600 label-5 ${t.theme === "ui/ux" ? "uppercase" : "capitalize"}`}
+                    >
+                      {t.theme}
+                    </p>
+                    <SelectField
+                      placeholder="1"
+                      value={String(qty)}
+                      options={ticketSelectOptions}
                       onChange={handleQty(t.id, max)}
-                      className="border-soft-200 no-spinner h-8 w-16 rounded-md border px-2 text-sm"
+                      width="88px"
                     />
                   </div>
                 </li>

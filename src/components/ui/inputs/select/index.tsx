@@ -16,11 +16,12 @@ export default function SelectField({
   value,
   onChange,
   error,
+  width,
   placeholder = "Select an option",
   id = "select-field",
 }: SelectFieldProps) {
   return (
-    <div className="flex w-full min-w-[200px] flex-col gap-2">
+    <div className={`flex min-w-[80px] flex-col gap-2 ${width ? `!w-[${width}]` : "w-full"}`}>
       {label && (
         <label htmlFor={id} className="label-3 block font-medium tracking-tight">
           <span className="mr-2">{label}</span>
