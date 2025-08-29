@@ -19,6 +19,9 @@ jobs:
   dockerize-and-deploy:
     runs-on: ubuntu-latest
 
+    env:
+      API_URL: ${{ secrets.STAGING_API_BASE_URL }}
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -39,6 +42,7 @@ jobs:
         if: github.ref == 'refs/heads/main'
         run: |
           echo "SERVICE_NAME=amethyst-main" >> $GITHUB_ENV
+          echo "API_URL=${{ secrets.PROD_API_BASE_URL }}"
 
       - name: Google Cloud Auth
         uses: "google-github-actions/auth@v2"
@@ -61,12 +65,12 @@ jobs:
       - name: Deploy to Cloud Run
         run: |
           gcloud run deploy ${{ env.SERVICE_NAME }} \
-            --image gcr.io/${{ secrets.GCP_PROJECT_ID }}/${{ secrets.DOCKER_IMAGE_NAME }}:${{ env.IMAGE_TAG }} \
+            --image gcr.io/${{ secrets.GCP_PROJECT_ID }}/${{ secrets.DOCKER_IMAGE_NAME }}:${{ github.sha }} \
             --platform managed \
             --region us-central1 \
             --allow-unauthenticated
             --allow-unauthenticated \
-            --set-env-vars NEXT_PUBLIC_API_URL=${{ secrets.STAGING_API_BASE_URL }}
+            --set-env-vars NEXT_PUBLIC_API_URL=${{ env.API_URL }}
 
 
       - name: Get Cloud Run service URL
