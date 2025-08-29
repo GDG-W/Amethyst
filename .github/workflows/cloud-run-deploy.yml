@@ -25,7 +25,7 @@ jobs:
 
       - name: Set service name and image tag for PRs
         id: service-name
-        if:  github.event_name == "pull_request"
+        if:  github.event_name == 'pull_request'
         run: |
           echo "SERVICE_NAME=amethyst-${{ github.event.pull_request.base.ref }}-preview-${{ github.event.number }}" >> $GITHUB_ENV
           echo "IMAGE_TAG=${{ github.sha }}" >> $GITHUB_ENV
