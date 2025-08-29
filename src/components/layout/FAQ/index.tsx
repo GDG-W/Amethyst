@@ -180,11 +180,11 @@ export default function Index() {
             <h2 className="font-akira text-xl text-black uppercase lg:text-[1.75rem]">
               General Questions
             </h2>
-            <div className="custom-scrollbar flex w-full flex-col gap-4 overflow-y-auto lg:pr-16">
+            <div className="custom-scrollbar flex w-full flex-col gap-4 overflow-y-auto xl:pr-16">
               {currentQuestions.map((item) => (
                 <div key={item.id} className="group">
                   <div
-                    className="w-full cursor-pointer rounded-xl bg-[#FDE293] p-5 transition-all duration-200 lg:w-[706px]"
+                    className="w-full cursor-pointer rounded-xl bg-[#FDE293] p-5 transition-all duration-200 xl:w-[706px]"
                     style={{
                       clipPath:
                         "polygon( 98.3% 0%,98.3% 0%,98.576% 0.196%,98.838% 0.765%,99.081% 1.674%,99.304% 2.894%,99.502% 4.393%,99.672% 6.141%,99.81% 8.107%,99.913% 10.259%,99.978% 12.567%,100% 15%,100% 64%,100% 64%,99.978% 66.433%,99.913% 68.741%,99.81% 70.894%,99.672% 72.859%,99.502% 74.607%,99.304% 76.106%,99.081% 77.326%,98.838% 78.236%,98.576% 78.804%,98.3% 79%,96.863% 79%,95.358% 97.177%,95.358% 97.177%,95.284% 97.914%,95.198% 98.488%,95.104% 98.898%,95.004% 99.144%,94.901% 99.226%,94.798% 99.144%,94.698% 98.898%,94.604% 98.488%,94.518% 97.914%,94.443% 97.177%,92.938% 79%,1.7% 79%,1.7% 79%,1.424% 78.804%,1.162% 78.236%,0.919% 77.326%,0.696% 76.106%,0.498% 74.607%,0.328% 72.859%,0.19% 70.894%,0.087% 68.741%,0.022% 66.433%,0% 64%,0% 15%,0% 15%,0.022% 12.567%,0.087% 10.259%,0.19% 8.107%,0.328% 6.141%,0.498% 4.393%,0.696% 2.894%,0.919% 1.674%,1.162% 0.765%,1.424% 0.196%,1.7% 0%,98.3% 0% )",
