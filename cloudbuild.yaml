@@ -19,19 +19,20 @@ steps:
          '--region', '${_REGION}',
          '--platform', 'managed',
          '--allow-unauthenticated',
-         '--port', '3000'
+         '--port', '3000',
+         '--set-env-vars','NEXT_PUBLIC_API_URL=https://sapphire-1013705579431.us-central1.run.app',
   ]
   waitFor: ['push']
 
 options:
-  logging: NONE 
+  logging: NONE
 
 # images: [
 #   'gcr.io/${_PROJECT_ID}/${_APP_NAME}:${_TAG}'
 # ]
 
 substitutions:
-  _TAG: latest 
+  _TAG: latest
   _PROJECT_ID: devfest-lagos-2025
   _APP_NAME: amethyst-main
   _REGION: europe-west1
