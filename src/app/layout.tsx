@@ -30,9 +30,6 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="">
-      <body className={`${inter.variable} ${akira.variable} `}>
-        <div className="">{children}</div>
     <html lang="en" className="relative">
       <body>
         <div
