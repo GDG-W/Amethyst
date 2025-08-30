@@ -8,3 +8,5 @@ export const buyerSchema = z.object({
   email: z.string().min(1, "Email address is required").email("Please enter a valid email address"),
   belongsToMe: z.boolean(),
 });
+
+export type BuyerSchema = z.infer<typeof buyerSchema>;
