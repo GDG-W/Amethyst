@@ -1,7 +1,6 @@
 "use client";
 
 import React from "react";
-import { z } from "zod";
 
 import TextField from "@/components/ui/inputs/text-field";
 import Checkbox from "@/components/ui/inputs/checkbox";
@@ -15,23 +14,33 @@ import AttendeeInfo from "../attendee-info";
 
 import type { OrderItem, BuyerInfo } from "@/app/buy/client";
 
-type FormData = z.infer<typeof buyerSchema>;
-
-type BuyerInformationProps = {
-  selectedDates: OrderItem[];
-};
-
 const BuyerInformation = ({ selectedDates }: { selectedDates: OrderItem[] }) => {
-  const { buyerInfo, buyerErrors, attendeeInfo, updateBuyerField, setBuyerError } =
+  const { buyerInfo, orderItems, buyerErrors, attendeeInfo, updateBuyerField, setBuyerError } =
     useBuyFormStore();
 
   const fullName = buyerInfo?.fullName || "";
   const email = buyerInfo?.email || "";
   const belongsToMe = buyerInfo?.belongsToMe || false;
 
+  const validateField = <K extends keyof BuyerInfo>(field: K, value: BuyerInfo[K]) => {
+    const partial = { ...buyerInfo, [field]: value };
+
+    const result = buyerSchema.safeParse(partial);
+
+    if (!result.success) {
+      const issue = result.error.issues.find((i) => i.path[0] === field);
+      setBuyerError(field, issue ? issue.message : null);
+    } else {
+      setBuyerError(field, null);
+    }
+  };
+
   const handleFieldChange = <K extends keyof BuyerInfo>(field: K, value: BuyerInfo[K]) => {
     updateBuyerField(field, value);
+    validateField(field, value);
   };
+
+  const canShowBelongsToMe = orderItems.every((item) => (item.ticketCount || 0) === 1);
 
   let ChildComponent;
   if (belongsToMe) {
@@ -57,6 +66,7 @@ const BuyerInformation = ({ selectedDates }: { selectedDates: OrderItem[] }) => 
                 placeholder="Enter full name"
                 value={fullName}
                 onChange={(e) => handleFieldChange("fullName", e.target.value)}
+                onBlur={(e) => validateField("fullName", e.target.value)}
                 error={buyerErrors.fullName}
               />
             </div>
@@ -69,6 +79,7 @@ const BuyerInformation = ({ selectedDates }: { selectedDates: OrderItem[] }) => 
                 placeholder="Enter email address"
                 value={email}
                 onChange={(e) => handleFieldChange("email", e.target.value)}
+                onBlur={(e) => validateField("fullName", e.target.value)}
                 error={buyerErrors.email}
               />
             </div>
@@ -76,14 +87,16 @@ const BuyerInformation = ({ selectedDates }: { selectedDates: OrderItem[] }) => 
         </form>
       </Card>
 
-      <div className="mt-4">
-        <Checkbox
-          name="belongsToMe"
-          label="This ticket belongs to me"
-          checked={belongsToMe}
-          onChange={(checked) => handleFieldChange("belongsToMe", checked.target.checked)}
-        />
-      </div>
+      {canShowBelongsToMe && (
+        <div className="mt-4">
+          <Checkbox
+            name="belongsToMe"
+            label="This ticket belongs to me"
+            checked={belongsToMe}
+            onChange={(checked) => handleFieldChange("belongsToMe", checked.target.checked)}
+          />
+        </div>
+      )}
 
       <div className="mt-6">{ChildComponent}</div>
     </div>

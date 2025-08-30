@@ -1,0 +1,38 @@
+steps:
+- # Build ${_APP_NAME} image
+  id: build
+  name: gcr.io/cloud-builders/docker:latest
+  args: ['build','-t', 'gcr.io/${_PROJECT_ID}/${_APP_NAME}:${_TAG}', '-f', 'Dockerfile', '.']
+
+- # Push the container image to Artifact Registry
+  id: push
+  name: gcr.io/cloud-builders/docker
+  args: ['push', 'gcr.io/${_PROJECT_ID}/${_APP_NAME}:${_TAG}']
+  waitFor: ['build']
+
+- # Deploy to Cloud Run
+  # name: google/cloud-sdk
+  id: deploy
+  name: gcr.io/cloud-builders/gcloud
+  args: ['run', 'deploy', '${_APP_NAME}',
+         '--image', 'gcr.io/${_PROJECT_ID}/${_APP_NAME}:${_TAG}',
+         '--region', '${_REGION}',
+         '--platform', 'managed',
+         '--allow-unauthenticated',
+         '--port', '3000',
+         '--set-env-vars','NEXT_PUBLIC_API_URL=https://sapphire-1013705579431.us-central1.run.app',
+  ]
+  waitFor: ['push']
+
+options:
+  logging: NONE
+
+# images: [
+#   'gcr.io/${_PROJECT_ID}/${_APP_NAME}:${_TAG}'
+# ]
+
+substitutions:
+  _TAG: latest
+  _PROJECT_ID: devfest-lagos-2025
+  _APP_NAME: amethyst-main
+  _REGION: europe-west1
