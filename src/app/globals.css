@@ -472,22 +472,23 @@
 
 @utility font-akira {
   font-family: var(--font-akira), sans-serif;
-/* Remove arrows in Chrome, Safari, Edge */
-input.no-spinner::-webkit-outer-spin-button,
-input.no-spinner::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
-}
+  /* Remove arrows in Chrome, Safari, Edge */
+  input.no-spinner::-webkit-outer-spin-button,
+  input.no-spinner::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
 
-/* Remove arrows from number inputs in Firefox */
-/* global.css or your tailwind styles */
-.no-spinner {
-  -webkit-appearance: none;
-  /* Chrome, Safari, Edge, Opera */
-  -moz-appearance: textfield;
-  /* Firefox */
-  appearance: none;
-  /* Standard */
-  margin: 0;
-  /* Remove default spacing */
+  /* Remove arrows from number inputs in Firefox */
+  /* global.css or your tailwind styles */
+  .no-spinner {
+    -webkit-appearance: none;
+    /* Chrome, Safari, Edge, Opera */
+    -moz-appearance: textfield;
+    /* Firefox */
+    appearance: none;
+    /* Standard */
+    margin: 0;
+    /* Remove default spacing */
+  }
 }
