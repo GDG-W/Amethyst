@@ -16,24 +16,32 @@ export default function SelectField({
   value,
   onChange,
   error,
+  width,
   placeholder = "Select an option",
   id = "select-field",
 }: SelectFieldProps) {
   return (
-    <div className="flex min-w-[400px] flex-col gap-2">
+    <div className={`flex min-w-[80px] flex-col gap-2 ${width ? `!w-[${width}]` : "w-full"}`}>
       {label && (
         <label htmlFor={id} className="label-3 block font-medium tracking-tight">
           <span className="mr-2">{label}</span>
           {extraLabel && <span className="text-sm text-gray-500">{extraLabel}</span>}
         </label>
       )}
-      <Select.Root value={value} onValueChange={onChange}>
+      <Select.Root
+        key={`${id}-${Number(Boolean(value))}`}
+        value={value}
+        onValueChange={onChange}
+        defaultValue={undefined}
+      >
         <Select.Trigger
           id={id}
           aria-labelledby={id}
           className="border-soft-200 data-[placeholder]:text-soft-400 inline-flex items-center justify-between rounded-[8px] border bg-white p-4 tracking-tight"
         >
-          <Select.Value placeholder={placeholder} />
+          <span className="truncate pr-2">
+            <Select.Value placeholder={placeholder} />
+          </span>
           <Select.Icon>
             <ChevronDown className="text-sub-600 h-4 w-4" />
           </Select.Icon>
