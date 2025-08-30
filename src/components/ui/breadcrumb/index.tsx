@@ -8,6 +8,8 @@ type BreadcrumbProps = {
 };
 
 export default function Breadcrumb({ breadcrumbList, activeIndex = 0 }: BreadcrumbProps) {
+  // I set a baseline so it doesn't run out of scope i.e when active index is greater than the last index of the array
+  activeIndex = activeIndex > breadcrumbList.length - 1 ? breadcrumbList.length - 1 : activeIndex;
   return (
     <nav
       aria-label="breadcrumb"
