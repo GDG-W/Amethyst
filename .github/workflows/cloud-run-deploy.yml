@@ -28,7 +28,7 @@ jobs:
 
       - name: Set service name and image tag for PRs
         id: service-name
-        if:  github.event_name == 'pull_request'
+        if: github.event_name == 'pull_request'
         run: |
           echo "SERVICE_NAME=amethyst-${{ github.event.pull_request.base.ref }}-preview-${{ github.event.number }}" >> $GITHUB_ENV
           echo "IMAGE_TAG=${{ github.sha }}" >> $GITHUB_ENV
@@ -59,7 +59,7 @@ jobs:
 
       - name: Build and Push Docker Image
         run: |
-          docker build -t gcr.io/${{ secrets.GCP_PROJECT_ID }}/${{ secrets.DOCKER_IMAGE_NAME }}:${{ github.sha }} .
+          docker build --build-arg NEXT_PUBLIC_API_URL=${{ env.API_URL }} -t gcr.io/${{ secrets.GCP_PROJECT_ID }}/${{ secrets.DOCKER_IMAGE_NAME }}:${{ github.sha }} .
           docker push gcr.io/${{ secrets.GCP_PROJECT_ID }}/${{ secrets.DOCKER_IMAGE_NAME }}:${{ github.sha }}
 
       - name: Deploy to Cloud Run
@@ -70,7 +70,6 @@ jobs:
             --region europe-west1 \
             --allow-unauthenticated \
             --set-env-vars NEXT_PUBLIC_API_URL=${{ env.API_URL }}
-
 
       - name: Get Cloud Run service URL
         if: github.event_name == 'pull_request'
