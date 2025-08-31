@@ -69,15 +69,24 @@ export default function TicketDetails({
               const dayLabel = API_DAY_TO_LABEL[t.day] ?? t.day;
               const qty = quantities[t.id] ?? 0;
               const max = t.available_quantity ?? 0;
+              console.log(t, "me");
+
               return (
                 <li key={t.id}>
                   <div className="label-3 mb-2 flex items-center justify-between font-medium sm:mb-3">
-                    <p>
-                      {dayLabel} -{" "}
-                      <span className={`${t.theme === "ui/ux" ? "uppercase" : "capitalize"}`}>
-                        {t.theme}
-                      </span>
-                    </p>
+                    <div className="flex items-center gap-6">
+                      <p>
+                        {dayLabel} -{" "}
+                        <span className={`${t.theme === "ui/ux" ? "uppercase" : "capitalize"}`}>
+                          {t.theme}
+                        </span>
+                      </p>
+                      {t.day === "thurs" && (
+                        <p className="border-stroke-sub-300 text-away-base w-fit rounded-full border px-5 py-1 text-center text-sm capitalize">
+                          {t.ticket_type}
+                        </p>
+                      )}
+                    </div>
                     <p>{formatCurrencyNaira(t.price)}</p>
                   </div>
                   <div className="flex items-center justify-between">
