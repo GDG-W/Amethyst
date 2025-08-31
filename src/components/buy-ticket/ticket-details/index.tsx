@@ -74,7 +74,7 @@ export default function TicketDetails({
               return (
                 <li key={t.id}>
                   <div className="label-3 mb-2 flex items-center justify-between font-medium sm:mb-3">
-                    <div className="flex items-center gap-6">
+                    <div className="flex items-center gap-2">
                       <p>
                         {dayLabel} -{" "}
                         <span className={`${t.theme === "ui/ux" ? "uppercase" : "capitalize"}`}>
@@ -82,7 +82,7 @@ export default function TicketDetails({
                         </span>
                       </p>
                       {t.day === "thurs" && (
-                        <p className="border-stroke-sub-300 text-away-base label-5 w-fit min-w-14 rounded-sm border px-2 py-1 text-center text-sm font-medium capitalize">
+                        <p className="border-stroke-sub-300 text-away-base label-5 w-fit min-w-14 rounded-full border px-2 py-1 text-center text-sm font-medium capitalize">
                           {t.ticket_type}
                         </p>
                       )}
