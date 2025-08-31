@@ -1,13 +1,14 @@
 import Image from "next/image";
+import Link from "next/link";
 import React from "react";
 
 import Button from "@/components/ui/home-button";
 
 const Hero = () => {
   return (
-    <div className="min-h-screen w-full p-4 md:min-h-[80vh] lg:min-h-screen">
-      <div className="max-w-8xl mx-auto">
-        <div className="flex min-h-[calc(100vh-2rem)] w-full flex-col items-center justify-center rounded-xl bg-[#171717] py-12 md:flex-row lg:items-stretch">
+    <div className="w-full p-4">
+      <div className="w-full rounded-xl bg-[#171717]">
+        <div className="mx-auto flex w-full max-w-7xl flex-col items-center justify-center rounded-xl bg-[#171717] py-12 md:flex-row lg:items-stretch">
           <div className="flex flex-1 flex-col justify-center px-6 py-8 md:py-12 lg:px-16">
             <div className="mb-4 flex justify-start">
               <Image
@@ -30,19 +31,26 @@ const Hero = () => {
               </p>
 
               <div className="mt-6 flex w-full flex-col gap-3 md:mt-8 md:flex-row md:gap-4 lg:max-w-md">
-                <Button variant="primary" className="w-full text-[#141414] md:flex-1">
-                  Buy Tickets
-                </Button>
-                <Button variant="secondary" className="w-full uppercase md:flex-1">
-                  Log in
-                </Button>
+                <Link href="/buy">
+                  <Button
+                    variant="primary"
+                    className="w-full whitespace-nowrap text-[#141414] md:flex-1"
+                  >
+                    Buy Tickets
+                  </Button>
+                </Link>
+                <Link className="flex-1" href="/login">
+                  <Button variant="secondary" className="w-full flex-1 uppercase md:flex-1">
+                    Log in
+                  </Button>
+                </Link>
               </div>
             </div>
           </div>
 
           <div className="flex flex-1 flex-col items-center justify-end md:items-end lg:justify-center">
             <div className="relative w-full pt-8 md:pt-20 lg:w-auto">
-              <div className="absolute top-2 right-4 md:top-4 md:right-4 lg:top-8 lg:right-8 xl:top-12 xl:right-12">
+              <div className="absolute top-2 right-8 md:top-12 md:right-14 lg:top-8 lg:right-8 xl:top-12 xl:right-25">
                 <Image
                   src="/devfest25.svg"
                   alt="DevFest 2025"
