@@ -16,8 +16,6 @@ export default function Breadcrumb({ breadcrumbList, activeIndex = 0 }: Breadcru
       const selector = `p[aria-current="page"]`;
       const activeCrumb = document.querySelector(selector);
 
-      console.log(activeCrumb);
-
       if (!activeCrumb) return;
 
       activeCrumb.scrollIntoView({
