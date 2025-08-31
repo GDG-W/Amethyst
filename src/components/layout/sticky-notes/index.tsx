@@ -34,7 +34,7 @@ export default function stickyNote() {
       text: "Insights from Googlers, GDEs, and tech leaders",
       icon: "/speak-ai-fill.svg",
       backgroundColor: "bg-[#C3ECF6]",
-      tilt: "-rotate-[18.8deg]",
+      tilt: "-rotate-[10.8deg]",
     },
     {
       title: "Ultimate Masterclasses",
@@ -72,7 +72,7 @@ export default function stickyNote() {
       text: "Get direct feedback from Googlers, GDEs, and mentors",
       icon: "/building-line.svg",
       backgroundColor: "bg-[#F7F7F7]",
-      tilt: "-rotate-[13.3deg]",
+      tilt: "-rotate-[10.3deg]",
     },
     {
       title: "After Party Celebration",
