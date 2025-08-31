@@ -7,7 +7,7 @@ import Button from "@/components/ui/home-button";
 const JoinUs = () => {
   return (
     <div className="flex justify-center bg-[#FCF6DF] px-3 py-3 md:px-36 md:py-4">
-      <div className="relative flex w-full flex-col items-center justify-center space-y-5 overflow-hidden rounded-lg bg-[#171717] p-5 text-white md:space-y-7 md:p-8 lg:rounded-xl lg:p-18">
+      <div className="relative flex w-full max-w-7xl flex-col items-center justify-center space-y-5 overflow-hidden rounded-sm bg-[#171717] p-5 text-white md:space-y-7 md:p-8 lg:rounded-xl lg:p-18">
         <h1 className="font-akira w-full max-w-sm pt-6 text-center text-base leading-tight font-bold uppercase md:max-w-none md:text-2xl md:leading-normal lg:pt-0">
           The future is technology, join us at{" "}
           <span className="text-[#F6B51E]">DevFest Lagos 2025</span> and help shape that future in
