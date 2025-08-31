@@ -229,7 +229,7 @@ export default function BuyPageClient() {
         <button
           disabled={step === 0}
           onClick={handleGoBack}
-          className="disabled:text-soft-400 flex items-center gap-1 disabled:cursor-not-allowed"
+          className="disabled:text-soft-400 flex shrink-0 items-center gap-1 disabled:cursor-not-allowed"
         >
           <ChevronLeft className="inline" size={20} />
           <span className="label-4 cursor-pointer">Go Back</span>
