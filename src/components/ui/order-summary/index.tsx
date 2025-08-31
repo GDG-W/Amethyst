@@ -63,7 +63,7 @@ const OrderSummary = ({
           </ul>
         )}
         <Button disabled={disabled} onClick={handleButtonClick} loading={loading}>
-          {currentStep === noOfSteps ? "Proceed to Pay" : "Continue"}
+          {currentStep >= noOfSteps ? "Proceed to Pay" : "Continue"}
         </Button>
       </div>
     </Card>
