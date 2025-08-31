@@ -5,12 +5,16 @@ import { FormProvider, useForm, Controller } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+
 import Button from "@/components/ui/button";
 import TextField from "@/components/ui/inputs/text-field";
+import { login } from "@/services/auth.service";
+import { toAPIError } from "@/services/api";
 
 const loginSchema = z.object({
-  email_address: z.email("Please enter a valid email"),
-  ticket_id: z.string().length(8, "Ticket ID must be exactly 8 characters"), // customize as needed
+  email: z.email("Please enter a valid email"),
+  ticket_id: z.string().length(6, "Ticket ID must be exactly 6 characters"), // customize as needed
 });
 
 export default function LoginClient() {
@@ -18,7 +22,7 @@ export default function LoginClient() {
     resolver: zodResolver(loginSchema),
     mode: "all", // show errors as user types
     defaultValues: {
-      email_address: "",
+      email: "",
       ticket_id: "",
     },
   });
@@ -29,8 +33,21 @@ export default function LoginClient() {
     formState: { errors, isValid },
   } = methods;
 
+  const queryClient = useQueryClient();
+
+  const mutation = useMutation({
+    mutationFn: login,
+    mutationKey: ["auth"],
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["auth"] });
+    },
+  });
+
   const onSubmit = async (values: z.infer<typeof loginSchema>) => {
-    console.log(values);
+    const res = await mutation.mutateAsync(values);
+    console.log(res);
+    if (res.success) return res.data;
+    throw toAPIError(res);
   };
 
   return (
@@ -40,7 +57,7 @@ export default function LoginClient() {
         className="max-sm:border-soft-200 flex w-full flex-col gap-y-6 rounded-lg bg-white px-4 py-5 max-sm:rounded-t-none max-sm:border max-sm:border-t-0 sm:w-[450px] sm:p-5"
       >
         <Controller
-          name="email_address"
+          name="email"
           control={control}
           render={({ field }) => (
             <TextField
@@ -49,7 +66,7 @@ export default function LoginClient() {
               label="Email address"
               placeholder="Enter email address"
               helperText="The email associated with your ticket"
-              error={errors.email_address?.message}
+              error={errors.email?.message}
             />
           )}
         />
@@ -69,7 +86,7 @@ export default function LoginClient() {
         />
 
         <div className="space-y-4">
-          <Button disabled={!isValid} type="submit" size="full">
+          <Button disabled={!isValid || mutation.isPending} type="submit" size="full">
             <span className="text-lg leading-6 font-bold tracking-[-4%] text-white">Log in</span>
           </Button>
           <p className="label-4 text-soft-400 text-center">
