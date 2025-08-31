@@ -497,3 +497,12 @@ input.no-spinner::-webkit-inner-spin-button {
   margin: 0;
   /* Remove default spacing */
 }
+
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}

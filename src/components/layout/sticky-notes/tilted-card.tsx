@@ -24,7 +24,7 @@ export default function TiltedCard({
 
   return (
     <div
-      className={`relative h-[16.875rem] rounded-[1rem] px-5 py-8 ${backgroundColor} ${rotationClass} animate-drop-in`}
+      className={`relative h-[16.875rem] px-5 py-8 ${backgroundColor} ${rotationClass} animate-drop-in`}
       style={{
         ...rotationStyle,
         ...(marginTop && { marginTop }),

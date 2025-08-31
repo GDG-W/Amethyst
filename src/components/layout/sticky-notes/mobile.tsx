@@ -1,7 +1,8 @@
 "use client";
 
+import { useRef, useState } from "react";
+
 import Image from "next/image";
-import { useState } from "react";
 
 const cardData = [
   {
@@ -84,6 +85,7 @@ interface TiltedCardProps {
   tilt: string | number;
   isCenter: boolean;
 }
+
 function TiltedCard({
   title,
   text,
@@ -94,7 +96,7 @@ function TiltedCard({
 }: TiltedCardProps) {
   return (
     <div
-      className={`relative h-[16.875rem] w-80 flex-shrink-0 rounded-[1rem] px-5 py-8 transition-transform duration-500 ease-in-out ${backgroundColor} ${isCenter ? "rotate-0" : tilt}`}
+      className={`relative h-[16.875rem] w-80 flex-shrink-0 px-5 py-8 transition-transform duration-500 ease-in-out ${backgroundColor} ${isCenter ? "rotate-0" : tilt}`}
     >
       <div className="mb-6 flex h-12 w-12 items-center justify-center rounded-full bg-white">
         <Image src={icon} alt="Card icon" width={24} height={24} />
@@ -110,13 +112,44 @@ function TiltedCard({
 
 export default function Mobile() {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+
+  const scrollToCard = (index: number) => {
+    if (scrollContainerRef.current) {
+      const cardWidth = 320;
+      const gap = 24;
+      const scrollPosition = index * (cardWidth + gap);
+
+      scrollContainerRef.current.scrollTo({
+        left: scrollPosition,
+        behavior: "smooth",
+      });
+    }
+  };
 
   const goToPrevious = () => {
-    setCurrentIndex((prevIndex) => (prevIndex === 0 ? cardData.length - 1 : prevIndex - 1));
+    const newIndex = currentIndex === 0 ? cardData.length - 1 : currentIndex - 1;
+    setCurrentIndex(newIndex);
+    scrollToCard(newIndex);
   };
 
   const goToNext = () => {
-    setCurrentIndex((prevIndex) => (prevIndex === cardData.length - 1 ? 0 : prevIndex + 1));
+    const newIndex = currentIndex === cardData.length - 1 ? 0 : currentIndex + 1;
+    setCurrentIndex(newIndex);
+    scrollToCard(newIndex);
+  };
+
+  const handleScroll = () => {
+    if (scrollContainerRef.current) {
+      const cardWidth = 320;
+      const gap = 24;
+      const scrollLeft = scrollContainerRef.current.scrollLeft;
+      const newIndex = Math.round(scrollLeft / (cardWidth + gap));
+
+      if (newIndex !== currentIndex && newIndex >= 0 && newIndex < cardData.length) {
+        setCurrentIndex(newIndex);
+      }
+    }
   };
 
   return (
@@ -135,7 +168,7 @@ export default function Mobile() {
             <div className="flex gap-6">
               <button
                 onClick={goToPrevious}
-                className="flex h-12 w-12 items-center justify-center rounded-full border border-gray-100 bg-white shadow-sm"
+                className="flex h-12 w-12 items-center justify-center rounded-full border border-gray-100 bg-white shadow-sm transition-colors hover:bg-gray-50"
                 aria-label="Previous card"
               >
                 <svg
@@ -155,7 +188,7 @@ export default function Mobile() {
 
               <button
                 onClick={goToNext}
-                className="flex h-12 w-12 items-center justify-center rounded-full border border-gray-100 bg-white shadow-sm"
+                className="flex h-12 w-12 items-center justify-center rounded-full border border-gray-100 bg-white shadow-sm transition-colors hover:bg-gray-50"
                 aria-label="Next card"
               >
                 <svg
@@ -176,15 +209,19 @@ export default function Mobile() {
           </div>
         </div>
 
-        <div className="overflow-hidden">
-          <div
-            className="flex transition-transform duration-500 ease-in-out"
-            style={{
-              transform: `translateX(-${currentIndex * (320 + 24)}px)`,
-            }}
-          >
+        <div
+          ref={scrollContainerRef}
+          className="scrollbar-hide overflow-x-auto overflow-y-hidden"
+          onScroll={handleScroll}
+          style={{
+            scrollSnapType: "x mandatory",
+            scrollbarWidth: "none",
+            msOverflowStyle: "none",
+          }}
+        >
+          <div className="flex">
             {cardData.map((card, index) => (
-              <div key={index} className="mr-6 last:mr-0">
+              <div key={index} className="mr-6 last:mr-0" style={{ scrollSnapAlign: "start" }}>
                 <TiltedCard
                   title={card.title}
                   text={card.text}
