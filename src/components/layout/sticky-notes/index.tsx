@@ -103,7 +103,7 @@ export default function stickyNote() {
           </h2>
         </div>
 
-        <div className="flex gap-16">
+        <div className="relative flex gap-16">
           {topCards.map((card, index) => (
             <TiltedCard
               key={index}
@@ -116,6 +116,13 @@ export default function stickyNote() {
               animationDelay={index * 150}
             />
           ))}
+          <Image
+            className="absolute top-6 -right-15 rotate-2"
+            src="/learn.svg"
+            alt="arrow pointing to text"
+            height={20}
+            width={150}
+          />
         </div>
       </div>
 
