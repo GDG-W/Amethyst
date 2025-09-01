@@ -1,13 +1,13 @@
 "use client";
 
-import React from "react";
+import React, { useMemo } from "react";
 
+import { THURS_PRO_ID, THURS_STANDARD_ID } from "@/constants/ticket";
+import Card from "@/components/ui/card";
 import TextField from "@/components/ui/inputs/text-field";
 import Checkbox from "@/components/ui/inputs/checkbox";
-import Card from "@/components/ui/card";
-import { useBuyFormStore } from "@/store/buy-form-store";
-
 import { buyerSchema } from "@/schemas/buyerSchema";
+import { useBuyFormStore } from "@/store/buy-form-store";
 
 import ProfileRegistration from "../profile-reg";
 import AttendeeInfo from "../attendee-info";
@@ -40,7 +40,32 @@ const BuyerInformation = ({ selectedDates }: { selectedDates: OrderItem[] }) => 
     validateField(field, value);
   };
 
-  const canShowBelongsToMe = orderItems.every((item) => (item.ticketCount || 0) === 1);
+  // const canShowBelongsToMe = orderItems.every((item) => (item.ticketCount || 0) === 1);
+
+  const canShowBelongsToMe = useMemo(() => {
+    let hasThursStandard = false;
+    let hasThursPro = false;
+    let allOne = true;
+
+    for (const item of orderItems) {
+      if ((item.ticketCount || 0) !== 1) {
+        allOne = false;
+        break;
+      }
+      if (item.id === THURS_STANDARD_ID) {
+        hasThursStandard = true;
+      }
+      if (item.id === THURS_PRO_ID) {
+        hasThursPro = true;
+      }
+
+      if (hasThursStandard && hasThursPro) {
+        break;
+      }
+    }
+
+    return allOne && !(hasThursStandard && hasThursPro);
+  }, [orderItems]);
 
   let ChildComponent;
   if (belongsToMe) {
