@@ -13,8 +13,9 @@ import { toast } from "@/components/ui/toast";
 import { useBuyFormStore } from "@/store/buy-form-store";
 import { useCheckout } from "@/hooks/useCheckout";
 import { useTickets } from "@/hooks/useTickets";
+import { useMediaQuery } from "@/hooks/useMediaQuery";
 
-const steps = ["Buy Ticket", "Buyer Information"];
+const steps = ["Buy Ticket", "Buyer Information", "Checkout"];
 
 export type OrderItem = {
   id: string;
@@ -51,11 +52,19 @@ type CheckoutPayload = {
 
 export default function BuyPageClient() {
   const [step, setStep] = useState(0);
+  const [payloadData, setPayloadData] = useState<CheckoutPayload | null>(null);
   const { tickets: standardTickets } = useTickets("standard");
   const { tickets: proTickets } = useTickets("pro");
   const { mutateAsync: checkout, isPending } = useCheckout();
   const { orderItems, buyerInfo, attendeeInfo, profileInfo } = useBuyFormStore();
 
+  const isMobile = useMediaQuery(640, "max");
+
+  const incrementStep = () => {
+    setStep((s) => {
+      return Math.min(s + 1, steps.length - 1);
+    });
+  };
   const isNextDisabled = () => {
     if (step === 0) {
       // Step 0: no tickets selected
@@ -110,7 +119,7 @@ export default function BuyPageClient() {
         setSelectedByType(type as "standard" | "pro", filtered);
       });
 
-      setStep((s) => Math.min(s + 1, steps.length - 1));
+      incrementStep();
       return true;
     }
 
@@ -199,13 +208,19 @@ export default function BuyPageClient() {
 
   const handleNext = async () => {
     if (step === 0) return handleContinue();
-
     if (step === 1) {
       const payload = prepareCheckoutPayload();
       if (!payload) return;
 
+      setPayloadData(payload);
+
+      incrementStep();
+    }
+    if (step === 2) {
+      if (!payloadData) return;
+
       try {
-        const res = await checkout(payload);
+        const res = await checkout(payloadData);
       } catch (err) {
         toast.error("Checkout failed", "Please try again in a few minutes");
       }
@@ -218,21 +233,33 @@ export default function BuyPageClient() {
         <button
           disabled={step === 0}
           onClick={handleGoBack}
-          className="disabled:text-soft-400 flex items-center gap-1 disabled:cursor-not-allowed"
+          className="disabled:text-soft-400 flex shrink-0 items-center gap-1 disabled:cursor-not-allowed"
         >
           <ChevronLeft className="inline" size={20} />
           <span className="label-4 cursor-pointer">Go Back</span>
         </button>
         |
-        <Breadcrumb activeIndex={step} breadcrumbList={steps} />
+        <Breadcrumb activeIndex={step} breadcrumbList={isMobile ? steps : steps.slice(0, -1)} />
       </div>
       <div className="flex flex-col gap-[20px] pt-5 sm:flex-row">
         <div className="w-full sm:flex-[9]">
           {step === 0 && <BuyTicket />}
-          {step === 1 && <BuyerInformation selectedDates={orderItems} />}
+          {(step === 1 || (!isMobile && step === 2)) && (
+            <BuyerInformation selectedDates={orderItems} />
+          )}
+          {isMobile && step === 2 && (
+            <OrderSummary
+              items={orderItems}
+              currentStep={step + 1}
+              noOfSteps={steps.length}
+              handleButtonClick={handleNext}
+              disabled={isNextDisabled()}
+              loading={isPending}
+            />
+          )}
           <Button
             onClick={handleNext}
-            className="mt-10 sm:hidden"
+            className={`mt-10 sm:hidden ${isMobile && step === 2 ? "hidden" : null}`}
             disabled={isNextDisabled()}
             loading={isPending}
           >
@@ -243,7 +270,7 @@ export default function BuyPageClient() {
           <OrderSummary
             items={orderItems}
             currentStep={step + 1}
-            noOfSteps={steps.length}
+            noOfSteps={isMobile ? steps.length : steps.length - 1}
             handleButtonClick={handleNext}
             disabled={isNextDisabled()}
             loading={isPending}
