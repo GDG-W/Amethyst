@@ -8,40 +8,33 @@ import Button from "@/components/ui/home-button";
 export default function index() {
   const footerLinks = {
     leftColumn: [
-      { label: "Login", href: "#" },
-      { label: "Claim Ticket", href: "#" },
-      { label: "Join the Community", href: "#" },
+      { label: "Login", href: "/login" },
+      { label: "Claim Ticket", href: "/claim" },
+      { label: "Join the Community", href: "https://gdg.community.dev/gdg-lagos/" },
     ],
     rightColumn: [
-      { label: "Privacy Policy", href: "#" },
-      { label: "Community Guidelines", href: "#" },
+      { label: "Privacy Policy", href: "https://policies.google.com/privacy" },
+      {
+        label: "Community Guidelines",
+        href: "https://www.google.com/events/policy/anti-harassmentpolicy.html",
+      },
     ],
   };
 
   const socialLinks = [
-    { name: "Twitter", icon: "/x.svg", href: "#" },
-    { name: "Instagram", icon: "/instagram.svg", href: "#" },
-    { name: "Facebook", icon: "/facebook.svg", href: "#" },
-    { name: "YouTube", icon: "/youtube.svg", href: "#" },
-    { name: "LinkedIn", icon: "/linkedin.svg", href: "#" },
+    { name: "Twitter", icon: "/x.svg", href: "https://x.com/gdglagos" },
+    { name: "Instagram", icon: "/instagram.svg", href: "https://www.instagram.com/gdglagos/#" },
+    {
+      name: "Facebook",
+      icon: "/facebook.svg",
+      href: "https://web.facebook.com/people/Google-Developers-Group-Lagos/100075612535619/#",
+    },
+    { name: "YouTube", icon: "/youtube.svg", href: "https://www.youtube.com/@GDGLagos" },
+    { name: "LinkedIn", icon: "/linkedin.svg", href: "https://www.linkedin.com/company/gdg-lagos" },
   ];
 
   return (
     <>
-      <style jsx global>{`
-        @keyframes gentle-spin {
-          from {
-            transform: rotate(0deg);
-          }
-          to {
-            transform: rotate(360deg);
-          }
-        }
-        .spin-gentle {
-          animation: gentle-spin 7s linear infinite;
-        }
-      `}</style>
-
       <footer className="relative w-full overflow-hidden bg-[#FCF6DF]">
         <div className="relative mx-auto max-w-7xl px-6 py-20 lg:px-[3.75rem] lg:pt-[9.1875rem] lg:pb-12">
           <Image
