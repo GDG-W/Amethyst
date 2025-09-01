@@ -7,6 +7,7 @@ import { usePathname } from "next/navigation";
 
 import Logo from "@/components/icons/logo";
 import Button from "@/components/ui/button";
+import LogoutIcon from "@/components/icons/logout-icon";
 
 const Header = () => {
   const pathname = usePathname();
@@ -28,6 +29,11 @@ const Header = () => {
         {pathname === "/login" || pathname === "/upgrade" ? (
           <Button size="fit">
             <Link href="/buy">Buy Tickets!</Link>
+          </Button>
+        ) : pathname === "/" ? (
+          <Button size="fit" variant="ghost" className="flex items-center gap-x-1">
+            <span className="label-2">Logout</span>
+            <LogoutIcon />
           </Button>
         ) : null}
       </nav>
