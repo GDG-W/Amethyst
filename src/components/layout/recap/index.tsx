@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import Image from "next/image";
 import Link from "next/link";
@@ -8,30 +8,51 @@ import Link from "next/link";
 import Button from "@/components/ui/home-button";
 
 const images = [
-  { id: 1, src: "/gallery-image1.webp", alt: "DevFest moment 1" },
-  { id: 2, src: "/gallery-image2.webp", alt: "DevFest moment 2" },
-  { id: 3, src: "/gallery-image3.webp", alt: "DevFest moment 3" },
-  { id: 4, src: "/gallery-image4.webp", alt: "DevFest moment 4" },
-  { id: 5, src: "/gallery-image5.webp", alt: "DevFest moment 5" },
-  { id: 6, src: "/gallery-image6.webp", alt: "DevFest moment 6" },
-  { id: 7, src: "/gallery-image7.webp", alt: "DevFest moment 7" },
-  { id: 8, src: "/gallery-image8.webp", alt: "DevFest moment 8" },
-  { id: 9, src: "/gallery-image9.webp", alt: "DevFest moment 9" },
-  { id: 10, src: "/gallery-image10.webp", alt: "DevFest moment 10" },
+  { id: 1, src: "/gallery-image1.png", alt: "DevFest moment 1" },
+  { id: 2, src: "/gallery-image2.png", alt: "DevFest moment 2" },
+  { id: 3, src: "/gallery-image3.png", alt: "DevFest moment 3" },
+  { id: 4, src: "/gallery-image4.png", alt: "DevFest moment 4" },
+  { id: 5, src: "/gallery-image5.png", alt: "DevFest moment 5" },
+  { id: 6, src: "/gallery-image6.png", alt: "DevFest moment 6" },
+  { id: 7, src: "/gallery-image7.png", alt: "DevFest moment 7" },
+  { id: 8, src: "/gallery-image8.png", alt: "DevFest moment 8" },
+  { id: 9, src: "/gallery-image9.png", alt: "DevFest moment 9" },
+  { id: 10, src: "/gallery-image10.png", alt: "DevFest moment 10" },
 ];
 
 export default function Recap() {
-  const [currentIndex, setCurrentIndex] = useState(0);
+  const [translateX, setTranslateX] = useState(0);
+  const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const containerRef = useRef(null);
+
+  const cardWidth = 256 + 17;
+  const totalWidth = images.length * cardWidth;
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length);
-    }, 3000);
+    const startAnimation = () => {
+      intervalRef.current = setInterval(() => {
+        setTranslateX((prev) => {
+          const newTranslateX = prev - cardWidth;
 
-    return () => clearInterval(interval);
-  }, []);
+          if (Math.abs(newTranslateX) >= totalWidth) {
+            return 0;
+          }
 
-  const infiniteImages = [...images, ...images];
+          return newTranslateX;
+        });
+      }, 3000);
+    };
+
+    startAnimation();
+
+    return () => {
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
+      }
+    };
+  }, [cardWidth, totalWidth]);
+
+  const infiniteImages = [...images, ...images, ...images];
 
   return (
     <section className="w-full bg-[#FFFFFF]">
@@ -69,7 +90,6 @@ export default function Recap() {
             />
           </div>
 
-          {/* Mobile floating image */}
           <Image
             src="/recap-image.png"
             width={150}
@@ -79,12 +99,11 @@ export default function Recap() {
           />
         </div>
 
-        {/* Carousel */}
-        <div className="flex gap-[1.0625rem] overflow-hidden">
+        <div className="flex gap-[1.0625rem] overflow-hidden" ref={containerRef}>
           <div
             className="flex items-end gap-[1.0625rem] transition-transform duration-1000 ease-in-out"
             style={{
-              transform: `translateX(-${currentIndex * (256 + 17)}px)`,
+              transform: `translateX(${translateX}px)`,
             }}
           >
             {infiniteImages.map((image, index) => (
