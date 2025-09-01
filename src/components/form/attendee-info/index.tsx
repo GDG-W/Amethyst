@@ -5,6 +5,8 @@ import React from "react";
 import MultiInput from "@/components/ui/inputs/multi-input";
 import Card from "@/components/ui/card";
 import { useBuyFormStore } from "@/store/buy-form-store";
+import { THURS_PRO_ID, THURS_STANDARD_ID } from "@/constants/ticket";
+// import { date, email } from "zod";
 
 type AttendeesInfoProps = {
   selectedDates: Array<{
@@ -16,17 +18,18 @@ type AttendeesInfoProps = {
 };
 
 // Helper function to initialize default values
-const getDefaultEmailsByDate = (selectedDates: AttendeesInfoProps["selectedDates"]) => {
-  return selectedDates.reduce(
-    (acc, date) => {
-      acc[date.id] = [];
-      return acc;
-    },
-    {} as Record<string, string[]>
-  );
-};
+// const getDefaultEmailsByDate = (selectedDates: AttendeesInfoProps["selectedDates"]) => {
+//   return selectedDates.reduce(
+//     (acc, date) => {
+//       acc[date.id] = [];
+//       return acc;
+//     },
+//     {} as Record<string, string[]>
+//   );
+// };
 
 const AttendeeInfo = ({ selectedDates }: AttendeesInfoProps) => {
+  const attendeeInfoArr = useBuyFormStore((state) => state.attendeeInfo);
   const { attendeeInfo, attendeeErrors, updateAttendeeEmails, setAttendeeError } =
     useBuyFormStore();
 
@@ -52,10 +55,31 @@ const AttendeeInfo = ({ selectedDates }: AttendeesInfoProps) => {
       return;
     }
 
-    updateAttendeeEmails(dateId, emails);
+    let isUniqueMail = true;
 
-    // Clear any existing error for this field
-    setAttendeeError(dateId, null);
+    if (dateId === THURS_STANDARD_ID || dateId === THURS_PRO_ID) {
+      const standardEmail = attendeeInfoArr?.emailsByDate[`${THURS_STANDARD_ID}`];
+      const proEmail = attendeeInfoArr?.emailsByDate[`${THURS_PRO_ID}`];
+
+      switch (dateId) {
+        case THURS_STANDARD_ID:
+          if (!proEmail || proEmail.length < 1) break;
+          isUniqueMail = emails.every((email) => !proEmail.includes(email));
+          break;
+        case THURS_PRO_ID:
+          if (!standardEmail || standardEmail.length < 1) break;
+          isUniqueMail = emails.every((email) => !standardEmail.includes(email));
+          break;
+      }
+    }
+
+    if (!isUniqueMail) {
+      setAttendeeError(dateId, "You can't buy a pro and standard ticket for the same person!");
+      return;
+    }
+
+    updateAttendeeEmails(dateId, emails);
+    setAttendeeError(dateId, null); // Clear any existing error for this field
   };
 
   return (
@@ -71,7 +95,7 @@ const AttendeeInfo = ({ selectedDates }: AttendeesInfoProps) => {
             <MultiInput
               id={`attendee-emails-${date.id || index}`}
               label={date.ticketCount > 1 ? "Email address(es)" : "Email address"}
-              extraLabel={`${date.dayName}`}
+              extraLabel={`${date.dayName} ${date.id === THURS_PRO_ID ? "(Pro)" : ""}`}
               placeholder={date.ticketCount > 1 ? "Enter email address(es)" : "Enter email address"}
               value={attendeeInfo?.emailsByDate[date.id] || []}
               onChange={(emails) => handleEmailChange(date.id, emails)}
