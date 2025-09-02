@@ -7,6 +7,8 @@ import Link from "next/link";
 
 import Button from "@/components/ui/home-button";
 
+import Header from "../navbar";
+
 const Hero = () => {
   const speakers = [
     { src: "/speaker1.svg", alt: "Speaker 1" },
@@ -20,53 +22,35 @@ const Hero = () => {
     { src: "/speaker9.svg", alt: "Speaker 9" },
   ];
 
-  const infiniteSpeakers = [
-    ...speakers,
-    ...speakers,
-    ...speakers,
-    ...speakers,
-    ...speakers,
-    ...speakers,
-  ];
+  const infiniteSpeakers = [...speakers, ...speakers, ...speakers];
 
   const [translateX, setTranslateX] = useState(0);
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
-  const containerRef = useRef(null);
-  const [cardWidth, setCardWidth] = useState(0);
+  const containerRef = useRef<HTMLDivElement>(null);
   const [isTransitioning, setIsTransitioning] = useState(true);
 
   useEffect(() => {
-    const updateCardWidth = () => {
-      setCardWidth(window.innerWidth >= 768 ? 408 : 272);
-    };
-
-    updateCardWidth();
-    window.addEventListener("resize", updateCardWidth);
-
-    return () => window.removeEventListener("resize", updateCardWidth);
-  }, []);
-
-  const totalWidth = speakers.length * cardWidth;
-
-  useEffect(() => {
-    if (cardWidth === 0) return;
-
     const startAnimation = () => {
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
+      }
+
       intervalRef.current = setInterval(() => {
         setTranslateX((prev) => {
+          const isMobile = window.innerWidth < 768;
+          const cardWidth = isMobile ? 272 : 408;
           const newTranslateX = prev - cardWidth;
           const singleSetWidth = speakers.length * cardWidth;
 
           if (Math.abs(newTranslateX) >= singleSetWidth * 2) {
-            setIsTransitioning(false);
-
-            requestAnimationFrame(() => {
-              requestAnimationFrame(() => {
+            setTimeout(() => {
+              setIsTransitioning(false);
+              setTranslateX(-singleSetWidth);
+              setTimeout(() => {
                 setIsTransitioning(true);
-              });
-            });
-
-            return -singleSetWidth;
+              }, 10);
+            }, 1000);
+            return newTranslateX;
           }
 
           return newTranslateX;
@@ -76,18 +60,28 @@ const Hero = () => {
 
     startAnimation();
 
+    const handleResize = () => {
+      startAnimation();
+    };
+
+    window.addEventListener("resize", handleResize);
+
     return () => {
       if (intervalRef.current) {
         clearInterval(intervalRef.current);
       }
+      window.removeEventListener("resize", handleResize);
     };
-  }, [cardWidth, speakers.length, totalWidth]);
+  }, [speakers.length]);
 
   return (
-    <div className="min-h-screen w-full p-4 md:min-h-[80vh] lg:min-h-screen">
-      <div className="max-w-8xl mx-auto">
-        <div className="flex min-h-[calc(100vh-2rem)] w-full flex-col items-center justify-center rounded-xl bg-[#171717] py-12 md:flex-row lg:items-stretch">
-          <div className="flex flex-1 flex-col justify-center px-6 py-8 md:py-12 lg:px-16">
+    <div className="w-full p-4">
+      <div className="w-full overflow-hidden rounded-xl bg-[#171717]">
+        <div className="pt-5 pb-0">
+          <Header />
+        </div>
+        <div className="mx-auto flex w-full max-w-7xl flex-col items-center justify-center bg-[#171717] pb-6 md:pb-14 lg:flex-row lg:items-stretch">
+          <div className="flex flex-1 flex-col justify-center px-6">
             <div className="mb-4 flex justify-start">
               <Image
                 src="/road-to-devfest.svg"
@@ -98,13 +92,13 @@ const Hero = () => {
               />
             </div>
 
-            <div className="text-center md:text-left">
-              <h1 className="font-akira text-xl font-bold text-balance text-white uppercase md:max-w-md md:text-left md:text-3xl lg:max-w-xl lg:text-4xl">
-                DevFest <br className="hidden md:block" /> Lagos <br className="hidden md:block" />{" "}
+            <div className="text-center lg:text-left">
+              <h1 className="font-akira text-xl font-bold text-white uppercase md:max-w-md md:text-3xl lg:max-w-xl lg:text-left lg:text-4xl">
+                DevFest <br className="hidden lg:block" /> Lagos <br className="hidden lg:block" />{" "}
                 Returns for{" "}
                 <span className="text-[#4285F4]">
                   {" "}
-                  <br className="hidden md:block" />
+                  <br className="hidden lg:block" />
                   Five Epic Days.
                 </span>
               </h1>
@@ -126,7 +120,7 @@ const Hero = () => {
                 <Link className="flex-1" href="/login">
                   <Button
                     variant="secondary"
-                    className="w-full flex-1 cursor-pointer uppercase md:flex-1"
+                    className="w-full flex-1 cursor-pointer whitespace-nowrap uppercase md:flex-1"
                   >
                     Log in
                   </Button>
@@ -134,8 +128,7 @@ const Hero = () => {
               </div>
             </div>
           </div>
-
-          <div className="flex flex-1 flex-col items-center justify-end md:items-end lg:justify-center">
+          <div className="flex w-full flex-1 flex-col items-center justify-end md:w-auto md:items-end lg:justify-center">
             <div className="relative w-full pt-8 md:pt-20 lg:w-auto lg:max-w-lg">
               <div className="absolute top-2 right-4 z-10 md:top-4 md:right-4 lg:top-8 lg:right-8 xl:top-12 xl:right-16">
                 <Image
@@ -147,17 +140,23 @@ const Hero = () => {
                 />
               </div>
 
-              <div className="flex w-full overflow-hidden" ref={containerRef}>
+              <div
+                className="flex w-full justify-center overflow-hidden md:justify-start"
+                ref={containerRef}
+                style={{ maxWidth: "100%" }}
+              >
                 <div
                   className={`flex ${isTransitioning ? "transition-transform duration-1000 ease-in-out" : ""}`}
                   style={{
                     transform: `translateX(${translateX}px)`,
+                    width: "max-content",
                   }}
                 >
                   {infiniteSpeakers.map((speaker, index) => (
                     <div
                       key={`${Math.floor(index / speakers.length)}-${index % speakers.length}`}
-                      className="mr-4 h-80 w-64 flex-shrink-0 md:mr-6 md:h-96 md:w-96 lg:h-[500px]"
+                      className="mr-4 h-80 w-60 flex-shrink-0 md:mr-6 md:h-80 md:w-80 lg:h-[500px] lg:w-96"
+                      style={{ minWidth: "16rem" }}
                     >
                       <Image
                         src={speaker.src}
