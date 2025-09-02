@@ -22,24 +22,19 @@ const images = [
 
 export default function Recap() {
   const [translateX, setTranslateX] = useState(0);
+  const [isTransitioning, setIsTransitioning] = useState(true);
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
-  const containerRef = useRef(null);
 
   const cardWidth = 256 + 17;
   const totalWidth = images.length * cardWidth;
 
+  const infiniteImages = [...images, ...images, ...images];
+
   useEffect(() => {
     const startAnimation = () => {
       intervalRef.current = setInterval(() => {
-        setTranslateX((prev) => {
-          const newTranslateX = prev - cardWidth;
-
-          if (Math.abs(newTranslateX) >= totalWidth) {
-            return 0;
-          }
-
-          return newTranslateX;
-        });
+        setTranslateX((prev) => prev - cardWidth);
+        setIsTransitioning(true);
       }, 3000);
     };
 
@@ -50,9 +45,16 @@ export default function Recap() {
         clearInterval(intervalRef.current);
       }
     };
-  }, [cardWidth, totalWidth]);
+  }, [cardWidth]);
 
-  const infiniteImages = [...images, ...images, ...images];
+  useEffect(() => {
+    if (Math.abs(translateX) >= totalWidth * 2) {
+      setTimeout(() => {
+        setIsTransitioning(false);
+        setTranslateX(-totalWidth);
+      }, 100);
+    }
+  }, [translateX, totalWidth]);
 
   return (
     <section className="w-full bg-[#FFFFFF]">
@@ -60,14 +62,12 @@ export default function Recap() {
         <div className="relative flex h-full justify-between px-5 pt-[6.625rem] pb-8 lg:pr-[6.1875rem] lg:pl-[11.875rem]">
           <div className="flex w-full flex-col items-center justify-center lg:max-w-lg lg:flex-row">
             <div className="flex flex-col gap-6">
-              <div className="flex flex-col gap-6">
-                <h2 className="font-akira text-xl font-bold">2024 recap</h2>
-                <p className="label-3">
-                  From inspiring talks to hands-on sessions, DevFest Lagos 2024 had it all — Mental
-                  Health, Mobile, Design, Web, Cloud, DevOps, Machine Learning, AR/VR, and more.
-                  Here&apos;s a look back at the moments that made it unforgettable.
-                </p>
-              </div>
+              <h2 className="font-akira text-xl font-bold md:text-[2rem]">2024 recap</h2>
+              <p className="label-3">
+                From inspiring talks to hands-on sessions, DevFest Lagos 2024 had it all — Mental
+                Health, Mobile, Design, Web, Cloud, DevOps, Machine Learning, AR/VR, and more.
+                Here&apos;s a look back at the moments that made it unforgettable.
+              </p>
               <div className="flex w-full flex-col gap-3 md:flex-row">
                 <Link href="/buy">
                   <Button className="w-full md:flex-1">Buy TicketS</Button>
@@ -80,29 +80,13 @@ export default function Recap() {
               </div>
             </div>
           </div>
-
-          <div className="hidden lg:block">
-            <Image
-              src="/recap-image.png"
-              width={150}
-              height={10}
-              alt="laptop image with devfest logo"
-              className="scale-hover"
-            />
-          </div>
-
-          <Image
-            src="/recap-image.png"
-            width={150}
-            height={150}
-            alt="laptop image with devfest logo"
-            className="scale-hover absolute top-20 right-5 block w-[5.68375rem] -translate-y-1/2 lg:hidden"
-          />
         </div>
 
-        <div className="flex gap-[1.0625rem] overflow-hidden" ref={containerRef}>
+        <div className="flex gap-[1.0625rem] overflow-hidden">
           <div
-            className="flex items-end gap-[1.0625rem] transition-transform duration-1000 ease-in-out"
+            className={`flex items-end gap-[1.0625rem] ${
+              isTransitioning ? "transition-transform duration-1000 ease-in-out" : ""
+            }`}
             style={{
               transform: `translateX(${translateX}px)`,
             }}
@@ -115,7 +99,7 @@ export default function Recap() {
                 <Image
                   src={image.src}
                   width={300}
-                  height={0}
+                  height={200}
                   alt={image.alt}
                   className="h-full w-auto object-contain"
                 />

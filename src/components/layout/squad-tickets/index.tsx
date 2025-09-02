@@ -21,7 +21,7 @@ const ticketTypes = [
     description:
       "For those who want more access and a more focused, premium experience — all in one day",
     features: [
-      "Exclusive access to sponsor booths & product demos",
+      "Exclusive access to product demos",
       "Access to masterclasses and technical workshops",
       "Invitation to the Executive Roundtable",
       "Special swags and merch",
