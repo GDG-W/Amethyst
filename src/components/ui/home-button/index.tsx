@@ -12,7 +12,7 @@ export default function Button({
   className = "",
 }: ButtonProps) {
   const baseClasses =
-    "p-4 h-[52px] md:h-[3.75rem] items-center justify-center flex  rounded-full heading-6 border-4 transition-all duration-200 hover:scale-105 font-akira";
+    "p-4 h-[52px] md:h-[3.75rem] items-center justify-center flex cursor-pointer rounded-full heading-6 border-4 transition-all duration-200 hover:scale-105 font-akira";
 
   const variants = {
     primary: "bg-[#F6B51E] border-[#1E1E1E] text-sm md:text-base w-[10.9375rem] md:w-[16.125rem] ",

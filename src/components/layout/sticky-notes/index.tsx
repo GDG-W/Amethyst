@@ -92,7 +92,7 @@ export default function stickyNote() {
       <div className="mx-auto flex max-w-7xl items-center pt-20 pl-[5.725rem]">
         <div className="relative flex flex-col">
           <Image
-            className="absolute -top-12 -left-15 rotate-2"
+            className="scale-hover absolute -top-12 -left-15 rotate-2"
             src="/sticky-arrow.png"
             alt="arrow pointing to text"
             height={20}
@@ -117,7 +117,7 @@ export default function stickyNote() {
             />
           ))}
           <Image
-            className="absolute top-6 -right-15 rotate-2"
+            className="scale-hover absolute top-6 -right-15 rotate-2"
             src="/learn.svg"
             alt="arrow pointing to text"
             height={20}

@@ -9,7 +9,6 @@ export default function index() {
   const footerLinks = {
     leftColumn: [
       { label: "Login", href: "/login" },
-      { label: "Claim Ticket", href: "/claim" },
       { label: "Join the Community", href: "https://gdg.community.dev/gdg-lagos/" },
     ],
     rightColumn: [
@@ -42,7 +41,7 @@ export default function index() {
             alt="DevFest Lagos 2025"
             width={100}
             height={150}
-            className="spin-gentle absolute top-0 right-4 z-10 lg:top-10 lg:right-5"
+            className="scale-hover absolute top-0 right-4 z-10 w-24 lg:top-10 lg:right-5 lg:w-40"
           />
 
           <div className="relative">
@@ -68,7 +67,7 @@ export default function index() {
                   </div>
                 </div>
 
-                <div className="mt-4 space-y-4 lg:mt-0">
+                <div className="space-y-4 lg:mt-0">
                   {footerLinks.rightColumn.map((link, index) => (
                     <a key={index} href={link.href} className="label-3 font-inter block">
                       {link.label}

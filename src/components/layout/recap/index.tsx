@@ -87,6 +87,7 @@ export default function Recap() {
               width={150}
               height={10}
               alt="laptop image with devfest logo"
+              className="scale-hover"
             />
           </div>
 
@@ -95,7 +96,7 @@ export default function Recap() {
             width={150}
             height={150}
             alt="laptop image with devfest logo"
-            className="absolute top-20 right-5 block w-[5.68375rem] -translate-y-1/2 lg:hidden"
+            className="scale-hover absolute top-20 right-5 block w-[5.68375rem] -translate-y-1/2 lg:hidden"
           />
         </div>
 
@@ -116,7 +117,7 @@ export default function Recap() {
                   width={300}
                   height={0}
                   alt={image.alt}
-                  className="h-auto w-auto object-contain"
+                  className="h-full w-auto object-contain"
                 />
               </div>
             ))}

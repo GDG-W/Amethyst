@@ -23,7 +23,7 @@ const JoinUs = () => {
             alt="See you there"
             width={150}
             height={150}
-            className="absolute -bottom-8 left-5"
+            className="scale-hover absolute -bottom-8 left-5"
           />
         </div>
       </div>
