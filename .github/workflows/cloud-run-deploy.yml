@@ -4,9 +4,11 @@ on:
   push:
     branches:
       - main
+      - dev
   pull_request:
     branches:
       - main
+      - dev
 
 permissions:
   contents: read
@@ -17,20 +19,30 @@ jobs:
   dockerize-and-deploy:
     runs-on: ubuntu-latest
 
+    env:
+      API_URL: ${{ secrets.STAGING_API_BASE_URL }}
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Set service name and image tag
+      - name: Set service name and image tag for PRs
         id: service-name
+        if: github.event_name == 'pull_request'
         run: |
-          if [ "${{ github.event_name }}" = "pull_request" ]; then
-            echo "SERVICE_NAME=next-app-project-pr-${{ github.event.number }}" >> $GITHUB_ENV
-            echo "IMAGE_TAG=pr-${{ github.event.number }}" >> $GITHUB_ENV
-          else
-            echo "SERVICE_NAME=next-app-project" >> $GITHUB_ENV
-            echo "IMAGE_TAG=latest" >> $GITHUB_ENV
-          fi
+          echo "SERVICE_NAME=amethyst-${{ github.event.pull_request.base.ref }}-preview-${{ github.event.number }}" >> $GITHUB_ENV
+          echo "IMAGE_TAG=${{ github.sha }}" >> $GITHUB_ENV
+
+      - name: Set service name for staging
+        if: github.ref == 'refs/heads/dev'
+        run: |
+          echo "SERVICE_NAME=amethyst-staging" >> $GITHUB_ENV
+
+      - name: Set service name for prod
+        if: github.ref == 'refs/heads/main'
+        run: |
+          echo "SERVICE_NAME=amethyst-main" >> $GITHUB_ENV
+          echo "API_URL=${{ secrets.PROD_API_BASE_URL }}"
 
       - name: Google Cloud Auth
         uses: "google-github-actions/auth@v2"
@@ -47,22 +59,23 @@ jobs:
 
       - name: Build and Push Docker Image
         run: |
-          docker build -t gcr.io/${{ secrets.GCP_PROJECT_ID }}/${{ secrets.DOCKER_IMAGE_NAME }}:${{ env.IMAGE_TAG }} .
-          docker push gcr.io/${{ secrets.GCP_PROJECT_ID }}/${{ secrets.DOCKER_IMAGE_NAME }}:${{ env.IMAGE_TAG }}
+          docker build --build-arg NEXT_PUBLIC_API_URL=${{ env.API_URL }} -t gcr.io/${{ secrets.GCP_PROJECT_ID }}/${{ secrets.DOCKER_IMAGE_NAME }}:${{ github.sha }} .
+          docker push gcr.io/${{ secrets.GCP_PROJECT_ID }}/${{ secrets.DOCKER_IMAGE_NAME }}:${{ github.sha }}
 
       - name: Deploy to Cloud Run
         run: |
           gcloud run deploy ${{ env.SERVICE_NAME }} \
-            --image gcr.io/${{ secrets.GCP_PROJECT_ID }}/${{ secrets.DOCKER_IMAGE_NAME }}:${{ env.IMAGE_TAG }} \
+            --image gcr.io/${{ secrets.GCP_PROJECT_ID }}/${{ secrets.DOCKER_IMAGE_NAME }}:${{ github.sha }} \
             --platform managed \
-            --region us-central1 \
-            --allow-unauthenticated
+            --region europe-west1 \
+            --allow-unauthenticated \
+            --set-env-vars NEXT_PUBLIC_API_URL=${{ env.API_URL }}
 
       - name: Get Cloud Run service URL
         if: github.event_name == 'pull_request'
         id: get-url
         run: |
-          SERVICE_URL=$(gcloud run services describe ${{ env.SERVICE_NAME }} --region=us-central1 --format='value(status.url)')
+          SERVICE_URL=$(gcloud run services describe ${{ env.SERVICE_NAME }} --region=europe-west1 --format='value(status.url)')
           echo "SERVICE_URL=$SERVICE_URL" >> $GITHUB_ENV
 
       - name: Comment PR with preview URL
