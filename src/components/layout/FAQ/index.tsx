@@ -113,110 +113,98 @@ export default function Index() {
   };
 
   const toggleQuestion = (questionId: number) => {
-    if (expandedQuestion === questionId) {
-      setExpandedQuestion(null);
-    } else {
-      setExpandedQuestion(questionId);
-    }
+    setExpandedQuestion((prev) => (prev === questionId ? null : questionId));
   };
 
   const currentTopic = topics[activeTopicIndex];
   const currentQuestions = faqData[currentTopic as keyof typeof faqData] || [];
 
   return (
-    <>
-      <style jsx global>{`
-        .custom-scrollbar::-webkit-scrollbar {
-          width: 3px;
-        }
-
-        .custom-scrollbar::-webkit-scrollbar-track {
-          background: transparent;
-        }
-
-        .custom-scrollbar::-webkit-scrollbar-thumb {
-          background-color: #f9ab00;
-          border-radius: 8px;
-        }
-
-        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-          background-color: #e09900;
-        }
-      `}</style>
-
-      <section className="flex w-full justify-center bg-[#FFFAEB]">
-        <div className="mx-auto flex w-full max-w-7xl flex-col justify-center gap-[3.875rem] px-5 py-10 md:flex-row lg:gap-[5.75rem] lg:px-8 lg:py-20">
-          <div className="flex flex-col gap-6 lg:ml-20 lg:max-w-sm lg:gap-[2.5rem]">
-            <div className="flex flex-col gap-3">
-              <p className="label-3 text-[#5C5C5C]">FAQs</p>
-              <p className="font-akira text-xl text-black lg:w-1/3 lg:text-4xl">
-                Your questions answered
-              </p>
-            </div>
-            <div className="flex flex-col gap-[.875rem]">
-              <span className="text-sub-600 text-sm">FILTER BY TOPIC</span>
-              <div className="flex flex-col gap-1">
-                <ul className="flex gap-2 overflow-x-auto md:flex-col">
-                  {topics.map((topic, index) => (
-                    <li key={index}>
-                      <button
-                        aria-label="button"
-                        onClick={() => handleTopicClick(index)}
-                        className={`text-left transition-colors ${
-                          index === activeTopicIndex
-                            ? "label-4 md:label-3 rounded-lg border border-gray-300 bg-white px-3 py-2 whitespace-nowrap text-black"
-                            : "label-4 md:label-3 text-sub-600 flex items-center justify-center px-3 py-2 text-center whitespace-nowrap"
-                        }`}
-                      >
-                        {topic}
-                      </button>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </div>
+    <section className="flex w-full justify-center bg-[#FFFAEB]">
+      <div className="mx-auto flex w-full max-w-7xl flex-col justify-center gap-[3.875rem] px-5 py-10 md:flex-row lg:gap-[5.75rem] lg:px-8 lg:py-20">
+        <div className="flex flex-col gap-6 lg:ml-20 lg:max-w-sm lg:gap-[2.5rem]">
+          <div className="flex flex-col gap-3">
+            <p className="label-3 text-[#5C5C5C]">FAQs</p>
+            <p className="font-akira text-xl text-black lg:w-1/3 lg:text-4xl">
+              Your questions answered
+            </p>
           </div>
-          <div className="flex w-full flex-col gap-5 md:h-[26.8125rem]">
-            <h2 className="font-akira text-xl text-black uppercase lg:text-[1.75rem]">
-              General Questions
-            </h2>
-            <div className="custom-scrollbar flex w-full flex-col gap-4 overflow-y-auto xl:pr-16">
-              {currentQuestions.map((item) => (
-                <div key={item.id} className="group">
-                  <div
-                    className="w-full cursor-pointer rounded-xl bg-[#FDE293] p-5 transition-all duration-200 xl:w-[706px]"
-                    style={{
-                      clipPath:
-                        "polygon( 98.3% 0%,98.3% 0%,98.576% 0.196%,98.838% 0.765%,99.081% 1.674%,99.304% 2.894%,99.502% 4.393%,99.672% 6.141%,99.81% 8.107%,99.913% 10.259%,99.978% 12.567%,100% 15%,100% 64%,100% 64%,99.978% 66.433%,99.913% 68.741%,99.81% 70.894%,99.672% 72.859%,99.502% 74.607%,99.304% 76.106%,99.081% 77.326%,98.838% 78.236%,98.576% 78.804%,98.3% 79%,96.863% 79%,95.358% 97.177%,95.358% 97.177%,95.284% 97.914%,95.198% 98.488%,95.104% 98.898%,95.004% 99.144%,94.901% 99.226%,94.798% 99.144%,94.698% 98.898%,94.604% 98.488%,94.518% 97.914%,94.443% 97.177%,92.938% 79%,1.7% 79%,1.7% 79%,1.424% 78.804%,1.162% 78.236%,0.919% 77.326%,0.696% 76.106%,0.498% 74.607%,0.328% 72.859%,0.19% 70.894%,0.087% 68.741%,0.022% 66.433%,0% 64%,0% 15%,0% 15%,0.022% 12.567%,0.087% 10.259%,0.19% 8.107%,0.328% 6.141%,0.498% 4.393%,0.696% 2.894%,0.919% 1.674%,1.162% 0.765%,1.424% 0.196%,1.7% 0%,98.3% 0% )",
-                    }}
-                    onClick={() => toggleQuestion(item.id)}
-                  >
-                    <div className="flex w-full items-center justify-between pb-3">
-                      <span className="label-3 md:label-4 pr-4 font-semibold text-[#141414]">
-                        {item.question}
-                      </span>
-                      <button
-                        className="flex h-[2rem] w-[2rem] flex-shrink-0 items-center justify-center rounded-[.5rem] bg-white text-lg font-bold text-gray-600 shadow-sm transition-all duration-200 group-hover:text-gray-800 hover:shadow-md"
-                        aria-label={
-                          expandedQuestion === item.id ? "Collapse answer" : "Expand answer"
-                        }
-                      >
-                        {expandedQuestion === item.id ? "−" : "+"}
-                      </button>
-                    </div>
 
-                    {expandedQuestion === item.id && (
-                      <div className="pb-12">
-                        <p className="label-4 leading-relaxed text-[#4D4D4D]">{item.answer}</p>
-                      </div>
-                    )}
-                  </div>
-                </div>
-              ))}
+          <div className="flex flex-col gap-[.875rem]">
+            <span className="text-sub-600 text-sm">FILTER BY TOPIC</span>
+            <div className="flex flex-col gap-1">
+              <ul className="flex gap-2 overflow-x-auto md:flex-col">
+                {topics.map((topic, index) => (
+                  <li key={index}>
+                    <button
+                      aria-label="button"
+                      onClick={() => handleTopicClick(index)}
+                      className={`text-left transition-colors ${
+                        index === activeTopicIndex
+                          ? "label-4 md:label-3 rounded-lg border border-gray-300 bg-white px-3 py-2 whitespace-nowrap text-black"
+                          : "label-4 md:label-3 text-sub-600 flex items-center justify-center px-3 py-2 text-center whitespace-nowrap"
+                      }`}
+                    >
+                      {topic}
+                    </button>
+                  </li>
+                ))}
+              </ul>
             </div>
           </div>
         </div>
-      </section>
-    </>
+
+        <div className="flex h-[26.8125rem] w-full flex-col gap-5">
+          <h2 className="font-akira text-xl text-black uppercase lg:text-[1.75rem]">
+            General Questions
+          </h2>
+
+          <div className="custom-scrollbar flex w-full flex-col gap-6 overflow-y-auto pr-2 xl:pr-16">
+            {currentQuestions.map((item) => (
+              <div key={item.id} className="relative">
+                <svg
+                  className="absolute right-5 -bottom-4"
+                  width="42"
+                  height="37"
+                  viewBox="0 0 42 37"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M24.4641 34.5C22.9245 37.1667 19.0755 37.1667 17.5359 34.5L1.08141 6C-0.458187 3.33333 1.46632 0 4.54552 0L37.4545 0C40.5337 0 42.4582 3.33333 40.9186 6L24.4641 34.5Z"
+                    fill="#FFE7A5"
+                  />
+                </svg>
+
+                <div
+                  className="relative z-10 w-full cursor-pointer rounded-2xl bg-[#FDE293] p-5 pr-7 transition-all duration-200 xl:w-[706px]"
+                  onClick={() => toggleQuestion(item.id)}
+                >
+                  <div className="flex w-full items-center justify-between pb-3">
+                    <span className="label-3 md:label-4 pr-4 font-semibold text-[#141414]">
+                      {item.question}
+                    </span>
+                    <button
+                      className="flex h-[2rem] w-[2rem] flex-shrink-0 items-center justify-center rounded-[.5rem] bg-white text-lg font-bold text-gray-600 shadow-sm transition-all duration-200 hover:text-gray-800 hover:shadow-md"
+                      aria-label={
+                        expandedQuestion === item.id ? "Collapse answer" : "Expand answer"
+                      }
+                    >
+                      {expandedQuestion === item.id ? "−" : "+"}
+                    </button>
+                  </div>
+
+                  {expandedQuestion === item.id && (
+                    <div className="mb-4">
+                      <p className="label-4 leading-relaxed text-[#4D4D4D]">{item.answer}</p>
+                    </div>
+                  )}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
   );
 }

@@ -474,7 +474,7 @@
   font-family: var(--font-akira), sans-serif;
 }
 
-/* *{
+/* * {
   outline: 1px solid red;
 } */
 
@@ -517,6 +517,27 @@ input.no-spinner::-webkit-inner-spin-button {
   }
 }
 
-.spin-gentle {
-  animation: gentle-spin 7s linear infinite;
+.scale-hover {
+  transition: transform 0.3s ease-in-out;
+}
+
+.scale-hover:hover {
+  transform: scale(1.05);
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 3px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background-color: #f9ab00;
+  border-radius: 8px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background-color: #e09900;
 }
