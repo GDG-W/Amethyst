@@ -1,11 +1,13 @@
 "use client";
 import React from "react";
-type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
+
+export type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
   children: React.ReactNode;
   loading?: boolean;
   size?: "full" | "fit";
   variant?: "primary" | "secondary" | "link" | "ghost";
 };
+
 const Button = ({
   children,
   disabled,
@@ -24,7 +26,7 @@ const Button = ({
       primary: "bg-away-base text-white",
       secondary: "bg-away-base/10 border border-away-base text-away-base",
       link: "bg-transparent text-away-base underline underline-offset-2",
-      ghost: "bg-transparent text-static-black",
+      ghost: "bg-transparent text-away-black",
     },
   };
 
