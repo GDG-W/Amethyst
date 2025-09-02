@@ -7,15 +7,18 @@ export function useGetuser() {
   return user;
 }
 
-export function useLogin(user: UserState, token: string) {
+export function useLogin() {
   const setUser = useUserDetailsStore((state) => state.setUser);
 
-  function handleLogin() {
+  function handleLogin(user: UserState, token: string) {
     setUser(user);
 
     //store the token and user in cookie
-    Cookies.set("token", token, { expires: user.expires_at });
-    Cookies.set("user", JSON.stringify(user), { expires: user.expires_at });
+    const expiresDate = new Date(user.expires_at);
+    const daysUntilExpiry = Math.ceil((expiresDate.getTime() - Date.now()) / (1000 * 60 * 60 * 24));
+
+    Cookies.set("token", token, { expires: daysUntilExpiry, path: "/" });
+    Cookies.set("user", JSON.stringify(user), { expires: daysUntilExpiry, path: "/" });
   }
   return handleLogin;
 }
