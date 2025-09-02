@@ -60,18 +60,18 @@ const SuccessCard = ({ title, summary, links, className, toggleModal }: ModalPro
             <Button
               variant={"primary"}
               onClick={() => {
-                navigator.push("/dashboard");
+                navigator.push("/buy");
               }}
             >
-              Go back to dashboard
+              Buy more tickets
             </Button>
             <Button
               variant={"secondary"}
               onClick={() => {
-                navigator.push("/buy");
+                navigator.push("/dashboard");
               }}
             >
-              Buy More
+              Go to dashboard
             </Button>
           </>
         )}
