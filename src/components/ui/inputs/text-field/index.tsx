@@ -52,10 +52,12 @@ const TextField = ({
 
   return (
     <div className="w-full">
-      <label htmlFor={id} className="label-3 mb-2 block font-medium tracking-tight">
-        <span className="mr-2">{label}</span>
-        {extraLabel && <span className="text-sm text-gray-500">{extraLabel}</span>}
-      </label>
+      {label && (
+        <label htmlFor={id} className="label-3 mb-2 block font-medium tracking-tight">
+          <span className="mr-2">{label}</span>
+          {extraLabel && <span className="text-sm text-gray-500">{extraLabel}</span>}
+        </label>
+      )}
 
       <input
         data-testid={id}
