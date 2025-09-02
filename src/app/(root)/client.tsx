@@ -11,7 +11,7 @@ export default function HomeClient() {
   const [activeTab, setActiveTab] = useState("details");
 
   return (
-    <div className="mt-4 flex flex-col items-center md:mt-[43px]">
+    <div className="mt-4 flex flex-col md:mt-[43px]">
       <div className="mb-[35px] flex w-full justify-center md:mb-[31px]">
         <Tab tabs={tabs} activeTab={activeTab} setActiveTab={setActiveTab} />
       </div>
