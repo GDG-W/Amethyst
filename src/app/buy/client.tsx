@@ -197,7 +197,7 @@ export default function BuyPageClient() {
     return {
       buyer,
       attendees: mergedAttendees,
-      callback_url: `${window.location.origin}/login`,
+      callback_url: `${window.location.origin}/success`,
       claim_url: `${window.location.origin}/claim`,
     };
   };
