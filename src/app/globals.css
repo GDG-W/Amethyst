@@ -488,6 +488,7 @@
 
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
   background: #e6a50a;
+}
   
 /* Remove arrows in Chrome, Safari, Edge */
 input.no-spinner::-webkit-outer-spin-button,
