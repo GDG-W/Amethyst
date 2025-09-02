@@ -1,9 +1,88 @@
+"use client";
+
 import Image from "next/image";
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
+
+import Link from "next/link";
 
 import Button from "@/components/ui/home-button";
 
 const Hero = () => {
+  const speakers = [
+    { src: "/speaker1.svg", alt: "Speaker 1" },
+    { src: "/speaker2.svg", alt: "Speaker 2" },
+    { src: "/speaker3.svg", alt: "Speaker 3" },
+    { src: "/speaker4.svg", alt: "Speaker 4" },
+    { src: "/speaker5.svg", alt: "Speaker 5" },
+    { src: "/speaker6.svg", alt: "Speaker 6" },
+    { src: "/speaker7.svg", alt: "Speaker 7" },
+    { src: "/speaker8.svg", alt: "Speaker 8" },
+    { src: "/speaker9.svg", alt: "Speaker 9" },
+  ];
+
+  const infiniteSpeakers = [
+    ...speakers,
+    ...speakers,
+    ...speakers,
+    ...speakers,
+    ...speakers,
+    ...speakers,
+  ];
+
+  const [translateX, setTranslateX] = useState(0);
+  const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const containerRef = useRef(null);
+  const [cardWidth, setCardWidth] = useState(0);
+  const [isTransitioning, setIsTransitioning] = useState(true);
+
+  useEffect(() => {
+    const updateCardWidth = () => {
+      setCardWidth(window.innerWidth >= 768 ? 408 : 272);
+    };
+
+    updateCardWidth();
+    window.addEventListener("resize", updateCardWidth);
+
+    return () => window.removeEventListener("resize", updateCardWidth);
+  }, []);
+
+  const totalWidth = speakers.length * cardWidth;
+
+  useEffect(() => {
+    if (cardWidth === 0) return;
+
+    const startAnimation = () => {
+      intervalRef.current = setInterval(() => {
+        setTranslateX((prev) => {
+          const newTranslateX = prev - cardWidth;
+          const singleSetWidth = speakers.length * cardWidth;
+
+          if (Math.abs(newTranslateX) >= singleSetWidth * 2) {
+            setIsTransitioning(false);
+
+            requestAnimationFrame(() => {
+              requestAnimationFrame(() => {
+                setIsTransitioning(true);
+              });
+            });
+
+            return -singleSetWidth;
+          }
+
+          return newTranslateX;
+        });
+      }, 3000);
+    };
+
+    startAnimation();
+
+    return () => {
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
+      }
+    };
+  }, [cardWidth, speakers.length, totalWidth]);
+
   return (
     <div className="min-h-screen w-full p-4 md:min-h-[80vh] lg:min-h-screen">
       <div className="max-w-8xl mx-auto">
@@ -19,57 +98,77 @@ const Hero = () => {
               />
             </div>
 
-            <div className="max-w-full text-center md:max-w-2xl md:text-left">
-              <h1 className="font-akira text-xl font-bold text-white uppercase md:text-2xl lg:text-3xl">
-                DevFest Lagos Returns for <span className="text-[#4285F4]">Epic Five Days</span>
+            <div className="text-center md:text-left">
+              <h1 className="font-akira text-xl font-bold text-balance text-white uppercase md:max-w-md md:text-left md:text-3xl lg:max-w-xl lg:text-4xl">
+                DevFest <br className="hidden md:block" /> Lagos <br className="hidden md:block" />{" "}
+                Returns for{" "}
+                <span className="text-[#4285F4]">
+                  {" "}
+                  <br className="hidden md:block" />
+                  Five Epic Days.
+                </span>
               </h1>
 
-              <p className="mt-4 text-sm text-[#D1D1D1] md:mt-6 md:text-base">
+              <p className="mt-4 text-sm text-[#D1D1D1] md:mt-6 md:max-w-md md:text-base lg:max-w-xl">
                 Join the largest tech gathering in Lagos happening over five transformative days,
                 from Tuesday 18th - Saturday 22nd November 2025.
               </p>
 
-              <div className="mt-6 flex w-full flex-col gap-3 md:mt-8 md:flex-row md:gap-4 lg:max-w-md">
-                <Button variant="primary" className="w-full text-[#141414] md:flex-1">
-                  Buy Tickets
-                </Button>
-                <Button variant="secondary" className="w-full uppercase md:flex-1">
-                  Log in
-                </Button>
+              <div className="mt-6 flex w-full flex-col gap-3 md:mt-8 md:max-w-md md:flex-row md:gap-4">
+                <Link href="/buy">
+                  <Button
+                    variant="primary"
+                    className="w-full cursor-pointer whitespace-nowrap text-[#141414] md:flex-1"
+                  >
+                    Buy Tickets
+                  </Button>
+                </Link>
+                <Link className="flex-1" href="/login">
+                  <Button
+                    variant="secondary"
+                    className="w-full flex-1 cursor-pointer uppercase md:flex-1"
+                  >
+                    Log in
+                  </Button>
+                </Link>
               </div>
             </div>
           </div>
 
           <div className="flex flex-1 flex-col items-center justify-end md:items-end lg:justify-center">
-            <div className="relative w-full pt-8 md:pt-20 lg:w-auto">
-              <div className="absolute top-2 right-4 md:top-4 md:right-4 lg:top-8 lg:right-8 xl:top-12 xl:right-12">
+            <div className="relative w-full pt-8 md:pt-20 lg:w-auto lg:max-w-lg">
+              <div className="absolute top-2 right-4 z-10 md:top-4 md:right-4 lg:top-8 lg:right-8 xl:top-12 xl:right-16">
                 <Image
                   src="/devfest25.svg"
                   alt="DevFest 2025"
                   width={120}
                   height={120}
                   className="h-16 w-16 md:h-20 md:w-20 lg:h-24 lg:w-24"
-                  priority
                 />
               </div>
 
-              <div className="flex w-full gap-2 overflow-x-clip lg:justify-end">
-                <Image
-                  src="/hero-mobile.svg"
-                  alt="DevFest 2024 Image"
-                  width={600}
-                  height={900}
-                  className="h-auto w-full md:hidden lg:max-w-2xl"
-                  priority
-                />
-                <Image
-                  src="/hero-img.svg"
-                  alt="DevFest 2024 Image"
-                  width={400}
-                  height={900}
-                  className="h-auto w-full lg:max-w-lg"
-                  priority
-                />
+              <div className="flex w-full overflow-hidden" ref={containerRef}>
+                <div
+                  className={`flex ${isTransitioning ? "transition-transform duration-1000 ease-in-out" : ""}`}
+                  style={{
+                    transform: `translateX(${translateX}px)`,
+                  }}
+                >
+                  {infiniteSpeakers.map((speaker, index) => (
+                    <div
+                      key={`${Math.floor(index / speakers.length)}-${index % speakers.length}`}
+                      className="mr-4 h-80 w-64 flex-shrink-0 md:mr-6 md:h-96 md:w-96 lg:h-[500px]"
+                    >
+                      <Image
+                        src={speaker.src}
+                        alt={speaker.alt}
+                        width={400}
+                        height={400}
+                        className="h-full w-full rounded-md object-cover lg:rounded-lg"
+                      />
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
           </div>
