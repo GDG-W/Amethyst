@@ -1,16 +1,21 @@
 "use client";
 
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { FormProvider, useForm, Controller } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
+import { toast } from "sonner";
+
 import Button from "@/components/ui/button";
 import TextField from "@/components/ui/inputs/text-field";
 import { login } from "@/services/auth.service";
 import { toAPIError } from "@/services/api";
+import { useLogin } from "@/hooks/useUser";
+import { UserState } from "@/store/user-details-store";
 
 const loginSchema = z.object({
   email: z.email("Please enter a valid email"),
@@ -18,6 +23,7 @@ const loginSchema = z.object({
 });
 
 export default function LoginClient() {
+  const router = useRouter();
   const methods = useForm<z.infer<typeof loginSchema>>({
     resolver: zodResolver(loginSchema),
     mode: "all", // show errors as user types
@@ -43,11 +49,20 @@ export default function LoginClient() {
     },
   });
 
+  const handleLogin = useLogin();
+
   const onSubmit = async (values: z.infer<typeof loginSchema>) => {
     const res = await mutation.mutateAsync(values);
-    console.log(res);
-    if (res.success) return res.data;
-    throw toAPIError(res);
+
+    if (res.success) {
+      const { id, ...userData } = res.data as UserState & { id: string };
+      handleLogin(userData, id);
+      toast.success("Login successful");
+      router.replace("/dashboard");
+      methods.reset();
+    } else {
+      throw toAPIError(res);
+    }
   };
 
   return (
