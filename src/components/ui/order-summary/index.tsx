@@ -5,7 +5,7 @@ import { CloseIcon } from "@/components/icons/close-icon";
 
 import Card from "../card";
 import Button from "../button";
-import TextFieldUpdated from "../inputs";
+import TextField from "../inputs/text-field";
 type OrderItemsType = {
   name: string;
   price: number;
@@ -65,8 +65,8 @@ const OrderSummary = ({
             </li>
             <li className="my-5">
               {applyDiscount && (
-                <TextFieldUpdated
-                  actionDisabled={true}
+                <TextField
+                  // actionDisabled={true}
                   placeholder="Add discount code"
                   onChange={() => {}}
                   actionLabel="Apply"
