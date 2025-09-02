@@ -29,8 +29,7 @@ type AttendeesInfoProps = {
 // };
 
 const AttendeeInfo = ({ selectedDates }: AttendeesInfoProps) => {
-  const attendeeInfoArr = useBuyFormStore((state) => state.attendeeInfo);
-  const { attendeeInfo, attendeeErrors, updateAttendeeEmails, setAttendeeError } =
+  const { buyerInfo, attendeeInfo, attendeeErrors, updateAttendeeEmails, setAttendeeError } =
     useBuyFormStore();
 
   const ticketQuantities = selectedDates.reduce(
@@ -57,9 +56,14 @@ const AttendeeInfo = ({ selectedDates }: AttendeesInfoProps) => {
 
     let isUniqueMail = true;
 
+    if (buyerInfo && emails.includes(buyerInfo?.email)) {
+      setAttendeeError(dateId, "You can't buy another ticket with the same email!");
+      return;
+    }
+
     if (dateId === THURS_STANDARD_ID || dateId === THURS_PRO_ID) {
-      const standardEmail = attendeeInfoArr?.emailsByDate[`${THURS_STANDARD_ID}`];
-      const proEmail = attendeeInfoArr?.emailsByDate[`${THURS_PRO_ID}`];
+      const standardEmail = attendeeInfo?.emailsByDate[`${THURS_STANDARD_ID}`];
+      const proEmail = attendeeInfo?.emailsByDate[`${THURS_PRO_ID}`];
 
       switch (dateId) {
         case THURS_STANDARD_ID:
