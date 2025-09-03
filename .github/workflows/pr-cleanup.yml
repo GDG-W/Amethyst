@@ -27,4 +27,4 @@ jobs:
 
       - name: Delete Cloud Run Service
         run: |
-          gcloud run services delete ${{ env.SERVICE_NAME }} --region europe-west1
+          gcloud run services delete ${{ env.SERVICE_NAME }} --region europe-west1 --quiet
