@@ -49,20 +49,20 @@ const Ticket: React.FC<TicketProps> = ({
       <div className={`absolute top-0 bottom-0 left-0 w-1.5 ${getBorderColor(date)}`}></div>
 
       {isProTicket && (
-        <div className='absolute -top-1 left-[0.2px] z-50'>
+        <div className="absolute -top-1 left-[0.2px] z-50">
           <ProTag />
         </div>
       )}
 
       {/* Barcode */}
-      <div className='xs:right-3 xs:w-4 xs:h-28 absolute top-6 right-16 h-20 w-8 sm:top-12 sm:right-14 sm:h-32 md:w-16'>
-        <div className='h-full w-full'>
+      <div className="xs:right-3 xs:w-4 xs:h-28 absolute top-6 right-16 h-20 w-8 sm:top-12 sm:right-14 sm:h-32 md:w-16">
+        <div className="h-full w-full">
           <Barcode width={64} height={132} />
         </div>
       </div>
 
       <div
-        className='absolute -top-3 right-26 -bottom-3 w-1 md:right-36'
+        className="absolute -top-3 right-26 -bottom-3 w-1 md:right-36"
         style={{
           backgroundImage: `radial-gradient(circle, #FFFCF5 50%, transparent 0%)`,
           backgroundSize: "4px calc(100% / 7)",
@@ -71,24 +71,24 @@ const Ticket: React.FC<TicketProps> = ({
       ></div>
 
       <div className={`p-4 pr-14 sm:p-6 sm:pr-20`}>
-        <h1 className='mb-3 max-w-48 font-medium text-gray-900 sm:mb-4 md:max-w-64 md:text-lg'>
+        <h1 className="mb-3 max-w-48 font-medium text-gray-900 sm:mb-4 md:max-w-64 md:text-lg">
           {title}
         </h1>
 
-        <div className='mb-3 grid grid-cols-2 gap-2 md:mb-4 md:gap-4'>
+        <div className="mb-3 grid grid-cols-2 gap-2 md:mb-4 md:gap-4">
           <div>
-            <h3 className='mb-0.5 text-sm font-medium text-[#5C5C5C] md:text-base'>Date</h3>
-            <p className='text-sm text-[#A3A3A3] md:text-base'>{date}</p>
+            <h3 className="mb-0.5 text-sm font-medium text-[#5C5C5C] md:text-base">Date</h3>
+            <p className="text-sm text-[#A3A3A3] md:text-base">{date}</p>
           </div>
           <div>
-            <h3 className='mb-1 text-sm font-medium text-[#5C5C5C] md:text-base'>Time</h3>
-            <p className='text-sm text-[#A3A3A3] md:text-base'>{time}</p>
+            <h3 className="mb-1 text-sm font-medium text-[#5C5C5C] md:text-base">Time</h3>
+            <p className="text-sm text-[#A3A3A3] md:text-base">{time}</p>
           </div>
         </div>
 
         <div>
-          <h3 className='mb-1 text-sm font-medium text-[#5C5C5C] md:text-base'>Ticket Type</h3>
-          <p className='text-sm text-[#A3A3A3] md:text-base'>{ticketType}</p>
+          <h3 className="mb-1 text-sm font-medium text-[#5C5C5C] md:text-base">Ticket Type</h3>
+          <p className="text-sm text-[#A3A3A3] md:text-base">{ticketType}</p>
         </div>
       </div>
     </div>
@@ -134,10 +134,10 @@ const TicketList = () => {
   ];
 
   return (
-    <div className='min-h-screen py-4 sm:py-8'>
-      <div className='mx-auto max-w-4xl px-4 sm:px-8 lg:px-28'>
-        <div className='custom-scrollbar overflow-y-auto' style={{ maxHeight: "80vh" }}>
-          <div className='space-y-3 sm:space-y-4'>
+    <div className="min-h-screen py-4 sm:py-8">
+      <div className="mx-auto max-w-4xl px-4 sm:px-8 lg:px-28">
+        <div className="custom-scrollbar overflow-y-auto" style={{ maxHeight: "80vh" }}>
+          <div className="space-y-3 sm:space-y-4">
             {tickets.map((ticket, index) => (
               <Ticket key={index} {...ticket} />
             ))}
