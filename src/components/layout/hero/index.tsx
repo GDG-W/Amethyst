@@ -93,7 +93,7 @@ const Hero = () => {
             </div>
 
             <div className="text-center lg:text-left">
-              <h1 className="font-akira text-xl font-bold text-white uppercase md:max-w-md md:text-3xl lg:max-w-xl lg:text-left lg:text-4xl">
+              <h1 className="font-akira text-[25px] font-bold text-white uppercase md:text-3xl lg:text-left lg:text-[50px]">
                 DevFest <br className="hidden lg:block" /> Lagos <br className="hidden lg:block" />{" "}
                 Returns for{" "}
                 <span className="text-[#4285F4]">
