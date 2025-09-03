@@ -1,0 +1,30 @@
+name: Cleanup closed PR
+
+on:
+  pull_request:
+    types:
+      - closed
+
+jobs:
+  delete-cloud-run-service:
+    runs-on: ubuntu-latest
+
+    env:
+      SERVICE_NAME: amethyst-${{ github.event.pull_request.base.ref }}-preview-${{ github.event.number }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Google Cloud Auth
+        uses: "google-github-actions/auth@v2"
+        with:
+          credentials_json: "${{ secrets.GCP_SA_KEY }}"
+          project_id: ${{ secrets.GCP_PROJECT_ID }}
+
+      - name: Set up Cloud SDK
+        uses: "google-github-actions/setup-gcloud@v2"
+
+      - name: Delete Cloud Run Service
+        run: |
+          gcloud run services delete ${{ env.SERVICE_NAME }} --region europe-west1
