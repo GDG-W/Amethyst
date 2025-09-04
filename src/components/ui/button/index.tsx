@@ -20,6 +20,9 @@ const Button = ({
       full: "w-full",
       fit: "w-fit",
     },
+    height: {
+      auto: "auto",
+    },
     variants: {
       primary: "bg-away-base text-white",
       secondary: "bg-away-base/10 border border-away-base text-away-base",
@@ -36,7 +39,7 @@ const Button = ({
       {...rest}
     >
       {loading ? (
-        <span className="h-5 w-5 animate-spin rounded-full border-2 border-white border-t-transparent"></span>
+        <span className="size-5 animate-spin rounded-full border-2 border-white border-t-transparent"></span>
       ) : (
         children
       )}
