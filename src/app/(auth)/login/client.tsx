@@ -1,21 +1,17 @@
 "use client";
 
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { FormProvider, useForm, Controller } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-
-import { toast } from "sonner";
+import { toast } from "@/components/ui/toast";
 
 import Button from "@/components/ui/button";
 import TextField from "@/components/ui/inputs/text-field";
-import { login } from "@/services/auth.service";
-import { toAPIError } from "@/services/api";
-import { useLogin } from "@/hooks/useUser";
-import { UserState } from "@/store/user-details-store";
+
+import { useLogin } from "@/hooks/useAuth";
+import { ErrorType } from "@/types/api";
 
 const loginSchema = z.object({
   email: z.email("Please enter a valid email"),
@@ -23,7 +19,6 @@ const loginSchema = z.object({
 });
 
 export default function LoginClient() {
-  const router = useRouter();
   const methods = useForm<z.infer<typeof loginSchema>>({
     resolver: zodResolver(loginSchema),
     mode: "all", // show errors as user types
@@ -39,29 +34,15 @@ export default function LoginClient() {
     formState: { errors, isValid },
   } = methods;
 
-  const queryClient = useQueryClient();
-
-  const mutation = useMutation({
-    mutationFn: login,
-    mutationKey: ["auth"],
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["auth"] });
-    },
-  });
-
-  const handleLogin = useLogin();
+  const { mutateAsync, isPending } = useLogin();
 
   const onSubmit = async (values: z.infer<typeof loginSchema>) => {
-    const res = await mutation.mutateAsync(values);
-
-    if (res.success) {
-      const { id, ...userData } = res.data as UserState & { id: string };
-      handleLogin(userData, id);
-      toast.success("Login successful");
-      router.replace("/dashboard");
+    try {
+      await mutateAsync(values);
       methods.reset();
-    } else {
-      throw toAPIError(res);
+    } catch (error) {
+      const err = error as ErrorType;
+      toast.error("Login failed", err.message);
     }
   };
 
@@ -101,7 +82,7 @@ export default function LoginClient() {
         />
 
         <div className="space-y-4">
-          <Button disabled={!isValid || mutation.isPending} type="submit" size="full">
+          <Button disabled={!isValid || isPending} type="submit" size="full">
             <span className="text-lg leading-6 font-bold tracking-[-4%] text-white">Log in</span>
           </Button>
           <p className="label-4 text-soft-400 text-center">
