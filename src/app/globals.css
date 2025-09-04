@@ -427,6 +427,13 @@
 
 /* Labels and Paragraphs */
 
+@utility label-0 {
+  /* should also serve as paragraph-0 */
+  font-size: 28px;
+  line-height: 100%;
+  letter-spacing: -0.015em;
+}
+
 @utility label-1 {
   /* should also serve as paragraph-1 */
   font-size: 24px;
