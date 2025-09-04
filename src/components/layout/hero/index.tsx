@@ -83,7 +83,7 @@ const Hero = () => {
         </div>
         <div className="mx-auto flex w-full max-w-7xl flex-col items-center justify-center bg-[#171717] pb-6 md:pb-14 lg:flex-row lg:items-stretch">
           <div className="flex flex-1 flex-col justify-center px-6">
-            <div className="mb-4 flex justify-start">
+            <div className="flex justify-start md:mb-2 lg:mb-4">
               <Image
                 src="/road-to-devfest.svg"
                 alt="Road to DevFest"
@@ -94,12 +94,12 @@ const Hero = () => {
             </div>
 
             <div className="text-center lg:text-left">
-              <h1 className="font-akira text-xl font-bold text-white uppercase md:max-w-md md:text-3xl lg:max-w-xl lg:text-left lg:text-4xl">
+              <h1 className="font-akira text-[25px] font-bold text-white uppercase md:max-w-md md:text-3xl lg:max-w-xl lg:text-left lg:text-[50px]">
                 DevFest <br className="hidden lg:block" /> Lagos <br className="hidden lg:block" />{" "}
                 Returns for{" "}
                 <span className="text-[#4285F4]">
                   {" "}
-                  <br className="hidden lg:block" />
+                  <br className="hidden md:block" />
                   Five Epic Days.
                 </span>
               </h1>
@@ -109,7 +109,7 @@ const Hero = () => {
                 from Tuesday 18th - Saturday 22nd November 2025.
               </p>
 
-              <div className="mt-6 flex w-full flex-col gap-3 md:mt-8 md:max-w-md md:flex-row md:gap-4">
+              <div className="mt-6 flex w-full flex-col gap-3 md:mt-6 md:max-w-md md:flex-row md:gap-4">
                 <Link href="/buy">
                   <Button
                     variant="primary"
