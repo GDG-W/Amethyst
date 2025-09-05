@@ -46,7 +46,7 @@ export default function TiltedCardsGrid({ cards }: TiltedCardsGridProps) {
             backgroundColor={card.backgroundColor}
             tilt={card.tilt}
             marginTop={card.marginTop}
-            animationDelay={index * 150} // Stagger the animations
+            animationDelay={index * 150}
           />
         ))}
       </div>
