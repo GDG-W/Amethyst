@@ -9,97 +9,97 @@ export default function Index() {
     "Ticketing & Access": [
       {
         id: 1,
-        question: "1. What is DevFest?",
+        question: "Can I buy tickets for the event through this platform?",
         answer:
-          "DevFest is a community-led developer conference hosted by Google Developer Groups around the world. It's a day-long event featuring technical talks, workshops, and networking opportunities for developers of all skill levels.",
+          "Yes! This platform allows you to securely purchase tickets for the one-day or two-day event option.",
       },
       {
         id: 2,
-        question: "2. How do I register for the event?",
+        question: "Is lunch or swag included in my ticket?",
         answer:
-          "You can register through our official website by clicking the registration link. Fill out the required information and complete payment to secure your spot at the conference.",
+          "No — meals and merchandise are not included by default. However, some vendor stalls and sponsors may offer giveaways during the event.",
       },
       {
         id: 3,
-        question: "3. What should I bring to the conference?",
+        question: "What if I register and can’t attend anymore?",
         answer:
-          "Please bring your laptop, charger, and ID for registration. We also recommend bringing business cards for networking and a notebook for taking notes during sessions.",
+          "Tickets are non-refundable for DevFest Lagos 2025 and not transferable. Each ticket is tied to a specific attendee and cannot be transferred to another person.",
       },
       {
         id: 4,
-        question: "4. Is there parking available?",
+        question: "How do I pay for my ticket?",
         answer:
-          "Yes, free parking is available at the venue for all attendees. Additional parking can be found in nearby public areas if the main lot fills up.",
+          "We have a number of payment options for your convenience — card payment, bank transfer, and USSD.",
       },
       {
         id: 5,
-        question: "5. What time does the event start?",
+        question: "Can I buy tickets for other people?",
         answer:
-          "The event starts at 9:00 AM with registration and welcome coffee. The first technical session begins at 9:30 AM sharp.",
+          "Absolutely! You can purchase tickets for others, but they will need to register for the event separately to claim their tickets.",
+      },
+      {
+        id: 6,
+        question: "What information do I need to provide when buying tickets for others?",
+        answer:
+          "You will need to provide the email address for each person you are purchasing tickets for.",
+      },
+      {
+        id: 7,
+        question: "Will the people I buy tickets for receive a confirmation email?",
+        answer:
+          "No, they will not receive a confirmation email with tickets attached. They will receive an email prompting them to register for the event, and upon successful registration, they will be able to claim their tickets.",
+      },
+      {
+        id: 8,
+        question: "I want to purchase tickets for more than 10 people. What should I do?",
+        answer:
+          "For bulk ticket purchases (more than 10), please email us at team@gdglagos.com and we’ll help process your order.",
+      },
+      {
+        id: 9,
+        question: "What does a ticket grant me access to?",
+        answer:
+          "All ticket categories provide full access to all talks, workshops, sponsor booths, and product showcases on the days they cover.",
       },
     ],
     "Claiming Tickets": [
       {
-        id: 6,
-        question: "1. How do I claim my ticket after purchase?",
-        answer:
-          "After successful payment, you'll receive a confirmation email with your ticket details and QR code within 24 hours of registration.",
-      },
-      {
-        id: 7,
-        question: "2. What if I didn't receive my confirmation email?",
-        answer:
-          "Check your spam folder first. If you still can't find it, contact our support team with your registration details and we'll resend it immediately.",
-      },
-      {
-        id: 8,
-        question: "3. Can I transfer my ticket to someone else?",
-        answer:
-          "Yes, tickets can be transferred up to 48 hours before the event. Contact support with both the original and new attendee details to process the transfer.",
-      },
-      {
-        id: 9,
-        question: "4. Do I need to print my ticket?",
-        answer:
-          "No, digital tickets on your smartphone work perfectly. Just ensure your phone is charged and the QR code is clearly visible for scanning.",
-      },
-      {
         id: 10,
-        question: "5. What happens if I lose my ticket?",
+        question: "I purchased a ticket for someone else. How do they claim their ticket?",
         answer:
-          "Don't worry! Bring a valid ID to the registration desk and we can look up your registration in our system to issue a replacement badge.",
+          "The person you purchased a ticket for will receive an email prompting them to register for the event. After successful registration, they will receive a confirmation email and be able to claim their ticket through the platform.",
+      },
+      {
+        id: 11,
+        question: "I haven't received an email to claim my ticket. What should I do?",
+        answer:
+          "First, check your spam folder. If you still can't find the email, contact DevFest Lagos directly at team@gdglagos.com.",
+      },
+      {
+        id: 12,
+        question: "Can I claim my ticket before registering for the event?",
+        answer:
+          "Unfortunately, no. Tickets can only be claimed after successful event registration.",
       },
     ],
     "Upgrading Tickets": [
       {
-        id: 11,
-        question: "1. Can I upgrade my standard ticket?",
-        answer:
-          "Yes, you can upgrade to VIP through your registration portal up to 3 days before the event, subject to availability.",
-      },
-      {
-        id: 12,
-        question: "2. What are the VIP ticket benefits?",
-        answer:
-          "VIP tickets include priority seating, exclusive networking lunch, premium swag bag, and access to speaker meet-and-greet sessions.",
-      },
-      {
         id: 13,
-        question: "3. Is there a deadline for upgrades?",
+        question:
+          "I purchased a ticket for a day or more, but now I want to attend other days. Can I upgrade my ticket?",
         answer:
-          "Yes, all ticket upgrades must be completed at least 72 hours before the event to ensure proper arrangements are made.",
+          "Yes, you can upgrade your ticket by purchasing additional days to add to your current ticket. This way, you’ll be able to attend on more days.",
       },
       {
         id: 14,
-        question: "4. How much does an upgrade cost?",
+        question: "How do I upgrade my ticket?",
         answer:
-          "Upgrade costs vary depending on your current ticket type. Standard to VIP upgrades are typically $50 plus a small processing fee.",
+          "Simply log in to your DevFest Lagos dashboard and navigate to the ticket details section. Then, follow the on-screen instructions to complete the upgrade process.",
       },
       {
         id: 15,
-        question: "5. Can I get a refund after upgrading?",
-        answer:
-          "Upgrade fees are non-refundable, but you can transfer your upgraded ticket to another person following our standard transfer policy.",
+        question: "Will I receive a new ticket ID after upgrading?",
+        answer: "No, your ticket ID remains the same after upgrading your ticket.",
       },
     ],
   };
@@ -156,7 +156,7 @@ export default function Index() {
 
         <div className="flex h-[26.8125rem] w-full flex-col gap-5">
           <h2 className="font-akira text-xl text-black uppercase lg:text-[1.75rem]">
-            General Questions
+            {currentTopic === "Ticketing & Access" ? "General Questions" : currentTopic}
           </h2>
 
           <div className="custom-scrollbar flex w-full flex-col gap-6 overflow-y-auto pr-2 xl:pr-16">
@@ -177,10 +177,10 @@ export default function Index() {
                 </svg>
 
                 <div
-                  className="relative z-10 w-full cursor-pointer rounded-2xl bg-[#FDE293] p-5 pr-7 transition-all duration-200 xl:w-[706px]"
+                  className="relative z-10 w-full cursor-pointer rounded-2xl bg-[#FDE293] px-5 py-2 pr-7 transition-all duration-200 xl:w-[706px]"
                   onClick={() => toggleQuestion(item.id)}
                 >
-                  <div className="flex w-full items-center justify-between pb-3">
+                  <div className="flex w-full items-center justify-between">
                     <span className="label-3 md:label-4 pr-4 font-semibold text-[#141414]">
                       {item.question}
                     </span>
@@ -195,7 +195,7 @@ export default function Index() {
                   </div>
 
                   {expandedQuestion === item.id && (
-                    <div className="mb-4">
+                    <div className="my-2">
                       <p className="label-4 leading-relaxed text-[#4D4D4D]">{item.answer}</p>
                     </div>
                   )}

@@ -21,44 +21,40 @@ const images = [
 ];
 
 export default function Recap() {
+  const [imageQueue, setImageQueue] = useState(images);
   const [translateX, setTranslateX] = useState(0);
-  const [isTransitioning, setIsTransitioning] = useState(true);
+  const [isTransitioning, setIsTransitioning] = useState(false);
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
   const cardWidth = 256 + 17;
-  const totalWidth = images.length * cardWidth;
-
-  const infiniteImages = [...images, ...images, ...images];
 
   useEffect(() => {
-    const startAnimation = () => {
-      intervalRef.current = setInterval(() => {
-        setTranslateX((prev) => prev - cardWidth);
-        setIsTransitioning(true);
-      }, 3000);
-    };
+    intervalRef.current = setInterval(() => {
+      setIsTransitioning(true);
+      setTranslateX(-cardWidth);
 
-    startAnimation();
-
-    return () => {
-      if (intervalRef.current) {
-        clearInterval(intervalRef.current);
-      }
-    };
-  }, [cardWidth]);
-
-  useEffect(() => {
-    if (Math.abs(translateX) >= totalWidth * 2) {
       setTimeout(() => {
         setIsTransitioning(false);
-        setTranslateX(-totalWidth);
-      }, 100);
-    }
-  }, [translateX, totalWidth]);
+
+        requestAnimationFrame(() => {
+          setImageQueue((prev) => {
+            const [first, ...rest] = prev;
+            return [...rest, first];
+          });
+          setTranslateX(0);
+        });
+      }, 1000);
+    }, 3000);
+
+    return () => {
+      if (intervalRef.current) clearInterval(intervalRef.current);
+    };
+  }, [cardWidth]);
 
   return (
     <section className="w-full bg-[#FFFFFF]">
       <div className="mx-auto flex h-full max-w-7xl flex-col gap-[6.8125rem] lg:justify-between lg:gap-[13.6875rem]">
+        {/* Heading */}
         <div className="relative flex h-full justify-between px-5 pt-[6.625rem] pb-8 lg:pr-[6.1875rem] lg:pl-[11.875rem]">
           <div className="flex w-full flex-col items-center justify-center lg:max-w-lg lg:flex-row">
             <div className="flex flex-col gap-6">
@@ -80,28 +76,46 @@ export default function Recap() {
               </div>
             </div>
           </div>
+
+          <div className="hidden lg:block">
+            <Image
+              src="/recap-image.png"
+              width={150}
+              height={150}
+              alt="laptop image with devfest logo"
+              className="scale-hover"
+            />
+          </div>
+
+          <Image
+            src="/recap-image.png"
+            width={150}
+            height={150}
+            alt="laptop image with devfest logo"
+            className="absolute top-20 right-5 block w-[5.68375rem] -translate-y-1/2 lg:hidden"
+          />
         </div>
 
-        <div className="flex gap-[1.0625rem] overflow-hidden">
+        <div className="overflow-hidden">
           <div
-            className={`flex items-end gap-[1.0625rem] ${
+            className={`flex items-end gap-[1.0625rem] will-change-transform ${
               isTransitioning ? "transition-transform duration-1000 ease-in-out" : ""
             }`}
             style={{
               transform: `translateX(${translateX}px)`,
             }}
           >
-            {infiniteImages.map((image, index) => (
+            {imageQueue.map((image, index) => (
               <div
                 key={`${image.id}-${index}`}
                 className="flex flex-shrink-0 items-end overflow-hidden rounded-lg"
               >
                 <Image
                   src={image.src}
-                  width={300}
+                  width={256}
                   height={200}
                   alt={image.alt}
-                  className="h-full w-auto object-contain"
+                  className="h-full object-contain"
                 />
               </div>
             ))}
