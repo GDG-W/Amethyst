@@ -56,7 +56,9 @@ const AttendeeInfo = ({ selectedDates }: AttendeesInfoProps) => {
 
     let isUniqueMail = true;
 
-    if (buyerInfo && emails.includes(buyerInfo?.email)) {
+    const emailSet = new Set(emails.map((e) => e.toLowerCase()));
+
+    if (buyerInfo && emailSet.has(buyerInfo?.email.toLowerCase())) {
       setAttendeeError(dateId, "You can't buy another ticket with the same email!");
       return;
     }
@@ -68,11 +70,11 @@ const AttendeeInfo = ({ selectedDates }: AttendeesInfoProps) => {
       switch (dateId) {
         case THURS_STANDARD_ID:
           if (!proEmail || proEmail.length < 1) break;
-          isUniqueMail = emails.every((email) => !proEmail.includes(email));
+          isUniqueMail = proEmail.every((email) => !emailSet.has(email.toLowerCase()));
           break;
         case THURS_PRO_ID:
           if (!standardEmail || standardEmail.length < 1) break;
-          isUniqueMail = emails.every((email) => !standardEmail.includes(email));
+          isUniqueMail = standardEmail.every((email) => !emailSet.has(email.toLowerCase()));
           break;
       }
     }
