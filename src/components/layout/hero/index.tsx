@@ -11,24 +11,27 @@ import Button from "@/components/ui/home-button";
 import Header from "../navbar";
 
 const Hero = () => {
-  const speakers = [
-    { src: "/speaker1.svg", alt: "Speaker 1" },
-    { src: "/speaker2.svg", alt: "Speaker 2" },
-    { src: "/speaker3.svg", alt: "Speaker 3" },
-    { src: "/speaker4.svg", alt: "Speaker 4" },
-    { src: "/speaker5.svg", alt: "Speaker 5" },
-    { src: "/speaker6.svg", alt: "Speaker 6" },
-    { src: "/speaker7.svg", alt: "Speaker 7" },
-    { src: "/speaker8.svg", alt: "Speaker 8" },
-    { src: "/speaker9.svg", alt: "Speaker 9" },
+  const initialSpeakers = [
+    { src: "/speaker1.webp", alt: "Speaker 1" },
+    { src: "/speaker2.webp", alt: "Speaker 2" },
+    { src: "/speaker3.webp", alt: "Speaker 3" },
+    { src: "/speaker4.webp", alt: "Speaker 4" },
+    { src: "/speaker5.webp", alt: "Speaker 5" },
+    { src: "/speaker6.webp", alt: "Speaker 6" },
+    { src: "/speaker7.webp", alt: "Speaker 7" },
+    { src: "/speaker8.webp", alt: "Speaker 8" },
+    { src: "/speaker9.webp", alt: "Speaker 9" },
   ];
 
-  const infiniteSpeakers = [...speakers, ...speakers, ...speakers];
-
+  const [speakerQueue, setSpeakerQueue] = useState(initialSpeakers);
   const [translateX, setTranslateX] = useState(0);
+  const [isTransitioning, setIsTransitioning] = useState(false);
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
-  const containerRef = useRef<HTMLDivElement>(null);
-  const [isTransitioning, setIsTransitioning] = useState(true);
+
+  const getCardWidth = () => {
+    const isMobile = window.innerWidth < 768;
+    return isMobile ? 272 : 408;
+  };
 
   useEffect(() => {
     const startAnimation = () => {
@@ -37,32 +40,37 @@ const Hero = () => {
       }
 
       intervalRef.current = setInterval(() => {
-        setTranslateX((prev) => {
-          const isMobile = window.innerWidth < 768;
-          const cardWidth = isMobile ? 272 : 408;
-          const newTranslateX = prev - cardWidth;
-          const singleSetWidth = speakers.length * cardWidth;
+        const cardWidth = getCardWidth();
 
-          if (Math.abs(newTranslateX) >= singleSetWidth * 2) {
-            setTimeout(() => {
-              setIsTransitioning(false);
-              setTranslateX(-singleSetWidth);
-              setTimeout(() => {
-                setIsTransitioning(true);
-              }, 10);
-            }, 1000);
-            return newTranslateX;
-          }
+        setIsTransitioning(true);
+        setTranslateX(-cardWidth);
 
-          return newTranslateX;
-        });
+        setTimeout(() => {
+          setIsTransitioning(false);
+
+          requestAnimationFrame(() => {
+            setSpeakerQueue((prev) => {
+              const [first, ...rest] = prev;
+              return [...rest, first];
+            });
+            setTranslateX(0);
+          });
+        }, 1000);
       }, 3000);
     };
 
     startAnimation();
 
     const handleResize = () => {
-      startAnimation();
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
+      }
+      setTranslateX(0);
+      setIsTransitioning(false);
+
+      setTimeout(() => {
+        startAnimation();
+      }, 100);
     };
 
     window.addEventListener("resize", handleResize);
@@ -73,7 +81,7 @@ const Hero = () => {
       }
       window.removeEventListener("resize", handleResize);
     };
-  }, [speakers.length]);
+  }, []);
 
   return (
     <div className="w-full p-4">
@@ -82,22 +90,22 @@ const Hero = () => {
           <Header />
         </div>
         <div className="mx-auto flex w-full max-w-7xl flex-col items-center justify-center bg-[#171717] pb-6 md:pb-14 lg:flex-row lg:items-stretch">
-          <div className="flex flex-1 flex-col justify-center px-6">
+          <div className="flex w-full flex-2 flex-col justify-center px-6">
             <div className="flex justify-start md:mb-2 lg:mb-4">
               <Image
                 src="/road-to-devfest.svg"
                 alt="Road to DevFest"
                 width={120}
                 height={120}
-                className="h-28 w-28 md:h-36 md:w-36 lg:h-40 lg:w-40"
+                className="scale-hover h-28 w-28 md:h-36 md:w-36 lg:h-40 lg:w-40"
               />
             </div>
 
-            <div className="text-center lg:text-left">
-              <h1 className="font-akira text-[25px] font-bold text-white uppercase md:max-w-md md:text-3xl lg:max-w-xl lg:text-left lg:text-[50px]">
+            <div className="mx-auto text-center lg:text-left">
+              <h1 className="font-akira text-[1.75rem] font-bold text-white uppercase md:text-3xl lg:max-w-md lg:text-left lg:text-[4rem] xl:max-w-3xl">
                 DevFest <br className="hidden lg:block" /> Lagos <br className="hidden lg:block" />{" "}
                 Returns for{" "}
-                <span className="text-[#4285F4]">
+                <span className="whitespace-nowrap text-[#4285F4]">
                   {" "}
                   <br className="hidden md:block" />
                   Five Epic Days.
@@ -129,6 +137,7 @@ const Hero = () => {
               </div>
             </div>
           </div>
+
           <div className="flex w-full flex-1 flex-col items-center justify-end md:w-auto md:items-end lg:justify-center">
             <div className="relative w-full pt-8 md:pt-20 lg:w-auto lg:max-w-lg">
               <div className="absolute top-2 right-4 z-10 md:top-4 md:right-4 lg:top-8 lg:right-8 xl:top-12 xl:right-16">
@@ -137,25 +146,24 @@ const Hero = () => {
                   alt="DevFest 2025"
                   width={120}
                   height={120}
-                  className="h-16 w-16 md:h-20 md:w-20 lg:h-24 lg:w-24"
+                  className="scale-hover h-16 w-16 md:h-20 md:w-20 lg:h-24 lg:w-24"
                 />
               </div>
 
-              <div
-                className="flex w-full justify-center overflow-hidden md:justify-start"
-                ref={containerRef}
-                style={{ maxWidth: "100%" }}
-              >
+              {/* Infinite Queue Carousel */}
+              <div className="flex w-full justify-center overflow-hidden md:justify-start">
                 <div
-                  className={`flex ${isTransitioning ? "transition-transform duration-1000 ease-in-out" : ""}`}
+                  className={`flex will-change-transform ${
+                    isTransitioning ? "transition-transform duration-1000 ease-in-out" : ""
+                  }`}
                   style={{
                     transform: `translateX(${translateX}px)`,
                     width: "max-content",
                   }}
                 >
-                  {infiniteSpeakers.map((speaker, index) => (
+                  {speakerQueue.map((speaker, index) => (
                     <div
-                      key={`${Math.floor(index / speakers.length)}-${index % speakers.length}`}
+                      key={`speaker-${index}-${speaker.src}`}
                       className="mr-4 h-80 w-60 flex-shrink-0 md:mr-6 md:h-80 md:w-80 lg:h-[500px] lg:w-96"
                       style={{ minWidth: "16rem" }}
                     >
