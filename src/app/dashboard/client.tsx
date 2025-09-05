@@ -4,11 +4,19 @@ import { useState } from "react";
 
 import Tab from "@/components/ui/tab";
 
+import { useGetuser } from "@/hooks/useUser";
+
 import Details from "./tabs/details";
 import RSVP from "./tabs/rsvp";
 
 export default function HomeClient() {
   const [activeTab, setActiveTab] = useState("details");
+  const user = useGetuser();
+
+  const tabItems: Record<string, React.ReactElement> = {
+    details: <Details userId={user?.user_id} />,
+    rsvp: <RSVP />,
+  };
 
   return (
     <div className="mt-4 flex flex-col md:mt-[43px]">
@@ -19,11 +27,6 @@ export default function HomeClient() {
     </div>
   );
 }
-
-const tabItems: Record<string, React.ReactElement> = {
-  details: <Details />,
-  rsvp: <RSVP />,
-};
 
 const tabs = [
   {
