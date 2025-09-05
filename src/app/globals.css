@@ -477,6 +477,26 @@
   box-shadow: 0px 2px 2px 0px #16266452 inset;
 }
 
+/* Custom Scrollbar Styles */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 16px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: #ebebeb;
+  border-radius: 50px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #f6b51e;
+  border-radius: 50px;
+  border: none;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #e6a50a;
+}
+  
 /* Remove arrows in Chrome, Safari, Edge */
 input.no-spinner::-webkit-outer-spin-button,
 input.no-spinner::-webkit-inner-spin-button {
