@@ -17,7 +17,7 @@ export default function Tab({ tabs, activeTab, setActiveTab }: TabProps) {
           data-active={tab.name === activeTab ? activeTab : undefined}
           variant="ghost"
           onClick={() => setActiveTab(tab.name)}
-          className="relative z-0"
+          className="label-3 relative z-0 text-nowrap"
         >
           {tab.label}
         </Button>
