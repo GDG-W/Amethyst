@@ -1,15 +1,17 @@
 "use client";
-import { ChevronLeft } from "lucide-react";
+
 import React, { useState } from "react";
 
-import BuyTicket from "@/components/steps/buy-ticket";
+import { ChevronLeft } from "lucide-react";
+
 import Breadcrumb from "@/components/ui/breadcrumb";
-import OrderSummary from "@/components/ui/order-summary";
 import Button from "@/components/ui/button";
+import BuyTicket from "@/components/steps/buy-ticket";
 import BuyerInformation from "@/components/form/buyer-info";
+import OrderSummary from "@/components/ui/order-summary";
+import { toast } from "@/components/ui/toast";
 import { useBuyFormStore } from "@/store/buy-form-store";
 import { useCheckout } from "@/hooks/useCheckout";
-import { toast } from "@/components/ui/toast";
 import { useTickets } from "@/hooks/useTickets";
 import { useMediaQuery } from "@/hooks/useMediaQuery";
 
@@ -89,7 +91,7 @@ export default function BuyPageClient() {
         const totalAttendees =
           attendeeInfo && attendeeInfo.emailsByDate
             ? Object.values(attendeeInfo.emailsByDate).reduce(
-                (sum, emails) => sum + emails.filter(Boolean).length,
+                (sum: number, emails) => sum + (emails as string[]).filter(Boolean).length,
                 0
               )
             : 0;
@@ -140,26 +142,28 @@ export default function BuyPageClient() {
     // Add attendees from emailsByDate
     if (attendeeInfo?.emailsByDate) {
       Object.entries(attendeeInfo.emailsByDate).forEach(([dateId, emails]) => {
-        emails.forEach((email) => {
-          if (!email) return;
+        if (Array.isArray(emails)) {
+          emails.forEach((email) => {
+            if (!email) return;
 
-          const ticket_ids = orderItems
-            .filter((i) => i.id === dateId)
-            .map((i) => i.id)
-            .filter(Boolean);
+            const ticket_ids = orderItems
+              .filter((i) => i.id === dateId)
+              .map((i) => i.id)
+              .filter(Boolean);
 
-          if (!ticket_ids.length) return;
+            if (!ticket_ids.length) return;
 
-          const attendee: CheckoutAttendee = {
-            email,
-            ticket_ids,
-            ...(profileInfo?.gender && { gender: profileInfo.gender }),
-            ...(profileInfo?.role && { role: profileInfo.role }),
-            ...(profileInfo?.experienceLevel && { experience: profileInfo.experienceLevel }),
-          };
+            const attendee: CheckoutAttendee = {
+              email,
+              ticket_ids,
+              ...(profileInfo?.gender && { gender: profileInfo.gender }),
+              ...(profileInfo?.role && { role: profileInfo.role }),
+              ...(profileInfo?.experienceLevel && { experience: profileInfo.experienceLevel }),
+            };
 
-          attendees.push(attendee);
-        });
+            attendees.push(attendee);
+          });
+        }
       });
     }
 
