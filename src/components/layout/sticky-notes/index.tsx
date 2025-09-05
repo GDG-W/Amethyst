@@ -118,7 +118,7 @@ export default function stickyNote() {
           ))}
           <Image
             className="scale-hover absolute top-6 -right-15 rotate-2"
-            src="/learn.png"
+            src="/learn.svg"
             alt="arrow pointing to text"
             height={20}
             width={150}

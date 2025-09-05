@@ -26,7 +26,7 @@ export default function Recap() {
   const [isTransitioning, setIsTransitioning] = useState(false);
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
-  const cardWidth = 256 + 17;
+  const cardWidth = 256 + 16;
 
   useEffect(() => {
     intervalRef.current = setInterval(() => {
