@@ -477,6 +477,14 @@
   box-shadow: 0px 2px 2px 0px #16266452 inset;
 }
 
+@utility font-akira {
+  font-family: var(--font-akira), sans-serif;
+}
+
+/* * {
+  outline: 1px solid red;
+} */
+
 /* Custom Scrollbar Styles */
 .custom-scrollbar::-webkit-scrollbar {
   width: 16px;
@@ -496,7 +504,7 @@
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
   background: #e6a50a;
 }
-  
+
 /* Remove arrows in Chrome, Safari, Edge */
 input.no-spinner::-webkit-outer-spin-button,
 input.no-spinner::-webkit-inner-spin-button {
@@ -515,4 +523,48 @@ input.no-spinner::-webkit-inner-spin-button {
   /* Standard */
   margin: 0;
   /* Remove default spacing */
+}
+
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+@keyframes gentle-spin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.scale-hover {
+  transition: transform 0.3s ease-in-out;
+}
+
+.scale-hover:hover {
+  transform: scale(1.05);
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 3px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background-color: #f9ab00;
+  border-radius: 8px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background-color: #e09900;
 }
