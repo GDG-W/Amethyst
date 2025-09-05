@@ -8,16 +8,16 @@ import Link from "next/link";
 import Button from "@/components/ui/home-button";
 
 const images = [
-  { id: 1, src: "/gallery-image1.png", alt: "DevFest moment 1" },
-  { id: 2, src: "/gallery-image2.png", alt: "DevFest moment 2" },
-  { id: 3, src: "/gallery-image3.png", alt: "DevFest moment 3" },
-  { id: 4, src: "/gallery-image4.png", alt: "DevFest moment 4" },
-  { id: 5, src: "/gallery-image5.png", alt: "DevFest moment 5" },
-  { id: 6, src: "/gallery-image6.png", alt: "DevFest moment 6" },
-  { id: 7, src: "/gallery-image7.png", alt: "DevFest moment 7" },
-  { id: 8, src: "/gallery-image8.png", alt: "DevFest moment 8" },
-  { id: 9, src: "/gallery-image9.png", alt: "DevFest moment 9" },
-  { id: 10, src: "/gallery-image10.png", alt: "DevFest moment 10" },
+  { id: 1, src: "/gallery-image1.webp", alt: "DevFest moment 1" },
+  { id: 2, src: "/gallery-image2.webp", alt: "DevFest moment 2" },
+  { id: 3, src: "/gallery-image3.webp", alt: "DevFest moment 3" },
+  { id: 4, src: "/gallery-image4.webp", alt: "DevFest moment 4" },
+  { id: 5, src: "/gallery-image5.webp", alt: "DevFest moment 5" },
+  { id: 6, src: "/gallery-image6.webp", alt: "DevFest moment 6" },
+  { id: 7, src: "/gallery-image7.webp", alt: "DevFest moment 7" },
+  { id: 8, src: "/gallery-image8.webp", alt: "DevFest moment 8" },
+  { id: 9, src: "/gallery-image9.webp", alt: "DevFest moment 9" },
+  { id: 10, src: "/gallery-image10.webp", alt: "DevFest moment 10" },
 ];
 
 export default function Recap() {
