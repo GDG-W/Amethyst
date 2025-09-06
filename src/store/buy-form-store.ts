@@ -1,8 +1,10 @@
 import { create } from "zustand";
+
 import { devtools } from "zustand/middleware";
 
+import { AttendeeInfo, BuyerInfo, OrderItem } from "@/app/(root)/buy/client";
+
 import { TicketType } from "@/types/ticket";
-import { OrderItem, BuyerInfo, AttendeeInfo } from "@/app/buy/client";
 
 interface TicketState {
   orderItems: OrderItem[];

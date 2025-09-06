@@ -1,13 +1,13 @@
 import React, { useEffect, useMemo } from "react";
 
-import TicketDetails from "@/components/buy-ticket/ticket-details";
-import { useTickets } from "@/hooks/useTickets";
 import { API_DAY_TO_LABEL } from "@/lib/constants";
-import { indexTicketsByIsoDate } from "@/lib/utils";
+import { OrderItem } from "@/app/(root)/buy/client";
 import { Ticket } from "@/types/ticket";
-import { useBuyFormStore } from "@/store/buy-form-store";
+import TicketDetails from "@/components/buy-ticket/ticket-details";
 
-import { OrderItem } from "@/app/buy/client";
+import { indexTicketsByIsoDate } from "@/lib/utils";
+import { useBuyFormStore } from "@/store/buy-form-store";
+import { useTickets } from "@/hooks/useTickets";
 
 import TicketsSelection from "../ui/ticket-selection";
 
