@@ -20,11 +20,11 @@ export default function Details({ userId, tickets }: { userId: string; tickets: 
   ];
 
   const ticketsArr = tickets.map((t) => {
-    const { date, time } = formatDateTime(t.date);
+    const { date } = formatDateTime(t.date);
     return {
       theme: t.theme,
       date,
-      time,
+      time: "9:00 AM",
       ticket_type: t.ticket_type,
     };
   });
