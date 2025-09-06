@@ -43,6 +43,7 @@ export interface SelectFieldProps {
   onChange: (value: string) => void;
   onOpen?: () => void;
   width?: string;
+  inputStyle?: string;
 }
 
 export type MultiInputFieldProps = {
