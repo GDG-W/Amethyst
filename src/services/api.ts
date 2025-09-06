@@ -1,4 +1,5 @@
 import { AxiosResponse } from "axios";
+import Cookies from "js-cookie";
 
 import axiosInstance from "@/lib/axios";
 import { isPlainObject } from "@/lib/utils";
@@ -51,7 +52,18 @@ class API {
     return this._handleResponse<T>(response);
   };
 
-  static get = async <T>(endpoint: string): Promise<BaseResponse<T>> => {
+  static get = async <T>(
+    endpoint: string,
+    options?: { requiresAuth?: boolean; token?: string }
+  ): Promise<BaseResponse<T>> => {
+    const headers: Record<string, string> = {};
+    if (options?.requiresAuth) {
+      const token = Cookies.get("token");
+      if (token) {
+        headers.Authorization = `Bearer ${token}`;
+      }
+    }
+
     const response = await axiosInstance.get<T | ErrorResponse, AxiosResponse<T | ErrorResponse>>(
       endpoint
     );
