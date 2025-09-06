@@ -102,7 +102,7 @@ const Hero = () => {
             </div>
 
             <div className="mx-auto text-center lg:text-left">
-              <h1 className="font-akira text-[1.5rem] font-bold text-white uppercase md:max-w-md md:text-4xl lg:text-left lg:text-[4rem] xl:max-w-3xl">
+              <h1 className="font-akira text-[1.5rem] font-bold text-white uppercase min-[375px]:text-[1.625rem] min-[425px]:text-[1.75rem] md:max-w-md md:text-4xl lg:text-left lg:text-[4rem] xl:max-w-3xl">
                 DevFest <br className="hidden lg:block" /> Lagos <br className="hidden lg:block" />{" "}
                 Returns for{" "}
                 <span className="text-[#4285F4] md:whitespace-nowrap">
