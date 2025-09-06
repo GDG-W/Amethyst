@@ -133,7 +133,7 @@ export default function MultiInput({
           {value.map((item) => (
             <span
               key={item}
-              className="text-strong-950 bg-away-lighter flex items-center gap-1 rounded-full px-2 py-1.5 text-sm"
+              className="text-strong-950 bg-away-lighter flex items-center gap-1 rounded-full px-2 py-1.5 text-sm !no-underline"
             >
               {item}
               <button type="button" className="cursor-pointer" onClick={() => handleRemove(item)}>
