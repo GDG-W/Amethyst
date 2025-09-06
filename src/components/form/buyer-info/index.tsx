@@ -12,7 +12,7 @@ import { useBuyFormStore } from "@/store/buy-form-store";
 import ProfileRegistration from "../profile-reg";
 import AttendeeInfo from "../attendee-info";
 
-import type { BuyerInfo, OrderItem } from "@/app/(dashboard)/buy/client";
+import type { BuyerInfo, OrderItem } from "@/app/(root)/buy/client";
 
 const BuyerInformation = ({ selectedDates }: { selectedDates: OrderItem[] }) => {
   const { buyerInfo, orderItems, buyerErrors, attendeeInfo, updateBuyerField, setBuyerError } =

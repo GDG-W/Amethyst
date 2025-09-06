@@ -2,7 +2,7 @@ import { create } from "zustand";
 
 import { devtools } from "zustand/middleware";
 
-import { AttendeeInfo, BuyerInfo, OrderItem } from "@/app/(dashboard)/buy/client";
+import { AttendeeInfo, BuyerInfo, OrderItem } from "@/app/(root)/buy/client";
 
 import { TicketType } from "@/types/ticket";
 
