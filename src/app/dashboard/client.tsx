@@ -6,15 +6,18 @@ import Tab from "@/components/ui/tab";
 
 import { useGetuser } from "@/hooks/useUser";
 
+import { useUserTickets } from "@/hooks/useTickets";
+
 import Details from "./tabs/details";
 import RSVP from "./tabs/rsvp";
 
 export default function HomeClient() {
   const [activeTab, setActiveTab] = useState("details");
   const user = useGetuser();
+  const { tickets } = useUserTickets();
 
   const tabItems: Record<string, React.ReactElement> = {
-    details: <Details userId={user?.user_id} />,
+    details: <Details userId={user?.user_id} tickets={tickets} />,
     rsvp: <RSVP />,
   };
 

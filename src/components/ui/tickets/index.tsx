@@ -2,22 +2,23 @@ import React from "react";
 
 import ProTag from "@/components/icons/pro-tag";
 import Barcode from "@/components/icons/barcode";
+import { useMediaQuery } from "@/hooks/useMediaQuery";
 
-interface TicketProps {
-  title: string;
+export interface TicketProps {
+  theme: string;
   date: string;
   time?: string;
-  ticketType?: string;
+  ticket_type?: string;
 }
 
 const Ticket: React.FC<TicketProps> = ({
-  title,
+  theme,
   date,
   time = "10:00 AM",
-  ticketType = "Standard",
+  ticket_type = "Standard",
 }) => {
   const dayNumber = parseInt(date.match(/\d+/)?.[0] || "0");
-  const isProTicket = dayNumber === 20 && ticketType === "Pro";
+  const isProTicket = dayNumber === 20 && ticket_type === "Pro";
 
   const getBorderColor = (date: string): string => {
     const dayNumber = parseInt(date.match(/\d+/)?.[0] || "0");
@@ -72,7 +73,7 @@ const Ticket: React.FC<TicketProps> = ({
 
       <div className={`p-4 pr-14 sm:p-6 sm:pr-20`}>
         <h1 className="mb-3 max-w-48 font-medium text-gray-900 sm:mb-4 md:max-w-64 md:text-lg">
-          {title}
+          {theme}
         </h1>
 
         <div className="mb-3 grid grid-cols-2 gap-2 md:mb-4 md:gap-4">
@@ -88,64 +89,61 @@ const Ticket: React.FC<TicketProps> = ({
 
         <div>
           <h3 className="mb-1 text-sm font-medium text-[#5C5C5C] md:text-base">Ticket Type</h3>
-          <p className="text-sm text-[#A3A3A3] md:text-base">{ticketType}</p>
+          <p className="text-sm text-[#A3A3A3] capitalize md:text-base">{ticket_type}</p>
         </div>
       </div>
     </div>
   );
 };
 
-const TicketList = () => {
-  const tickets = [
-    {
-      title: "Kickoff & Big Ideas",
-      date: "18th November",
-      time: "10:00 AM",
-      ticketType: "Pro",
-      day: "Monday",
-    },
-    {
-      title: "Frontend development and Mobile development",
-      date: "19th November",
-      time: "10:00 AM",
-      ticketType: "Standard",
-    },
-    {
-      title: "Frontend Fundamentals",
-      date: "20th November",
-      time: "2:00 PM",
-      ticketType: "Pro",
-      day: "Friday",
-    },
-    {
-      title: "Advanced Algorithms",
-      date: "21st November",
-      time: "10:00 AM",
-      ticketType: "Standard",
-      day: "Tuesday",
-    },
-    {
-      title: "Advanced Algorithms",
-      date: "22nd November",
-      time: "10:00 AM",
-      ticketType: "Standard",
-      day: "Tuesday",
-    },
-  ];
-
+const TicketList = ({ tickets = ticketsArr }: { tickets: TicketProps[] }) => {
+  const isMobile = useMediaQuery(767, "max");
   return (
-    <div className="min-h-screen py-4 sm:py-8">
-      <div className="mx-auto max-w-4xl px-4 sm:px-8 lg:px-28">
-        <div className="custom-scrollbar overflow-y-auto" style={{ maxHeight: "80vh" }}>
-          <div className="space-y-3 sm:space-y-4">
-            {tickets.map((ticket, index) => (
-              <Ticket key={index} {...ticket} />
-            ))}
-          </div>
-        </div>
+    <div className={`${!isMobile && "custom-scrollbar"} md:max-h-[334px] md:overflow-y-auto`}>
+      <div className="space-y-3 sm:space-y-4">
+        {tickets.map((ticket, index) => (
+          <Ticket key={index} {...ticket} />
+        ))}
       </div>
     </div>
   );
 };
+
+const ticketsArr = [
+  {
+    theme: "Kickoff & Big Ideas",
+    date: "18th November",
+    time: "10:00 AM",
+    ticket_type: "Pro",
+    day: "Monday",
+  },
+  {
+    theme: "Frontend development and Mobile development",
+    date: "19th November",
+    time: "10:00 AM",
+    ticket_type: "Standard",
+  },
+  {
+    theme: "Frontend Fundamentals",
+    date: "20th November",
+    time: "2:00 PM",
+    ticket_type: "Pro",
+    day: "Friday",
+  },
+  {
+    theme: "Advanced Algorithms",
+    date: "21st November",
+    time: "10:00 AM",
+    ticket_type: "Standard",
+    day: "Tuesday",
+  },
+  {
+    theme: "Advanced Algorithms",
+    date: "22nd November",
+    time: "10:00 AM",
+    ticket_type: "Standard",
+    day: "Tuesday",
+  },
+];
 
 export default TicketList;

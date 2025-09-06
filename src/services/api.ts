@@ -1,4 +1,5 @@
 import { AxiosResponse } from "axios";
+import Cookies from "js-cookie";
 
 import axiosInstance from "@/lib/axios";
 import { isPlainObject } from "@/lib/utils";
@@ -57,10 +58,8 @@ class API {
   ): Promise<BaseResponse<T>> => {
     try {
       const headers: Record<string, string> = {};
-
       if (options?.requiresAuth) {
-        const token =
-          options.token ?? (typeof window !== "undefined" ? localStorage.getItem("token") : null);
+        const token = Cookies.get("token");
 
         if (token) {
           headers.Authorization = `Bearer ${token}`;
