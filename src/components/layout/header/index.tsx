@@ -1,15 +1,17 @@
 "use client";
-import React from "react";
 
 import Link from "next/link";
 
+import React from "react";
+
 import { usePathname } from "next/navigation";
 
-import Logo from "@/components/icons/logo";
 import Button from "@/components/ui/button";
+import Logo from "@/components/icons/logo";
 import LogoutIcon from "@/components/icons/logout-icon";
-import { useLogout } from "@/hooks/useAuth";
+
 import { useGetuser } from "@/hooks/useUser";
+import { useLogout } from "@/hooks/useAuth";
 
 const Header = () => {
   const pathname = usePathname();
@@ -18,7 +20,9 @@ const Header = () => {
   return (
     <header className="border-bg-surface-800 mx-auto flex max-w-[800px] justify-center rounded-full border bg-white px-5 py-4 md:px-10 md:py-5">
       <nav className="flex w-full items-center justify-between">
-        <Logo className="w-36 md:w-40 xl:w-48" />
+        <Link href="/">
+          <Logo className="w-36 md:w-40 xl:w-48" />
+        </Link>
         {pathname === "/buy" ? (
           <>
             {user_id ? (
