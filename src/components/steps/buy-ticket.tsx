@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo } from "react";
 
 import { API_DAY_TO_LABEL } from "@/lib/constants";
-import { OrderItem } from "@/app/(dashboard)/buy/client";
+import { OrderItem } from "@/app/(root)/buy/client";
 import { Ticket } from "@/types/ticket";
 import TicketDetails from "@/components/buy-ticket/ticket-details";
 

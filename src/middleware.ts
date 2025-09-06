@@ -2,7 +2,8 @@ import { NextResponse } from "next/server";
 
 import type { NextRequest } from "next/server";
 
-const authPages = ["/login", "/buy", "/"]; // add unathenticated pages route here.
+const protectedPages = ["/dashboard"]; // Only authenticated users can access this
+const allowedForAll = ["/buy"]; // add unathenticated pages route here.
 
 export function middleware(request: NextRequest) {
   const token = request.cookies.get("token")?.value || null;
@@ -19,16 +20,15 @@ export function middleware(request: NextRequest) {
 
   const isAuth = Boolean(token && user);
   const { pathname } = request.nextUrl;
-  const isAuthPage = authPages.includes(pathname);
 
-  // ✅ Redirect authenticated users trying to access auth pages
-  if (isAuth && isAuthPage) {
-    return NextResponse.redirect(new URL("/dashboard", request.url));
+  // 🔒 Protect /dashboard
+  if (protectedPages.includes(pathname) && !isAuth) {
+    return NextResponse.redirect(new URL("/login", request.url));
   }
 
-  // ✅ Redirect unauthenticated users trying to access protected pages
-  if (!isAuth && !isAuthPage) {
-    return NextResponse.redirect(new URL("/login", request.url));
+  // 🔑 Prevent authenticated users from visiting login
+  if (isAuth && pathname === "/login") {
+    return NextResponse.redirect(new URL("/dashboard", request.url));
   }
 
   return NextResponse.next();
