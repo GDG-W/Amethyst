@@ -89,7 +89,7 @@ const Hero = () => {
         <div className="pt-5 pb-0">
           <Header />
         </div>
-        <div className="mx-auto flex w-full max-w-7xl flex-col items-center justify-center bg-[#171717] pb-6 md:pb-14 lg:flex-row lg:items-stretch">
+        <div className="mx-auto flex max-w-7xl flex-col items-center justify-center bg-[#171717] pb-6 md:pb-14 lg:flex-row lg:items-stretch">
           <div className="flex w-full flex-2 flex-col justify-center px-6">
             <div className="flex justify-start md:mb-2 lg:mb-4">
               <Image
@@ -102,22 +102,22 @@ const Hero = () => {
             </div>
 
             <div className="mx-auto text-center lg:text-left">
-              <h1 className="font-akira text-[1.75rem] font-bold text-white uppercase md:text-3xl lg:max-w-md lg:text-left lg:text-[4rem] xl:max-w-3xl">
+              <h1 className="font-akira text-[1.5rem] font-bold text-white uppercase md:max-w-md md:text-4xl lg:text-left lg:text-[4rem] xl:max-w-3xl">
                 DevFest <br className="hidden lg:block" /> Lagos <br className="hidden lg:block" />{" "}
                 Returns for{" "}
-                <span className="whitespace-nowrap text-[#4285F4]">
+                <span className="text-[#4285F4] md:whitespace-nowrap">
                   {" "}
                   <br className="hidden md:block" />
                   Five Epic Days.
                 </span>
               </h1>
 
-              <p className="mt-4 text-sm text-[#D1D1D1] md:mt-6 md:max-w-md md:text-base lg:max-w-xl">
+              <p className="mx-auto mt-4 text-sm text-[#D1D1D1] md:mt-6 md:max-w-md md:text-base lg:max-w-xl">
                 Join the largest tech gathering in Lagos happening over five transformative days,
                 from Tuesday 18th - Saturday 22nd November 2025.
               </p>
 
-              <div className="mt-6 flex w-full flex-col gap-3 md:mt-6 md:max-w-md md:flex-row md:gap-4">
+              <div className="mx-auto mt-6 flex w-full flex-col gap-3 md:mt-6 md:max-w-md md:flex-row md:gap-4">
                 <Link href="/buy">
                   <Button
                     variant="primary"
@@ -140,7 +140,7 @@ const Hero = () => {
 
           <div className="flex w-full flex-1 flex-col items-center justify-end md:w-auto md:items-end lg:justify-center">
             <div className="relative w-full pt-8 md:pt-20 lg:w-auto lg:max-w-lg">
-              <div className="absolute top-2 right-4 z-10 md:top-4 md:right-4 lg:top-8 lg:right-8 xl:top-12 xl:right-16">
+              <div className="absolute top-2 right-2 z-10 md:top-4 md:right-4 lg:top-8 lg:right-8 xl:top-12 xl:right-16">
                 <Image
                   src="/devfest25.svg"
                   alt="DevFest 2025"
