@@ -2,17 +2,17 @@
 
 import React from "react";
 
-import TextField from "@/components/ui/inputs/text-field";
 import Checkbox from "@/components/ui/inputs/checkbox";
-import Card from "@/components/ui/card";
-import { useBuyFormStore } from "@/store/buy-form-store";
 
+import Card from "@/components/ui/card";
+import TextField from "@/components/ui/inputs/text-field";
 import { buyerSchema } from "@/schemas/buyerSchema";
+import { useBuyFormStore } from "@/store/buy-form-store";
 
 import ProfileRegistration from "../profile-reg";
 import AttendeeInfo from "../attendee-info";
 
-import type { OrderItem, BuyerInfo } from "@/app/buy/client";
+import type { BuyerInfo, OrderItem } from "@/app/(root)/buy/client";
 
 const BuyerInformation = ({ selectedDates }: { selectedDates: OrderItem[] }) => {
   const { buyerInfo, orderItems, buyerErrors, attendeeInfo, updateBuyerField, setBuyerError } =

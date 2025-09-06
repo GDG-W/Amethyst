@@ -152,7 +152,7 @@ export default function MultiInput({
               onBlur={handleBlur}
               onKeyDown={handleKeyDown}
               onPaste={handlePaste}
-              className="placeholder:text-soft-400 flex-1 bg-transparent outline-none"
+              className="placeholder:text-soft-400 flex-1 bg-transparent lowercase !no-underline outline-none"
               placeholder={placeholder}
             />
           ) : null}

@@ -1,6 +1,8 @@
 import TicketList, { TicketProps } from "@/components/ui/tickets";
 import { formatDateTime } from "@/lib/helpers";
 
+import BuyTicketButton from "../components/BuyTicketButton";
+
 export default function Details({ userId, tickets }: { userId: string; tickets: TicketProps[] }) {
   const details = [
     {
@@ -50,6 +52,9 @@ export default function Details({ userId, tickets }: { userId: string; tickets: 
           <p className="label-3 md:label-2 text-strong-950 font-medium">Your Ticket(s)</p>
           <div>
             <TicketList tickets={ticketsArr} />
+          </div>
+          <div>
+            <BuyTicketButton />
           </div>
         </div>
       </div>
