@@ -1,4 +1,7 @@
-export default function Details({ userId }: { userId: string }) {
+import TicketList, { TicketProps } from "@/components/ui/tickets";
+import { formatDateTime } from "@/lib/helpers";
+
+export default function Details({ userId, tickets }: { userId: string; tickets: TicketProps[] }) {
   const details = [
     {
       title: "Full Name",
@@ -13,6 +16,16 @@ export default function Details({ userId }: { userId: string }) {
       value: userId,
     },
   ];
+
+  const ticketsArr = tickets.map((t) => {
+    const { date, time } = formatDateTime(t.date);
+    return {
+      theme: t.theme,
+      date,
+      time,
+      ticket_type: t.ticket_type,
+    };
+  });
   return (
     <div className="flex flex-col gap-y-[23px] md:gap-y-[50px]">
       <div className="flex flex-col gap-1 md:self-center md:text-center">
@@ -35,7 +48,9 @@ export default function Details({ userId }: { userId: string }) {
         </div>
         <div className="flex flex-col gap-y-5">
           <p className="label-3 md:label-2 text-strong-950 font-medium">Your Ticket(s)</p>
-          <div className="overflow-y-auto md:h-[334px]"></div>
+          <div>
+            <TicketList tickets={ticketsArr} />
+          </div>
         </div>
       </div>
     </div>

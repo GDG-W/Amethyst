@@ -6,7 +6,7 @@ export const getTickets = async (ticketType: TicketType) => {
 };
 
 export const getUserTicket = async () => {
-  return API.get(`/users/tickets`);
+  return API.get(`/users/tickets`, { requiresAuth: true });
 };
 
 export default {
