@@ -112,12 +112,12 @@ const Hero = () => {
                 </span>
               </h1>
 
-              <p className="mx-auto mt-4 text-sm text-[#D1D1D1] md:mt-6 md:max-w-md md:text-base lg:max-w-xl">
+              <p className="mx-auto mt-4 text-sm text-[#D1D1D1] md:mt-6 md:max-w-md md:text-base lg:mx-0 lg:max-w-xl">
                 Join the largest tech gathering in Lagos happening over five transformative days,
                 from Tuesday 18th - Saturday 22nd November 2025.
               </p>
 
-              <div className="mx-auto mt-6 flex w-full flex-col gap-3 md:mt-6 md:max-w-md md:flex-row md:gap-4">
+              <div className="mx-auto mt-6 flex w-full flex-col gap-3 md:mt-6 md:max-w-md md:flex-row md:gap-4 lg:mx-0">
                 <Link href="/buy">
                   <Button
                     variant="primary"
