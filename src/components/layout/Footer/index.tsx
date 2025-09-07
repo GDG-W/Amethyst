@@ -27,7 +27,7 @@ const titleVariants = {
     y: 0,
     transition: {
       duration: 0.8,
-      ease: "easeOut",
+      ease: [0.25, 0.25, 0, 1] as [number, number, number, number],
     },
   },
 };
@@ -42,7 +42,7 @@ const globeVariants = {
     y: 0,
     transition: {
       duration: 1.2,
-      ease: "easeOut",
+      ease: [0.25, 0.25, 0, 1] as [number, number, number, number],
       delay: 0.3,
     },
   },
@@ -55,7 +55,7 @@ const contentVariants = {
     y: 0,
     transition: {
       duration: 0.6,
-      ease: "easeOut",
+      ease: [0.25, 0.25, 0, 1] as [number, number, number, number],
     },
   },
 };
@@ -67,7 +67,7 @@ const linkVariants = {
     x: 0,
     transition: {
       duration: 0.5,
-      ease: "easeOut",
+      ease: [0.25, 0.25, 0, 1] as [number, number, number, number],
     },
   },
 };
@@ -79,7 +79,7 @@ const socialVariants = {
     scale: 1,
     transition: {
       duration: 0.4,
-      ease: "easeOut",
+      ease: [0.25, 0.25, 0, 1] as [number, number, number, number],
     },
   },
 };
@@ -91,7 +91,7 @@ const imageVariants = {
     x: 0,
     transition: {
       duration: 0.8,
-      ease: "easeOut",
+      ease: [0.25, 0.25, 0, 1] as [number, number, number, number],
     },
   },
 };
@@ -103,7 +103,7 @@ const copyrightVariants = {
     y: 0,
     transition: {
       duration: 0.6,
-      ease: "easeOut",
+      ease: [0.25, 0.25, 0, 1] as [number, number, number, number],
       delay: 0.5,
     },
   },

@@ -45,7 +45,6 @@ export default function Index() {
   const isHeadingInView = useInView(headingRef, { once: true, margin: "-100px" });
   const areTicketsInView = useInView(ticketsRef, { once: true, margin: "-100px" });
 
-  // Animation variants
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -83,7 +82,7 @@ export default function Index() {
       filter: "blur(0px)",
       transition: {
         duration: 0.6,
-        ease: [0.25, 0.25, 0, 1],
+        ease: [0.25, 0.25, 0, 1] as const,
       },
     },
   };
@@ -101,7 +100,7 @@ export default function Index() {
       transition: {
         duration: 0.8,
         delay: 0.4,
-        ease: [0.25, 0.25, 0, 1],
+        ease: [0.25, 0.25, 0, 1] as const,
       },
     },
   };
@@ -117,38 +116,35 @@ export default function Index() {
     },
   };
 
-  // Further reduced animation values to eliminate overflow
   const ticketVariants = {
     hidden: {
       opacity: 0,
       y: 20,
       scale: 0.98,
     },
-    visible: (index) => ({
+    visible: (index: number) => ({
       opacity: 1,
       y: 0,
       scale: 1,
       transition: {
         duration: 0.6,
         delay: index * 0.1,
-        ease: [0.25, 0.25, 0, 1],
+        ease: [0.25, 0.25, 0, 1] as const,
       },
     }),
   };
 
-  // Reduced floating animation to prevent overflow
   const floatingVariants = {
     animate: {
       y: [-2, 2, -2],
       transition: {
         duration: 6,
-        ease: "easeInOut",
+        ease: [0.25, 0.25, 0, 1] as const,
         repeat: Infinity,
       },
     },
   };
 
-  // Enhanced TicketCard wrapper with fixed animations
   const AnimatedTicketCard = ({
     ticket,
     index,

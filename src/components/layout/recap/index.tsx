@@ -40,7 +40,7 @@ const textVariants = {
     y: 0,
     transition: {
       duration: 0.8,
-      ease: "easeOut",
+      ease: [0.25, 0.25, 0, 1] as const,
     },
   },
 };
@@ -52,7 +52,7 @@ const imageVariants = {
     scale: 1,
     transition: {
       duration: 0.8,
-      ease: "easeOut",
+      ease: [0.25, 0.25, 0, 1] as const,
     },
   },
 };
@@ -64,7 +64,7 @@ const galleryVariants = {
     y: 0,
     transition: {
       duration: 1,
-      ease: "easeOut",
+      ease: [0.25, 0.25, 0, 1] as const,
     },
   },
 };
@@ -76,7 +76,7 @@ const buttonVariants = {
     y: 0,
     transition: {
       duration: 0.6,
-      ease: "easeOut",
+      ease: [0.25, 0.25, 0, 1] as const,
     },
   },
 };

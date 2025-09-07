@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useRef } from "react";
 import { motion, useInView } from "framer-motion";
 
@@ -6,7 +8,6 @@ import Link from "next/link";
 
 import Button from "@/components/ui/home-button";
 
-// Animation variants
 const containerVariants = {
   hidden: { opacity: 0, scale: 0.95 },
   visible: {
@@ -14,7 +15,7 @@ const containerVariants = {
     scale: 1,
     transition: {
       duration: 0.8,
-      ease: "easeOut",
+      ease: [0.25, 0.25, 0, 1] as const,
       staggerChildren: 0.3,
     },
   },
@@ -27,7 +28,7 @@ const titleVariants = {
     y: 0,
     transition: {
       duration: 0.8,
-      ease: "easeOut",
+      ease: [0.25, 0.25, 0, 1] as const,
     },
   },
 };
@@ -40,7 +41,7 @@ const buttonVariants = {
     scale: 1,
     transition: {
       duration: 0.6,
-      ease: "easeOut",
+      ease: [0.25, 0.25, 0, 1] as const,
     },
   },
 };
@@ -53,7 +54,7 @@ const imageVariants = {
     rotate: 0,
     transition: {
       duration: 1,
-      ease: "easeOut",
+      ease: [0.25, 0.25, 0, 1] as const,
       delay: 0.5,
     },
   },
