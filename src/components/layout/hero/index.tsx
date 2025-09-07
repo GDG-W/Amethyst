@@ -83,7 +83,6 @@ const Hero = () => {
     };
   }, []);
 
-  // Animation variants
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -100,15 +99,13 @@ const Hero = () => {
     hidden: {
       opacity: 0,
       y: 60,
-      filter: "blur(4px)",
     },
     visible: {
       opacity: 1,
       y: 0,
-      filter: "blur(0px)",
       transition: {
         duration: 0.8,
-        ease: [0.25, 0.25, 0, 1],
+        ease: [0.25, 0.25, 0, 1] as const,
       },
     },
   };
@@ -125,9 +122,9 @@ const Hero = () => {
       rotate: 0,
       transition: {
         duration: 1,
-        ease: [0.25, 0.25, 0, 1],
-        type: "spring",
+        type: "spring" as const,
         stiffness: 100,
+        damping: 15,
       },
     },
   };
@@ -136,15 +133,13 @@ const Hero = () => {
     hidden: {
       opacity: 0,
       y: 40,
-      clipPath: "inset(100% 0 0 0)",
     },
     visible: {
       opacity: 1,
       y: 0,
-      clipPath: "inset(0% 0 0 0)",
       transition: {
         duration: 1,
-        ease: [0.25, 0.25, 0, 1],
+        ease: [0.25, 0.25, 0, 1] as const,
       },
     },
   };
@@ -161,14 +156,14 @@ const Hero = () => {
       scale: 1,
       transition: {
         duration: 0.6,
-        ease: [0.25, 0.25, 0, 1],
+        ease: [0.25, 0.25, 0, 1] as const,
       },
     },
     hover: {
       scale: 1.05,
       transition: {
         duration: 0.2,
-        ease: "easeInOut",
+        ease: "easeInOut" as const,
       },
     },
     tap: {
@@ -186,7 +181,7 @@ const Hero = () => {
       x: 0,
       transition: {
         duration: 1,
-        ease: [0.25, 0.25, 0, 1],
+        ease: [0.25, 0.25, 0, 1] as const,
         staggerChildren: 0.1,
         delayChildren: 0.5,
       },
@@ -198,7 +193,7 @@ const Hero = () => {
       y: [-10, 10, -10],
       transition: {
         duration: 4,
-        ease: "easeInOut",
+        ease: "easeInOut" as const,
         repeat: Infinity,
       },
     },
@@ -207,7 +202,7 @@ const Hero = () => {
   return (
     <motion.div
       ref={heroRef}
-      className="w-full p-4"
+      className="w-full overflow-hidden p-4"
       initial="hidden"
       animate={isInView ? "visible" : "hidden"}
       variants={containerVariants}
@@ -224,9 +219,9 @@ const Hero = () => {
           <Header />
         </motion.div>
 
-        <div className="mx-auto flex max-w-7xl flex-col items-center justify-center bg-[#171717] pb-6 md:pb-14 lg:flex-row lg:items-stretch">
+        <div className="mx-auto flex max-w-7xl flex-col items-center justify-center overflow-hidden bg-[#171717] pb-6 md:pb-14 lg:flex-row lg:items-stretch">
           <motion.div
-            className="flex w-full flex-2 flex-col justify-center px-6"
+            className="flex w-full min-w-0 flex-2 flex-col justify-center px-6"
             variants={containerVariants}
           >
             <motion.div className="flex justify-start md:mb-2 lg:mb-4" variants={logoVariants}>
@@ -335,7 +330,7 @@ const Hero = () => {
           </motion.div>
 
           <motion.div
-            className="flex w-full flex-1 flex-col items-center justify-end md:w-auto md:items-end lg:justify-center"
+            className="flex w-full min-w-0 flex-1 flex-col items-center justify-end md:w-auto md:items-end lg:justify-center"
             variants={carouselContainerVariants}
           >
             <div className="relative w-full pt-8 md:pt-20 lg:w-auto lg:max-w-lg">
@@ -358,7 +353,6 @@ const Hero = () => {
                 />
               </motion.div>
 
-              {/* Enhanced Infinite Queue Carousel */}
               <div className="flex w-full justify-center overflow-hidden md:justify-start">
                 <div
                   className={`flex will-change-transform ${

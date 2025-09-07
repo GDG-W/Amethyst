@@ -8,6 +8,30 @@ import { useRef } from "react";
 
 import TiltedCard from "./tilted-card";
 
+interface CardData {
+  title: string;
+  text: string;
+  icon: string;
+  backgroundColor: string;
+  tilt: string;
+  marginTop?: string;
+}
+
+interface DraggableWrapperProps {
+  children: React.ReactNode;
+}
+
+interface AnimatedTiltedCardProps {
+  card: CardData;
+  index: number;
+  inView: boolean;
+}
+
+interface AnimatedTiltedCardsGridProps {
+  cards: CardData[];
+  inView: boolean;
+}
+
 export default function StickyNote() {
   const sectionRef = useRef(null);
   const titleRef = useRef(null);
@@ -18,7 +42,7 @@ export default function StickyNote() {
   const areTopCardsInView = useInView(topCardsRef, { once: true, margin: "-100px" });
   const isGridInView = useInView(gridRef, { once: true, margin: "-100px" });
 
-  const cardData = [
+  const cardData: CardData[] = [
     {
       title: "Bootcamps & Codelabs",
       text: "Get your hands dirty with real code and frameworks",
@@ -98,14 +122,14 @@ export default function StickyNote() {
   const topCards = cardData.slice(0, 2);
   const remainingCards = cardData.slice(2);
 
-  // Variants
+  // Variants with proper TypeScript types
   const titleVariants = {
     hidden: { opacity: 0, y: 30, scale: 0.95 },
     visible: {
       opacity: 1,
       y: 0,
       scale: 1,
-      transition: { duration: 0.8, ease: [0.25, 0.25, 0, 1] },
+      transition: { duration: 0.8, ease: [0.25, 0.25, 0, 1] as const },
     },
   };
 
@@ -115,22 +139,22 @@ export default function StickyNote() {
       opacity: 1,
       scale: 1,
       rotate: 2,
-      transition: { duration: 0.6, ease: [0.25, 0.25, 0, 1], delay: 0.2 },
+      transition: { duration: 0.6, ease: [0.25, 0.25, 0, 1] as const, delay: 0.2 },
     },
   };
 
   const cardVariants = {
     hidden: { opacity: 0, y: 40, scale: 0.9 },
-    visible: (delay = 0) => ({
+    visible: (delay: number = 0) => ({
       opacity: 1,
       y: 0,
       scale: 1,
-      transition: { duration: 0.6, delay, ease: [0.25, 0.25, 0, 1] },
+      transition: { duration: 0.6, delay, ease: [0.25, 0.25, 0, 1] as const },
     }),
   };
 
-  // Draggable wrapper
-  const DraggableWrapper = ({ children }) => (
+  // Draggable wrapper with proper types
+  const DraggableWrapper: React.FC<DraggableWrapperProps> = ({ children }) => (
     <motion.div
       drag
       dragConstraints={{ left: -80, right: 80, top: -80, bottom: 80 }}
@@ -145,8 +169,8 @@ export default function StickyNote() {
     </motion.div>
   );
 
-  // Single Card
-  const AnimatedTiltedCard = ({ card, index, inView }) => (
+  // Single Card with proper types
+  const AnimatedTiltedCard: React.FC<AnimatedTiltedCardProps> = ({ card, index, inView }) => (
     <DraggableWrapper>
       <motion.div
         variants={cardVariants}
@@ -159,8 +183,8 @@ export default function StickyNote() {
     </DraggableWrapper>
   );
 
-  // Grid
-  const AnimatedTiltedCardsGrid = ({ cards, inView }) => (
+  // Grid with proper types
+  const AnimatedTiltedCardsGrid: React.FC<AnimatedTiltedCardsGridProps> = ({ cards, inView }) => (
     <div className="mx-auto grid max-w-6xl grid-cols-1 gap-6 px-6 pt-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
       {cards.map((card, index) => (
         <DraggableWrapper key={index}>
@@ -180,8 +204,8 @@ export default function StickyNote() {
   );
 
   return (
-    <section ref={sectionRef} className="hidden w-full bg-[#FFFFFF] xl:block">
-      <div className="mx-auto flex max-w-7xl items-center pt-20 pl-[5.725rem]">
+    <section ref={sectionRef} className="hidden w-full overflow-hidden bg-[#FFFFFF] xl:block">
+      <div className="mx-auto flex max-w-7xl items-center overflow-hidden pt-20 pl-[5.725rem]">
         <div className="relative flex flex-col" ref={titleRef}>
           <motion.div
             variants={arrowVariants}
@@ -214,7 +238,6 @@ export default function StickyNote() {
           ))}
 
           <motion.div
-            // variants={arrowVariants}
             initial="hidden"
             animate={areTopCardsInView ? "visible" : "hidden"}
             whileHover={{ scale: 1.1, rotate: 8, transition: { duration: 0.3 } }}

@@ -143,36 +143,6 @@ export default function Index() {
     },
   };
 
-  const slideInFromLeft = {
-    hidden: {
-      opacity: 0,
-      scale: 0.95,
-    },
-    visible: {
-      opacity: 1,
-      scale: 1,
-      transition: { duration: 0.8, ease: [0.25, 0.25, 0, 1] },
-    },
-  };
-
-  const slideInFromRight = {
-    hidden: {
-      opacity: 0,
-      x: 60,
-      filter: "blur(4px)",
-    },
-    visible: {
-      opacity: 1,
-      x: 0,
-      filter: "blur(0px)",
-      transition: {
-        duration: 0.8,
-        ease: [0.25, 0.25, 0, 1],
-        delay: 0.2,
-      },
-    },
-  };
-
   const titleVariants = {
     hidden: {
       opacity: 0,
@@ -183,7 +153,7 @@ export default function Index() {
       y: 0,
       transition: {
         duration: 0.6,
-        ease: [0.25, 0.25, 0, 1],
+        ease: [0.25, 0.25, 0, 1] as [number, number, number, number],
       },
     },
   };
@@ -201,7 +171,7 @@ export default function Index() {
       transition: {
         duration: 0.5,
         delay: index * 0.1,
-        ease: [0.25, 0.25, 0, 1],
+        ease: [0.25, 0.25, 0, 1] as [number, number, number, number],
       },
     }),
   };
@@ -219,7 +189,7 @@ export default function Index() {
       transition: {
         duration: 0.5,
         delay: index * 0.08,
-        ease: [0.25, 0.25, 0, 1],
+        ease: [0.25, 0.25, 0, 1] as [number, number, number, number],
       },
     }),
   };
@@ -236,7 +206,7 @@ export default function Index() {
       marginTop: 8,
       transition: {
         duration: 0.4,
-        ease: [0.25, 0.25, 0, 1],
+        ease: [0.25, 0.25, 0, 1] as [number, number, number, number],
       },
     },
   };
@@ -247,7 +217,7 @@ export default function Index() {
       rotate: 45,
       transition: {
         duration: 0.3,
-        ease: [0.25, 0.25, 0, 1],
+        ease: [0.25, 0.25, 0, 1] as [number, number, number, number],
       },
     },
   };
@@ -264,7 +234,6 @@ export default function Index() {
         <motion.div
           ref={headingRef}
           className="flex flex-col gap-6 lg:ml-20 lg:max-w-sm lg:gap-[2.5rem]"
-          variants={slideInFromLeft}
           initial="hidden"
           animate={isHeadingInView ? "visible" : "hidden"}
         >
@@ -325,7 +294,6 @@ export default function Index() {
 
         <motion.div
           className="flex h-[26.8125rem] w-full flex-col gap-5"
-          // variants={slideInFromRight}
           initial="hidden"
           animate={isSectionInView ? "visible" : "hidden"}
         >
