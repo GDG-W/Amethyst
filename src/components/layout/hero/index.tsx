@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useRef, useState } from "react";
+import { motion, useInView } from "framer-motion";
 
 import Image from "next/image";
 
@@ -27,6 +28,8 @@ const Hero = () => {
   const [translateX, setTranslateX] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const heroRef = useRef(null);
+  const isInView = useInView(heroRef, { once: true, margin: "-100px" });
 
   const getCardWidth = () => {
     const isMobile = window.innerWidth < 768;
@@ -41,13 +44,11 @@ const Hero = () => {
 
       intervalRef.current = setInterval(() => {
         const cardWidth = getCardWidth();
-
         setIsTransitioning(true);
         setTranslateX(-cardWidth);
 
         setTimeout(() => {
           setIsTransitioning(false);
-
           requestAnimationFrame(() => {
             setSpeakerQueue((prev) => {
               const [first, ...rest] = prev;
@@ -67,7 +68,6 @@ const Hero = () => {
       }
       setTranslateX(0);
       setIsTransitioning(false);
-
       setTimeout(() => {
         startAnimation();
       }, 100);
@@ -83,74 +83,282 @@ const Hero = () => {
     };
   }, []);
 
+  // Animation variants
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        duration: 0.6,
+        staggerChildren: 0.2,
+        delayChildren: 0.3,
+      },
+    },
+  };
+
+  const slideUpVariants = {
+    hidden: {
+      opacity: 0,
+      y: 60,
+      filter: "blur(4px)",
+    },
+    visible: {
+      opacity: 1,
+      y: 0,
+      filter: "blur(0px)",
+      transition: {
+        duration: 0.8,
+        ease: [0.25, 0.25, 0, 1],
+      },
+    },
+  };
+
+  const logoVariants = {
+    hidden: {
+      opacity: 0,
+      scale: 0.8,
+      rotate: -10,
+    },
+    visible: {
+      opacity: 1,
+      scale: 1,
+      rotate: 0,
+      transition: {
+        duration: 1,
+        ease: [0.25, 0.25, 0, 1],
+        type: "spring",
+        stiffness: 100,
+      },
+    },
+  };
+
+  const textRevealVariants = {
+    hidden: {
+      opacity: 0,
+      y: 40,
+      clipPath: "inset(100% 0 0 0)",
+    },
+    visible: {
+      opacity: 1,
+      y: 0,
+      clipPath: "inset(0% 0 0 0)",
+      transition: {
+        duration: 1,
+        ease: [0.25, 0.25, 0, 1],
+      },
+    },
+  };
+
+  const buttonVariants = {
+    hidden: {
+      opacity: 0,
+      y: 30,
+      scale: 0.9,
+    },
+    visible: {
+      opacity: 1,
+      y: 0,
+      scale: 1,
+      transition: {
+        duration: 0.6,
+        ease: [0.25, 0.25, 0, 1],
+      },
+    },
+    hover: {
+      scale: 1.05,
+      transition: {
+        duration: 0.2,
+        ease: "easeInOut",
+      },
+    },
+    tap: {
+      scale: 0.98,
+    },
+  };
+
+  const carouselContainerVariants = {
+    hidden: {
+      opacity: 0,
+      x: 100,
+    },
+    visible: {
+      opacity: 1,
+      x: 0,
+      transition: {
+        duration: 1,
+        ease: [0.25, 0.25, 0, 1],
+        staggerChildren: 0.1,
+        delayChildren: 0.5,
+      },
+    },
+  };
+
+  const floatingVariants = {
+    animate: {
+      y: [-10, 10, -10],
+      transition: {
+        duration: 4,
+        ease: "easeInOut",
+        repeat: Infinity,
+      },
+    },
+  };
+
   return (
-    <div className="w-full p-4">
-      <div className="w-full overflow-hidden rounded-xl bg-[#171717]">
-        <div className="pt-5 pb-0">
+    <motion.div
+      ref={heroRef}
+      className="w-full p-4"
+      initial="hidden"
+      animate={isInView ? "visible" : "hidden"}
+      variants={containerVariants}
+    >
+      <motion.div
+        className="w-full overflow-hidden rounded-xl bg-[#171717]"
+        variants={slideUpVariants}
+        whileHover={{
+          boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.25)",
+          transition: { duration: 0.3 },
+        }}
+      >
+        <motion.div className="pt-5 pb-0" variants={slideUpVariants}>
           <Header />
-        </div>
+        </motion.div>
+
         <div className="mx-auto flex max-w-7xl flex-col items-center justify-center bg-[#171717] pb-6 md:pb-14 lg:flex-row lg:items-stretch">
-          <div className="flex w-full flex-2 flex-col justify-center px-6">
-            <div className="flex justify-start md:mb-2 lg:mb-4">
+          <motion.div
+            className="flex w-full flex-2 flex-col justify-center px-6"
+            variants={containerVariants}
+          >
+            <motion.div className="flex justify-start md:mb-2 lg:mb-4" variants={logoVariants}>
               <Image
                 src="/road-to-devfest.svg"
                 alt="Road to DevFest"
                 width={120}
                 height={120}
-                className="scale-hover h-28 w-28 md:h-36 md:w-36 lg:h-40 lg:w-40"
+                className="h-28 w-28 md:h-36 md:w-36 lg:h-40 lg:w-40"
               />
-            </div>
+            </motion.div>
 
             <div className="mx-auto text-center lg:text-left">
-              <h1 className="font-akira text-[1.5rem] font-bold text-white uppercase min-[375px]:text-[1.625rem] min-[425px]:text-[1.75rem] md:max-w-md md:text-4xl lg:text-left lg:text-[4rem] xl:max-w-3xl">
-                DevFest <br className="hidden lg:block" /> Lagos <br className="hidden lg:block" />{" "}
-                Returns for{" "}
-                <span className="text-[#4285F4] md:whitespace-nowrap">
-                  {" "}
-                  <br className="hidden md:block" />
-                  Five Epic Days.
-                </span>
-              </h1>
+              <motion.div variants={textRevealVariants}>
+                <h1 className="font-akira text-[1.5rem] font-bold text-white uppercase min-[375px]:text-[1.625rem] min-[425px]:text-[1.75rem] md:max-w-md md:text-4xl lg:text-left lg:text-[4rem] xl:max-w-3xl">
+                  <motion.span
+                    initial={{ opacity: 0, y: 50 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.8, duration: 0.6 }}
+                  >
+                    DevFest
+                  </motion.span>{" "}
+                  <br className="hidden lg:block" />
+                  <motion.span
+                    initial={{ opacity: 0, y: 50 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 1, duration: 0.6 }}
+                  >
+                    Lagos
+                  </motion.span>{" "}
+                  <br className="hidden lg:block" />
+                  <motion.span
+                    initial={{ opacity: 0, y: 50 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 1.2, duration: 0.6 }}
+                  >
+                    Returns for
+                  </motion.span>{" "}
+                  <motion.span
+                    className="text-[#4285F4] md:whitespace-nowrap"
+                    initial={{ opacity: 0, scale: 0.8, y: 50 }}
+                    animate={{ opacity: 1, scale: 1, y: 0 }}
+                    transition={{
+                      delay: 1.4,
+                      duration: 0.8,
+                      type: "spring",
+                      stiffness: 120,
+                    }}
+                  >
+                    <br className="hidden md:block" />
+                    Five Epic Days.
+                  </motion.span>
+                </h1>
+              </motion.div>
 
-              <p className="mx-auto mt-4 text-sm text-[#D1D1D1] md:mt-6 md:max-w-md md:text-base lg:mx-0 lg:max-w-xl">
+              <motion.p
+                className="mx-auto mt-4 text-sm text-[#D1D1D1] md:mt-6 md:max-w-md md:text-base lg:mx-0 lg:max-w-xl"
+                variants={textRevealVariants}
+                initial="hidden"
+                animate="visible"
+                transition={{ delay: 1.6 }}
+              >
                 Join the largest tech gathering in Lagos happening over five transformative days,
                 from Tuesday 18th - Saturday 22nd November 2025.
-              </p>
+              </motion.p>
 
-              <div className="mx-auto mt-6 flex w-full flex-col gap-3 md:mt-6 md:max-w-md md:flex-row md:gap-4 lg:mx-0">
+              <motion.div
+                className="mx-auto mt-6 flex w-full flex-col gap-3 md:mt-6 md:max-w-md md:flex-row md:gap-4 lg:mx-0"
+                variants={containerVariants}
+                initial="hidden"
+                animate="visible"
+                transition={{ delay: 1.8, staggerChildren: 0.1 }}
+              >
                 <Link href="/buy">
-                  <Button
-                    variant="primary"
-                    className="w-full cursor-pointer whitespace-nowrap text-[#141414] md:flex-1"
+                  <motion.div
+                    variants={buttonVariants}
+                    whileHover="hover"
+                    whileTap="tap"
+                    className="w-full md:flex-1"
                   >
-                    Buy Tickets
-                  </Button>
+                    <Button
+                      variant="primary"
+                      className="w-full cursor-pointer whitespace-nowrap text-[#141414]"
+                    >
+                      Buy Tickets
+                    </Button>
+                  </motion.div>
                 </Link>
                 <Link className="flex-1" href="/login">
-                  <Button
-                    variant="secondary"
-                    className="w-full flex-1 cursor-pointer whitespace-nowrap uppercase md:flex-1"
+                  <motion.div
+                    variants={buttonVariants}
+                    whileHover="hover"
+                    whileTap="tap"
+                    className="w-full md:flex-1"
                   >
-                    Log in
-                  </Button>
+                    <Button
+                      variant="secondary"
+                      className="w-full flex-1 cursor-pointer whitespace-nowrap uppercase"
+                    >
+                      Log in
+                    </Button>
+                  </motion.div>
                 </Link>
-              </div>
+              </motion.div>
             </div>
-          </div>
+          </motion.div>
 
-          <div className="flex w-full flex-1 flex-col items-center justify-end md:w-auto md:items-end lg:justify-center">
+          <motion.div
+            className="flex w-full flex-1 flex-col items-center justify-end md:w-auto md:items-end lg:justify-center"
+            variants={carouselContainerVariants}
+          >
             <div className="relative w-full pt-8 md:pt-20 lg:w-auto lg:max-w-lg">
-              <div className="absolute top-2 right-2 z-10 md:top-4 md:right-4 lg:top-8 lg:right-8 xl:top-12 xl:right-16">
+              <motion.div
+                className="absolute top-2 right-5 z-10 max-[360px]:right-5 md:top-4 md:right-4 lg:top-8 lg:right-8 xl:top-12 xl:right-16"
+                variants={floatingVariants}
+                animate="animate"
+                whileHover={{
+                  scale: 1.1,
+                  rotate: 5,
+                  transition: { duration: 0.3 },
+                }}
+              >
                 <Image
                   src="/devfest25.svg"
                   alt="DevFest 2025"
                   width={120}
                   height={120}
-                  className="scale-hover h-16 w-16 md:h-20 md:w-20 lg:h-24 lg:w-24"
+                  className="h-16 w-16 md:h-20 md:w-20 lg:h-24 lg:w-24"
                 />
-              </div>
+              </motion.div>
 
-              {/* Infinite Queue Carousel */}
+              {/* Enhanced Infinite Queue Carousel */}
               <div className="flex w-full justify-center overflow-hidden md:justify-start">
                 <div
                   className={`flex will-change-transform ${
@@ -179,10 +387,10 @@ const Hero = () => {
                 </div>
               </div>
             </div>
-          </div>
+          </motion.div>
         </div>
-      </div>
-    </div>
+      </motion.div>
+    </motion.div>
   );
 };
 
