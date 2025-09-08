@@ -8,7 +8,6 @@ import { useRef } from "react";
 
 import Button from "@/components/ui/home-button";
 
-// Animation variants
 const containerVariants = {
   hidden: { opacity: 0 },
   visible: {
@@ -158,7 +157,6 @@ export default function Footer() {
           initial="hidden"
           animate={isFooterInView ? "visible" : "hidden"}
         >
-          {/* Globe Animation */}
           <motion.div
             className="scale-hover absolute top-0 right-4 z-10 w-24 lg:top-10 lg:right-5 lg:w-40"
             variants={globeVariants}
@@ -174,7 +172,6 @@ export default function Footer() {
             />
           </motion.div>
 
-          {/* Title */}
           <div className="relative">
             <motion.div
               className="font-akira flex flex-wrap items-center gap-6 text-[2.25rem] leading-[.8] font-bold text-black lg:text-[7rem]"
@@ -188,7 +185,6 @@ export default function Footer() {
             </motion.div>
           </div>
 
-          {/* Links & Socials */}
           <div className="flex w-full flex-col-reverse items-start justify-between gap-12 lg:flex-row">
             <div className="flex w-full flex-col gap-12">
               <motion.div
@@ -229,7 +225,6 @@ export default function Footer() {
                 </div>
               </motion.div>
 
-              {/* Social Links */}
               <motion.div
                 ref={socialRef}
                 className="space-y-3 lg:space-y-6"
@@ -261,7 +256,6 @@ export default function Footer() {
               </motion.div>
             </div>
 
-            {/* Footer Image */}
             <motion.div
               ref={imageRef}
               className="mt-4 flex w-full flex-col lg:mt-0"
@@ -273,16 +267,15 @@ export default function Footer() {
                 <Button className="flex text-lg md:text-xl lg:hidden">Buy Tickets</Button>
               </Link>
               <Image
-                src="/footer-image.webp"
+                src="/footer-imagery.png"
                 alt="DevFest Lagos Community"
                 width={550}
                 height={200}
-                className="w-full"
+                className="scale-hovwer w-full"
               />
             </motion.div>
           </div>
 
-          {/* Copyright */}
           <motion.div
             ref={copyrightRef}
             className="mt-8 lg:mt-16"

@@ -122,7 +122,6 @@ export default function StickyNote() {
   const topCards = cardData.slice(0, 2);
   const remainingCards = cardData.slice(2);
 
-  // Variants with proper TypeScript types
   const titleVariants = {
     hidden: { opacity: 0, y: 30, scale: 0.95 },
     visible: {
@@ -153,7 +152,6 @@ export default function StickyNote() {
     }),
   };
 
-  // Draggable wrapper with proper types
   const DraggableWrapper: React.FC<DraggableWrapperProps> = ({ children }) => (
     <motion.div
       drag
@@ -169,7 +167,6 @@ export default function StickyNote() {
     </motion.div>
   );
 
-  // Single Card with proper types
   const AnimatedTiltedCard: React.FC<AnimatedTiltedCardProps> = ({ card, index, inView }) => (
     <DraggableWrapper>
       <motion.div
@@ -183,7 +180,6 @@ export default function StickyNote() {
     </DraggableWrapper>
   );
 
-  // Grid with proper types
   const AnimatedTiltedCardsGrid: React.FC<AnimatedTiltedCardsGridProps> = ({ cards, inView }) => (
     <div className="mx-auto grid max-w-6xl grid-cols-1 gap-6 px-6 pt-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
       {cards.map((card, index) => (
@@ -237,11 +233,7 @@ export default function StickyNote() {
             <AnimatedTiltedCard key={index} card={card} index={index} inView={areTopCardsInView} />
           ))}
 
-          <motion.div
-            initial="hidden"
-            animate={areTopCardsInView ? "visible" : "hidden"}
-            whileHover={{ scale: 1.1, rotate: 8, transition: { duration: 0.3 } }}
-          >
+          <motion.div initial="hidden" animate={areTopCardsInView ? "visible" : "hidden"}>
             <Image
               className="scale-hover absolute top-6 right-0 rotate-2"
               src="/learn.svg"
