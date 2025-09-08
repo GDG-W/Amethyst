@@ -13,15 +13,15 @@ import Header from "../navbar";
 
 const Hero = () => {
   const initialSpeakers = [
-    { src: "/speaker1.webp", alt: "Speaker 1" },
-    { src: "/speaker2.webp", alt: "Speaker 2" },
-    { src: "/speaker3.webp", alt: "Speaker 3" },
-    { src: "/speaker4.webp", alt: "Speaker 4" },
-    { src: "/speaker5.webp", alt: "Speaker 5" },
-    { src: "/speaker6.webp", alt: "Speaker 6" },
-    { src: "/speaker7.webp", alt: "Speaker 7" },
-    { src: "/speaker8.webp", alt: "Speaker 8" },
-    { src: "/speaker9.webp", alt: "Speaker 9" },
+    { src: "/speaker1.png", alt: "Speaker 1" },
+    { src: "/speaker2.png", alt: "Speaker 2" },
+    { src: "/speaker3.png", alt: "Speaker 3" },
+    { src: "/speaker4.png", alt: "Speaker 4" },
+    { src: "/speaker5.png", alt: "Speaker 5" },
+    { src: "/speaker6.png", alt: "Speaker 6" },
+    { src: "/speaker7.png", alt: "Speaker 7" },
+    { src: "/speaker8.png", alt: "Speaker 8" },
+    { src: "/speaker9.png", alt: "Speaker 9" },
   ];
 
   const [speakerQueue, setSpeakerQueue] = useState(initialSpeakers);
@@ -221,7 +221,7 @@ const Hero = () => {
 
         <div className="mx-auto flex max-w-7xl flex-col items-center justify-center overflow-hidden bg-[#171717] pb-6 md:pb-14 lg:flex-row lg:items-stretch">
           <motion.div
-            className="flex w-full min-w-0 flex-2 flex-col justify-center px-6"
+            className="flex w-full min-w-0 flex-1 flex-col justify-center px-6"
             variants={containerVariants}
           >
             <motion.div className="flex justify-start md:mb-2 lg:mb-4" variants={logoVariants}>
@@ -230,13 +230,13 @@ const Hero = () => {
                 alt="Road to DevFest"
                 width={120}
                 height={120}
-                className="h-28 w-28 md:h-36 md:w-36 lg:h-40 lg:w-40"
+                className="scale-hover h-28 w-28 md:h-36 md:w-36 lg:h-40 lg:w-40"
               />
             </motion.div>
 
             <div className="mx-auto text-center lg:text-left">
               <motion.div variants={textRevealVariants}>
-                <h1 className="font-akira text-[1.5rem] font-bold text-white uppercase min-[375px]:text-[1.625rem] min-[425px]:text-[1.75rem] md:max-w-md md:text-4xl lg:text-left lg:text-[4rem] xl:max-w-3xl">
+                <h1 className="font-akira text-[1.5rem] font-bold text-white uppercase min-[375px]:text-[1.625rem] min-[425px]:text-[1.75rem] md:max-w-md md:text-4xl lg:text-left lg:text-[3.5rem] xl:max-w-3xl">
                   <motion.span
                     initial={{ opacity: 0, y: 50 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -330,7 +330,7 @@ const Hero = () => {
           </motion.div>
 
           <motion.div
-            className="flex w-full min-w-0 flex-1 flex-col items-center justify-end md:w-auto md:items-end lg:justify-center"
+            className="flex w-full min-w-0 flex-col items-center justify-end md:w-auto md:items-end lg:justify-center"
             variants={carouselContainerVariants}
           >
             <div className="relative w-full pt-8 md:pt-20 lg:w-auto lg:max-w-lg">

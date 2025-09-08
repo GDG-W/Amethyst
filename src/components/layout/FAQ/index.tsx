@@ -22,7 +22,7 @@ export default function Index() {
         id: 1,
         question: "Can I buy tickets for the event through this platform?",
         answer:
-          "Yes! This platform allows you to securely purchase tickets for the one-day or two-day event option.",
+          "Yes! This platform allows you to securely purchase tickets for the five days event",
       },
       {
         id: 2,
@@ -130,7 +130,6 @@ export default function Index() {
   const currentTopic = topics[activeTopicIndex];
   const currentQuestions = faqData[currentTopic as keyof typeof faqData] || [];
 
-  // Animation variants
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
