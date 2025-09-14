@@ -15,7 +15,7 @@ import { ErrorType } from "@/types/api";
 
 const loginSchema = z.object({
   email: z.email("Please enter a valid email"),
-  ticket_id: z.string().length(6, "Ticket ID must be exactly 6 characters"), // customize as needed
+  ticket_id: z.string().length(10, "Ticket ID must be exactly 10 characters"), // customize as needed
 });
 
 export default function LoginClient() {
