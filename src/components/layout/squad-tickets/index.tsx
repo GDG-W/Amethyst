@@ -9,7 +9,7 @@ import TicketCard from "./ticket-card";
 const ticketTypes = [
   {
     title: "STANDARD TICKET",
-    price: "10,000 per day",
+    price: "7,000 per day",
     href: "/buy#standard",
     description: "Open to everyone — whether you're just starting out or deep in the industry",
     features: [
