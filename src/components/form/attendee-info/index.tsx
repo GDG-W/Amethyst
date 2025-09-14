@@ -58,10 +58,10 @@ const AttendeeInfo = ({ selectedDates }: AttendeesInfoProps) => {
 
     const emailSet = new Set(emails.map((e) => e.toLowerCase()));
 
-    if (buyerInfo && emailSet.has(buyerInfo?.email.toLowerCase())) {
-      setAttendeeError(dateId, "You can't buy another ticket with the same email!");
-      return;
-    }
+    // if (buyerInfo && emailSet.has(buyerInfo?.email.toLowerCase())) {
+    //   setAttendeeError(dateId, "You can't buy another ticket with the same email!");
+    //   return;
+    // }
 
     if (dateId === THURS_STANDARD_ID || dateId === THURS_PRO_ID) {
       const standardEmail = attendeeInfo?.emailsByDate[`${THURS_STANDARD_ID}`];
