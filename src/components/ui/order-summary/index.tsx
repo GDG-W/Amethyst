@@ -1,8 +1,11 @@
 "use client";
-import React, { useMemo } from "react";
+import React, { useMemo, useState } from "react";
+
+import { CloseIcon } from "@/components/icons/close-icon";
 
 import Card from "../card";
 import Button from "../button";
+import TextField from "../inputs/text-field";
 type OrderItemsType = {
   name: string;
   price: number;
@@ -27,6 +30,7 @@ const OrderSummary = ({
   disabled,
   loading,
 }: OrderSummaryInterface) => {
+  const [applyDiscount, setApplyDiscount] = useState(false);
   const total = useMemo(() => calculateTotal(items), [items]);
 
   return (
@@ -51,8 +55,24 @@ const OrderSummary = ({
             })}
 
             <hr className="border-soft-200 mt-4 h-0 border-t border-dashed" />
-            <li className="text-away-base my-5 flex cursor-pointer items-center justify-between gap-3 font-medium tracking-tight underline underline-offset-4">
-              <span>Add discount code</span>
+            <li className="text-away-base mt-5 flex cursor-pointer items-center justify-between gap-3 font-medium tracking-tight underline underline-offset-4">
+              <span onClick={() => setApplyDiscount(true)}>Add discount code</span>
+              {applyDiscount && (
+                <span onClick={() => setApplyDiscount(false)}>
+                  <CloseIcon />
+                </span>
+              )}
+            </li>
+            <li className="my-5">
+              {applyDiscount && (
+                <TextField
+                  // actionDisabled={true}
+                  placeholder="Add discount code"
+                  onChange={() => {}}
+                  actionLabel="Apply"
+                  onAction={() => {}}
+                />
+              )}
             </li>
 
             <hr className="border-soft-200 mb-4 h-0 border-t border-dashed" />

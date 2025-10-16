@@ -2,16 +2,25 @@ import React from "react";
 
 import { cn } from "@/lib/utils";
 import AlertIcon from "@/components/icons/alert";
-
-import { TextFieldProps } from "../types";
-
+type TextFieldProps = {
+  id?: string;
+  label?: string;
+  type?: string;
+  extraLabel?: string;
+  placeholder?: string;
+  helperText?: string;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  value?: string | number;
+  error?: string;
+  disabled?: boolean;
+};
 type ActionProps = {
   actionLabel?: string;
   onAction?: () => void;
   actionDisabled?: boolean;
 };
 
-const TextField = ({
+const TextFieldUpdated = ({
   id,
   label,
   type = "text",
@@ -108,4 +117,4 @@ const TextField = ({
   );
 };
 
-export default TextField;
+export default TextFieldUpdated;
