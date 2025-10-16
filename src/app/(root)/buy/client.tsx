@@ -46,17 +46,17 @@ type CheckoutAttendee = {
 type CheckoutPayload = {
   buyer: { fullname: string; email: string };
   attendees: CheckoutAttendee[];
+  discount_code: string | null;
   callback_url: string;
   claim_url: string;
 };
 
 export default function BuyPageClient() {
   const [step, setStep] = useState(0);
-  const [payloadData, setPayloadData] = useState<CheckoutPayload | null>(null);
   const { tickets: standardTickets } = useTickets("standard");
   const { tickets: proTickets } = useTickets("pro");
   const { mutateAsync: checkout, isPending } = useCheckout();
-  const { orderItems, buyerInfo, attendeeInfo, profileInfo } = useBuyFormStore();
+  const { orderItems, buyerInfo, attendeeInfo, profileInfo, discountCode } = useBuyFormStore();
 
   const isMobile = useMediaQuery(640, "max");
 
@@ -203,24 +203,25 @@ export default function BuyPageClient() {
       attendees: mergedAttendees,
       callback_url: `${window.location.origin}/success`,
       claim_url: `${window.location.origin}/claim`,
+      discount_code: discountCode,
     };
   };
 
   const handleNext = async () => {
     if (step === 0) return handleContinue();
     if (step === 1) {
-      const payload = prepareCheckoutPayload();
-      if (!payload) return;
-
-      setPayloadData(payload);
-
       incrementStep();
+      return;
     }
     if (step === 2) {
-      if (!payloadData) return;
+      const payload = prepareCheckoutPayload();
+      if (!payload) {
+        toast.error("An error occurred", "Could not prepare your order information.");
+        return;
+      }
 
       try {
-        const res = await checkout(payloadData);
+        const res = await checkout(payload);
       } catch (err) {
         toast.error("Checkout failed", "Please try again in a few minutes");
       }
