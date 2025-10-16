@@ -1,4 +1,5 @@
 "use client";
+
 import React, { useMemo, useState } from "react";
 
 import z from "zod";
@@ -7,9 +8,10 @@ import { CloseIcon } from "@/components/icons/close-icon";
 
 import { useBuyFormStore } from "@/store/buy-form-store";
 
-import Card from "../card";
 import Button from "../button";
+import Card from "../card";
 import TextField from "../inputs/text-field";
+
 type OrderItemsType = {
   name: string;
   price: number;
@@ -49,7 +51,7 @@ const OrderSummary = ({
       return;
     }
     const schema = z.object({
-      discountCode: z.string().length(6, "Discount code must be 6 characters long"),
+      discountCode: z.string(),
     });
     const result = schema.safeParse({ [field]: value });
 
