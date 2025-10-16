@@ -69,12 +69,11 @@ export default function TicketDetails({
               const dayLabel = API_DAY_TO_LABEL[t.day] ?? t.day;
               const qty = quantities[t.id] ?? 0;
               const max = t.available_quantity ?? 0;
-              console.log(t, "me");
 
               return (
                 <li key={t.id}>
-                  <div className="label-3 mb-2 flex items-center justify-between font-medium sm:mb-3">
-                    <div className="flex items-center gap-2">
+                  <div className="label-3 mb-2 flex items-center justify-between gap-5 font-medium sm:mb-3">
+                    <div className="flex items-start gap-2">
                       <p>
                         {dayLabel} -{" "}
                         <span className={`${t.theme === "ui/ux" ? "uppercase" : "capitalize"}`}>
@@ -82,7 +81,7 @@ export default function TicketDetails({
                         </span>
                       </p>
                       {t.day === "thurs" && (
-                        <p className="border-stroke-sub-300 text-away-base label-5 w-fit min-w-14 rounded-full border px-2 py-1 text-center text-sm font-medium capitalize">
+                        <p className="border-stroke-sub-300 text-away-base label-5 w-fit min-w-18 rounded-full border px-2 py-1 text-center text-xs font-medium capitalize sm:min-w-20 md:text-sm">
                           {t.ticket_type}
                         </p>
                       )}
