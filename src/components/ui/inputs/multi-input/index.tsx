@@ -133,7 +133,7 @@ export default function MultiInput({
           {value.map((item) => (
             <span
               key={item}
-              className="text-strong-950 bg-away-lighter flex items-center gap-1 rounded-full px-2 py-1.5 text-sm"
+              className="text-strong-950 bg-away-lighter flex items-center gap-1 rounded-full px-2 py-1.5 text-sm !no-underline"
             >
               {item}
               <button type="button" className="cursor-pointer" onClick={() => handleRemove(item)}>
@@ -152,7 +152,7 @@ export default function MultiInput({
               onBlur={handleBlur}
               onKeyDown={handleKeyDown}
               onPaste={handlePaste}
-              className="placeholder:text-soft-400 flex-1 bg-transparent outline-none"
+              className="placeholder:text-soft-400 flex-1 bg-transparent lowercase !no-underline outline-none"
               placeholder={placeholder}
             />
           ) : null}

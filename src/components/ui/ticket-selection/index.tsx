@@ -1,9 +1,10 @@
 "use client";
+
 import React from "react";
 
 import Card from "@/components/ui/ticket-selection/ticket-card";
-import Tabs from "@/components/ui/ticket-selection/ticket-tabs";
 import DatePicker from "@/components/ui/ticket-selection/date-picker";
+import Tabs from "@/components/ui/ticket-selection/ticket-tabs";
 import { TicketType } from "@/types/ticket";
 import { useTickets } from "@/hooks/useTickets";
 
@@ -43,6 +44,25 @@ const TicketsSelection = ({
     { id: "pro", label: "Pro Ticket" },
   ];
 
+  React.useEffect(() => {
+    const hash = window.location.hash.replace("#", "");
+    if (hash && (hash === "standard" || hash === "pro") && hash !== activeTab) {
+      onTabChange(hash as TicketType);
+    }
+  }, [activeTab, onTabChange]);
+
+  React.useEffect(() => {
+    const handleHashChange = () => {
+      const hash = window.location.hash.replace("#", "");
+      if (hash && (hash === "standard" || hash === "pro") && hash !== activeTab) {
+        onTabChange(hash as TicketType);
+      }
+    };
+
+    window.addEventListener("hashchange", handleHashChange);
+    return () => window.removeEventListener("hashchange", handleHashChange);
+  }, [activeTab, onTabChange]);
+
   const header = (
     <>
       <div className="flex h-8 w-8 items-center justify-center rounded-sm bg-[#171717] text-sm font-semibold text-white">
@@ -55,6 +75,8 @@ const TicketsSelection = ({
   const handleTabChange = (tabId: string) => {
     const newTab = tabId as TicketType;
     onTabChange(newTab);
+
+    window.history.replaceState(null, "", `#${newTab}`);
   };
 
   const handleDateSelectionChange = (dates: string[]) => {

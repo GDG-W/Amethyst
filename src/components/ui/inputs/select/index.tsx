@@ -4,7 +4,6 @@ import * as Select from "@radix-ui/react-select";
 import { Check, ChevronDown } from "lucide-react";
 
 import { cn } from "@/lib/utils";
-
 import AlertIcon from "@/components/icons/alert";
 
 import { SelectFieldProps } from "../types";
@@ -17,6 +16,7 @@ export default function SelectField({
   onChange,
   error,
   width,
+  inputStyle,
   placeholder = "Select an option",
   id = "select-field",
 }: SelectFieldProps) {
@@ -37,7 +37,10 @@ export default function SelectField({
         <Select.Trigger
           id={id}
           aria-labelledby={id}
-          className="border-soft-200 data-[placeholder]:text-soft-400 inline-flex items-center justify-between rounded-[8px] border bg-white p-4 tracking-tight"
+          className={cn(
+            `border-soft-200 data-[placeholder]:text-soft-400 inline-flex items-center justify-between rounded-[8px] border bg-white p-4 tracking-tight`,
+            inputStyle
+          )}
         >
           <span className="truncate pr-2">
             <Select.Value placeholder={placeholder} />

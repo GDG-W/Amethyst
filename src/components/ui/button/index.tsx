@@ -1,11 +1,14 @@
 "use client";
+
 import React from "react";
-type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
+
+export type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
   children: React.ReactNode;
   loading?: boolean;
   size?: "full" | "fit";
-  variant?: "primary" | "secondary" | "link";
+  variant?: "primary" | "secondary" | "link" | "ghost";
 };
+
 const Button = ({
   children,
   disabled,
@@ -20,10 +23,14 @@ const Button = ({
       full: "w-full",
       fit: "w-fit",
     },
+    height: {
+      auto: "auto",
+    },
     variants: {
       primary: "bg-away-base text-white",
       secondary: "bg-away-base/10 border border-away-base text-away-base",
       link: "bg-transparent text-away-base underline underline-offset-2",
+      ghost: "bg-transparent text-away-black",
     },
   };
 
@@ -36,7 +43,7 @@ const Button = ({
       {...rest}
     >
       {loading ? (
-        <span className="h-5 w-5 animate-spin rounded-full border-2 border-white border-t-transparent"></span>
+        <span className="size-5 animate-spin rounded-full border-2 border-white border-t-transparent"></span>
       ) : (
         children
       )}

@@ -101,6 +101,7 @@ export default function TicketDetails({
                       options={ticketSelectOptions}
                       onChange={handleQty(t.id, max)}
                       width="88px"
+                      inputStyle="!p-2.5 !pl-3"
                     />
                   </div>
                 </li>
