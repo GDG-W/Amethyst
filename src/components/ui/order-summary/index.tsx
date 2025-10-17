@@ -95,15 +95,17 @@ const OrderSummary = ({
             </li>
             <li className="my-5">
               {applyDiscount && (
-                <TextField
-                  value={discountCode ?? ""}
-                  name="discountCode"
-                  placeholder="Add discount code"
-                  onChange={(e) => handleFieldChange("discountCode", e.target.value)}
-                  onBlur={(e) => validateField("discountCode", e.target.value)}
-                  error={discountError}
-                  actionLabel="Apply"
-                />
+                <div className="flex">
+                  <TextField
+                    value={discountCode ?? ""}
+                    name="discountCode"
+                    placeholder="Add discount code"
+                    onChange={(e) => handleFieldChange("discountCode", e.target.value)}
+                    onBlur={(e) => validateField("discountCode", e.target.value)}
+                    error={discountError}
+                    actionLabel="Apply"
+                  />
+                </div>
               )}
             </li>
 
