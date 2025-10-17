@@ -32,6 +32,11 @@ interface AttendeeState {
   attendeeErrors: Partial<Record<string, string>>;
 }
 
+interface DiscountState {
+  discountCode: string;
+  discountError: string | null;
+}
+
 interface TicketActions {
   setOrderItems: (items: OrderItem[]) => void;
   setSelectedByType: (type: TicketType, dates: string[]) => void;
@@ -62,14 +67,22 @@ interface AttendeeActions {
   resetAttendeeState: () => void;
 }
 
+interface DiscountActions {
+  setDiscountCode: (code: string) => void;
+  setDiscountError: (error: string | null) => void;
+  resetDiscountState: () => void;
+}
+
 type BuyFormStore = TicketState &
   BuyerState &
   ProfileState &
   AttendeeState &
+  DiscountState &
   TicketActions &
   BuyerActions &
   ProfileActions &
-  AttendeeActions;
+  AttendeeActions &
+  DiscountActions;
 
 const initialTicketState: TicketState = {
   orderItems: [],
@@ -93,6 +106,11 @@ const initialAttendeeState: AttendeeState = {
   attendeeErrors: {},
 };
 
+const initialDiscountState: DiscountState = {
+  discountCode: "",
+  discountError: null,
+};
+
 export const useBuyFormStore = create<BuyFormStore>()(
   devtools(
     (set, get) => ({
@@ -100,6 +118,7 @@ export const useBuyFormStore = create<BuyFormStore>()(
       ...initialBuyerState,
       ...initialProfileState,
       ...initialAttendeeState,
+      ...initialDiscountState,
 
       setOrderItems: (items) => set({ orderItems: items }, false, "setOrderItems"),
 
@@ -222,6 +241,12 @@ export const useBuyFormStore = create<BuyFormStore>()(
         ),
 
       resetAttendeeState: () => set(initialAttendeeState, false, "resetAttendeeState"),
+
+      // Discount code
+
+      setDiscountCode: (code) => set({ discountCode: code }, false, "setDiscountCode"),
+      setDiscountError: (error) => set({ discountError: error }, false, "setDiscountError"),
+      resetDiscountState: () => set(initialDiscountState, false, "resetDiscountState"),
     }),
     {
       name: "buy-form-store",

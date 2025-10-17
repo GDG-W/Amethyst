@@ -284,8 +284,8 @@ const Hero = () => {
                 animate="visible"
                 transition={{ delay: 1.6 }}
               >
-                Join the largest tech gathering in Lagos happening over five transformative days,
-                from Tuesday 18th - Saturday 22nd November 2025.
+                Get ready for 20+ hands-on workshops, dynamic panel sessions, and an unforgettable
+                after-party, all happening from November 18th to 22nd, 2025!
               </motion.p>
 
               <motion.div
