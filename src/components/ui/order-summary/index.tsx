@@ -1,11 +1,17 @@
 "use client";
+
 import React, { useMemo, useState } from "react";
+
+import z from "zod";
 
 import { CloseIcon } from "@/components/icons/close-icon";
 
-import Card from "../card";
+import { useBuyFormStore } from "@/store/buy-form-store";
+
 import Button from "../button";
+import Card from "../card";
 import TextField from "../inputs/text-field";
+
 type OrderItemsType = {
   name: string;
   price: number;
@@ -32,6 +38,30 @@ const OrderSummary = ({
 }: OrderSummaryInterface) => {
   const [applyDiscount, setApplyDiscount] = useState(false);
   const total = useMemo(() => calculateTotal(items), [items]);
+  const { setDiscountCode, setDiscountError, discountCode, discountError } = useBuyFormStore();
+
+  const handleFieldChange = (field: string, value: string) => {
+    setDiscountCode(value);
+    validateField(field, value);
+  };
+
+  const validateField = (field: string, value: string) => {
+    if (!value) {
+      setDiscountError(null);
+      return;
+    }
+    const schema = z.object({
+      discountCode: z.string(),
+    });
+    const result = schema.safeParse({ [field]: value });
+
+    if (!result.success) {
+      const issue = result.error.issues.find((i) => i.path[0] === field);
+      setDiscountError(issue ? issue.message : null);
+    } else {
+      setDiscountError(null);
+    }
+  };
 
   return (
     <Card title="Order Summary">
@@ -66,11 +96,13 @@ const OrderSummary = ({
             <li className="my-5">
               {applyDiscount && (
                 <TextField
-                  // actionDisabled={true}
+                  value={discountCode ?? ""}
+                  name="discountCode"
                   placeholder="Add discount code"
-                  onChange={() => {}}
+                  onChange={(e) => handleFieldChange("discountCode", e.target.value)}
+                  onBlur={(e) => validateField("discountCode", e.target.value)}
+                  error={discountError}
                   actionLabel="Apply"
-                  onAction={() => {}}
                 />
               )}
             </li>
