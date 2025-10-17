@@ -2,15 +2,15 @@
 
 import { useState } from "react";
 
-import Header from "@/components/layout/header";
+import Button from "@/components/ui/button";
 import Card from "@/components/ui/card";
 import Checkbox from "@/components/ui/inputs/checkbox";
+import Header from "@/components/layout/header";
 import MultiInput from "@/components/ui/inputs/multi-input";
 import Select from "@/components/ui/inputs/select";
+import SuccessModal from "@/components/modal/success-modal";
 import TextField from "@/components/ui/inputs/text-field";
 import { toast } from "@/components/ui/toast";
-import SuccessModal from "@/components/modal/success-modal";
-import Button from "@/components/ui/button";
 
 const options = [
   { label: "Option 1", value: "one" },
@@ -36,7 +36,7 @@ export default function Testing() {
         currModalState={toggleSuccessModal}
         toggleModal={setToggleSuccessModal}
         title="Purchase Successful"
-        summary="You have successfully purchased tickets for DevFest Lagos 2025. Check your email for your ticket ID."
+        summary="You have successfully purchased tickets for DevFest Lagos 2025. Check your email for more details "
       />
 
       <Button
