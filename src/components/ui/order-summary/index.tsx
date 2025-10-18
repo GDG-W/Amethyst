@@ -24,6 +24,7 @@ interface OrderSummaryInterface {
   noOfSteps: number;
   loading?: boolean;
   disabled?: boolean;
+  setIsPreflight?: (x: boolean) => void;
 }
 function calculateTotal(listItems: OrderItemsType[]) {
   return listItems.reduce((total: number, item: OrderItemsType) => total + item.price, 0);
@@ -35,6 +36,7 @@ const OrderSummary = ({
   noOfSteps,
   disabled,
   loading,
+  setIsPreflight,
 }: OrderSummaryInterface) => {
   const [applyDiscount, setApplyDiscount] = useState(false);
   const total = useMemo(() => calculateTotal(items), [items]);
@@ -104,6 +106,7 @@ const OrderSummary = ({
                     onBlur={(e) => validateField("discountCode", e.target.value)}
                     error={discountError}
                     actionLabel="Apply"
+                    onAction={() => setIsPreflight && setIsPreflight(true)}
                   />
                 </div>
               )}
