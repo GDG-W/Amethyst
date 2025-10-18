@@ -16,8 +16,9 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "DevFest '25 | Ticketing",
-  description: "Purchase your tickets to attend one of the biggest tech conferences in Africa",
+  title: "DevFest Lagos 2025 | Ticketing",
+  description:
+    "Secure your ticket for DevFest Lagos 2025! Get tickets for the premier tech conference, featuring talks on Mobile, Cloud, Web, AI/ML, Design, and more, from Nov 18th-22nd.",
 };
 const akira = localFont({
   src: "../components/fonts/Akira-Expanded-Demo.otf",
