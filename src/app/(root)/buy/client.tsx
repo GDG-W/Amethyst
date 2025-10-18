@@ -53,6 +53,7 @@ type CheckoutPayload = {
 
 export default function BuyPageClient() {
   const [step, setStep] = useState(0);
+  const [isPreflight, setIsPreflight] = useState(false);
   const { tickets: standardTickets } = useTickets("standard");
   const { tickets: proTickets } = useTickets("pro");
   const { mutateAsync: checkout, isPending } = useCheckout();
@@ -221,7 +222,9 @@ export default function BuyPageClient() {
       }
 
       try {
-        const res = await checkout(payload);
+        const payloadWithPreflight = { ...payload, is_preflight: isPreflight };
+        const res = await checkout(payloadWithPreflight);
+        // console.log(res);
       } catch (err) {
         toast.error("Checkout failed", "Please try again in a few minutes");
       }
@@ -256,6 +259,7 @@ export default function BuyPageClient() {
               handleButtonClick={handleNext}
               disabled={isNextDisabled()}
               loading={isPending}
+              setIsPreflight={setIsPreflight}
             />
           )}
           <Button
