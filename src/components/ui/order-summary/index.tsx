@@ -71,7 +71,7 @@ const OrderSummary = ({
     }
   };
 
-  const discountedAmount = discount && toCurrency(discount.discountedAmount);
+  const discountedAmount = discount && toCurrency(discount.discountedAmount ?? 0);
   const minusDiscountedAmount = !discountedAmount ? undefined : `-${discountedAmount}`;
 
   return (
