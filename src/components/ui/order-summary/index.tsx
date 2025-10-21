@@ -14,6 +14,8 @@ import TextField from "../inputs/text-field";
 
 type OrderItemsType = {
   name: string;
+  theme: string;
+  description: string;
   price: number;
 };
 
@@ -79,6 +81,21 @@ const OrderSummary = ({
                   <p className="text-sub-600 font-medium tracking-tight">{item.name}</p>
                   <p className="label-3 font-medium tracking-tight text-black">
                     &#8358;{item.price}
+                  </p>
+                </li>
+              );
+            })}
+
+            <hr className="border-soft-200 mt-4 h-0 border-t border-dashed" />
+            {items.map((item, index) => {
+              return (
+                <li
+                  key={`${item.name}-${item.price}-${index}`}
+                  className="mb-3 flex items-center justify-between gap-3"
+                >
+                  <p className="text-sub-600 font-medium tracking-tight">{item.theme}</p>
+                  <p className="label-3 font-medium tracking-tight text-black">
+                    {item.description}
                   </p>
                 </li>
               );
