@@ -1,0 +1,99 @@
+.image-edit-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.image-preview-area {
+  position: relative;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.uploaded-image {
+  width: 100%;
+  height: auto;
+  display: block;
+  max-height: 600px !important;
+  object-fit: contain;
+}
+
+.custom-react-crop {
+  width: 100%;
+  max-width: 400px;
+  margin: 0 auto;
+}
+.ReactCrop__crop-selection {
+  border: 4px dashed #f4d03f !important;
+  animation: none !important;
+  background: none !important;
+  border-radius: 16px !important;
+}
+.ReactCrop__drag-handle {
+  background-color: #f4d03f !important;
+  border: none !important;
+}
+@keyframes dashRotate {
+  from {
+    stroke-dashoffset: 0;
+  }
+  to {
+    stroke-dashoffset: 100;
+  }
+}
+
+.action-buttons {
+  display: flex;
+  gap: 16px;
+  width: 100%;
+}
+.replace-photo-btn {
+  background: #ffecc0;
+  font-family: "Akira", "Arial Black", sans-serif;
+  color: #141414;
+  border: none;
+  padding: 16px 36px;
+  font-size: 16px;
+  font-weight: 800;
+  border-radius: 36px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  flex: 1;
+}
+
+.next-btn {
+  background: rgba(246, 181, 30, 1);
+  font-family: "Akira", "Arial Black", sans-serif;
+  color: #141414;
+  border: 4px solid black;
+  font-size: 16px;
+  font-weight: 800;
+  border-radius: 36px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  opacity: 1;
+  padding: 0.5rem 2rem;
+  letter-spacing: -2%;
+}
+
+@media (max-width: 768px) {
+  .image-preview-area {
+    border-radius: 24px;
+    max-width: 90%;
+  }
+  .action-buttons {
+    flex-direction: column;
+    gap: 16px;
+    padding: 0 1rem;
+    max-width: 100%;
+  }
+  .replace-photo-btn {
+    padding: 16px 36px;
+  }
+  .next-btn {
+    padding: 16px;
+  }
+}
