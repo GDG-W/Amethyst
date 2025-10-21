@@ -1,5 +1,4 @@
 "use client";
-import heic2any from "heic2any";
 import { useCallback, useState } from "react";
 
 import UploadIcon from "@/components/icons/upload-icon";
@@ -12,6 +11,8 @@ export const Upload = ({ onImageUpload }: UploadProps) => {
   const [isConverting, setIsConverting] = useState(false);
 
   const convertHeicToJpeg = async (file: File): Promise<Blob> => {
+    // Dynamically import heic2any only on the client when needed
+    const heic2any = (await import("heic2any")).default;
     const convertedBlob = await heic2any({
       blob: file,
       toType: "image/jpeg",
@@ -20,7 +21,6 @@ export const Upload = ({ onImageUpload }: UploadProps) => {
     const resultBlob = Array.isArray(convertedBlob) ? convertedBlob[0] : convertedBlob;
     return resultBlob as Blob;
   };
-
   const handleFileUpload = useCallback(
     async (file: File) => {
       if (!file) return;
