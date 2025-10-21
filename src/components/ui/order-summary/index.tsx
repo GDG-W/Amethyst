@@ -94,7 +94,7 @@ const OrderSummary = ({
                   className="mb-3 flex items-center justify-between gap-3"
                 >
                   <p className="text-sub-600 font-medium tracking-tight">{item.theme}</p>
-                  <p className="label-3 font-medium tracking-tight text-black">
+                  <p className="max-w-[14rem] text-[12px] leading-[1] font-medium text-black">
                     {item.description}
                   </p>
                 </li>
