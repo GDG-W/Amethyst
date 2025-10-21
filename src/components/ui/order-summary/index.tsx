@@ -91,7 +91,7 @@ const OrderSummary = ({
               return (
                 <li
                   key={`${item.name}-${item.price}-${index}`}
-                  className="mb-3 flex items-center justify-between gap-3"
+                  className="my-3 flex items-center justify-between gap-3"
                 >
                   <p className="text-sub-600 font-medium tracking-tight">{item.theme}</p>
                   <p className="max-w-[14rem] text-[12px] leading-[1] font-medium text-black">
