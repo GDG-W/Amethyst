@@ -83,7 +83,7 @@ export default function TicketDetails({
                   </div>
                   <div className="flex items-center justify-between">
                     <p
-                      className={`text-sub-600 label-5 ${t.theme === "ui/ux" ? "uppercase" : "capitalize"}`}
+                      className={`text-sub-600 label-5 max-w-[19rem] ${t.theme === "ui/ux" ? "uppercase" : "capitalize"}`}
                     >
                       {t.description}
                     </p>
