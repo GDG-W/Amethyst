@@ -93,7 +93,7 @@ const TextField = ({
             onClick={onAction}
             disabled={actionDisabled || inputProps.disabled}
             className={cn(
-              "ml-2 shrink-0 rounded-md px-2 py-1 text-lg font-medium",
+              "ml-2 shrink-0 cursor-pointer rounded-md px-2 py-1 text-lg font-medium",
               "text-away-base hover:text-away-base/80",
               "disabled:text-disabled-300 disabled:cursor-not-allowed"
             )}
