@@ -1,0 +1,196 @@
+.dpmaker-container {
+  min-height: 100vh;
+  background: rgba(255, 250, 235, 1);
+  position: relative;
+  overflow-x: hidden;
+  padding: 10px;
+}
+
+.dpmaker-container .title {
+  font-family: "Akira", "Arial Black", sans-serif;
+  font-weight: 800;
+  font-size: 32px;
+  text-align: center;
+  color: #000000;
+  margin: 1rem 0;
+  line-height: 0.85;
+  -webkit-text-stroke: 0.5px #201313;
+}
+
+.dpmaker-container .subtitle {
+  font-family: "Inter", Arial, sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  color: #5c5c5c;
+  text-align: center;
+  opacity: 0.8;
+  max-width: 600px;
+  margin-bottom: 10px;
+}
+
+.upload-section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  z-index: 2;
+}
+
+.upload-zone {
+  border: 10px solid #f6b51e;
+  border-radius: 10px;
+  background: #ffe7a5;
+  padding: 3rem 2rem;
+  text-align: center;
+  position: relative;
+  transition: all 0.3s ease;
+  width: 500px;
+  min-height: 500px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.file-input {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+}
+
+.upload-label {
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  pointer-events: none;
+}
+
+.upload-box {
+  background-color: #ffffff;
+  border: 1px #ffecc0;
+  border-radius: 12px;
+  padding: 12px;
+  width: 400px;
+  height: 126px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 4px;
+}
+.upload-title {
+  font-family: "Inter", Arial, sans-serif;
+  font-weight: 500;
+  font-style: Medium;
+  font-size: 16px;
+  line-height: 24px;
+  letter-spacing: -3%;
+  color: #171717;
+}
+.upload-text {
+  font-family: "Inter", Arial, sans-serif;
+  font-size: 1rem;
+  color: #262626;
+  line-height: 1.4;
+  font-size: 14px;
+}
+
+.click-text {
+  color: #171717;
+  font-weight: 600;
+}
+
+.preview-container {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  right: 10px;
+  bottom: 10px;
+  border-radius: 8px;
+  overflow: hidden;
+  background: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.preview-image {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  border-radius: 4px;
+}
+.designer-tag {
+  position: fixed;
+  right: 0px;
+  top: 90%;
+  transform: translateY(-50%);
+  z-index: 5;
+}
+
+@media (max-width: 768px) {
+  .dpmaker-container .shape-pink,
+  .dpmaker-container .shape-green {
+    display: none;
+  }
+
+  .dpmaker-container .title {
+    font-size: 24px;
+  }
+  .samples-grid {
+    grid-template-columns: repeat(2, minmax(100px, 1fr));
+  }
+  .dpmaker-container .logo-section {
+    width: 100%;
+  }
+  .logo-content .subtitle {
+    font-size: 14px;
+  }
+  .upload-zone {
+    border: none;
+    border-radius: 24px;
+    width: auto;
+    height: 560px;
+  }
+  .upload-box {
+    gap: 4px;
+    width: auto;
+    height: 126px;
+  }
+  .designer-tag {
+    display: none;
+  }
+
+  .customize-container {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .samples-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.5rem;
+  }
+  .upload-title {
+    font-family: "Akira", "Arial Black", sans-serif;
+  }
+
+  .upload-box {
+    padding: 10px;
+    width: 100%;
+    height: 100%;
+  }
+  .crop-selection {
+    width: 80%;
+    height: 70%;
+  }
+
+  .action-buttons {
+    padding: 0 0.5rem;
+  }
+}
