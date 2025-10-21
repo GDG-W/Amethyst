@@ -87,21 +87,6 @@ const OrderSummary = ({
             })}
 
             <hr className="border-soft-200 mt-4 h-0 border-t border-dashed" />
-            {items.map((item, index) => {
-              return (
-                <li
-                  key={`${item.name}-${item.price}-${index}`}
-                  className="my-3 flex items-center justify-between gap-3"
-                >
-                  <p className="text-sub-600 font-medium tracking-tight">{item.theme}</p>
-                  <p className="max-w-[14rem] text-[12px] leading-[1] font-medium text-black">
-                    {item.description}
-                  </p>
-                </li>
-              );
-            })}
-
-            <hr className="border-soft-200 mt-4 h-0 border-t border-dashed" />
             <li className="text-away-base mt-5 flex cursor-pointer items-center justify-between gap-3 font-medium tracking-tight underline underline-offset-4">
               <span onClick={() => setApplyDiscount(true)}>Add discount code</span>
               {applyDiscount && (
