@@ -12,8 +12,8 @@ import OrderSummary from "@/components/ui/order-summary";
 import { toast } from "@/components/ui/toast";
 import { useBuyFormStore } from "@/store/buy-form-store";
 import { useCheckout } from "@/hooks/useCheckout";
-import { useTickets } from "@/hooks/useTickets";
 import { useMediaQuery } from "@/hooks/useMediaQuery";
+import { useTickets } from "@/hooks/useTickets";
 
 const steps = ["Buy Ticket", "Buyer Information", "Checkout"];
 
@@ -23,6 +23,8 @@ export type OrderItem = {
   dayName: string;
   ticketCount: number;
   price: number;
+  theme: string;
+  description: string;
 };
 
 export type BuyerInfo = {
