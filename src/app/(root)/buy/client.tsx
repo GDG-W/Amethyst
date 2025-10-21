@@ -69,17 +69,15 @@ export default function BuyPageClient() {
   };
   const isNextDisabled = () => {
     if (step === 0) {
-      // Step 0: no tickets selected
       return orderItems.length < 1;
     }
 
     if (step === 1) {
       if (!buyerInfo || !buyerInfo.fullName || !buyerInfo.email) {
-        return true; // buyer info is required
+        return true;
       }
 
       if (buyerInfo.belongsToMe) {
-        // ticket belongs to me → require profile registration info
         return !(
           profileInfo &&
           profileInfo.gender &&
@@ -87,7 +85,6 @@ export default function BuyPageClient() {
           profileInfo.experienceLevel
         );
       } else {
-        // ticket for others → require attendee emails equal ticket count
         const totalTickets = orderItems.reduce((sum, item) => sum + (item.ticketCount || 0), 0);
 
         const totalAttendees =
@@ -107,7 +104,6 @@ export default function BuyPageClient() {
 
   const handleContinue = () => {
     if (step === 0) {
-      // Remove tickets with 0 quantity
       const { quantities, selectedByType, setSelectedByType } = useBuyFormStore.getState();
 
       ["standard", "pro"].forEach((type) => {
