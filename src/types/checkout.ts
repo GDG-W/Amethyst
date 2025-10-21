@@ -13,6 +13,11 @@ export interface CheckoutPayload {
   buyer: Buyer;
   attendees: Attendee[];
   callback_url: string;
+  discount_code: string | null;
+}
+
+export interface PreflightCheckoutPayload extends CheckoutPayload {
+  is_preflight: boolean;
 }
 
 export interface CheckoutResponse {
@@ -26,6 +31,14 @@ export interface CheckoutResponse {
   payer_email: string;
   payer_fullname: string;
   status: "pending" | "completed" | "failed";
+  discount: {
+    coupon_id: string;
+    discount: {
+      discountedAmount: number;
+      qualifiedSum: number;
+      usageCount: number;
+    };
+  };
 }
 
 export interface ApiError {

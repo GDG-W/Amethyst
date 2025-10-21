@@ -8,6 +8,10 @@ import { CloseIcon } from "@/components/icons/close-icon";
 
 import { useBuyFormStore } from "@/store/buy-form-store";
 
+import { DiscountType } from "@/app/(root)/buy/client";
+
+import { toCurrency } from "@/lib/helpers";
+
 import Button from "../button";
 import Card from "../card";
 import TextField from "../inputs/text-field";
@@ -22,8 +26,10 @@ interface OrderSummaryInterface {
   handleButtonClick: () => void;
   currentStep: number;
   noOfSteps: number;
+  discount?: DiscountType;
   loading?: boolean;
   disabled?: boolean;
+  handleDiscountApply: () => void;
 }
 function calculateTotal(listItems: OrderItemsType[]) {
   return listItems.reduce((total: number, item: OrderItemsType) => total + item.price, 0);
@@ -35,6 +41,8 @@ const OrderSummary = ({
   noOfSteps,
   disabled,
   loading,
+  discount,
+  handleDiscountApply,
 }: OrderSummaryInterface) => {
   const [applyDiscount, setApplyDiscount] = useState(false);
   const total = useMemo(() => calculateTotal(items), [items]);
@@ -62,6 +70,9 @@ const OrderSummary = ({
       setDiscountError(null);
     }
   };
+
+  const discountedAmount = discount && toCurrency(discount.discountedAmount ?? 0);
+  const minusDiscountedAmount = !discountedAmount ? undefined : `-${discountedAmount}`;
 
   return (
     <Card title="Order Summary">
@@ -103,7 +114,15 @@ const OrderSummary = ({
                     onChange={(e) => handleFieldChange("discountCode", e.target.value)}
                     onBlur={(e) => validateField("discountCode", e.target.value)}
                     error={discountError}
-                    actionLabel="Apply"
+                    actionLabel={minusDiscountedAmount ?? "Apply"}
+                    onAction={handleDiscountApply}
+                    actionDisabled={
+                      loading ||
+                      disabled ||
+                      currentStep < 2 ||
+                      !discountCode ||
+                      Boolean(discount?.discountedAmount)
+                    }
                   />
                 </div>
               )}
@@ -112,7 +131,9 @@ const OrderSummary = ({
             <hr className="border-soft-200 mb-4 h-0 border-t border-dashed" />
             <li className="flex items-center justify-between gap-3">
               <p className="text-sub-600 text-sm font-medium">Total</p>
-              <p className="label-3 text-sm font-medium text-black">&#8358;{total}</p>
+              <p className="label-3 text-sm font-medium text-black">
+                {toCurrency(discount?.amount_payable ?? total)}
+              </p>
             </li>
           </ul>
         )}
