@@ -52,6 +52,8 @@ const BuyTicket = () => {
       dayName: dayLabel,
       ticketCount: qty,
       price: qty * t.price,
+      theme: t.theme,
+      description: t.description,
     };
   };
 

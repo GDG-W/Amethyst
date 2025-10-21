@@ -5,6 +5,7 @@ export type TicketType = "standard" | "pro";
 type TicketDay = "tue" | "wed" | "thurs" | "fri" | "sat";
 
 export type Ticket = {
+  description: string;
   id: string;
   ticket_type: TicketType;
   day: TicketDay;
