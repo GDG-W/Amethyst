@@ -11,7 +11,7 @@ import BuyerInformation from "@/components/form/buyer-info";
 import OrderSummary from "@/components/ui/order-summary";
 import { toast } from "@/components/ui/toast";
 import { useBuyFormStore } from "@/store/buy-form-store";
-import { useCheckout } from "@/hooks/useCheckout";
+import { useCheckout, usePreflightCheckout } from "@/hooks/useCheckout";
 import { useTickets } from "@/hooks/useTickets";
 import { useMediaQuery } from "@/hooks/useMediaQuery";
 
@@ -51,12 +51,20 @@ type CheckoutPayload = {
   claim_url: string;
 };
 
+export type DiscountType = {
+  amount_payable: number;
+  discountedAmount: number;
+};
+
 export default function BuyPageClient() {
   const [step, setStep] = useState(0);
+  const [discount, setDiscount] = useState<DiscountType>();
   const { tickets: standardTickets } = useTickets("standard");
   const { tickets: proTickets } = useTickets("pro");
-  const { mutateAsync: checkout, isPending } = useCheckout();
   const { orderItems, buyerInfo, attendeeInfo, profileInfo, discountCode } = useBuyFormStore();
+
+  const { mutateAsync: checkout, isPending } = useCheckout();
+  const { mutateAsync: preflightCheckout, isPending: isPreflightPending } = usePreflightCheckout();
 
   const isMobile = useMediaQuery(640, "max");
 
@@ -221,8 +229,34 @@ export default function BuyPageClient() {
       }
 
       try {
-        const res = await checkout(payload);
+        await checkout(payload);
       } catch (err) {
+        toast.error("Checkout failed", "Please try again in a few minutes");
+      }
+    }
+  };
+
+  const handleDiscountApply = async () => {
+    if (step === 0) return handleContinue();
+    if (step === 1) {
+      incrementStep();
+      return;
+    }
+    if (step === 2) {
+      const payload = prepareCheckoutPayload();
+      if (!payload) {
+        toast.error("An error occurred", "Could not prepare your order information.");
+        return;
+      }
+      try {
+        const res = await preflightCheckout({ ...payload, is_preflight: true });
+        if (res.success) {
+          setDiscount({
+            amount_payable: res?.data?.amount_payable,
+            discountedAmount: res?.data?.discount?.discount?.discountedAmount,
+          });
+        }
+      } catch (error) {
         toast.error("Checkout failed", "Please try again in a few minutes");
       }
     }
@@ -255,14 +289,16 @@ export default function BuyPageClient() {
               noOfSteps={steps.length}
               handleButtonClick={handleNext}
               disabled={isNextDisabled()}
-              loading={isPending}
+              loading={isPending || isPreflightPending}
+              discount={discount}
+              handleDiscountApply={handleDiscountApply}
             />
           )}
           <Button
             onClick={handleNext}
             className={`mt-10 sm:hidden ${isMobile && step === 2 ? "hidden" : null}`}
             disabled={isNextDisabled()}
-            loading={isPending}
+            loading={isPending || isPreflightPending}
           >
             {step === steps.length - 1 ? "Proceed to Pay" : "Continue"}
           </Button>
@@ -274,7 +310,9 @@ export default function BuyPageClient() {
             noOfSteps={isMobile ? steps.length : steps.length - 1}
             handleButtonClick={handleNext}
             disabled={isNextDisabled()}
-            loading={isPending}
+            loading={isPending || isPreflightPending}
+            discount={discount}
+            handleDiscountApply={handleDiscountApply}
           />
         </div>
       </div>
