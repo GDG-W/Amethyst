@@ -87,7 +87,7 @@ export const Upload = ({ onImageUpload }: UploadProps) => {
 
   return (
     <div
-      className={`relative flex h-[560px] w-auto flex-col items-center justify-center rounded-[24px] bg-[#FFE7A5] p-[2rem] text-center transition-all duration-300 ease-in-out md:min-h-[500px] md:w-[500px] md:rounded-[10px] md:border-[10px] md:border-[#F6B51E] md:p-[3rem_2rem]${
+      className={`relative flex h-[460px] w-auto flex-col items-center justify-center rounded-[24px] bg-[#FFE7A5] p-[2rem] text-center transition-all duration-300 ease-in-out md:min-h-[500px] md:w-[500px] md:rounded-[10px] md:border-[10px] md:border-[#F6B51E] md:p-[3rem_2rem]${
         isDragOver ? "drag-over" : ""
       } `}
       onDrop={handleDrop}
