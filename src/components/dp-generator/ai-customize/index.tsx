@@ -212,7 +212,7 @@ export const AICustomize = ({
 
         <div className="form-container">
           <div className="form-field">
-            <label className="form-label">
+            <label className="font-inter text-[16px] text-black md:text-[16px] md:font-semibold md:text-[#333]">
               Your Name <span className="required">*</span>
             </label>
             <input

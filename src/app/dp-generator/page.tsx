@@ -20,7 +20,7 @@ const Home = () => {
       <header className="relative flex flex-col items-center justify-center overflow-hidden max-md:mt-[50px]">
         <Logo />
 
-        <div className="z-[1] text-center">
+        <div className="mt-4n z-[1] text-center">
           <h1 className="font-akira my-4 text-center text-[88px] leading-[0.85] font-bold tracking-[-0.02em] text-black uppercase [font-stretch:condensed] [text-shadow:none] max-md:text-[30px]">
             DEVFEST LAGOS
             <br />
