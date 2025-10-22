@@ -4,6 +4,8 @@ import React, { useState } from "react";
 
 import { ChevronLeft } from "lucide-react";
 
+import { useCheckout, usePreflightCheckout } from "@/hooks/useCheckout";
+
 import Breadcrumb from "@/components/ui/breadcrumb";
 import Button from "@/components/ui/button";
 import BuyTicket from "@/components/steps/buy-ticket";
@@ -11,9 +13,8 @@ import BuyerInformation from "@/components/form/buyer-info";
 import OrderSummary from "@/components/ui/order-summary";
 import { toast } from "@/components/ui/toast";
 import { useBuyFormStore } from "@/store/buy-form-store";
-import { useCheckout, usePreflightCheckout } from "@/hooks/useCheckout";
-import { useTickets } from "@/hooks/useTickets";
 import { useMediaQuery } from "@/hooks/useMediaQuery";
+import { useTickets } from "@/hooks/useTickets";
 
 const steps = ["Buy Ticket", "Buyer Information", "Checkout"];
 
@@ -23,6 +24,8 @@ export type OrderItem = {
   dayName: string;
   ticketCount: number;
   price: number;
+  theme: string;
+  description: string;
 };
 
 export type BuyerInfo = {
@@ -75,17 +78,15 @@ export default function BuyPageClient() {
   };
   const isNextDisabled = () => {
     if (step === 0) {
-      // Step 0: no tickets selected
       return orderItems.length < 1;
     }
 
     if (step === 1) {
       if (!buyerInfo || !buyerInfo.fullName || !buyerInfo.email) {
-        return true; // buyer info is required
+        return true;
       }
 
       if (buyerInfo.belongsToMe) {
-        // ticket belongs to me → require profile registration info
         return !(
           profileInfo &&
           profileInfo.gender &&
@@ -93,7 +94,6 @@ export default function BuyPageClient() {
           profileInfo.experienceLevel
         );
       } else {
-        // ticket for others → require attendee emails equal ticket count
         const totalTickets = orderItems.reduce((sum, item) => sum + (item.ticketCount || 0), 0);
 
         const totalAttendees =
@@ -113,7 +113,6 @@ export default function BuyPageClient() {
 
   const handleContinue = () => {
     if (step === 0) {
-      // Remove tickets with 0 quantity
       const { quantities, selectedByType, setSelectedByType } = useBuyFormStore.getState();
 
       ["standard", "pro"].forEach((type) => {

@@ -18,6 +18,8 @@ import TextField from "../inputs/text-field";
 
 type OrderItemsType = {
   name: string;
+  theme: string;
+  description: string;
   price: number;
 };
 
