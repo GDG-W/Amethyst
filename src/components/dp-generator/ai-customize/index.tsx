@@ -212,7 +212,7 @@ export const AICustomize = ({
 
         <div className="form-container">
           <div className="form-field">
-            <label className="font-inter text-[16px] text-black md:text-[16px] md:font-semibold md:text-[#333]">
+            <label className="font-inter text-[16px] font-semibold text-black md:text-[#333]">
               Your Name <span className="required">*</span>
             </label>
             <input
@@ -220,11 +220,11 @@ export const AICustomize = ({
               placeholder="Your Name"
               value={userName}
               onChange={(e) => onUserNameChange(e.target.value)}
-              className="name-input"
+              className="name-input text-[14px]"
             />
           </div>
 
-          <div className="form-field">
+          <div className="form-field w-max">
             <label className="gemini-option">
               <input
                 type="checkbox"
@@ -232,7 +232,7 @@ export const AICustomize = ({
                 onChange={(e) => setUseGemini(e.target.checked)}
                 className="gemini-checkbox"
               />
-              <span className="checkbox-text flex items-center gap-2">
+              <span className="checkbox-text flex items-center">
                 Style your Picture with Gemini <Gemini />
               </span>
             </label>
