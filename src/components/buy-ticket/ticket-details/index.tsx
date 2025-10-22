@@ -1,11 +1,12 @@
 "use client";
+
 import React, { useMemo } from "react";
 
-import Card from "@/components/ui/card";
 import { API_DAY_TO_LABEL } from "@/lib/constants";
-import { indexTicketsByIsoDate } from "@/lib/utils";
-import { Ticket } from "@/types/ticket";
+import Card from "@/components/ui/card";
 import SelectField from "@/components/ui/inputs/select";
+import { Ticket } from "@/types/ticket";
+import { indexTicketsByIsoDate } from "@/lib/utils";
 
 type TicketDetailsProps = {
   selectedDates?: string[];
@@ -82,9 +83,9 @@ export default function TicketDetails({
                   </div>
                   <div className="flex items-center justify-between">
                     <p
-                      className={`text-sub-600 label-5 ${t.theme === "ui/ux" ? "uppercase" : "capitalize"}`}
+                      className={`text-sub-600 label-5 max-w-[19rem] ${t.theme === "ui/ux" ? "uppercase" : ""}`}
                     >
-                      {t.theme}
+                      {t.description}
                     </p>
                     <SelectField
                       placeholder="1"
