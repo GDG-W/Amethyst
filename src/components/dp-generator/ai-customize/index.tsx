@@ -224,7 +224,7 @@ export const AICustomize = ({
             />
           </div>
 
-          <div className="form-field w-max">
+          <div className="form-field">
             <label className="gemini-option">
               <input
                 type="checkbox"
@@ -232,7 +232,7 @@ export const AICustomize = ({
                 onChange={(e) => setUseGemini(e.target.checked)}
                 className="gemini-checkbox"
               />
-              <span className="checkbox-text flex items-center">
+              <span className="font-inter flex items-center text-xs font-medium text-[#171717] md:text-base">
                 Style your Picture with Gemini <Gemini />
               </span>
             </label>
