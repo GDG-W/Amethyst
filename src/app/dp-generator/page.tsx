@@ -48,7 +48,7 @@ const Home = () => {
             <div className="relative flex items-center justify-center overflow-visible [transform-style:preserve-3d]">
               <img
                 className="relative z-[1] block h-auto"
-                src="images/home/joint.png"
+                src="/images/home/joint.png"
                 alt="Sample DP 1"
               />
             </div>
@@ -61,7 +61,7 @@ const Home = () => {
             <div className="relative flex items-center justify-center overflow-visible [transform-style:preserve-3d]">
               <img
                 className="relative z-[1] block h-auto"
-                src="images/home/mobile.png"
+                src="/images/home/mobile.png"
                 alt="Sample DP 1"
               />
             </div>
