@@ -13,15 +13,42 @@ import Header from "../navbar";
 
 const Hero = () => {
   const initialSpeakers = [
-    { src: "/speaker1.png", alt: "Speaker 1" },
-    { src: "/speaker2.png", alt: "Speaker 2" },
-    { src: "/speaker3.png", alt: "Speaker 3" },
-    { src: "/speaker4.png", alt: "Speaker 4" },
-    { src: "/speaker5.png", alt: "Speaker 5" },
-    { src: "/speaker6.png", alt: "Speaker 6" },
-    { src: "/speaker7.png", alt: "Speaker 7" },
-    { src: "/speaker8.png", alt: "Speaker 8" },
-    { src: "/speaker9.png", alt: "Speaker 9" },
+    {
+      src: "https://storage.googleapis.com/devfestlagos2025/Amethyst/public/speaker1.png",
+      alt: "Speaker 1",
+    },
+    {
+      src: "https://storage.googleapis.com/devfestlagos2025/Amethyst/public/speaker2.png",
+      alt: "Speaker 2",
+    },
+    {
+      src: "https://storage.googleapis.com/devfestlagos2025/Amethyst/public/speaker3.png",
+      alt: "Speaker 3",
+    },
+    {
+      src: "https://storage.googleapis.com/devfestlagos2025/Amethyst/public/speaker4.png",
+      alt: "Speaker 4",
+    },
+    {
+      src: "https://storage.googleapis.com/devfestlagos2025/Amethyst/public/speaker5.png",
+      alt: "Speaker 5",
+    },
+    {
+      src: "https://storage.googleapis.com/devfestlagos2025/Amethyst/public/speaker6.png",
+      alt: "Speaker 6",
+    },
+    {
+      src: "https://storage.googleapis.com/devfestlagos2025/Amethyst/public/speaker7.png",
+      alt: "Speaker 7",
+    },
+    {
+      src: "https://storage.googleapis.com/devfestlagos2025/Amethyst/public/speaker8.png",
+      alt: "Speaker 8",
+    },
+    {
+      src: "https://storage.googleapis.com/devfestlagos2025/Amethyst/public/speaker9.png",
+      alt: "Speaker 9",
+    },
   ];
 
   const [speakerQueue, setSpeakerQueue] = useState(initialSpeakers);
