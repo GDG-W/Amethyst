@@ -3,7 +3,7 @@ const DevfestLogoCorner = ({ width, height }: TSvgExports) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width={width || "188"}
-    height={height || "78"}
+    height={height || "59"}
     viewBox="0 0 198 83"
     fill="none"
   >

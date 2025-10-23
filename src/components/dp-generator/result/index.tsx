@@ -69,15 +69,17 @@ export const Results = ({ userName, finalImage }: ResultsProps) => {
     const imageBlob = await fetch(imageUrl).then((res) => res.blob());
     const imageFile = new File([imageBlob], "devfest-dp.png", { type: "image/png" });
 
+    console.log({ navigator, imageUrl, imageFile });
+
     try {
-      if (navigator.share && navigator.canShare && navigator.canShare({ files: [imageFile] })) {
-        await navigator.share({
-          title: "DevFest Lagos 2025",
-          text: message,
-          files: [imageFile],
-        });
-        return;
-      }
+      // if (navigator.share && navigator.canShare && navigator.canShare({ files: [imageFile] })) {
+      //   await navigator.share({
+      //     title: "DevFest Lagos 2025",
+      //     text: message,
+      //     files: [imageFile],
+      //   });
+      //   return;
+      // }
 
       const encodedMsg = encodeURIComponent(message);
       const encodedUrl = encodeURIComponent(window.location.origin);

@@ -64,7 +64,7 @@ export const DPMakerClient = () => {
 
   return (
     <>
-      <section className="relative z-[2] flex items-center justify-center">
+      <section className="relative z-[2] flex items-center justify-center p-2">
         <div className="upload-container">
           {currentStep === "upload" ? (
             <Upload onImageUpload={handleImageUpload} />
