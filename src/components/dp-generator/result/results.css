@@ -1,5 +1,5 @@
 .results-container {
-  min-height: 100vh;
+  /* min-height: 100vh; */
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -90,29 +90,27 @@
 
 .devfest-logo {
   position: absolute;
-  top: 33px;
-  right: 30px;
+  top: 37px;
+  right: 15px;
 }
 .frame-message {
-  font-family: "Inter", Arial, sans-serif;
   position: absolute;
   top: 30px;
   left: 34px;
-  color: #ffffff;
-  font-size: 14px;
-  font-weight: 600;
   padding: 10px;
-  text-shadow:
-    2px 2px 4px rgb(0, 0, 0),
-    0px 0px 8px rgb(0, 0, 0);
 }
 .frame-message span {
   display: block;
+  text-shadow: 0px 0px 20px rgba(0, 0, 0, 0.903);
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: 600;
+  font-family: "Inter", Arial, sans-serif;
 }
 .user-name-overlay {
   position: absolute;
   bottom: 42px;
-  right: 42px;
+  right: 46px;
   border: 1px solid #171717;
   background: rgba(255, 255, 255, 0.95);
   padding: 10px 20px;
@@ -124,7 +122,7 @@
 }
 
 .user-name {
-  font-size: 24px;
+  font-size: 18px;
   font-family: "Inter", Arial, sans-serif;
   font-style: bold;
   font-weight: 700;
@@ -176,7 +174,6 @@
   padding: 40px;
   max-width: 500px;
 }
-
 .customization-section h3 {
   font-family: "Inter", Arial, sans-serif;
   font-size: 28px;
@@ -255,12 +252,11 @@
   .user-name[data-length="long"] {
     font-size: 16px;
   }
-
   .user-name[data-length="very-long"] {
     font-size: 14px;
   }
-  .frame-message {
-    font-size: 10px;
+  .frame-message span {
+    font-size: 14px;
   }
   .background-selector {
     padding: 16px;

@@ -4,7 +4,7 @@ const BlueBackground = ({ width, height }: TSvgExports) => (
     xmlns="http://www.w3.org/2000/svg"
     width={width || "592"}
     height={height || "592"}
-    viewBox="0 0 592 592"
+    viewBox={`0 0 ${width || 592} ${height || 592}`}
     fill="none"
   >
     <g filter="url(#filter0_d_9229_3355)">

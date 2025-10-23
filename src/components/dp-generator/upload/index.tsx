@@ -87,7 +87,7 @@ export const Upload = ({ onImageUpload }: UploadProps) => {
 
   return (
     <div
-      className={`relative flex min-h-[500px] w-[500px] flex-col items-center justify-center rounded-[10px] border-[10px] border-[#F6B51E] bg-[#FFE7A5] px-8 py-12 text-center transition-all duration-300 ease-in-out max-md:h-[560px] max-md:w-auto max-md:rounded-[24px] max-md:border-0 ${
+      className={`relative flex h-[460px] w-auto flex-col items-center justify-center rounded-[24px] bg-[#FFE7A5] p-[2rem] text-center transition-all duration-300 ease-in-out md:min-h-[500px] md:w-[500px] md:rounded-[10px] md:border-[10px] md:border-[#F6B51E] md:p-[3rem_2rem]${
         isDragOver ? "drag-over" : ""
       } `}
       onDrop={handleDrop}
@@ -110,7 +110,7 @@ export const Upload = ({ onImageUpload }: UploadProps) => {
           Upload your Photo
         </h1>
 
-        <div className="flex h-[126px] w-[400px] flex-col items-center justify-center gap-1 rounded-xl border border-[#ffecc0] bg-white p-3 max-md:h-[126px] max-md:w-auto max-md:gap-1 max-sm:h-full max-sm:w-full max-sm:p-[10px]">
+        <div className="flex h-[126px] w-[400px] flex-col items-center justify-center gap-1 rounded-xl border border-[#ffecc0] bg-white p-3 max-md:h-[126px] max-md:w-auto max-md:gap-1 max-sm:h-full max-sm:w-full max-sm:p-[15px]">
           <div>
             <UploadIcon />
           </div>
