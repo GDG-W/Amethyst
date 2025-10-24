@@ -2,12 +2,11 @@ import "./globals.css";
 
 import { Inter } from "next/font/google";
 
-import localFont from "next/font/local";
-
 import Script from "next/script";
 
-import { RQProvider } from "@/lib/react-query";
+import localFont from "next/font/local";
 
+import { RQProvider } from "@/lib/react-query";
 import Toaster from "@/components/ui/toast";
 
 import type { Metadata } from "next";
@@ -23,6 +22,9 @@ export const metadata: Metadata = {
   title: "DevFest Lagos 2025 | Ticketing",
   description:
     "Secure your ticket for DevFest Lagos 2025! Get tickets for the premier tech conference, featuring talks on Mobile, Cloud, Web, AI/ML, Design, and more, from Nov 18th-22nd.",
+  icons: {
+    icon: "/logo.svg",
+  },
   openGraph: {
     title: "DevFest Lagos 2025 | Ticketing",
     description:
@@ -38,6 +40,7 @@ export const metadata: Metadata = {
     ],
   },
 };
+
 const akira = localFont({
   src: "../components/fonts/Akira-Expanded-Demo.otf",
   variable: "--font-akira",
@@ -51,17 +54,19 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZR44Q96G06"></script>
-      <Script id="gtag-script">
-        {`
-          window.dataLayer = window.dataLayer || [];
+      <body className={`${inter.variable} ${akira.variable}`}>
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-ZR44Q96G06"
+          strategy="afterInteractive"
+        />
+        <Script id="gtag-script" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
-
             gtag('config', 'G-ZR44Q96G06');
-        `}
-      </Script>
-      <body className={`${inter.variable} ${akira.variable}`}>
+          `}
+        </Script>
         <RQProvider>
           <div className="">{children}</div>
         </RQProvider>
