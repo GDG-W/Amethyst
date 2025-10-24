@@ -3,6 +3,15 @@ import path from "path";
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "storage.googleapis.com",
+        pathname: "/devfestlagos2025/**",
+      },
+    ],
+  },
   webpack: (config) => {
     /**
      * This allows importing of svgs into files
