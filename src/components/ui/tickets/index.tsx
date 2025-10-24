@@ -14,7 +14,7 @@ export interface TicketProps {
 const Ticket: React.FC<TicketProps> = ({
   theme,
   date,
-  time = "10:00 AM",
+  time = "8:00 AM",
   ticket_type = "Standard",
 }) => {
   const dayNumber = parseInt(date.match(/\d+/)?.[0] || "0");
@@ -98,6 +98,7 @@ const Ticket: React.FC<TicketProps> = ({
 
 const TicketList = ({ tickets = ticketsArr }: { tickets: TicketProps[] }) => {
   const isMobile = useMediaQuery(767, "max");
+
   return (
     <div className={`${!isMobile && "custom-scrollbar"} md:max-h-[334px] md:overflow-y-auto`}>
       <div className="space-y-3 sm:space-y-4">
@@ -113,34 +114,34 @@ const ticketsArr = [
   {
     theme: "Kickoff & Big Ideas",
     date: "18th November",
-    time: "10:00 AM",
+    time: "8:00 AM",
     ticket_type: "Pro",
     day: "Monday",
   },
   {
     theme: "Frontend development and Mobile development",
     date: "19th November",
-    time: "10:00 AM",
+    time: "8:00 AM",
     ticket_type: "Standard",
   },
   {
     theme: "Frontend Fundamentals",
     date: "20th November",
-    time: "2:00 PM",
+    time: "8:00 AM",
     ticket_type: "Pro",
     day: "Friday",
   },
   {
     theme: "Advanced Algorithms",
     date: "21st November",
-    time: "10:00 AM",
+    time: "8:00 AM",
     ticket_type: "Standard",
     day: "Tuesday",
   },
   {
     theme: "Advanced Algorithms",
     date: "22nd November",
-    time: "10:00 AM",
+    time: "8:00 AM",
     ticket_type: "Standard",
     day: "Tuesday",
   },

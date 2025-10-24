@@ -1,10 +1,12 @@
 import Sadface from "@/components/icons/sadface";
 
-export default function RSVP() {
+export default function RSVP({ fullname }: { fullname: string }) {
   return (
     <div className="flex flex-col gap-y-[68px] md:gap-y-[71px]">
       <div className="flex flex-col gap-1 text-center md:justify-center">
-        <h3 className="heading-5 md:heading-3 text-strong-950 font-medium">Welcome, Human</h3>
+        <h3 className="heading-5 md:heading-3 text-strong-950 font-medium">
+          Welcome, <span className="capitalize">{fullname}</span>
+        </h3>
         <p className="label-3 md:label-2 text-sub-600">
           Reserve your seat for sessions you don’t want to miss.
         </p>
