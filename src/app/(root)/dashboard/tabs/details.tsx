@@ -1,17 +1,29 @@
+import clsx from "clsx";
+
 import TicketList, { TicketProps } from "@/components/ui/tickets";
 import { formatDateTime } from "@/lib/helpers";
 
 import BuyTicketButton from "../components/BuyTicketButton";
 
-export default function Details({ userId, tickets }: { userId: string; tickets: TicketProps[] }) {
+export default function Details({
+  userId,
+  tickets,
+  fullname,
+  email,
+}: {
+  userId: string;
+  fullname: string;
+  email: string;
+  tickets: TicketProps[];
+}) {
   const details = [
     {
       title: "Full Name",
-      value: "Temitope Aiyegbusi",
+      value: fullname,
     },
     {
       title: "Email",
-      value: "aiyegbusitope@gmail.com",
+      value: email,
     },
     {
       title: "Ticket ID",
@@ -20,18 +32,21 @@ export default function Details({ userId, tickets }: { userId: string; tickets: 
   ];
 
   const ticketsArr = tickets.map((t) => {
-    const { date, time } = formatDateTime(t.date);
+    const { date } = formatDateTime(t.date);
     return {
       theme: t.theme,
       date,
-      time,
+      time: "8:00 am",
       ticket_type: t.ticket_type,
     };
   });
+
   return (
     <div className="flex flex-col gap-y-[23px] md:gap-y-[50px]">
       <div className="flex flex-col gap-1 md:self-center md:text-center">
-        <h3 className="heading-5 md:heading-3 text-strong-950 font-medium">Welcome, Human</h3>
+        <h3 className="heading-5 md:heading-3 text-strong-950 font-medium">
+          Welcome, <span className="capitalize">{fullname}</span>
+        </h3>
         <p className="label-3 md:label-2 text-sub-600">
           Scroll down to view all details of your ticket.
         </p>
@@ -41,9 +56,16 @@ export default function Details({ userId, tickets }: { userId: string; tickets: 
           <p className="label-3 md:label-2 font-medium">Attendee Information</p>
           <div className="flex flex-col gap-y-5">
             {details.map((detail) => (
-              <div key={detail.value} className="flex items-center justify-between">
+              <div key={detail.title} className="flex items-center justify-between">
                 <p className="label-3 text-sub-600">{detail.title}</p>
-                <p className="label-3 text-strong-950">{detail.value}</p>
+                <p
+                  className={clsx(
+                    "label-3 text-strong-950",
+                    detail.title === "Full Name" && "capitalize"
+                  )}
+                >
+                  {detail.value}
+                </p>
               </div>
             ))}
           </div>
