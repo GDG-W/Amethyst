@@ -1,6 +1,7 @@
 import clsx from "clsx";
 
 import TicketList, { TicketProps } from "@/components/ui/tickets";
+
 import { formatDateTime } from "@/lib/helpers";
 
 import BuyTicketButton from "../components/BuyTicketButton";
@@ -41,11 +42,13 @@ export default function Details({
     };
   });
 
+  const firstName = fullname?.split(" ")[0] || "Human";
+
   return (
     <div className="flex flex-col gap-y-[23px] md:gap-y-[50px]">
       <div className="flex flex-col gap-1 md:self-center md:text-center">
         <h3 className="heading-5 md:heading-3 text-strong-950 font-medium">
-          Welcome, <span className="capitalize">{fullname}</span>
+          Welcome, <span className="capitalize">{firstName}</span>
         </h3>
         <p className="label-3 md:label-2 text-sub-600">
           Scroll down to view all details of your ticket.
