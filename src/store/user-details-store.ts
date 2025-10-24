@@ -1,7 +1,10 @@
 import { create } from "zustand";
 import { devtools, persist } from "zustand/middleware";
 
+export type UserDetailsState = Record<string, string>;
+
 export type UserState = {
+  user: UserDetailsState;
   user_id: string;
   created_at: Date;
   expires_at: Date;
@@ -17,6 +20,7 @@ const initialUserState: UserState = {
   created_at: new Date(),
   expires_at: new Date(),
   user_id: "",
+  user: {},
 };
 
 export const useUserDetailsStore = create<UserDetailsStore>()(

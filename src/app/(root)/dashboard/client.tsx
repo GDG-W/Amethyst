@@ -14,11 +14,19 @@ import RSVP from "./tabs/rsvp";
 export default function HomeClient() {
   const [activeTab, setActiveTab] = useState("details");
   const user = useGetuser();
+
   const { tickets } = useUserTickets();
 
   const tabItems: Record<string, React.ReactElement> = {
-    details: <Details userId={user?.user_id} tickets={tickets} />,
-    rsvp: <RSVP />,
+    details: (
+      <Details
+        fullname={user?.user?.fullname}
+        email={user?.user?.email}
+        userId={user?.user_id}
+        tickets={tickets}
+      />
+    ),
+    rsvp: <RSVP fullname={user?.user?.fullname} />,
   };
 
   return (
