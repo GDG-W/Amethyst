@@ -53,8 +53,8 @@ export const Results = ({ userName, finalImage }: ResultsProps) => {
   const [loading, setLoading] = useState(false);
 
   const handleDownload = async () => {
+    setLoading(true);
     try {
-      setLoading(true);
       const imageUrl = await generateImage();
 
       if (!imageUrl) {
