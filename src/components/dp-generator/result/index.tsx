@@ -50,15 +50,27 @@ export const Results = ({ userName, finalImage }: ResultsProps) => {
       return "";
     }
   };
+  const [loading, setLoading] = useState(false);
 
   const handleDownload = async () => {
-    const imageUrl = await generateImage();
-    if (!imageUrl) return;
+    try {
+      setLoading(true);
+      const imageUrl = await generateImage();
 
-    const link = document.createElement("a");
-    link.download = `${userName}-DevFestLagos.png`;
-    link.href = imageUrl;
-    link.click();
+      if (!imageUrl) {
+        setLoading(false);
+        return;
+      }
+
+      const link = document.createElement("a");
+      link.download = `${userName}-DevFestLagos.png`;
+      link.href = imageUrl;
+      link.click();
+      setLoading(false);
+    } catch (error) {
+      console.error("Download failed:", error);
+      setLoading(false);
+    }
   };
 
   const handleShare = async (platform: "twitter" | "linkedin" | "instagram") => {
@@ -176,8 +188,8 @@ export const Results = ({ userName, finalImage }: ResultsProps) => {
 
         <div className="customization-section">
           <h3>Share the word that you&apos;ll be at #DevFestLagos2025!</h3>
-          <button className="download-btn" onClick={handleDownload}>
-            DOWNLOAD DP
+          <button className="download-btn" onClick={handleDownload} disabled={loading}>
+            {loading ? "Loading..." : "DOWNLOAD DP"}
           </button>
 
           <div className="share-section">
