@@ -54,6 +54,7 @@ export const Results = ({ userName, finalImage }: ResultsProps) => {
 
   const handleDownload = async () => {
     setLoading(true);
+    await new Promise((resolve) => setTimeout(resolve, 50));
     try {
       const imageUrl = await generateImage();
 
@@ -66,9 +67,9 @@ export const Results = ({ userName, finalImage }: ResultsProps) => {
       link.download = `${userName}-DevFestLagos.png`;
       link.href = imageUrl;
       link.click();
-      setLoading(false);
     } catch (error) {
       console.error("Download failed:", error);
+    } finally {
       setLoading(false);
     }
   };
@@ -188,7 +189,14 @@ export const Results = ({ userName, finalImage }: ResultsProps) => {
 
         <div className="customization-section">
           <h3>Share the word that you&apos;ll be at #DevFestLagos2025!</h3>
-          <button className="download-btn" onClick={handleDownload} disabled={loading}>
+          <button
+            className="download-btn"
+            onClick={() => {
+              setLoading(true);
+              handleDownload();
+            }}
+            disabled={loading}
+          >
             {loading ? "Loading..." : "DOWNLOAD DP"}
           </button>
 
