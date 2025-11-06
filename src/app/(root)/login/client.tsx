@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { FormProvider, useForm, Controller } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -19,6 +20,7 @@ const loginSchema = z.object({
 });
 
 export default function LoginClient() {
+  const router = useRouter();
   const methods = useForm<z.infer<typeof loginSchema>>({
     resolver: zodResolver(loginSchema),
     mode: "all", // show errors as user types
@@ -40,6 +42,7 @@ export default function LoginClient() {
     try {
       await mutateAsync(values);
       methods.reset();
+      router.replace("/dashboard");
     } catch (error) {
       const err = error as ErrorType;
       toast.error("Login failed", err.message);
