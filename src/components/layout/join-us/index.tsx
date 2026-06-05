@@ -78,7 +78,7 @@ const JoinUs = () => {
           variants={titleVariants}
         >
           The future is <br /> technology, join us at <br />
-          <span className="text-[#F6B51E]">DevFest Lagos 2025</span> <br /> and help shape that{" "}
+          <span className="text-[#F6B51E]">DevFest Lagos 2026</span> <br /> and help shape that{" "}
           <br /> future in Nigeria
         </motion.h1>
 
