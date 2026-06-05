@@ -6,4 +6,5 @@ export const API_DAY_TO_LABEL: Record<string, string> = {
   thurs: "Thursday",
   fri: "Friday",
   sat: "Saturday",
+  both: "Both Days (Fri & Sat)",
 };

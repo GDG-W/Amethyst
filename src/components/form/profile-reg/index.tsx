@@ -52,11 +52,42 @@ const ProfileRegistration: React.FC<ProfileRegistrationProps> = ({
   initialData,
   readonlyFields = [],
 }) => {
-  const { buyerInfo, profileInfo, profileErrors, updateProfileField, setProfileError } =
-    useBuyFormStore();
+  const {
+    buyerInfo,
+    profileInfo,
+    profileErrors,
+    updateProfileField,
+    setProfileError,
+    updateBuyerField,
+  } = useBuyFormStore();
 
-  const fullName = initialData?.fullName || buyerInfo?.fullName || "";
-  const email = initialData?.email || buyerInfo?.email || "";
+  const [localFullName, setLocalFullName] = React.useState(
+    initialData?.fullName || buyerInfo?.fullName || ""
+  );
+  const [localEmail, setLocalEmail] = React.useState(initialData?.email || buyerInfo?.email || "");
+
+  React.useEffect(() => {
+    setLocalFullName(initialData?.fullName || buyerInfo?.fullName || "");
+  }, [initialData?.fullName, buyerInfo?.fullName]);
+
+  React.useEffect(() => {
+    setLocalEmail(initialData?.email || buyerInfo?.email || "");
+  }, [initialData?.email, buyerInfo?.email]);
+
+  const handleFullNameChange = (val: string) => {
+    setLocalFullName(val);
+    if (updateBuyerField) {
+      updateBuyerField("fullName", val);
+    }
+  };
+
+  const handleEmailChange = (val: string) => {
+    setLocalEmail(val);
+    if (updateBuyerField) {
+      updateBuyerField("email", val);
+    }
+  };
+
   const gender = profileInfo?.gender || "";
   const role = profileInfo?.role || "";
   const experienceLevel = profileInfo?.experienceLevel || "";
@@ -75,9 +106,9 @@ const ProfileRegistration: React.FC<ProfileRegistrationProps> = ({
           label="Full Name"
           name="fullName"
           placeholder="Enter full name"
-          value={fullName}
-          onChange={() => {}} // Read-only since it comes from buyer info
-          disabled={true}
+          value={localFullName}
+          onChange={(e) => handleFullNameChange(e.target.value)}
+          disabled={isFieldReadonly("fullName")}
         />
 
         <TextField
@@ -86,9 +117,9 @@ const ProfileRegistration: React.FC<ProfileRegistrationProps> = ({
           name="email"
           type="email"
           placeholder="Enter email address"
-          value={email}
-          onChange={() => {}} // Read-only since it comes from buyer info
-          disabled={true}
+          value={localEmail}
+          onChange={(e) => handleEmailChange(e.target.value)}
+          disabled={isFieldReadonly("email")}
         />
 
         <SelectField

@@ -3,7 +3,7 @@ import React from "react";
 import { Check } from "lucide-react";
 
 type DateType = {
-  day: number;
+  day: number | string;
   dayName: string;
   date: string;
 };
@@ -96,7 +96,7 @@ const DatePicker = ({
     <div className={`${className}`}>
       {/* Month Header with Selection Count */}
       <div className="mb-4 flex items-center justify-center gap-2 rounded-sm border border-dashed border-[#EBEBEB] bg-[#F7F7F7] p-2 sm:p-3">
-        <h3 className="text-sm font-medium text-[#5C5C5C] sm:text-base">November 2025</h3>
+        <h3 className="text-sm font-medium text-[#5C5C5C] sm:text-base">November 2026</h3>
         {selectedDates.length > 0 && (
           <div className="rounded-sm border border-[#E2E4E9] bg-white px-2 text-xs text-[#525866] sm:text-sm">
             {getSelectionCount()} Selected

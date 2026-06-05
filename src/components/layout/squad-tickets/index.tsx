@@ -9,28 +9,28 @@ import TicketCard from "./ticket-card";
 const ticketTypes = [
   {
     title: "STANDARD TICKET",
-    price: "7,000 per day",
+    price: "8,000 per day",
     href: "/buy#standard",
     description: "Open to everyone — whether you're just starting out or deep in the industry",
     features: [
       "Access to all talks and sessions",
-      "Available throughout the five days",
+      "Access to one day",
       "Access to sponsor booths",
       "Entry to the networking area",
     ],
     variant: "standard" as const,
   },
   {
-    title: "PRO TICKET",
-    price: "70,000 FOR THURSDAY",
+    title: "FULL EXPERIENCE TICKET",
+    price: "15,000 BOTH DAYS",
     href: "/buy#pro",
     description:
-      "For those who want more access and a more focused, premium experience — all in one day",
+      "For those who want more access and a more focused, premium experience across both days",
     features: [
-      "Exclusive access to product demos",
-      "Access to masterclasses and technical workshops",
-      "Invitation to the Executive Roundtable",
-      "Special swags and merch",
+      "Access to all talks and sessions",
+      "Access to both days",
+      "Access to sponsor booths",
+      "Entry to the networking area",
     ],
     variant: "pro" as const,
   },
@@ -230,8 +230,8 @@ export default function Index() {
             animate={isHeadingInView ? "visible" : "hidden"}
             className="label-4 md:label-3 w-5/6 max-w-2xl text-center text-[#CCCCCC]"
           >
-            DevFest hits different when you roll with your crew. Grab your Standard or Pro tickets,
-            pick your day, and pull up with your friends
+            DevFest hits different when you roll with your crew. Grab your Standard or Full
+            Experience tickets, pick your days, and pull up with your friends
           </motion.p>
         </motion.div>
 

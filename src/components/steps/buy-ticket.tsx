@@ -44,7 +44,7 @@ const BuyTicket = () => {
     if (qty <= 0) return null;
 
     const dayLabel = API_DAY_TO_LABEL[t.day] ?? t.day;
-    const typeLabel = t.ticket_type === "pro" ? "Pro Ticket" : "Standard Ticket";
+    const typeLabel = t.ticket_type === "pro" ? "Full Experience Ticket" : "Standard Ticket";
 
     return {
       id: t.id,

@@ -4,9 +4,12 @@ import React from "react";
 
 import Logo from ".";
 
-jest.mock("../../../assets/svg/svg-export", () => ({
-  DevfestLogo: () => <svg data-testid="devfest-logo"></svg>,
-}));
+jest.mock("@/components/icons/devfestlogo-icon", () => {
+  return {
+    __esModule: true,
+    default: () => <svg data-testid="devfest-logo"></svg>,
+  };
+});
 
 describe("Logo Component", () => {
   it("renders the logo container", () => {

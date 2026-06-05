@@ -36,7 +36,7 @@ export default function Testing() {
         currModalState={toggleSuccessModal}
         toggleModal={setToggleSuccessModal}
         title="Purchase Successful"
-        summary="You have successfully purchased tickets for DevFest Lagos 2025. Check your email for more details "
+        summary="You have successfully purchased tickets for DevFest Lagos 2026. Check your email for more details "
       />
 
       <Button
