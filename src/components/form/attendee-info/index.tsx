@@ -5,11 +5,11 @@ import React from "react";
 import MultiInput from "@/components/ui/inputs/multi-input";
 import Card from "@/components/ui/card";
 import { useBuyFormStore } from "@/store/buy-form-store";
-import { THURS_PRO_ID, THURS_STANDARD_ID } from "@/constants/ticket";
+import { FRI_STANDARD_ID, SAT_STANDARD_ID, BOTH_DAYS_FULL_ID } from "@/constants/ticket";
 // import { date, email } from "zod";
 
 type AttendeesInfoProps = {
-  selectedDates: Array<{
+  selectedDates?: Array<{
     id: string;
     dayName: string;
     ticketCount: number;
@@ -28,11 +28,11 @@ type AttendeesInfoProps = {
 //   );
 // };
 
-const AttendeeInfo = ({ selectedDates }: AttendeesInfoProps) => {
+const AttendeeInfo = ({ selectedDates = [] }: AttendeesInfoProps) => {
   const { buyerInfo, attendeeInfo, attendeeErrors, updateAttendeeEmails, setAttendeeError } =
     useBuyFormStore();
 
-  const ticketQuantities = selectedDates.reduce(
+  const ticketQuantities = (selectedDates || []).reduce(
     (acc, date) => {
       acc[date.id] = date.ticketCount;
       return acc;
@@ -63,24 +63,25 @@ const AttendeeInfo = ({ selectedDates }: AttendeesInfoProps) => {
     //   return;
     // }
 
-    if (dateId === THURS_STANDARD_ID || dateId === THURS_PRO_ID) {
-      const standardEmail = attendeeInfo?.emailsByDate[`${THURS_STANDARD_ID}`];
-      const proEmail = attendeeInfo?.emailsByDate[`${THURS_PRO_ID}`];
+    if (dateId === BOTH_DAYS_FULL_ID || dateId === FRI_STANDARD_ID || dateId === SAT_STANDARD_ID) {
+      const friEmails = attendeeInfo?.emailsByDate[`${FRI_STANDARD_ID}`] || [];
+      const satEmails = attendeeInfo?.emailsByDate[`${SAT_STANDARD_ID}`] || [];
+      const fullEmails = attendeeInfo?.emailsByDate[`${BOTH_DAYS_FULL_ID}`] || [];
 
-      switch (dateId) {
-        case THURS_STANDARD_ID:
-          if (!proEmail || proEmail.length < 1) break;
-          isUniqueMail = proEmail.every((email) => !emailSet.has(email.toLowerCase()));
-          break;
-        case THURS_PRO_ID:
-          if (!standardEmail || standardEmail.length < 1) break;
-          isUniqueMail = standardEmail.every((email) => !emailSet.has(email.toLowerCase()));
-          break;
+      if (dateId === BOTH_DAYS_FULL_ID) {
+        const standardEmails = [...friEmails, ...satEmails].map((e) => e.toLowerCase());
+        isUniqueMail = standardEmails.every((email) => !emailSet.has(email));
+      } else {
+        const fullEmailsLower = fullEmails.map((e) => e.toLowerCase());
+        isUniqueMail = fullEmailsLower.every((email) => !emailSet.has(email));
       }
     }
 
     if (!isUniqueMail) {
-      setAttendeeError(dateId, "You can't buy a pro and standard ticket for the same person!");
+      setAttendeeError(
+        dateId,
+        "You can't buy a Full Experience and Standard ticket for the same person!"
+      );
       return;
     }
 
@@ -96,12 +97,12 @@ const AttendeeInfo = ({ selectedDates }: AttendeesInfoProps) => {
       number={4}
     >
       <div className="space-y-4 px-5 py-7">
-        {selectedDates.map((date, index) => (
+        {(selectedDates || []).map((date, index) => (
           <div key={`${date.id || date.dayName}-${index}`}>
             <MultiInput
               id={`attendee-emails-${date.id || index}`}
               label={date.ticketCount > 1 ? "Email address(es)" : "Email address"}
-              extraLabel={`${date.dayName} ${date.id === THURS_PRO_ID ? "(Pro)" : ""}`}
+              extraLabel={`${date.dayName} ${date.id === BOTH_DAYS_FULL_ID ? "(Full Experience)" : ""}`}
               placeholder={date.ticketCount > 1 ? "Enter email address(es)" : "Enter email address"}
               value={attendeeInfo?.emailsByDate[date.id] || []}
               onChange={(emails) => handleEmailChange(date.id, emails)}

@@ -28,20 +28,19 @@ const TicketsSelection = ({
     return set;
   }, [tickets]);
 
-  const dates = React.useMemo(
-    () => [
-      { day: 18, dayName: "Tue", date: "2025-11-18" },
-      { day: 19, dayName: "Wed", date: "2025-11-19" },
-      { day: 20, dayName: "Thu", date: "2025-11-20" },
-      { day: 21, dayName: "Fri", date: "2025-11-21" },
-      { day: 22, dayName: "Sat", date: "2025-11-22" },
-    ],
-    []
-  );
+  const dates = React.useMemo(() => {
+    if (activeTab === "pro") {
+      return [{ day: "13 & 14" as unknown as number, dayName: "Fri & Sat", date: "2026-11-13" }];
+    }
+    return [
+      { day: 13, dayName: "Fri", date: "2026-11-13" },
+      { day: 14, dayName: "Sat", date: "2026-11-14" },
+    ];
+  }, [activeTab]);
 
   const tabsData: { id: TicketType; label: string }[] = [
     { id: "standard", label: "Standard Ticket" },
-    { id: "pro", label: "Pro Ticket" },
+    { id: "pro", label: "Full Experience Ticket" },
   ];
 
   React.useEffect(() => {

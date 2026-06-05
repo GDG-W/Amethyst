@@ -4,6 +4,22 @@ import "@testing-library/jest-dom";
 
 import TicketList from "./index";
 
+beforeAll(() => {
+  Object.defineProperty(window, "matchMedia", {
+    writable: true,
+    value: jest.fn().mockImplementation((query) => ({
+      matches: false,
+      media: query,
+      onchange: null,
+      addListener: jest.fn(),
+      removeListener: jest.fn(),
+      addEventListener: jest.fn(),
+      removeEventListener: jest.fn(),
+      dispatchEvent: jest.fn(),
+    })),
+  });
+});
+
 describe("TicketList Component", () => {
   describe("Core Functionality", () => {
     it("renders the correct number of tickets", () => {
@@ -47,7 +63,7 @@ describe("TicketList Component", () => {
       const { container } = render(<TicketList />);
 
       expect(container.querySelector(".custom-scrollbar")).toBeInTheDocument();
-      expect(container.querySelector(".overflow-y-auto")).toBeInTheDocument();
+      expect(container.querySelector("[class*='overflow-y-auto']")).toBeInTheDocument();
     });
 
     it("handles tickets with default time and ticket type values", () => {

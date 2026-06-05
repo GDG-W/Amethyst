@@ -1,8 +1,9 @@
 import React from "react";
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 import { ExperienceLevelOptions, GenderOptions, RoleOptions } from "@/constants/options";
-import claimTicket from "@/services/claim-ticket.service";
+import claimTicketService from "@/services/claim-ticket.service";
 
 import { toast } from "../../ui/toast";
 
@@ -14,6 +15,21 @@ jest.mock("../../ui/toast", () => ({
     error: jest.fn(),
   },
 }));
+
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      retry: false,
+    },
+    mutations: {
+      retry: false,
+    },
+  },
+});
+
+const renderWithClient = (ui: React.ReactElement) => {
+  return render(<QueryClientProvider client={queryClient}>{ui}</QueryClientProvider>);
+};
 
 beforeAll(() => {
   window.HTMLElement.prototype.scrollIntoView = jest.fn();
@@ -37,10 +53,11 @@ describe("ClaimTicketForm", () => {
 
   beforeEach(() => {
     jest.clearAllMocks();
+    queryClient.clear();
   });
 
   it("renders all fields and submit button", () => {
-    render(<ClaimTicketForm token={token} formCallbackFn={formCallbackFn} />);
+    renderWithClient(<ClaimTicketForm token={token} toggleModal={formCallbackFn} />);
 
     expect(screen.getByLabelText(/full name/i)).toBeInTheDocument();
     expect(screen.getByRole("combobox", { name: /gender/i })).toBeInTheDocument();
@@ -50,9 +67,9 @@ describe("ClaimTicketForm", () => {
   });
 
   it("submits successfully when valid data is provided", async () => {
-    (claimTicket as jest.Mock).mockResolvedValue(true);
+    (claimTicketService.claimTicket as jest.Mock).mockResolvedValue({ success: true });
 
-    render(<ClaimTicketForm token={token} formCallbackFn={formCallbackFn} />);
+    renderWithClient(<ClaimTicketForm token={token} toggleModal={formCallbackFn} />);
 
     fireEvent.change(screen.getByLabelText(/full name/i), {
       target: { value: "John Doe" },
@@ -69,21 +86,24 @@ describe("ClaimTicketForm", () => {
     fireEvent.click(submitBtn);
 
     await waitFor(() => {
-      expect(claimTicket).toHaveBeenCalledWith({
+      expect(claimTicketService.claimTicket).toHaveBeenCalledWith({
         token,
         fullname: "John Doe",
         gender: GenderOptions[0].value,
         role: RoleOptions[3].value,
         experience: ExperienceLevelOptions[0].value,
       });
-      expect(formCallbackFn).toHaveBeenCalled();
+      expect(formCallbackFn).toHaveBeenCalledWith(true);
     });
   });
 
   it("shows toast error when claimTicket returns a string", async () => {
-    (claimTicket as jest.Mock).mockResolvedValue("Payment not found!");
+    (claimTicketService.claimTicket as jest.Mock).mockResolvedValue({
+      success: false,
+      message: "Payment not found!",
+    });
 
-    render(<ClaimTicketForm token={token} formCallbackFn={formCallbackFn} />);
+    renderWithClient(<ClaimTicketForm token={token} toggleModal={formCallbackFn} />);
 
     fireEvent.change(screen.getByLabelText(/full name/i), {
       target: { value: "Jane Doe" },
@@ -98,15 +118,15 @@ describe("ClaimTicketForm", () => {
     fireEvent.click(submitBtn);
 
     await waitFor(() => {
-      expect(claimTicket).toHaveBeenCalled();
+      expect(claimTicketService.claimTicket).toHaveBeenCalled();
       expect(toast.error).toHaveBeenCalledWith("Something went wrong!", "Payment not found!");
     });
   });
 
   it("shows toast error when claimTicket throws", async () => {
-    (claimTicket as jest.Mock).mockRejectedValue(new Error("Network down"));
+    (claimTicketService.claimTicket as jest.Mock).mockRejectedValue(new Error("Network down"));
 
-    render(<ClaimTicketForm token={token} formCallbackFn={formCallbackFn} />);
+    renderWithClient(<ClaimTicketForm token={token} toggleModal={formCallbackFn} />);
 
     fireEvent.change(screen.getByLabelText(/full name/i), {
       target: { value: "Test User" },
@@ -121,8 +141,8 @@ describe("ClaimTicketForm", () => {
     fireEvent.click(submitBtn);
 
     await waitFor(() => {
-      expect(claimTicket).toHaveBeenCalled();
-      expect(toast.error).toHaveBeenCalledWith("Something went wrong!", "Network down");
+      expect(claimTicketService.claimTicket).toHaveBeenCalled();
+      expect(toast.error).toHaveBeenCalledWith("Something went wrong!", "Unexpected network error");
     });
   });
 });

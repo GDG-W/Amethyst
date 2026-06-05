@@ -3,10 +3,21 @@ import "@testing-library/jest-dom";
 import React from "react";
 import { usePathname } from "next/navigation";
 
+import { useGetuser } from "@/hooks/useUser";
+import { useLogout } from "@/hooks/useAuth";
+
 import Header from ".";
 
 jest.mock("next/navigation", () => ({
   usePathname: jest.fn(),
+}));
+
+jest.mock("@/hooks/useUser", () => ({
+  useGetuser: jest.fn(),
+}));
+
+jest.mock("@/hooks/useAuth", () => ({
+  useLogout: jest.fn(),
 }));
 
 jest.mock(
@@ -18,8 +29,16 @@ jest.mock(
 );
 
 const mockedUsePathname = usePathname as jest.Mock;
+const mockedUseGetUser = useGetuser as jest.Mock;
+const mockedUseLogout = useLogout as jest.Mock;
 
 describe("Header", () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+    mockedUseGetUser.mockReturnValue({ user_id: null });
+    mockedUseLogout.mockReturnValue(jest.fn());
+  });
+
   it("renders the header container", () => {
     mockedUsePathname.mockReturnValue("/");
     render(<Header />);
@@ -34,23 +53,25 @@ describe("Header", () => {
     expect(logo).toBeInTheDocument();
   });
 
-  it("renders the 'Claim Ticket' link when on the buy page", () => {
+  it("renders the 'Login' link when on the buy page and user is not logged in", () => {
     mockedUsePathname.mockReturnValue("/buy");
+    mockedUseGetUser.mockReturnValue({ user_id: null });
     render(<Header />);
-    const link = screen.getByRole("link", { name: /claim ticket/i });
+    const link = screen.getByRole("link", { name: /login/i });
     expect(link).toBeInTheDocument();
-    expect(link).toHaveAttribute("href", "/claim");
+    expect(link).toHaveAttribute("href", "/login");
   });
 
-  it("does not render the 'Claim Ticket' link on other pages", () => {
-    mockedUsePathname.mockReturnValue("/");
+  it("renders the 'Logout' button when on the buy page and user is logged in", () => {
+    mockedUsePathname.mockReturnValue("/buy");
+    mockedUseGetUser.mockReturnValue({ user_id: "user-123" });
     render(<Header />);
-    const link = screen.queryByRole("link", { name: /claim ticket/i });
-    expect(link).not.toBeInTheDocument();
+    const button = screen.getByRole("button", { name: /logout/i });
+    expect(button).toBeInTheDocument();
   });
 
-  it("renders the 'Buy Tickets!' button on the claim page", () => {
-    mockedUsePathname.mockReturnValue("/claim");
+  it("renders the 'Buy Tickets!' button on the login page", () => {
+    mockedUsePathname.mockReturnValue("/login");
     render(<Header />);
     const link = screen.getByRole("link", { name: /buy tickets/i });
     expect(link).toBeInTheDocument();
@@ -65,10 +86,21 @@ describe("Header", () => {
     expect(link).toHaveAttribute("href", "/buy");
   });
 
-  it("does not render the 'Buy Tickets!' button on other pages", () => {
-    mockedUsePathname.mockReturnValue("/buy");
+  it("renders the 'Logout' button on the dashboard page", () => {
+    mockedUsePathname.mockReturnValue("/dashboard");
     render(<Header />);
-    const link = screen.queryByRole("link", { name: /buy tickets/i });
-    expect(link).not.toBeInTheDocument();
+    const button = screen.getByRole("button", { name: /logout/i });
+    expect(button).toBeInTheDocument();
+  });
+
+  it("does not render action buttons on other pages", () => {
+    mockedUsePathname.mockReturnValue("/");
+    render(<Header />);
+    const loginLink = screen.queryByRole("link", { name: /login/i });
+    const logoutBtn = screen.queryByRole("button", { name: /logout/i });
+    const buyLink = screen.queryByRole("link", { name: /buy tickets/i });
+    expect(loginLink).not.toBeInTheDocument();
+    expect(logoutBtn).not.toBeInTheDocument();
+    expect(buyLink).not.toBeInTheDocument();
   });
 });
