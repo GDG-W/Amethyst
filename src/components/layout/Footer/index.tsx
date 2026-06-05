@@ -165,7 +165,7 @@ export default function Footer() {
           >
             <Image
               src="/footer-globe.svg"
-              alt="DevFest Lagos 2025"
+              alt="DevFest Lagos 2026"
               width={100}
               height={150}
               className="w-full"
@@ -181,7 +181,7 @@ export default function Footer() {
               <Link href="/buy">
                 <Button className="hidden text-lg md:text-xl lg:flex">Buy Tickets</Button>
               </Link>
-              <span className="whitespace-nowrap">Lagos 2025</span>
+              <span className="whitespace-nowrap">Lagos 2026</span>
             </motion.div>
           </div>
 
@@ -284,7 +284,7 @@ export default function Footer() {
             animate={isCopyrightInView ? "visible" : "hidden"}
           >
             <p className="label-3 text-center font-semibold text-[#141414]">
-              © 2025 DevFest Lagos. All Rights Reserved.
+              © 2026 DevFest Lagos. All Rights Reserved.
             </p>
           </motion.div>
         </motion.div>
