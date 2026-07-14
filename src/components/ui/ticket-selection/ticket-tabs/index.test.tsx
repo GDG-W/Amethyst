@@ -58,7 +58,7 @@ describe("Tabs", () => {
         "py-2",
         "flex",
         "gap-1",
-        "border",
+        "border-y",
         "border-y-[#EBEBEB]",
         "-mx-4"
       );

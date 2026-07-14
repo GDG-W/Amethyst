@@ -2,7 +2,7 @@
 
 import React, { useMemo } from "react";
 
-import { THURS_PRO_ID, THURS_STANDARD_ID } from "@/constants/ticket";
+import { FRI_STANDARD_ID, SAT_STANDARD_ID, BOTH_DAYS_FULL_ID } from "@/constants/ticket";
 import Card from "@/components/ui/card";
 import Checkbox from "@/components/ui/inputs/checkbox";
 import TextField from "@/components/ui/inputs/text-field";
@@ -14,7 +14,7 @@ import AttendeeInfo from "../attendee-info";
 
 import type { BuyerInfo, OrderItem } from "@/app/(root)/buy/client";
 
-const BuyerInformation = ({ selectedDates }: { selectedDates: OrderItem[] }) => {
+const BuyerInformation = ({ selectedDates = [] }: { selectedDates?: OrderItem[] }) => {
   const { buyerInfo, orderItems, buyerErrors, attendeeInfo, updateBuyerField, setBuyerError } =
     useBuyFormStore();
 
@@ -43,8 +43,9 @@ const BuyerInformation = ({ selectedDates }: { selectedDates: OrderItem[] }) => 
   // const canShowBelongsToMe = orderItems.every((item) => (item.ticketCount || 0) === 1);
 
   const canShowBelongsToMe = useMemo(() => {
-    let hasThursStandard = false;
-    let hasThursPro = false;
+    let hasFriStandard = false;
+    let hasSatStandard = false;
+    let hasBothDaysFull = false;
     let allOne = true;
 
     for (const item of orderItems) {
@@ -52,19 +53,20 @@ const BuyerInformation = ({ selectedDates }: { selectedDates: OrderItem[] }) => 
         allOne = false;
         break;
       }
-      if (item.id === THURS_STANDARD_ID) {
-        hasThursStandard = true;
+      if (item.id === FRI_STANDARD_ID) {
+        hasFriStandard = true;
       }
-      if (item.id === THURS_PRO_ID) {
-        hasThursPro = true;
+      if (item.id === SAT_STANDARD_ID) {
+        hasSatStandard = true;
       }
-
-      if (hasThursStandard && hasThursPro) {
-        break;
+      if (item.id === BOTH_DAYS_FULL_ID) {
+        hasBothDaysFull = true;
       }
     }
 
-    return allOne && !(hasThursStandard && hasThursPro);
+    const hasOverlapping = hasBothDaysFull && (hasFriStandard || hasSatStandard);
+
+    return allOne && !hasOverlapping;
   }, [orderItems]);
 
   let ChildComponent;

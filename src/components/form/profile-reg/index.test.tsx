@@ -2,7 +2,18 @@ import React from "react";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 
+import { useBuyFormStore } from "@/store/buy-form-store";
+
 import ProfileRegistration from ".";
+
+beforeEach(() => {
+  const state = useBuyFormStore.getState();
+  state.resetBuyerState();
+  state.resetTicketState();
+  state.resetAttendeeState();
+  state.resetProfileState();
+  state.resetDiscountState();
+});
 
 describe("ProfileRegistration", () => {
   it("allows user to fill out text fields", async () => {
