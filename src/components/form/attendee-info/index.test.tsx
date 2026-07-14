@@ -2,7 +2,18 @@ import React from "react";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 
+import { useBuyFormStore } from "@/store/buy-form-store";
+
 import AttendeeInfo from ".";
+
+beforeEach(() => {
+  const state = useBuyFormStore.getState();
+  state.resetBuyerState();
+  state.resetTicketState();
+  state.resetAttendeeState();
+  state.resetProfileState();
+  state.resetDiscountState();
+});
 
 describe("AttendeeInfo", () => {
   it("renders with title and subtitle", () => {

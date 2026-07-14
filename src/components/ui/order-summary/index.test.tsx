@@ -53,7 +53,7 @@ describe("OrderSummary Component", () => {
 
     expect(screen.getByText("2 x Thursday (Standard ticket)")).toBeInTheDocument();
     expect(screen.getByText("3 x Friday")).toBeInTheDocument();
-    expect(screen.getByText("₦45000")).toBeInTheDocument(); // Total
+    expect(screen.getByText("₦45,000")).toBeInTheDocument(); // Total
   });
 
   it("calls handleButtonClick when button is clicked", () => {

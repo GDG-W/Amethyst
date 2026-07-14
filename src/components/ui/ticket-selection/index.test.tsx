@@ -75,7 +75,7 @@ jest.mock("@/components/ui/ticket-selection/date-picker", () => {
         data-selected={(selectedDates || []).join(",")}
         className={className}
       >
-        <button onClick={() => onSelectionChange?.(["2025-11-18"])} data-testid="mock-date-select">
+        <button onClick={() => onSelectionChange?.(["2026-11-13"])} data-testid="mock-date-select">
           Select Date
         </button>
         <span data-testid="selected-count">{(selectedDates || []).length}</span>
@@ -158,7 +158,7 @@ describe("TicketsSelection", () => {
       renderControlled();
 
       expect(screen.getByText("Standard Ticket")).toBeInTheDocument();
-      expect(screen.getByText("Pro Ticket")).toBeInTheDocument();
+      expect(screen.getByText("Full Experience Ticket")).toBeInTheDocument();
     });
 
     it("switches to standard tab when clicked", () => {
@@ -196,7 +196,7 @@ describe("TicketsSelection", () => {
       expect(selectedCount).toHaveTextContent("1");
 
       const datePicker = screen.getByTestId("date-picker");
-      expect(datePicker).toHaveAttribute("data-selected", "2025-11-18");
+      expect(datePicker).toHaveAttribute("data-selected", "2026-11-13");
     });
 
     it("maintains selected dates when staying on same tab", () => {
@@ -255,7 +255,7 @@ describe("TicketsSelection", () => {
       const { container } = renderControlled();
 
       const mainDiv = container.firstChild;
-      expect(mainDiv).toHaveClass("bg-strong-950");
+      expect(mainDiv).toHaveClass("h-fit");
     });
 
     it("applies correct spacing to DatePicker container", () => {
@@ -287,7 +287,7 @@ describe("TicketsSelection", () => {
 
       // Verify all expected tabs are rendered with correct labels
       expect(screen.getByTestId("tab-standard")).toHaveTextContent("Standard Ticket");
-      expect(screen.getByTestId("tab-pro")).toHaveTextContent("Pro Ticket");
+      expect(screen.getByTestId("tab-pro")).toHaveTextContent("Full Experience Ticket");
     });
 
     it("maintains consistent state between tabs and DatePicker", () => {

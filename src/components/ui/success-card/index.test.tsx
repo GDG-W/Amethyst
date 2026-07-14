@@ -40,8 +40,8 @@ describe("SuccessCard", () => {
   it("renders buttons with correct text", () => {
     render(<SuccessCard title="Success!" />);
 
-    expect(screen.getByRole("button", { name: /Buy more tickets/i })).toBeInTheDocument();
-    expect(screen.getByRole("button", { name: /Go to dashboard/i })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: /Buy More/i })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: /Go back to dashboard/i })).toBeInTheDocument();
   });
 
   it("renders buttons with correct text - when links are defined", () => {

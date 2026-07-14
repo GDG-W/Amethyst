@@ -21,8 +21,7 @@ export default function Index() {
       {
         id: 1,
         question: "Can I buy tickets for the event through this platform?",
-        answer:
-          "Yes! This platform allows you to securely purchase tickets for the five days event",
+        answer: "Yes! This platform allows you to securely purchase tickets for the two-day event",
       },
       {
         id: 2,
@@ -34,7 +33,7 @@ export default function Index() {
         id: 3,
         question: "What if I register and can't attend anymore?",
         answer:
-          "Tickets are non-refundable for DevFest Lagos 2025 and not transferable. Each ticket is tied to a specific attendee and cannot be transferred to another person.",
+          "Tickets are non-refundable for DevFest Lagos 2026 and not transferable. Each ticket is tied to a specific attendee and cannot be transferred to another person.",
       },
       {
         id: 4,

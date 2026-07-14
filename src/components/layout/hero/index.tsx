@@ -299,7 +299,7 @@ const Hero = () => {
                     }}
                   >
                     <br className="hidden md:block" />
-                    Five Epic Days.
+                    Two Epic Days.
                   </motion.span>
                 </h1>
               </motion.div>
@@ -312,7 +312,7 @@ const Hero = () => {
                 transition={{ delay: 1.6 }}
               >
                 Get ready for 20+ hands-on workshops, dynamic panel sessions, and an unforgettable
-                after-party, all happening from November 18th to 22nd, 2025!
+                after-party, all happening on November 13th and 14th, 2026!
               </motion.p>
 
               <motion.div

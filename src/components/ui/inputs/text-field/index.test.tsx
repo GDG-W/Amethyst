@@ -48,7 +48,8 @@ describe("TextField", () => {
   it("applies error styles when error is present", () => {
     render(<TextField {...defaultProps} error="Invalid input" />);
     const input = screen.getByLabelText("Test Label");
-    expect(input.className).toMatch(/border-red-500/);
+    const container = input.parentElement;
+    expect(container?.className).toMatch(/border-red-500/);
   });
 
   it("renders no helper or error message if neither is provided", () => {

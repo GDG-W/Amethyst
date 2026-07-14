@@ -135,12 +135,11 @@ export default function Recap() {
                 className="font-akira text-xl font-bold md:text-[2rem]"
                 variants={textVariants}
               >
-                2024 recap
+                2025 recap
               </motion.h2>
 
               <motion.p className="label-3" variants={textVariants}>
-                From inspiring talks to hands-on sessions, DevFest Lagos 2024 had it all — Mental
-                Health, Mobile, Design, Web, Cloud, DevOps, Machine Learning, AR/VR, and more.
+                From inspiring talks to hands-on sessions, DevFest Lagos 2025 had it all. AI, Web, Mobile, Cloud, Design, DevOps, Machine Learning, Cybersecurity, and more. 
                 Here&apos;s a look back at the moments that made it unforgettable.
               </motion.p>
 

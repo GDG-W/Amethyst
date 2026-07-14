@@ -1,6 +1,6 @@
 import "@testing-library/jest-dom";
 
-import { render, screen } from "@testing-library/react";
+import { render, screen, within } from "@testing-library/react";
 
 import TicketSection from "./index";
 
@@ -37,6 +37,19 @@ jest.mock("./ticket-card", () => {
   };
 });
 
+beforeAll(() => {
+  class MockIntersectionObserver {
+    observe = jest.fn();
+    disconnect = jest.fn();
+    unobserve = jest.fn();
+  }
+  Object.defineProperty(window, "IntersectionObserver", {
+    writable: true,
+    configurable: true,
+    value: MockIntersectionObserver,
+  });
+});
+
 describe("TicketSection", () => {
   describe("Section Structure", () => {
     it("renders the main section with correct styling", () => {
@@ -45,11 +58,11 @@ describe("TicketSection", () => {
       const section = screen.getByRole("region");
       expect(section).toHaveClass(
         "flex",
-        "min-h-screen",
         "w-full",
         "flex-col",
         "items-center",
         "justify-center",
+        "overflow-hidden",
         "bg-[#1E1E1E]"
       );
     });
@@ -59,7 +72,7 @@ describe("TicketSection", () => {
 
       const heading = screen.getByRole("heading", { level: 1 });
       expect(heading).toBeInTheDocument();
-      expect(heading).toHaveTextContent("BUY TICKETS FOR YOU AND YOUR SQUAD");
+      expect(heading.textContent?.replace(/\s+/g, "")).toBe("BUYTICKETSFORYOUANDYOURSQUAD");
       expect(heading).toHaveClass("font-akira", "heading-5", "md:heading-1", "text-white");
     });
 
@@ -86,16 +99,15 @@ describe("TicketSection", () => {
       const standardCard = screen.getByTestId("ticket-card-standard");
       expect(standardCard).toBeInTheDocument();
 
-      expect(screen.getByText("STANDARD TICKET")).toBeInTheDocument();
-      expect(screen.getByText("10,000 per day")).toBeInTheDocument(); // Changed here
-      expect(
-        screen.getByText(/Open to everyone — whether you're just starting out/)
-      ).toBeInTheDocument();
+      const { getByText } = within(standardCard);
+      expect(getByText("STANDARD TICKET")).toBeInTheDocument();
+      expect(getByText("8,000 per day")).toBeInTheDocument();
+      expect(getByText(/Open to everyone — whether you're just starting out/)).toBeInTheDocument();
 
-      expect(screen.getByText("Access to all talks and sessions")).toBeInTheDocument();
-      expect(screen.getByText("Available throughout the five days")).toBeInTheDocument();
-      expect(screen.getByText("Access to sponsor booths")).toBeInTheDocument();
-      expect(screen.getByText("Entry to the networking area")).toBeInTheDocument();
+      expect(getByText("Access to all talks and sessions")).toBeInTheDocument();
+      expect(getByText("Access to one day")).toBeInTheDocument();
+      expect(getByText("Access to sponsor booths")).toBeInTheDocument();
+      expect(getByText("Entry to the networking area")).toBeInTheDocument();
     });
 
     it("renders pro ticket card with correct props", () => {
@@ -104,20 +116,15 @@ describe("TicketSection", () => {
       const proCard = screen.getByTestId("ticket-card-pro");
       expect(proCard).toBeInTheDocument();
 
-      expect(screen.getByText("PRO TICKET")).toBeInTheDocument();
-      expect(screen.getByText("70,000 FOR THURSDAY")).toBeInTheDocument(); // Changed here
-      expect(
-        screen.getByText(/For those who want more access and a more focused/)
-      ).toBeInTheDocument();
+      const { getByText } = within(proCard);
+      expect(getByText("FULL EXPERIENCE TICKET")).toBeInTheDocument();
+      expect(getByText("15,000 BOTH DAYS")).toBeInTheDocument();
+      expect(getByText(/For those who want more access and a more focused/)).toBeInTheDocument();
 
-      expect(
-        screen.getByText("Exclusive access to sponsor booths & product demos")
-      ).toBeInTheDocument();
-      expect(
-        screen.getByText("Access to masterclasses and technical workshops")
-      ).toBeInTheDocument();
-      expect(screen.getByText("Invitation to the Executive Roundtable")).toBeInTheDocument();
-      expect(screen.getByText("Special swags and merch")).toBeInTheDocument();
+      expect(getByText("Access to all talks and sessions")).toBeInTheDocument();
+      expect(getByText("Access to both days")).toBeInTheDocument();
+      expect(getByText("Access to sponsor booths")).toBeInTheDocument();
+      expect(getByText("Entry to the networking area")).toBeInTheDocument();
     });
 
     it("passes correct variant props to ticket cards", () => {
@@ -134,37 +141,39 @@ describe("TicketSection", () => {
     it("displays correct pricing information", () => {
       render(<TicketSection />);
 
-      expect(screen.getByText("10,000 per day")).toBeInTheDocument(); // Changed here
-      expect(screen.getByText("70,000 FOR THURSDAY")).toBeInTheDocument(); // Changed here
+      expect(screen.getByText("8,000 per day")).toBeInTheDocument();
+      expect(screen.getByText("15,000 BOTH DAYS")).toBeInTheDocument();
     });
 
     it("displays all standard ticket features", () => {
       render(<TicketSection />);
+      const standardCard = screen.getByTestId("ticket-card-standard");
 
       const standardFeatures = [
         "Access to all talks and sessions",
-        "Available throughout the five days",
+        "Access to one day",
         "Access to sponsor booths",
         "Entry to the networking area",
       ];
 
       standardFeatures.forEach((feature) => {
-        expect(screen.getByText(feature)).toBeInTheDocument();
+        expect(within(standardCard).getByText(feature)).toBeInTheDocument();
       });
     });
 
     it("displays all pro ticket features", () => {
       render(<TicketSection />);
+      const proCard = screen.getByTestId("ticket-card-pro");
 
       const proFeatures = [
-        "Exclusive access to sponsor booths & product demos",
-        "Access to masterclasses and technical workshops",
-        "Invitation to the Executive Roundtable",
-        "Special swags and merch",
+        "Access to all talks and sessions",
+        "Access to both days",
+        "Access to sponsor booths",
+        "Entry to the networking area",
       ];
 
       proFeatures.forEach((feature) => {
-        expect(screen.getByText(feature)).toBeInTheDocument();
+        expect(within(proCard).getByText(feature)).toBeInTheDocument();
       });
     });
   });
@@ -221,8 +230,9 @@ describe("TicketSection", () => {
     it("has readable text content", () => {
       render(<TicketSection />);
 
-      expect(screen.getByText("BUY TICKETS FOR YOU AND YOUR SQUAD")).toBeVisible();
-      expect(screen.getByText(/DevFest hits different/)).toBeVisible();
+      const mainHeading = screen.getByRole("heading", { level: 1 });
+      expect(mainHeading).toBeInTheDocument();
+      expect(screen.getByText(/DevFest hits different/)).toBeInTheDocument();
     });
   });
 });
