@@ -19,23 +19,23 @@ const inter = Inter({
 const APP_URL = process.env.NEXT_PUBLIC_APP_URL!;
 
 export const metadata: Metadata = {
-  title: "DevFest Lagos 2026 | Ticketing",
+  title: "DevFest Lagos 2025 | Ticketing",
   description:
-    "Secure your ticket for DevFest Lagos 2026! Get tickets for the premier tech conference, featuring talks on Mobile, Cloud, Web, AI/ML, Design, and more, from Nov 18th-22nd.",
+    "Secure your ticket for DevFest Lagos 2025! Get tickets for the premier tech conference, featuring talks on Mobile, Cloud, Web, AI/ML, Design, and more, from Nov 18th-22nd.",
   icons: {
     icon: "/logo.svg",
   },
   openGraph: {
-    title: "DevFest Lagos 2026 | Ticketing",
+    title: "DevFest Lagos 2025 | Ticketing",
     description:
-      "Secure your ticket for DevFest Lagos 2026! Get tickets for the premier tech conference, featuring talks on Mobile, Cloud, Web, AI/ML, Design, and more, from Nov 18th-22nd.",
+      "Secure your ticket for DevFest Lagos 2025! Get tickets for the premier tech conference, featuring talks on Mobile, Cloud, Web, AI/ML, Design, and more, from Nov 18th-22nd.",
     url: APP_URL,
     images: [
       {
         url: "https://storage.googleapis.com/devfestlagos2025/Ruby/meta-tag.jpg",
         width: 1200,
         height: 630,
-        alt: "DevFest Lagos 2026 | Ticketing OG Image",
+        alt: "DevFest Lagos 2025 | Ticketing OG Image",
       },
     ],
   },

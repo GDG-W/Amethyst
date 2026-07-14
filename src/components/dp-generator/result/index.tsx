@@ -65,7 +65,7 @@ export const Results = ({ userName, finalImage }: ResultsProps) => {
     const imageUrl = await generateImage();
     if (!imageUrl) return;
 
-    const message = `I'll be at #DevFestLagos2026!`;
+    const message = `I'll be at #DevFestLagos2025!`;
     const imageBlob = await fetch(imageUrl).then((res) => res.blob());
     const imageFile = new File([imageBlob], "devfest-dp.png", { type: "image/png" });
 
@@ -74,7 +74,7 @@ export const Results = ({ userName, finalImage }: ResultsProps) => {
     try {
       // if (navigator.share && navigator.canShare && navigator.canShare({ files: [imageFile] })) {
       //   await navigator.share({
-      //     title: "DevFest Lagos 2026",
+      //     title: "DevFest Lagos 2025",
       //     text: message,
       //     files: [imageFile],
       //   });
@@ -108,7 +108,7 @@ export const Results = ({ userName, finalImage }: ResultsProps) => {
           setTimeout(() => {
             window.open("https://www.instagram.com", "_blank");
             alert(
-              "1. Open Instagram\n2. Create a new post\n3. Select the downloaded image\n4. Add the hashtag #DevFestLagos2026"
+              "1. Open Instagram\n2. Create a new post\n3. Select the downloaded image\n4. Add the hashtag #DevFestLagos2025"
             );
           }, 1000);
           break;
@@ -133,7 +133,7 @@ export const Results = ({ userName, finalImage }: ResultsProps) => {
             <div className="frame-overlay">
               <div className="frame-message">
                 <span>I can&apos;t wait to be at</span>
-                <span>DevFest Lagos 2026!</span>
+                <span>DevFest Lagos 2025!</span>
                 <div className="quote-mark">
                   <Top />
                 </div>
@@ -175,7 +175,7 @@ export const Results = ({ userName, finalImage }: ResultsProps) => {
         </div>
 
         <div className="customization-section">
-          <h3>Share the word that you&apos;ll be at #DevFestLagos2026!</h3>
+          <h3>Share the word that you&apos;ll be at #DevFestLagos2025!</h3>
           <button className="download-btn" onClick={handleDownload}>
             DOWNLOAD DP
           </button>
