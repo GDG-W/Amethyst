@@ -87,15 +87,15 @@ describe("TicketSection", () => {
       expect(standardCard).toBeInTheDocument();
 
       expect(screen.getByText("STANDARD TICKET")).toBeInTheDocument();
-      expect(screen.getByText("10,000 per day")).toBeInTheDocument(); // Changed here
+      expect(screen.getByText("8,000 per day")).toBeInTheDocument(); // Changed here
       expect(
         screen.getByText(/Open to everyone — whether you're just starting out/)
       ).toBeInTheDocument();
 
       expect(screen.getByText("Access to all talks and sessions")).toBeInTheDocument();
-      expect(screen.getByText("Available throughout the five days")).toBeInTheDocument();
       expect(screen.getByText("Access to sponsor booths")).toBeInTheDocument();
       expect(screen.getByText("Entry to the networking area")).toBeInTheDocument();
+      expect(screen.getByText("Access for one day only")).toBeInTheDocument();
     });
 
     it("renders pro ticket card with correct props", () => {
@@ -104,20 +104,16 @@ describe("TicketSection", () => {
       const proCard = screen.getByTestId("ticket-card-pro");
       expect(proCard).toBeInTheDocument();
 
-      expect(screen.getByText("PRO TICKET")).toBeInTheDocument();
-      expect(screen.getByText("70,000 FOR THURSDAY")).toBeInTheDocument(); // Changed here
+      expect(screen.getByText("FULL EXPERIENCE")).toBeInTheDocument();
+      expect(screen.getByText("15,000 FOR BOTH DAYS")).toBeInTheDocument(); // Changed here
       expect(
-        screen.getByText(/For those who want more access and a more focused/)
+        screen.getByText(/For those who don't want to worry about missing anything/)
       ).toBeInTheDocument();
 
-      expect(
-        screen.getByText("Exclusive access to sponsor booths & product demos")
-      ).toBeInTheDocument();
-      expect(
-        screen.getByText("Access to masterclasses and technical workshops")
-      ).toBeInTheDocument();
-      expect(screen.getByText("Invitation to the Executive Roundtable")).toBeInTheDocument();
-      expect(screen.getByText("Special swags and merch")).toBeInTheDocument();
+      expect(screen.getByText("Access to all talks and sessions")).toBeInTheDocument();
+      expect(screen.getByText("Access to sponsor booths")).toBeInTheDocument();
+      expect(screen.getByText("Entry to the networking area")).toBeInTheDocument();
+      expect(screen.getByText("Access for both day")).toBeInTheDocument();
     });
 
     it("passes correct variant props to ticket cards", () => {
@@ -134,8 +130,8 @@ describe("TicketSection", () => {
     it("displays correct pricing information", () => {
       render(<TicketSection />);
 
-      expect(screen.getByText("10,000 per day")).toBeInTheDocument(); // Changed here
-      expect(screen.getByText("70,000 FOR THURSDAY")).toBeInTheDocument(); // Changed here
+      expect(screen.getByText("8,000 per day")).toBeInTheDocument(); // Changed here
+      expect(screen.getByText("15,000 FOR BOTH DAYS")).toBeInTheDocument(); // Changed here
     });
 
     it("displays all standard ticket features", () => {
@@ -143,9 +139,9 @@ describe("TicketSection", () => {
 
       const standardFeatures = [
         "Access to all talks and sessions",
-        "Available throughout the five days",
         "Access to sponsor booths",
         "Entry to the networking area",
+        "Access to for one day only",
       ];
 
       standardFeatures.forEach((feature) => {
@@ -157,10 +153,10 @@ describe("TicketSection", () => {
       render(<TicketSection />);
 
       const proFeatures = [
-        "Exclusive access to sponsor booths & product demos",
-        "Access to masterclasses and technical workshops",
-        "Invitation to the Executive Roundtable",
-        "Special swags and merch",
+        "Access to all talks and sessions",
+        "Access to sponsor booths",
+        "Entry to the networking area",
+        "Access to for one day only",
       ];
 
       proFeatures.forEach((feature) => {
