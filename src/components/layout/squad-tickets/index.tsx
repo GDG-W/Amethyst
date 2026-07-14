@@ -9,28 +9,28 @@ import TicketCard from "./ticket-card";
 const ticketTypes = [
   {
     title: "STANDARD TICKET",
-    price: "8,000 per day",
+    price: "7,000 per day",
     href: "/buy#standard",
     description: "Open to everyone — whether you're just starting out or deep in the industry",
     features: [
       "Access to all talks and sessions",
-      "Access for one day",
+      "Available throughout the five days",
       "Access to sponsor booths",
       "Entry to the networking area",
     ],
     variant: "standard" as const,
   },
   {
-    title: "FULL EXPERIENCE",
-    price: "15,000 for both days",
+    title: "PRO TICKET",
+    price: "70,000 FOR THURSDAY",
     href: "/buy#pro",
     description:
       "For those who want more access and a more focused, premium experience — all in one day",
     features: [
-      "Access to all talks and sessions",
-      "Access to both days",
-      "Access to sponsor booths",
-      "Entry to the networking area",
+      "Exclusive access to product demos",
+      "Access to masterclasses and technical workshops",
+      "Invitation to the Executive Roundtable",
+      "Special swags and merch",
     ],
     variant: "pro" as const,
   },

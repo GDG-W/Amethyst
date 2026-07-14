@@ -31,7 +31,7 @@ export default function ClaimPage() {
         currModalState={toggleSuccessModal}
         toggleModal={setToggleSuccessModal}
         title="Registration Successful"
-        summary="You have successfully registered for DevFest Lagos 2026. Check your email for your Ticket ID"
+        summary="You have successfully registered for Devfest Lagos 2025. Check your email for your Ticket ID"
       />
     </div>
   );
