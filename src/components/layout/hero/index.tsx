@@ -299,7 +299,7 @@ const Hero = () => {
                     }}
                   >
                     <br className="hidden md:block" />
-                    Two Epic Days.
+                    Five Epic Days.
                   </motion.span>
                 </h1>
               </motion.div>
@@ -312,7 +312,7 @@ const Hero = () => {
                 transition={{ delay: 1.6 }}
               >
                 Get ready for 20+ hands-on workshops, dynamic panel sessions, and an unforgettable
-                after-party, all happening from November 13th to 14th, 2026!
+                after-party, all happening from November 18th to 22nd, 2025!
               </motion.p>
 
               <motion.div
@@ -373,7 +373,7 @@ const Hero = () => {
               >
                 <Image
                   src="/devfest25.svg"
-                  alt="DevFest 2026"
+                  alt="DevFest 2025"
                   width={120}
                   height={120}
                   className="h-16 w-16 md:h-20 md:w-20 lg:h-24 lg:w-24"
