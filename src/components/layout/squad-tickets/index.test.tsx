@@ -118,7 +118,7 @@ describe("TicketSection", () => {
 
       const { getByText } = within(proCard);
       expect(getByText("FULL EXPERIENCE TICKET")).toBeInTheDocument();
-      expect(getByText("15,000 BOTH DAYS")).toBeInTheDocument();
+      expect(getByText("16,000 BOTH DAYS")).toBeInTheDocument();
       expect(getByText(/For those who want more access and a more focused/)).toBeInTheDocument();
 
       expect(getByText("Access to all talks and sessions")).toBeInTheDocument();
@@ -142,7 +142,7 @@ describe("TicketSection", () => {
       render(<TicketSection />);
 
       expect(screen.getByText("8,000 per day")).toBeInTheDocument();
-      expect(screen.getByText("15,000 BOTH DAYS")).toBeInTheDocument();
+      expect(screen.getByText("16,000 BOTH DAYS")).toBeInTheDocument();
     });
 
     it("displays all standard ticket features", () => {

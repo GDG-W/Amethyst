@@ -22,7 +22,7 @@ const ticketTypes = [
   },
   {
     title: "FULL EXPERIENCE TICKET",
-    price: "15,000 BOTH DAYS",
+    price: "16,000 BOTH DAYS",
     href: "/buy#pro",
     description:
       "For those who want more access and a more focused, premium experience across both days",
