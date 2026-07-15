@@ -139,7 +139,8 @@ export default function Recap() {
               </motion.h2>
 
               <motion.p className="label-3" variants={textVariants}>
-                From inspiring talks to hands-on sessions, DevFest Lagos 2025 had it all. AI, Web, Mobile, Cloud, Design, DevOps, Machine Learning, Cybersecurity, and more. 
+                From inspiring talks to hands-on sessions, DevFest Lagos 2025 had it all. AI, Web,
+                Mobile, Cloud, Design, DevOps, Machine Learning, Cybersecurity, and more.
                 Here&apos;s a look back at the moments that made it unforgettable.
               </motion.p>
 
