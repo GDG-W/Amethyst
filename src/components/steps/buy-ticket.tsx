@@ -46,7 +46,7 @@ const BuyTicket = () => {
       updated_at: fri.updated_at,
       theme: "Full Experience",
       description: "Access to both days of the event",
-      date: "bothT00:00:00.000Z", // Keep standard ISO format for split("T")[0] logic
+      date: fri.date,
     };
 
     return [syntheticPro];
