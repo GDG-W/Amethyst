@@ -105,7 +105,9 @@ const DatePicker = ({
       </div>
 
       {/* Date Grid - Responsive grid with smaller gaps on mobile */}
-      <div className="grid grid-cols-5 gap-2 sm:gap-3">
+      <div
+        className={`grid gap-2 sm:gap-3 ${dates.length === 1 ? "grid-cols-2 sm:grid-cols-3" : "grid-cols-3 sm:grid-cols-4 md:grid-cols-5"}`}
+      >
         {dates.map((date) => (
           <DateButton
             key={date.day}
