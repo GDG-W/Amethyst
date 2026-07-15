@@ -5,14 +5,14 @@ import React from "react";
 import Card from "@/components/ui/ticket-selection/ticket-card";
 import DatePicker from "@/components/ui/ticket-selection/date-picker";
 import Tabs from "@/components/ui/ticket-selection/ticket-tabs";
-import { TicketType } from "@/types/ticket";
-import { useTickets } from "@/hooks/useTickets";
+import { Ticket, TicketType } from "@/types/ticket";
 
 type TicketsSelectionProps = {
   activeTab: TicketType;
   onTabChange: (id: TicketType) => void;
   selectedDates: string[];
   onSelectionChange: (dates: string[]) => void;
+  tickets: Ticket[];
 };
 
 const TicketsSelection = ({
@@ -20,23 +20,31 @@ const TicketsSelection = ({
   onTabChange,
   selectedDates,
   onSelectionChange,
+  tickets,
 }: TicketsSelectionProps) => {
-  const { tickets } = useTickets(activeTab);
   const availableDateKeys = React.useMemo(() => {
     const set = new Set<string>();
-    for (const t of tickets) if ((t.available_quantity ?? 0) > 0) set.add(t.date.split("T")[0]);
+    for (const t of tickets) {
+      if ((t.available_quantity ?? 0) > 0) {
+        set.add(t.date.split("T")[0]);
+      }
+    }
     return set;
   }, [tickets]);
 
   const dates = React.useMemo(() => {
     if (activeTab === "pro") {
-      return [{ day: "13 & 14" as unknown as number, dayName: "Fri & Sat", date: "2026-11-13" }];
+      const proTicket = tickets.find((t) => t.ticket_type === "pro");
+      const iso = proTicket ? proTicket.date.split("T")[0] : "2026-11-13";
+      return [{ day: "13 & 14" as unknown as number, dayName: "Fri & Sat", date: iso }];
     }
+    const friTicket = tickets.find((t) => t.day === "fri");
+    const satTicket = tickets.find((t) => t.day === "sat");
     return [
-      { day: 13, dayName: "Fri", date: "2026-11-13" },
-      { day: 14, dayName: "Sat", date: "2026-11-14" },
+      { day: 13, dayName: "Fri", date: friTicket ? friTicket.date.split("T")[0] : "2026-11-13" },
+      { day: 14, dayName: "Sat", date: satTicket ? satTicket.date.split("T")[0] : "2026-11-14" },
     ];
-  }, [activeTab]);
+  }, [activeTab, tickets]);
 
   const tabsData: { id: TicketType; label: string }[] = [
     { id: "standard", label: "Standard Ticket" },

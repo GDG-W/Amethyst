@@ -13,12 +13,12 @@ export interface CheckoutPayload {
   buyer: Buyer;
   attendees: Attendee[];
   callback_url: string;
+  claim_url: string;
   discount_code: string | null;
-}
-
-export interface PreflightCheckoutPayload extends CheckoutPayload {
   is_preflight: boolean;
 }
+
+export type PreflightCheckoutPayload = CheckoutPayload;
 
 export interface CheckoutResponse {
   id: string;
