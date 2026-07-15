@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo } from "react";
+import React, { useEffect, useMemo, useCallback } from "react";
 
 import { API_DAY_TO_LABEL } from "@/lib/constants";
 import { OrderItem } from "@/app/(root)/buy/client";
@@ -8,6 +8,8 @@ import TicketDetails from "@/components/buy-ticket/ticket-details";
 import { indexTicketsByIsoDate } from "@/lib/utils";
 import { useBuyFormStore } from "@/store/buy-form-store";
 import { useTickets } from "@/hooks/useTickets";
+
+import { BOTH_DAYS_FULL_ID } from "@/constants/ticket";
 
 import TicketsSelection from "../ui/ticket-selection";
 
@@ -24,7 +26,31 @@ const BuyTicket = () => {
   } = useBuyFormStore();
 
   const { tickets: standardTickets } = useTickets("standard");
-  const { tickets: proTickets } = useTickets("pro");
+
+  const proTickets = useMemo(() => {
+    if (standardTickets.length < 2) return [];
+
+    const fri = standardTickets.find((t) => t.day === "fri");
+    const sat = standardTickets.find((t) => t.day === "sat");
+
+    if (!fri || !sat) return [];
+
+    const syntheticPro: Ticket = {
+      id: BOTH_DAYS_FULL_ID,
+      ticket_type: "pro",
+      day: "both" as unknown as "fri",
+      price: fri.price + sat.price,
+      total_quantity: Math.min(fri.total_quantity, sat.total_quantity),
+      available_quantity: Math.min(fri.available_quantity, sat.available_quantity),
+      created_at: fri.created_at,
+      updated_at: fri.updated_at,
+      theme: "Full Experience",
+      description: "Access to both days of the event",
+      date: fri.date,
+    };
+
+    return [syntheticPro];
+  }, [standardTickets]);
 
   const ticketsActive = useMemo(
     () => (activeTicketType === "pro" ? proTickets : standardTickets),
@@ -39,23 +65,26 @@ const BuyTicket = () => {
     [selectedByType, activeTicketType]
   );
 
-  const mk = (t: Ticket): OrderItem | null => {
-    const qty = quantities[t.id] ?? 0;
-    if (qty <= 0) return null;
+  const mk = useCallback(
+    (t: Ticket): OrderItem | null => {
+      const qty = quantities[t.id] ?? 0;
+      if (qty <= 0) return null;
 
-    const dayLabel = API_DAY_TO_LABEL[t.day] ?? t.day;
-    const typeLabel = t.ticket_type === "pro" ? "Full Experience Ticket" : "Standard Ticket";
+      const dayLabel = API_DAY_TO_LABEL[t.day] ?? t.day;
+      const typeLabel = t.ticket_type === "pro" ? "Full Experience Ticket" : "Standard Ticket";
 
-    return {
-      id: t.id,
-      name: `${qty} x ${dayLabel} (${typeLabel})`,
-      dayName: dayLabel,
-      ticketCount: qty,
-      price: qty * t.price,
-      theme: t.theme,
-      description: t.description,
-    };
-  };
+      return {
+        id: t.id,
+        name: `${qty} x ${dayLabel} (${typeLabel})`,
+        dayName: dayLabel,
+        ticketCount: qty,
+        price: qty * t.price,
+        theme: t.theme,
+        description: t.description,
+      };
+    },
+    [quantities]
+  );
 
   const items = useMemo(() => {
     const iso = (d: string) => d.split("T")[0];
@@ -74,7 +103,7 @@ const BuyTicket = () => {
       .filter((x): x is OrderItem => !!x);
 
     return [...stdItems, ...proItems];
-  }, [selectedByType, standardTickets, proTickets, quantities]);
+  }, [selectedByType, standardTickets, proTickets, mk]);
 
   const handleSelectionChange = (newDates: string[]) => {
     setSelectedByType(activeTicketType, newDates);
@@ -118,7 +147,7 @@ const BuyTicket = () => {
     if (!areItemsEqual) {
       setOrderItems(items);
     }
-  }, [items]);
+  }, [items, setOrderItems]);
 
   return (
     <div className="h-fit">
@@ -127,6 +156,7 @@ const BuyTicket = () => {
         onTabChange={setActiveTicketType}
         selectedDates={selectedDates}
         onSelectionChange={handleSelectionChange}
+        tickets={ticketsActive}
       />
       <div className="mt-5">
         <TicketDetails

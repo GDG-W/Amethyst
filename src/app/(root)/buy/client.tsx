@@ -15,6 +15,7 @@ import { toast } from "@/components/ui/toast";
 import { useBuyFormStore } from "@/store/buy-form-store";
 import { useMediaQuery } from "@/hooks/useMediaQuery";
 import { useTickets } from "@/hooks/useTickets";
+import { BOTH_DAYS_FULL_ID, FRI_STANDARD_ID, SAT_STANDARD_ID } from "@/constants/ticket";
 
 const steps = ["Buy Ticket", "Buyer Information", "Checkout"];
 
@@ -52,6 +53,7 @@ type CheckoutPayload = {
   discount_code: string | null;
   callback_url: string;
   claim_url: string;
+  is_preflight: boolean;
 };
 
 export type DiscountType = {
@@ -153,10 +155,16 @@ export default function BuyPageClient() {
           emails.forEach((email) => {
             if (!email) return;
 
-            const ticket_ids = orderItems
+            let ticket_ids = orderItems
               .filter((i) => i.id === dateId)
               .map((i) => i.id)
               .filter(Boolean);
+
+            if (ticket_ids.includes(BOTH_DAYS_FULL_ID)) {
+              ticket_ids = ticket_ids.flatMap((id) =>
+                id === BOTH_DAYS_FULL_ID ? [FRI_STANDARD_ID, SAT_STANDARD_ID] : id
+              );
+            }
 
             if (!ticket_ids.length) return;
 
@@ -178,6 +186,7 @@ export default function BuyPageClient() {
     if (buyerInfo.belongsToMe && orderItems.length) {
       const buyerTicketIds = orderItems
         .map((i) => i.id)
+        .flatMap((id) => (id === BOTH_DAYS_FULL_ID ? [FRI_STANDARD_ID, SAT_STANDARD_ID] : id))
         .filter((id) => !attendees.some((att) => att.ticket_ids.includes(id)));
 
       if (buyerTicketIds.length) {
@@ -211,6 +220,7 @@ export default function BuyPageClient() {
       callback_url: `${window.location.origin}/success`,
       claim_url: `${window.location.origin}/claim`,
       discount_code: discountCode,
+      is_preflight: false,
     };
   };
 
@@ -229,7 +239,7 @@ export default function BuyPageClient() {
 
       try {
         await checkout(payload);
-      } catch (err) {
+      } catch {
         toast.error("Checkout failed", "Please try again in a few minutes");
       }
     }
@@ -255,7 +265,7 @@ export default function BuyPageClient() {
             discountedAmount: res?.data?.discount?.discount?.discountedAmount,
           });
         }
-      } catch (error) {
+      } catch {
         toast.error("Checkout failed", "Please try again in a few minutes");
       }
     }
