@@ -73,6 +73,10 @@ export default function BuyPageClient() {
 
   const isMobile = useMediaQuery(640, "max");
 
+  // Discount codes are only validated against the backend once the full order
+  // (buyer + attendees) is known, on the final checkout step.
+  const canApplyDiscount = step === steps.length - 1;
+
   const incrementStep = () => {
     setStep((s) => {
       return Math.min(s + 1, steps.length - 1);
@@ -301,6 +305,7 @@ export default function BuyPageClient() {
               loading={isPending || isPreflightPending}
               discount={discount}
               handleDiscountApply={handleDiscountApply}
+              canApplyDiscount={canApplyDiscount}
             />
           )}
           <Button
@@ -322,6 +327,7 @@ export default function BuyPageClient() {
             loading={isPending || isPreflightPending}
             discount={discount}
             handleDiscountApply={handleDiscountApply}
+            canApplyDiscount={canApplyDiscount}
           />
         </div>
       </div>
