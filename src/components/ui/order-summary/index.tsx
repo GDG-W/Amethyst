@@ -32,6 +32,7 @@ interface OrderSummaryInterface {
   loading?: boolean;
   disabled?: boolean;
   handleDiscountApply: () => void;
+  canApplyDiscount: boolean;
 }
 function calculateTotal(listItems: OrderItemsType[]) {
   return listItems.reduce((total: number, item: OrderItemsType) => total + item.price, 0);
@@ -45,6 +46,7 @@ const OrderSummary = ({
   loading,
   discount,
   handleDiscountApply,
+  canApplyDiscount,
 }: OrderSummaryInterface) => {
   const [applyDiscount, setApplyDiscount] = useState(false);
   const total = useMemo(() => calculateTotal(items), [items]);
@@ -97,38 +99,41 @@ const OrderSummary = ({
               );
             })}
 
-            <hr className="border-soft-200 mt-4 h-0 border-t border-dashed" />
-            <li className="text-away-base mt-5 flex cursor-pointer items-center justify-between gap-3 font-medium tracking-tight underline underline-offset-4">
-              <span onClick={() => setApplyDiscount(true)}>Add discount code</span>
-              {applyDiscount && (
-                <span onClick={() => setApplyDiscount(false)}>
-                  <CloseIcon />
-                </span>
-              )}
-            </li>
-            <li className="my-5">
-              {applyDiscount && (
-                <div className="flex">
-                  <TextField
-                    value={discountCode ?? ""}
-                    name="discountCode"
-                    placeholder="Add discount code"
-                    onChange={(e) => handleFieldChange("discountCode", e.target.value)}
-                    onBlur={(e) => validateField("discountCode", e.target.value)}
-                    error={discountError}
-                    actionLabel={minusDiscountedAmount ?? "Apply"}
-                    onAction={handleDiscountApply}
-                    actionDisabled={
-                      loading ||
-                      disabled ||
-                      currentStep < 2 ||
-                      !discountCode ||
-                      Boolean(discount?.discountedAmount)
-                    }
-                  />
-                </div>
-              )}
-            </li>
+            {canApplyDiscount && (
+              <>
+                <hr className="border-soft-200 mt-4 h-0 border-t border-dashed" />
+                <li className="text-away-base mt-5 flex cursor-pointer items-center justify-between gap-3 font-medium tracking-tight underline underline-offset-4">
+                  <span onClick={() => setApplyDiscount(true)}>Add discount code</span>
+                  {applyDiscount && (
+                    <span onClick={() => setApplyDiscount(false)}>
+                      <CloseIcon />
+                    </span>
+                  )}
+                </li>
+                <li className="my-5">
+                  {applyDiscount && (
+                    <div className="flex">
+                      <TextField
+                        value={discountCode ?? ""}
+                        name="discountCode"
+                        placeholder="Add discount code"
+                        onChange={(e) => handleFieldChange("discountCode", e.target.value)}
+                        onBlur={(e) => validateField("discountCode", e.target.value)}
+                        error={discountError}
+                        actionLabel={minusDiscountedAmount ?? "Apply"}
+                        onAction={handleDiscountApply}
+                        actionDisabled={
+                          loading ||
+                          disabled ||
+                          !discountCode ||
+                          Boolean(discount?.discountedAmount)
+                        }
+                      />
+                    </div>
+                  )}
+                </li>
+              </>
+            )}
 
             <hr className="border-soft-200 mb-4 h-0 border-t border-dashed" />
             <li className="flex items-center justify-between gap-3">

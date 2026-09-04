@@ -36,6 +36,7 @@ describe("OrderSummary Component", () => {
         handleButtonClick={mockHandleButtonClick}
         currentStep={1}
         noOfSteps={3}
+        canApplyDiscount={false}
       />
     );
     expect(screen.getByText("Select your ticket date(s) to see order summary")).toBeInTheDocument();
@@ -48,6 +49,7 @@ describe("OrderSummary Component", () => {
         handleButtonClick={mockHandleButtonClick}
         currentStep={1}
         noOfSteps={3}
+        canApplyDiscount={false}
       />
     );
 
@@ -63,6 +65,7 @@ describe("OrderSummary Component", () => {
         handleButtonClick={mockHandleButtonClick}
         currentStep={1}
         noOfSteps={3}
+        canApplyDiscount={false}
       />
     );
 
@@ -79,6 +82,7 @@ describe("OrderSummary Component", () => {
         currentStep={1}
         noOfSteps={3}
         disabled={true} // Set disabled prop
+        canApplyDiscount={false}
       />
     );
 
@@ -93,6 +97,7 @@ describe("OrderSummary Component", () => {
         handleButtonClick={mockHandleButtonClick}
         currentStep={3}
         noOfSteps={3}
+        canApplyDiscount={true}
       />
     );
 
@@ -105,8 +110,9 @@ describe("OrderSummary Component", () => {
         <OrderSummary
           items={sampleItems}
           handleButtonClick={mockHandleButtonClick}
-          currentStep={1}
+          currentStep={3}
           noOfSteps={3}
+          canApplyDiscount={true}
         />
       );
 
@@ -135,8 +141,9 @@ describe("OrderSummary Component", () => {
         <OrderSummary
           items={sampleItems}
           handleButtonClick={mockHandleButtonClick}
-          currentStep={1}
+          currentStep={3}
           noOfSteps={3}
+          canApplyDiscount={true}
         />
       );
 
@@ -164,8 +171,9 @@ describe("OrderSummary Component", () => {
         <OrderSummary
           items={sampleItems}
           handleButtonClick={mockHandleButtonClick}
-          currentStep={1}
+          currentStep={3}
           noOfSteps={3}
+          canApplyDiscount={true}
         />
       );
 
