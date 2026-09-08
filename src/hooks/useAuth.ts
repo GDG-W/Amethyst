@@ -1,15 +1,12 @@
 import Cookies from "js-cookie";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
-import { useRouter } from "next/navigation";
-
 import { useUserDetailsStore, UserState } from "@/store/user-details-store";
 import { login } from "@/services/auth.service";
 import { Auth, SuccessResponse } from "@/types/auth";
 import { toAPIError } from "@/services/api";
 
 export function useLogin() {
-  const router = useRouter();
   const queryClient = useQueryClient();
 
   const mutation = useMutation({
@@ -27,7 +24,6 @@ export function useLogin() {
       const data = response?.data;
       const { id, ...userData } = data;
       handlePostLogin(userData, id);
-      router.replace("/dashboard");
     },
   });
 
@@ -36,12 +32,24 @@ export function useLogin() {
   function handlePostLogin(user: UserState, token: string) {
     setUser(user);
 
-    //store the token and user in cookie
-    const expiresDate = new Date(user.expires_at);
-    const daysUntilExpiry = Math.ceil((expiresDate.getTime() - Date.now()) / (1000 * 60 * 60 * 24));
+    // Derive the session lifetime from the two server timestamps rather than from
+    // `expires_at` vs. the local clock: the browser evaluates `expires` against the
+    // device clock, so a device running fast makes the cookie land in the past and
+    // the browser drops it silently, leaving the user bounced back to /login.
+    // Anchoring the server-provided duration to the local clock keeps it skew-proof.
+    const createdAt = new Date(user.created_at).getTime();
+    const expiresAt = new Date(user.expires_at).getTime();
+    const sessionLifetimeMs = expiresAt - createdAt;
 
-    Cookies.set("token", token, { expires: daysUntilExpiry, path: "/" });
-    Cookies.set("user", JSON.stringify(user), { expires: daysUntilExpiry, path: "/" });
+    // Fall back to a session cookie if the timestamps are missing or nonsensical —
+    // a cookie that dies with the tab still beats no cookie at all.
+    const expires =
+      Number.isFinite(sessionLifetimeMs) && sessionLifetimeMs > 0
+        ? new Date(Date.now() + sessionLifetimeMs)
+        : undefined;
+
+    Cookies.set("token", token, { expires, path: "/" });
+    Cookies.set("user", JSON.stringify(user), { expires, path: "/" });
   }
 
   return mutation;

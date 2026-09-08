@@ -40,6 +40,9 @@ export default function LoginClient() {
 
   const onSubmit = async (values: z.infer<typeof loginSchema>) => {
     try {
+      // `mutateAsync` resolves only after the mutation's onSuccess has run, so the
+      // session cookies useLogin sets are already in place before we navigate — the
+      // middleware guarding /dashboard will see them.
       await mutateAsync(values);
       methods.reset();
       router.replace("/dashboard");
